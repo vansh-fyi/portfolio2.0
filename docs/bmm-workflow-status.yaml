@@ -23,15 +23,15 @@ field_type: "brownfield"
 workflow_path: "method-brownfield.yaml"
 workflow_status: "
 # Phase 0: Documentation
-document-project: required # agent: analyst
+document-project: docs/index.md # agent: analyst
 
 # Phase 1: Planning
-prd: required # agent: pm
-validate-prd: optional # agent: pm
-create-design: conditional # agent: ux-designer
+prd: docs/PRD.md # agent: pm
+validate-prd: docs/validation-report-2025-11-14.md # agent: pm
+create-design: skipped # agent: ux-designer
 
 # Phase 2: Solutioning
-create-architecture: recommended # agent: architect
+create-architecture: docs/architecture.md # agent: architect
 test-design: recommended # agent: tea
 validate-architecture: optional # agent: architect
 solutioning-gate-check: required # agent: architect
