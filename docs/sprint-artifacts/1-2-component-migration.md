@@ -1,6 +1,6 @@
 # Story 1.2: Component Migration
 
-Status: drafted
+Status: ready-for-dev
 
 ## Story
 
@@ -47,7 +47,7 @@ This story is derived from Epic 1: Core Application & React Migration. The goal 
 
 ### Context Reference
 
-<!-- Path(s) to story context XML will be added here by context workflow -->
+- docs/sprint-artifacts/stories/1-2-component-migration.context.xml
 
 ### Agent Model Used
 

@@ -1,0 +1,99 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>2</storyId>
+    <title>Component Migration</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-15</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/1-2-component-migration.md</sourceStoryPath>
+  </metadata>
+  <story>
+    <asA>developer</asA>
+    <iWant>to break down the existing `index.html` into reusable React components (e.g., Header, Hero, Skills, Projects, About, Testimonials, Contact, Footer)</iWant>
+    <soThat>the application is modular and maintainable</soThat>
+    <tasks>
+- [ ] Create a `components` directory in `portfolio-react/src` (AC: 3)
+- [ ] Create a `Header` component (AC: 3)
+- [ ] Create a `Hero` component (AC: 3)
+- [ ] Create a `Skills` component (AC: 3)
+- [ ] Create a `Projects` component (AC: 3)
+- [ ] Create an `About` component (AC: 3)
+- [ ] Create a `Testimonials` component (AC: 3)
+- [ ] Create a `Contact` component (AC: 3)
+- [ ] Create a `Footer` component (AC: 3)
+    </tasks>
+  </story>
+  <acceptanceCriteria>
+1.  **Given** the `index.html` file
+2.  **When** I view the component structure in the React project
+3.  **Then** I see a logical breakdown of the page into smaller components.
+  </acceptanceCriteria>
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Portfolio Website - Epic Breakdown</title>
+        <section>Story 1.2: Component Migration</section>
+        <snippet>As a developer, I want to break down the existing `index.html` into reusable React components (e.g., Header, Hero, Skills, Projects, About, Testimonials, Contact, Footer), so that the application is modular and maintainable.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure</section>
+        <snippet>
+/Users/hp/Desktop/Work/Repositories/portfolio2.0/
+├── portfolio-react/          # New React project (created by Vite)
+│   ├── public/               # Static assets (images, fonts)
+│   │   └── assets/
+│   ├── src/                  # React source code
+│   │   ├── components/       # Reusable UI components
+...
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Portfolio Website - Product Requirements Document</title>
+        <section>Functional Requirements</section>
+        <snippet>FR2: All existing UI, layout, and user interactions from the original static pages must be preserved in the React application.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <doc>
+        <path>brownfield/index.html</path>
+        <title>Original HTML</title>
+        <section>Full Page</section>
+        <snippet>The entire index.html file is the source for the component breakdown.</snippet>
+      </doc>
+    </code>
+    <dependencies>
+      <dependency>
+        <name>react</name>
+        <version>^19.2.0</version>
+      </dependency>
+      <dependency>
+        <name>react-dom</name>
+        <version>^19.2.0</version>
+      </dependency>
+      <dependency>
+        <name>vite</name>
+        <version>^7.2.2</version>
+      </dependency>
+    </dependencies>
+  </artifacts>
+  <constraints>
+    <constraint>Components should be placed in the `portfolio-react-template/src/components/` directory.</constraint>
+    <constraint>Follow the naming conventions from the architecture document (PascalCase for components).</constraint>
+  </constraints>
+  <interfaces></interfaces>
+  <tests>
+    <standards>Co-locate tests with the code they test (e.g., Component.test.tsx, service.test.ts).</standards>
+    <locations>
+      <location>portfolio-react-template/src/components/</location>
+    </locations>
+    <ideas>
+      <idea>Verify that each created component renders without errors.</idea>
+      <idea>Create a snapshot test for each component to ensure consistent rendering.</idea>
+    </ideas>
+  </tests>
+</story-context>
