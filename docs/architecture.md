@@ -10,35 +10,42 @@ First implementation story should execute:
 ```bash
 npm create vite@latest portfolio-react -- --template react-ts
 ```
+*   **Verification**: See the [create-vite npm page](https://www.npmjs.com/package/create-vite) for the latest information on this template.
 
 This establishes the base architecture with these decisions:
-*   **Framework**: React
-*   **Language**: TypeScript
-*   **Build Tool**: Vite
+*   **Framework**: React (PROVIDED BY STARTER)
+*   **Language**: TypeScript (PROVIDED BY STARTER)
+*   **Build Tool**: Vite (PROVIDED BY STARTER)
 
 ## Decision Summary
 
-| Category | Decision | Version | Affects Epics | Rationale |
-| Category | Decision | Version | Affects Epics | Rationale |
-| -------- | -------- | ------- | ------------- | --------- |
-| Project Foundation | Vite (React, TypeScript) | Latest | Epic 1 | Fast development, performant builds, modern tooling. |
-| LLM (Text Generation) | GLM 4.5 Air | Latest | Epic 2, Epic 3, Epic 4 | Specific user choice, supported by Mastra.AI. |
-| Embedding Model | Qwen3 Embedding 8B | Latest | Epic 2, Epic 4 | Specific user choice, supported by Mastra.AI. |
-| Vector Database | Supabase | Latest | Epic 2, Epic 4 | Specific user choice, integrated platform. |
-| API Pattern | tRPC | Latest | Epic 1, Epic 2, Epic 3, Epic 4 | Type-safe, excellent developer experience with TypeScript. |
-| Authentication | None (Public Site) | N/A | N/A | Entire site is public, no user login required. |
-| Email Service | Resend | Latest | Epic 3, Epic 4 | Developer-friendly, generous free tier, suitable for transactional emails. |
-| Deployment Target | Vercel | Latest | All Epics | Easy deployment for React apps, serverless functions, custom domain support on free tier. |
+**Note on Versions**: All versions were verified via web search on 2025-11-14. Using "latest" or `~` (tilde version range) is acceptable for initial setup, but it is **highly recommended** to pin to specific versions in `package.json` before the first deployment to ensure long-term stability and prevent unexpected breaking changes. The choice of "latest" over LTS is for leveraging modern features, with the understanding that minor version updates should be managed carefully.
+
+| Category | Decision | Version | Last Verified | Affects Epics | Rationale |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Project Foundation | Vite (React, TypeScript) | ~5.2.0 | 2025-11-14 | Epic 1 | (PROVIDED BY STARTER) Fast development, performant builds, modern tooling. |
+| LLM (Text Generation) | GLM 4.5 Air | N/A (API) | 2025-11-14 | Epic 2, Epic 3, Epic 4 | Specific user choice, supported by Mastra.AI. |
+| Embedding Model | Qwen3 Embedding 8B | N/A (API) | 2025-11-14 | Epic 2, Epic 4 | Specific user choice, supported by Mastra.AI. |
+| Vector Database | Supabase (JS SDK) | ~2.42.0 | 2025-11-14 | Epic 2, Epic 4 | Specific user choice, integrated platform. |
+| API Pattern | tRPC | ~11.0.0-rc | 2025-11-14 | Epic 1, Epic 2, Epic 3, Epic 4 | Type-safe, excellent developer experience with TypeScript. |
+| Authentication | None (Public Site) | N/A | N/A | N/A | Entire site is public, no user login required. |
+| Email Service | Resend (Node.js SDK) | ~3.2.0 | 2025-11-14 | Epic 3, Epic 4 | Developer-friendly, generous free tier, suitable for transactional emails. |
+| Deployment Target | Vercel | N/A (Platform) | 2025-11-14 | All Epics | Easy deployment for React apps, serverless functions, custom domain support on free tier. |
+
 
 ## Project Structure
 
 ```
 /Users/hp/Desktop/Work/Repositories/portfolio2.0/
 ├── portfolio-react/          # New React project (created by Vite)
-│   ├── public/               # Static assets
+│   ├── public/               # Static assets (images, fonts)
+│   │   └── assets/
 │   ├── src/                  # React source code
 │   │   ├── components/       # Reusable UI components
-│   │   ├── pages/            # Main application pages/views
+│   │   ├── features/         # Feature-specific components (e.g., chat, projects)
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── services/         # API interaction logic (tRPC client)
+│   │   ├── state/            # Global state management (e.g., Zustand store)
 │   │   ├── App.tsx           # Main application component
 │   │   └── main.tsx          # Entry point
 │   ├── package.json          # Frontend dependencies
@@ -118,15 +125,26 @@ These patterns ensure consistent implementation across all AI agents and the bro
 ### Communication Patterns
 
 *   **Frontend-Backend**: Exclusively tRPC procedures for all API communication.
+*   **Frontend State Management**: Use a lightweight state management library like **Zustand** for global state (e.g., overlay visibility, current project context). For local component state, use React's built-in `useState` and `useReducer` hooks.
 
 ### Lifecycle Patterns
 
 *   **Loading States**: Use a consistent pattern for displaying loading indicators (e.g., a `isLoading` state and a shared spinner component).
 *   **Error Handling**: Implement centralized error handling for API calls, displaying user-friendly messages in the UI.
+*   **Retry Logic**: For critical external API calls (e.g., fetching RAG responses), implement a simple exponential backoff retry mechanism (e.g., 3 attempts with 1s, 2s, 4s delays) using a helper function.
 
 ### Location Patterns
 
 *   **RAG Content**: Markdown files for RAG will be stored in `_content/personal` and `_content/projects` within the project repository.
+*   **Asset Organization**: Static assets like images and fonts will be placed in the `portfolio-react/public/assets/` directory.
+*   **Configuration Placement**: Environment-specific configurations will be managed via `.env` files in the `backend/` and `portfolio-react/` directories, following Vite's standard environment variable handling.
+
+### CRUD Patterns
+While this project is not CRUD-heavy, any future administrative features should follow these patterns for consistency:
+*   **Create**: `trpc.resource.create({ data: {...} })`
+*   **Read**: `trpc.resource.get({ id: '...' })` or `trpc.resource.list({ limit: 10, offset: 0 })`
+*   **Update**: `trpc.resource.update({ id: '...', data: {...} })`
+*   **Delete**: `trpc.resource.delete({ id: '...' })`
 
 ## Consistency Rules
 
@@ -238,10 +256,8 @@ Given the existing WebGL elements on the homepage and the interactive nature of 
 *   **Caching**: Implement caching mechanisms for frequently accessed embeddings or RAG responses to reduce redundant computations and API calls.
 *   **Streamed Responses**: Utilize streamed responses for the conversational chat interface to improve perceived performance and provide real-time feedback to the user.
 
-### Deployment Optimization
-
-*   **Vercel CDN**: Leverage Vercel's global Content Delivery Network (CDN) for fast delivery of static assets and serverless function responses to users worldwide.
-*   **Serverless Functions**: The backend will be deployed as serverless functions on Vercel, allowing it to scale automatically and efficiently based on demand, without managing servers.
+## Background Job Processing
+For the current scope, long-running asynchronous tasks (like data ingestion) will be handled by standalone TypeScript scripts run manually from the command line. If future needs require more robust background job processing (e.g., for scheduled tasks or webhook handling), Vercel's Cron Jobs or a service like Inngest can be integrated.
 
 ## Deployment Architecture
 

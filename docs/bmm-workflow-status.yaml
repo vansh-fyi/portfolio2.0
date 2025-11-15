@@ -32,11 +32,11 @@ create-design: skipped # agent: ux-designer
 
 # Phase 2: Solutioning
 create-architecture: docs/architecture.md # agent: architect
-test-design: recommended # agent: tea
-validate-architecture: optional # agent: architect
-solutioning-gate-check: required # agent: architect
+test-design: docs/test-design-system.md # agent: tea
+validate-architecture: docs/validation-report-2025-11-14.md # agent: architect
+solutioning-gate-check: docs/implementation-readiness-report-2025-11-14.md # agent: architect
 
 # Phase 3: Implementation
-sprint-planning: required # agent: sm
-story-development: required # agent: sm
+sprint-planning: docs/sprint-artifacts/sprint-status.yaml # agent: sm
+story-development: docs/sprint-artifacts/sprint-status.yaml # agent: sm
 "
