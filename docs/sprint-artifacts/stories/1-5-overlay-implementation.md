@@ -33,8 +33,8 @@ so that they can be triggered by user actions.
 ## Review Follow-ups (AI)
 
 **Code Changes Required:**
-- [ ] [Medium] Add unit tests for `portfolio-react-template/src/state/overlayStore.ts` to verify state updates and actions.
-- [ ] [Medium] Add basic rendering tests for `portfolio-react-template/src/components/overlays/ProjectOverlay.tsx` and `portfolio-react-template/src/components/overlays/ChatOverlay.tsx` to ensure they render correctly when visible and `null` when not visible.
+- [x] [Medium] Add unit tests for `portfolio-react-template/src/state/overlayStore.ts` to verify state updates and actions.
+- [x] [Medium] Add basic rendering tests for `portfolio-react-template/src/components/overlays/ProjectOverlay.tsx` and `portfolio-react-template/src/components/overlays/ChatOverlay.tsx` to ensure they render correctly when visible and `null` when not visible.
 
 ## Dev Notes
 
@@ -175,4 +175,4 @@ However, a critical omission is the lack of dedicated unit tests for the newly i
 - [ ] [Medium] Add basic rendering tests for `portfolio-react-template/src/components/overlays/ProjectOverlay.tsx` and `portfolio-react-template/src/components/overlays/ChatOverlay.tsx` to ensure they render correctly when visible and `null` when not visible.
 
 **Advisory Notes:**
-- Note: Consider adding a mechanism to prevent body scrolling when an overlay is open for improved user experience.
+- Note: A mechanism to prevent body scrolling when an overlay is open for improved user experience has been implemented.
