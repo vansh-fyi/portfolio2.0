@@ -3,9 +3,9 @@ const Projects = () => {
     <section className="scroll-animate lg:py-24 in-view pt-20 pb-20 relative" id="projects">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-geist font-light text-white tracking-tighter" style={{}}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-geist font-light text-white tracking-tighter">
             Where creativity meets
-            <span className="block bg-gradient-to-r bg-clip-text text-transparent font-geist font-light tracking-tighter bg-gradient-to-l from-purple-500 to-orange-300" style={{}}>
+            <span className="block bg-gradient-to-r bg-clip-text text-transparent font-geist font-light tracking-tighter bg-gradient-to-l from-purple-500 to-orange-300">
               Precision
             </span>
           </h2>
@@ -22,7 +22,7 @@ const Projects = () => {
             <div className="absolute bottom-6 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
                 <h4 className="text-lg font-semibold text-white mb-2">Aether: AI Powered Design System Generator</h4>
-                <p className="text-sm max-w-md text-white/80" style={{}}>
+                <p className="text-sm max-w-md text-white/80">
                   Generate code components and create your design system for vibe coding tools. Use your moodboard or let AI do everything.
                 </p>
               </div>
@@ -30,12 +30,12 @@ const Projects = () => {
           </div>
           {/* Project 2 */}
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=1080&q=80" alt="Abstract Art" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{}} />
+            <img src="https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=1080&q=80" alt="Abstract Art" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
                 <h4 className="font-semibold text-white mb-1">DriQ Health 🔒</h4>
-                <p className="text-xs text-white/80" style={{}}>
+                <p className="text-xs text-white/80">
                   Incontinence Monitoring for Seniors
                 </p>
               </div>
@@ -47,10 +47,10 @@ const Projects = () => {
             <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white" style={{}}>
+                <h4 className="font-semibold mb-1 text-white">
                   Sparto
                 </h4>
-                <p className="text-xs text-white/80" style={{}}>
+                <p className="text-xs text-white/80">
                   Request based Ecommerce application to sell spare parts.
                 </p>
               </div>
@@ -58,14 +58,14 @@ const Projects = () => {
           </div>
           {/* Project 4 */}
           <div className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5">
-            <img src="https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80" alt="Futuristic Art" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{}} />
+            <img src="https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80" alt="Futuristic Art" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white" style={{}}>
+                <h4 className="font-semibold mb-1 text-white">
                   Sparto Admin
                 </h4>
-                <p className="text-xs text-white/80" style={{}}>
+                <p className="text-xs text-white/80">
                   Enterprise application for managing Sparto
                 </p>
               </div>
@@ -77,10 +77,10 @@ const Projects = () => {
             <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60"></div>
             <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white" style={{}}>
+                <h4 className="font-semibold mb-1 text-white">
                   Vibio
                 </h4>
-                <p className="text-xs text-white/80" style={{}}>
+                <p className="text-xs text-white/80">
                   Event Platform for Creatives
                 </p>
               </div>

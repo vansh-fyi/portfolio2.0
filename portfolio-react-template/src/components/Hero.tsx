@@ -20,47 +20,13 @@ const Hero = () => {
       <img src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_dark_focus.jpg" alt="" className="transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" id="dark-bg-image" />
       <img id="light-bg-image" src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_light_focus.jpg" alt="" className="transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
       <div className="" id="wrapper">
-        <div className="gradient-blur" style={{}}>
+        <div className="gradient-blur">
           <div className=""></div>
           <div></div>
           <div></div>
           <div></div>
           <div></div>
           <div></div>
-        </div>
-      </div>
-      <div className="z-10 relative" style={{}}>
-        <div className="flex md:px-8 max-w-7xl mr-auto ml-auto pt-5 pr-6 pb-5 pl-6 items-center justify-between invisible">
-          {/* Placeholder for spacing */}
-          <div className="flex [animation:fadeSlideIn_1s_ease-out_0.1s_both] md:gap-x-8 rounded-full ring-1 pt-1 pr-1 pb-1 pl-1 gap-x-8 gap-y-4 items-center ring-white/10">
-            <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
-              <a href="#" className="inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_white.png)] bg-cover rounded-full"></a>
-              <p className="md:text-xl md:text-white/80 font-medium text-base font-geist text-white/80">
-                Vansh
-              </p>
-            </div>
-            <nav className="hidden md:flex gap-2 gap-x-2 gap-y-2 items-center">
-              <a href="index.html#solutions" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/90 bg-white/5 ring-white/10">
-                Solutions
-              </a>
-              <a href="index.html#showcase" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">
-                Showcase
-              </a>
-              <a href="index.html#resources" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">
-                Resources
-              </a>
-            </nav>
-          </div>
-          <div className="flex ring-1 rounded-full pt-1 pr-1 pb-1 pl-1 gap-x-2 gap-y-2 items-center ring-white/10">
-            <button className="inline-flex transition [animation:fadeSlideIn_1s_ease-out_0.3s_both] active:scale-95 w-9 h-9 ring-1 rounded-full backdrop-blur-sm items-center justify-center hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/10 ring-white/15" aria-label="Mode">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" style={{ color: 'rgb(255, 255, 255)', width: '18px', height: '18px' }}>
-                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-              </svg>
-            </button>
-            <a href="#" className="inline-flex items-center gap-2 transition [animation:fadeSlideIn_1s_ease-out_0.3s_both] active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/15 hover:ring-white/25 text-white/90 bg-white/10 ring-white/20">
-              Contact
-            </a>
-          </div>
         </div>
       </div>
       <main className="flex h-[calc(100vh-80px)] z-10 relative items-end">

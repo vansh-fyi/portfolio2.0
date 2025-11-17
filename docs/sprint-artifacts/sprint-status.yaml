@@ -37,8 +37,8 @@ story_location: /Users/hp/Desktop/Work/Repositories/portfolio2.0/docs/sprint-art
 development_status:
   epic-1: backlog
   1-1-project-setup-foundation: done
-  1-2-component-migration: ready-for-dev
-  1-3-styling-integration: backlog
+  1-2-component-migration: done
+  1-3-styling-integration: in-progress
   1-4-spa-navigation-routing: backlog
   1-5-overlay-implementation: backlog
   epic-1-retrospective: optional

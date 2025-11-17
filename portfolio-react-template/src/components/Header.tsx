@@ -22,7 +22,7 @@ const Header = () => {
         <div className="flex xl:pt-2 xl:pl-2 xl:pr-2 xl:pb-2 ring-1 rounded-full pt-2 pr-2 pb-2 pl-2 backdrop-blur-sm gap-x-2 gap-y-2 items-center bg-black/80 ring-white/10">
           <button className="inline-flex transition active:scale-95 w-9 h-9 rounded-full ring-1 backdrop-blur-sm items-center justify-center hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10" aria-label="Toggle theme" id="themeToggle">
             {/* Moon icon - shows by default in DARK mode */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" id="moonIcon" style={{ color: 'rgb(255, 255, 255)', width: '18px', height: '18px' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-white" id="moonIcon">
               <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" className=""></path>
             </svg>
             {/* Sun icon - shows in LIGHT mode (hidden by default) */}

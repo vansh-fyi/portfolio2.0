@@ -1,7 +1,7 @@
 import * as renderer from 'react-test-renderer';
-import Header from '../Header';
+import Hero from '../Hero';
 
 it('renders correctly', () => {
-  const tree = renderer.create(<Header />).toJSON();
+  const tree = renderer.create(<Hero />).toJSON();
   expect(tree).toMatchSnapshot();
 });
