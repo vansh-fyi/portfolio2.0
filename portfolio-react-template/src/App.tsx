@@ -9,6 +9,7 @@ declare global {
     };
   }
 }
+import { useOverlayStore } from './state/overlayStore';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -17,8 +18,12 @@ import About from './components/About';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ProjectOverlay from './components/overlays/ProjectOverlay';
+import ChatOverlay from './components/overlays/ChatOverlay';
 
 function App() {
+  const { isProjectOverlayVisible, isChatOverlayVisible, closeProjectOverlay, closeChatOverlay } = useOverlayStore();
+
   useEffect(() => {
     if (!window.UnicornStudio) {
       window.UnicornStudio = { init: () => { }, isInitialized: true };
@@ -63,6 +68,8 @@ function App() {
         <Contact />
       </Element>
       <Footer />
+      <ProjectOverlay isVisible={isProjectOverlayVisible} onClose={closeProjectOverlay} />
+      <ChatOverlay isVisible={isChatOverlayVisible} onClose={closeChatOverlay} />
     </div>
   )
 }

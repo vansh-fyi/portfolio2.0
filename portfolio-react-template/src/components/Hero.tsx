@@ -1,4 +1,7 @@
+import { useOverlayStore } from '../state/overlayStore';
+
 const Hero = () => {
+  const { openChatOverlay } = useOverlayStore();
   return (
     <section className="overflow-hidden h-screen relative" id="hero">
       {/* Decorative grid lines */}
@@ -53,7 +56,7 @@ const Hero = () => {
                         <path d="M5 18H3"></path>
                       </svg>
                     </div>
-                    <input type="text" aria-label="Chat with AI agent" className="placeholder:text-white/30 focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3" placeholder="Ask anything about me !" data-typed-placeholder="Ask anything about me !" />
+                    <input type="text" aria-label="Chat with AI agent" className="placeholder:text-white/30 focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3" placeholder="Ask anything about me !" data-typed-placeholder="Ask anything about me !" onClick={openChatOverlay} readOnly />
                     <button className="inline-flex transition-colors active:scale-95 w-9 h-9 border rounded-lg items-center justify-center hover:bg-white bg-white/80 border-white/10" aria-label="Send message">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-black/80">
                         <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" className=""></path>
