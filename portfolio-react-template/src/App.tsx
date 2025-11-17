@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import { Element } from 'react-scroll';
+
 declare global {
   interface Window {
     UnicornStudio?: {
@@ -42,12 +44,24 @@ function App() {
         <div id="lightBackground" data-us-project="VACzULFkoQAmEcep6hU" data-us-lazyload="true" data-us-production="true" data-us-scale="0.5" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full transition-opacity duration-500 opacity-0"></div>
       </div>
       <Header />
-      <Hero />
-      <Skills />
-      <Projects />
-      <About />
-      <Testimonials />
-      <Contact />
+      <div id="hero">
+        <Hero />
+      </div>
+      <Element name="features">
+        <Skills />
+      </Element>
+      <Element name="projects">
+        <Projects />
+      </Element>
+      <Element name="about">
+        <About />
+      </Element>
+      <Element name="testimonials">
+        <Testimonials />
+      </Element>
+      <Element name="contact">
+        <Contact />
+      </Element>
       <Footer />
     </div>
   )

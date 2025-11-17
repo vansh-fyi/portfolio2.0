@@ -11,8 +11,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/react-scroll": "^1.8.10",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-scroll": "^1.9.3",
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {

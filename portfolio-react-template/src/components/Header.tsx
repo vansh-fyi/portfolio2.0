@@ -1,21 +1,23 @@
+import { Link } from 'react-scroll';
+
 const Header = () => {
   return (
     <header className="z-20 fixed top-0 right-0 left-0">
       <div className="flex max-w-7xl mr-auto ml-auto pt-4 pr-6 pb-4 pl-6 items-center justify-between">
         {/* Left: brand + primary nav */}
         <div className="flex md:gap-x-8 md:pl-2 md:pt-2 md:pr-2 md:pb-2 bg-black/80 ring-white/10 ring-1 rounded-full pt-2 pr-2 pb-2 pl-2 backdrop-blur-sm gap-x-8 gap-y-4 items-center">
-          <a href="#hero" className="flex gap-x-2 gap-y-2 items-center cursor-pointer transition opacity-90">
+          <Link to="hero" smooth={true} duration={500} className="flex gap-x-2 gap-y-2 items-center cursor-pointer transition opacity-90">
             <span className="inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-full" id="logo-dark"></span>
             <span className="inline-flex items-center justify-center bg-center hidden w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_light.png)] bg-cover rounded-full" id="logo-light"></span>
             <p className="md:text-xl md:text-white font-medium text-base font-geist text-white/80">
               Vansh
             </p>
-          </a>
+          </Link>
           <nav className="hidden md:flex gap-2 gap-x-2 gap-y-2 items-center">
-            <a href="#features" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10">Skills</a>
-            <a href="#projects" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist rounded-full ring-1 pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10">Projects</a>
-            <a href="#about" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10">About Me</a>
-            <a href="#testimonials" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10">Testimonials</a>
+            <Link to="features" smooth={true} duration={500} className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10 cursor-pointer">Skills</Link>
+            <Link to="projects" smooth={true} duration={500} className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist rounded-full ring-1 pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10 cursor-pointer">Projects</Link>
+            <Link to="about" smooth={true} duration={500} className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10 cursor-pointer">About Me</Link>
+            <Link to="testimonials" smooth={true} duration={500} className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10 cursor-pointer">Testimonials</Link>
           </nav>
         </div>
         {/* Right: contact */}
@@ -38,7 +40,7 @@ const Header = () => {
               <path d="m19.07 4.93-1.41 1.41" className=""></path>
             </svg>
           </button>
-          <a href="#contact" className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist rounded-full ring-1 pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10">Contact Me</a>
+          <Link to="contact" smooth={true} duration={500} className="inline-flex items-center gap-2 transition active:scale-95 text-sm font-medium font-geist rounded-full ring-1 pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10 cursor-pointer">Contact Me</Link>
         </div>
       </div>
     </header>
