@@ -601,20 +601,46 @@ html {
       rgba(0, 0, 0, 0) 100%);
 }
 
+
+
 .gradient-blur>div:nth-of-type(6) {
+
   z-index: 7;
+
   backdrop-filter: blur(32px);
+
   mask: linear-gradient(to bottom,
+
       rgba(0, 0, 0, 0) 75%,
+
       rgba(0, 0, 0, 1) 87.5%,
+
       rgba(0, 0, 0, 1) 100%);
+
 }
 
+
+
 .gradient-blur::after {
+
   content: "";
+
   z-index: 8;
+
   backdrop-filter: blur(64px);
+
   mask: linear-gradient(to bottom,
+
       rgba(0, 0, 0, 0) 87.5%,
+
       rgba(0, 0, 0, 1) 100%);
+
+}
+
+
+
+.body-lock {
+
+  overflow: hidden;
+
 }

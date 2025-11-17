@@ -25,6 +25,14 @@ function App() {
   const { isProjectOverlayVisible, isChatOverlayVisible, closeProjectOverlay, closeChatOverlay } = useOverlayStore();
 
   useEffect(() => {
+    if (isProjectOverlayVisible || isChatOverlayVisible) {
+      document.body.classList.add('body-lock');
+    } else {
+      document.body.classList.remove('body-lock');
+    }
+  }, [isProjectOverlayVisible, isChatOverlayVisible]);
+
+  useEffect(() => {
     if (!window.UnicornStudio) {
       window.UnicornStudio = { init: () => { }, isInitialized: true };
       const i = document.createElement("script");
