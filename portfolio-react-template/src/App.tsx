@@ -32,28 +32,51 @@ function App() {
     }
   }, [isProjectOverlayVisible, isChatOverlayVisible]);
 
+  // Then in your useEffect:
   useEffect(() => {
-    if (!window.UnicornStudio) {
-      window.UnicornStudio = { init: () => { }, isInitialized: true };
-      const i = document.createElement("script");
-      i.src = "https://cdn.jsdelivr.net/gh/hunicornstudio/unicornstudio.js@1.4.29/dist/UnicornStudio.umd.js";
-      onload = function () {
-        if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
-          window.UnicornStudio.init();
-          window.UnicornStudio.isInitialized = true;
-        }
-      };
-      (document.head || document.body).appendChild(i);
-    } else if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
-      window.UnicornStudio.init();
-      window.UnicornStudio.isInitialized = true;
-    }
+    const initUnicornStudio = () => {
+      if (!window.UnicornStudio) {
+        window.UnicornStudio = { init: () => { }, isInitialized: false };
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
+        script.onload = () => {
+          if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
+            window.UnicornStudio.init(); // Just call it directly, no .then()
+            window.UnicornStudio.isInitialized = true;
+
+            // Make backgrounds visible after initialization
+            setTimeout(() => {
+              const darkBg = document.getElementById('darkBackground');
+              const lightBg = document.getElementById('lightBackground');
+              if (darkBg) darkBg.style.opacity = '1';
+              if (lightBg) lightBg.style.opacity = '0';
+            }, 100);
+          }
+        };
+        script.onerror = () => {
+          console.error('Failed to load Unicorn Studio script');
+        };
+        (document.head || document.body).appendChild(script);
+      } else if (window.UnicornStudio && !window.UnicornStudio.isInitialized) {
+        window.UnicornStudio.init();
+        window.UnicornStudio.isInitialized = true;
+
+        setTimeout(() => {
+          const darkBg = document.getElementById('darkBackground');
+          const lightBg = document.getElementById('lightBackground');
+          if (darkBg) darkBg.style.opacity = '1';
+          if (lightBg) lightBg.style.opacity = '0';
+        }, 100);
+      }
+    };
+
+    initUnicornStudio();
   }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
       <div className="aura-background-component fixed -z-10 w-full h-screen top-0">
-        <div id="darkBackground" data-us-project="krvLRHX3sj3CqBBHyMDj" data-us-lazyload="true" data-us-production="true" data-us-scale="1.0" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full transition-opacity duration-500 opacity-0"></div>
+        <div id="darkBackground" data-us-project="krvLrHX3sj3cg8BHywDj" data-us-lazyload="true" data-us-production="true" data-us-scale="1.0" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full transition-opacity duration-500 opacity-0"></div>
         <div id="lightBackground" data-us-project="VACzULFkoQAmEcep6hU" data-us-lazyload="true" data-us-production="true" data-us-scale="0.5" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full transition-opacity duration-500 opacity-0"></div>
       </div>
       <Header />
