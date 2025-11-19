@@ -75,7 +75,7 @@ const Hero = () => {
                     <input
                       type="text"
                       aria-label="Chat with AI agent"
-                      className="placeholder:text-white/30 focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3"
+                      className="focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3"
                       placeholder="Ask anything about me !"
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}

@@ -49,7 +49,7 @@ development_status:
   epic-2-retrospective: completed # 2025-11-19 - See epic-2-retrospective-2025-11-19.md
   epic-3: backlog
   3-1-lead-gen-chat-ui: done # Code review approved 2025-11-19
-  3-2-lead-gen-conversational-flow: backlog
+  3-2-lead-gen-conversational-flow: done # Code review approved 2025-11-19
   3-3-email-api-integration: backlog
   epic-3-retrospective: optional
   epic-4: backlog

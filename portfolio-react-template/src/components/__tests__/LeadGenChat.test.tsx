@@ -27,11 +27,11 @@ describe('LeadGenChat Component', () => {
     expect(sendButton).toBeInTheDocument();
   });
 
-  it('displays initial greeting message from agent', () => {
+  it('displays initial greeting message from agent (AC #1)', () => {
     render(<LeadGenChat />);
 
-    // Check for initial agent greeting
-    expect(screen.getByText(/Hi there! Nice to meet you/i)).toBeInTheDocument();
+    // Check for initial agent greeting - updated to match AC #1
+    expect(screen.getByText(/Hi! I am Ursa. Please mention your requirements./i)).toBeInTheDocument();
   });
 
   it('displays message history correctly', () => {
@@ -49,15 +49,15 @@ describe('LeadGenChat Component', () => {
     const sendButton = screen.getByLabelText(/Send message/i);
 
     // Type a message
-    fireEvent.change(input, { target: { value: 'Hello, I need help with a project' } });
-    expect(input.value).toBe('Hello, I need help with a project');
+    fireEvent.change(input, { target: { value: 'John' } });
+    expect(input.value).toBe('John');
 
     // Send the message
     fireEvent.click(sendButton);
 
     // Check that the message appears in the chat
     await waitFor(() => {
-      expect(screen.getByText('Hello, I need help with a project')).toBeInTheDocument();
+      expect(screen.getByText('John')).toBeInTheDocument();
     });
   });
 
@@ -84,7 +84,7 @@ describe('LeadGenChat Component', () => {
     const sendButton = screen.getByLabelText(/Send message/i);
 
     // Send a message
-    fireEvent.change(input, { target: { value: 'Test message' } });
+    fireEvent.change(input, { target: { value: 'John' } });
     fireEvent.click(sendButton);
 
     // Loading indicator should appear
@@ -129,12 +129,12 @@ describe('LeadGenChat Component', () => {
     const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
 
     // Type a message and press Enter
-    fireEvent.change(input, { target: { value: 'Message via Enter key' } });
+    fireEvent.change(input, { target: { value: 'Jane' } });
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 });
 
     // Check that the message appears
     await waitFor(() => {
-      expect(screen.getByText('Message via Enter key')).toBeInTheDocument();
+      expect(screen.getByText('Jane')).toBeInTheDocument();
     });
   });
 
@@ -176,19 +176,224 @@ describe('LeadGenChat Component', () => {
     }, { timeout: 2000 });
   });
 
-  it('displays agent response after user message', async () => {
+  // NEW TESTS FOR CONVERSATION FLOW (AC #2, #3)
+
+  it('extracts name from "I\'m [Name]" format and advances to EMAIL step (AC #2)', async () => {
     render(<LeadGenChat />);
 
     const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
     const sendButton = screen.getByLabelText(/Send message/i);
 
-    // Send a message
-    fireEvent.change(input, { target: { value: 'Hello agent' } });
+    // User provides name in "I'm [Name]" format
+    fireEvent.change(input, { target: { value: "I'm John" } });
+    fireEvent.click(sendButton);
+
+    // Wait for agent response asking for email
+    await waitFor(() => {
+      expect(screen.getByText(/Nice to meet you, John!/i)).toBeInTheDocument();
+      expect(screen.getByText(/What's the best email to reach you?/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('extracts name from plain name format and advances to EMAIL step (AC #2)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // User provides plain name
+    fireEvent.change(input, { target: { value: "Jane Doe" } });
     fireEvent.click(sendButton);
 
     // Wait for agent response
     await waitFor(() => {
-      expect(screen.getByText(/Thank you for reaching out/i)).toBeInTheDocument();
+      expect(screen.getByText(/Nice to meet you, Jane Doe!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('validates email format and accepts valid email (AC #2)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Step 1: Provide name
+    fireEvent.change(input, { target: { value: "John" } });
+    fireEvent.click(sendButton);
+
+    // Wait for email prompt
+    await waitFor(() => {
+      expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // Step 2: Provide valid email
+    fireEvent.change(input, { target: { value: "john@example.com" } });
+    fireEvent.click(sendButton);
+
+    // Wait for confirmation
+    await waitFor(() => {
+      expect(screen.getByText(/Perfect! Got your email: john@example.com/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('rejects invalid email and shows error message (AC #2, #3)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Step 1: Provide name
+    fireEvent.change(input, { target: { value: "John" } });
+    fireEvent.click(sendButton);
+
+    // Wait for email prompt
+    await waitFor(() => {
+      expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // Step 2: Provide invalid email
+    fireEvent.change(input, { target: { value: "invalid-email" } });
+    fireEvent.click(sendButton);
+
+    // Wait for error message with Ursa personality
+    await waitFor(() => {
+      expect(screen.getByText(/Hmm, that doesn't look like a valid email/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('collects project details and displays confirmation summary (AC #2)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Step 1: Provide name
+    fireEvent.change(input, { target: { value: "John" } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // Step 2: Provide email
+    fireEvent.change(input, { target: { value: "john@example.com" } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Tell me more about your project/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // Step 3: Provide project details
+    fireEvent.change(input, { target: { value: "I need help building a web app" } });
+    fireEvent.click(sendButton);
+
+    // Wait for final summary with all collected data
+    await waitFor(() => {
+      expect(screen.getByText(/Got it! Here's what I have:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Name: John/i)).toBeInTheDocument();
+      expect(screen.getByText(/Project: I need help building a web app/i)).toBeInTheDocument();
+      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('displays Ursa personality in all responses (AC #3)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Check initial greeting has Ursa personality
+    expect(screen.getByText(/Hi! I am Ursa/i)).toBeInTheDocument();
+
+    // Provide name
+    fireEvent.change(input, { target: { value: "John" } });
+    fireEvent.click(sendButton);
+
+    // Check response uses conversational tone with emoji
+    await waitFor(() => {
+      expect(screen.getByText(/Nice to meet you, John! 👋/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('handles full conversation flow from NAME to COMPLETE (AC #1, #2, #3)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Initial greeting
+    expect(screen.getByText(/Hi! I am Ursa. Please mention your requirements./i)).toBeInTheDocument();
+
+    // NAME step
+    fireEvent.change(input, { target: { value: "Alice" } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Nice to meet you, Alice!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // EMAIL step
+    fireEvent.change(input, { target: { value: "alice@example.com" } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Perfect! Got your email: alice@example.com/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // PROJECT_DETAILS step
+    fireEvent.change(input, { target: { value: "Build an e-commerce site" } });
+    fireEvent.click(sendButton);
+
+    await waitFor(() => {
+      expect(screen.getByText(/Got it!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // CONFIRMATION step - summary with Ursa personality
+    await waitFor(() => {
+      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon! 🚀/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('handles combined name and project details in first message (AC #2)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // User provides both name and project info in first message
+    fireEvent.change(input, { target: { value: "I'm Sarah and I need help with a mobile app project" } });
+    fireEvent.click(sendButton);
+
+    // Agent should extract both name and project details
+    await waitFor(() => {
+      expect(screen.getByText(/Nice to meet you, Sarah!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+
+    // Provide email
+    fireEvent.change(input, { target: { value: "sarah@example.com" } });
+    fireEvent.click(sendButton);
+
+    // Should display full confirmation with all collected data
+    await waitFor(() => {
+      expect(screen.getByText(/Got it! Here's what I have:/i)).toBeInTheDocument();
+      expect(screen.getByText(/Name: Sarah/i)).toBeInTheDocument();
+      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon!/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('handles unclear name input with clarifying question (AC #2, #3)', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // User provides unclear input (numbers/special chars)
+    fireEvent.change(input, { target: { value: "12345" } });
+    fireEvent.click(sendButton);
+
+    // Agent should ask for clarification
+    await waitFor(() => {
+      expect(screen.getByText(/I didn't quite catch your name. What should I call you?/i)).toBeInTheDocument();
     }, { timeout: 2000 });
   });
 });

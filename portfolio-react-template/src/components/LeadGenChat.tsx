@@ -7,6 +7,25 @@ interface Message {
   timestamp?: Date;
 }
 
+type ConversationStep =
+  | 'GREETING'
+  | 'NAME'
+  | 'EMAIL'
+  | 'PROJECT_DETAILS'
+  | 'CONFIRMATION'
+  | 'COMPLETE';
+
+interface CollectedData {
+  name?: string;
+  email?: string;
+  projectDetails?: string;
+}
+
+interface ConversationState {
+  currentStep: ConversationStep;
+  collectedData: CollectedData;
+}
+
 interface LeadGenChatProps {
   className?: string;
 }
@@ -19,12 +38,16 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: 'agent',
-      text: 'Hi there! Nice to meet you. Text me for collaboration or opportunities!',
+      text: 'Hi! I am Ursa. Please mention your requirements.',
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [conversationState, setConversationState] = useState<ConversationState>({
+    currentStep: 'NAME',
+    collectedData: {}
+  });
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new messages arrive
@@ -34,6 +57,139 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     }
   }, [messages, isLoading]);
 
+  // Helper: Extract name from user input (flexible parsing)
+  const extractName = (input: string): string | null => {
+    const trimmed = input.trim();
+
+    // Pattern: "I'm [Name]" or "I am [Name]" (stop at common separators)
+    const imPattern = /^(?:I'?m|I am)\s+([a-zA-Z\s\-']+?)(?:\s+and|\s+,|$)/i;
+    const imMatch = trimmed.match(imPattern);
+    if (imMatch) return imMatch[1].trim();
+
+    // Pattern: "My name is [Name]" (stop at common separators)
+    const namePattern = /^(?:My name is|my name's)\s+([a-zA-Z\s\-']+?)(?:\s+and|\s+,|$)/i;
+    const nameMatch = trimmed.match(namePattern);
+    if (nameMatch) return nameMatch[1].trim();
+
+    // Pattern: "Call me [Name]" (stop at common separators)
+    const callPattern = /^Call me\s+([a-zA-Z\s\-']+?)(?:\s+and|\s+,|$)/i;
+    const callMatch = trimmed.match(callPattern);
+    if (callMatch) return callMatch[1].trim();
+
+    // If input looks like a plain name (2-100 chars, letters/spaces/hyphens/apostrophes only)
+    if (trimmed.length >= 2 && trimmed.length <= 100) {
+      const nameRegex = /^[a-zA-Z\s\-']+$/;
+      if (nameRegex.test(trimmed)) {
+        return trimmed;
+      }
+    }
+
+    return null;
+  };
+
+  // Helper: Validate email format
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Process conversation based on current step
+  const processConversationStep = (userInput: string): Message => {
+    const { currentStep, collectedData } = conversationState;
+    let responseText = '';
+    let nextStep: ConversationStep = currentStep;
+    const updatedData = { ...collectedData };
+
+    switch (currentStep) {
+      case 'NAME': {
+        // Try to extract name from input
+        const extractedName = extractName(userInput);
+
+        // Also check if input might contain project details
+        const hasProjectKeywords = /\b(project|website|app|application|help|need|build|create|develop)\b/i.test(userInput);
+
+        if (extractedName) {
+          updatedData.name = extractedName;
+
+          // If input also mentions project details, extract them after "and" or similar separators
+          if (hasProjectKeywords) {
+            // Look for text after "and" or ","
+            const andMatch = userInput.match(/\b(?:and|,)\s+(.+)$/i);
+            if (andMatch && andMatch[1].length > 5) {
+              updatedData.projectDetails = andMatch[1].trim();
+            }
+          }
+
+          responseText = `Nice to meet you, ${extractedName}! 👋 What's the best email to reach you?`;
+          nextStep = 'EMAIL';
+        } else {
+          responseText = "I didn't quite catch your name. What should I call you?";
+        }
+        break;
+      }
+
+      case 'EMAIL': {
+        const email = userInput.trim();
+
+        if (isValidEmail(email)) {
+          updatedData.email = email;
+
+          // Check if we already have project details from NAME step
+          if (updatedData.projectDetails && updatedData.projectDetails.length > 0) {
+            // Display confirmation summary immediately since we have all data
+            responseText = `Perfect! Got your email: ${email}\n\nGot it! Here's what I have:\n\n- Name: ${updatedData.name}\n- Email: ${email}\n- Project: ${updatedData.projectDetails}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
+            nextStep = 'COMPLETE';
+          } else {
+            responseText = `Perfect! Got your email: ${email}\n\nTell me more about your project or what you need help with.`;
+            nextStep = 'PROJECT_DETAILS';
+          }
+        } else {
+          responseText = "Hmm, that doesn't look like a valid email. Could you double-check it? 📧";
+        }
+        break;
+      }
+
+      case 'PROJECT_DETAILS': {
+        const details = userInput.trim();
+
+        if (details.length > 0) {
+          updatedData.projectDetails = details;
+          // Display confirmation summary immediately
+          responseText = `Got it! Here's what I have:\n\n- Name: ${updatedData.name}\n- Email: ${updatedData.email}\n- Project: ${details}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
+          nextStep = 'COMPLETE';
+        } else {
+          responseText = "Oops, looks like you forgot to type something! 😅";
+        }
+        break;
+      }
+
+      case 'CONFIRMATION': {
+        // Display summary and transition to COMPLETE
+        const { name, email, projectDetails } = updatedData;
+        responseText = `Got it! Here's what I have:\n\n- Name: ${name}\n- Email: ${email}\n- Project: ${projectDetails || 'Not specified'}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
+        nextStep = 'COMPLETE';
+        break;
+      }
+
+      case 'COMPLETE': {
+        responseText = "Thanks! Your message has been recorded. Vansh will get back to you shortly!";
+        break;
+      }
+    }
+
+    // Update conversation state
+    setConversationState({
+      currentStep: nextStep,
+      collectedData: updatedData
+    });
+
+    return {
+      sender: 'agent',
+      text: responseText,
+      timestamp: new Date()
+    };
+  };
+
   const handleSend = () => {
     // Validate input (non-empty messages only)
     if (inputValue.trim() === '') return;
@@ -41,7 +197,7 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     // Add user message to history
     const userMessage: Message = {
       sender: 'user',
-      text: inputValue,
+      text: inputValue.trim(),
       timestamp: new Date()
     };
     setMessages(prev => [...prev, userMessage]);
@@ -49,17 +205,13 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     // Clear input field after send
     setInputValue('');
 
-    // Simulate agent response (placeholder for Story 3.2)
+    // Process conversation step
     setIsLoading(true);
     setTimeout(() => {
-      const agentResponse: Message = {
-        sender: 'agent',
-        text: 'Thank you for reaching out! I\'m Ursa, your AI assistant. The conversational flow will be implemented in the next story.',
-        timestamp: new Date()
-      };
+      const agentResponse = processConversationStep(userMessage.text);
       setMessages(prev => [...prev, agentResponse]);
       setIsLoading(false);
-    }, 1000);
+    }, 800);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
