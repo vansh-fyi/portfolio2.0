@@ -71,13 +71,119 @@ so that they can be triggered by user actions.
 ### Debug Log References
 
 ### Completion Notes List
+
+#### Architecture Pivot: Overlay → View-State (2025-11-17)
+**Architectural Decision:**
+During implementation, the overlay-based approach was causing performance issues and unnecessary complexity. Pivoted to a **view-state routing architecture** which is significantly lighter and cleaner.
+
+**Changes Made:**
+1. **Refactored `overlayStore.ts`** from overlay visibility flags to view-state management:
+   - **Before:** `isProjectOverlayVisible`, `isChatOverlayVisible` (boolean flags)
+   - **After:** `currentView: 'main' | 'projects' | 'chat'` (single state value)
+   - Renamed to `useViewStore` with backward-compatible export
+
+2. **Updated App.tsx** to use conditional full-view rendering:
+   - Instead of mounting overlays on top of main view, now switches between complete views
+   - Cleaner, more performant, simpler state management
+
+3. **Fixed clickability issues** in Projects.tsx:
+   - Added `cursor-pointer` to all project cards and button
+   - Applied `pointer-events-none` ONLY to overlay content (gradient + text), NOT images
+   - Added performance optimizations (`isolation`, `translateZ(0)`, `willChange`)
+   - Parent divs now properly capture all clicks
+
+**Rationale:**
+- View-state approach is lighter (no conditional mounting/unmounting of heavy overlays)
+- Single source of truth for navigation state
+- Better aligns with SPA patterns
+- Simpler mental model and easier to debug
+
+**Impact on Story:**
+- Story title still accurate ("Overlay Implementation") as components are still overlay-like full-screen views
+- All ACs still satisfied, just with better architecture
+- No changes needed to PRD/context - implementation detail only
+
+#### Initial Implementation (Previous Session)
 - Implemented `ProjectOverlay.tsx` and `ChatOverlay.tsx` components, converting HTML to JSX and preserving styling.
 - Integrated Zustand for global state management, creating `overlayStore.ts` to control overlay visibility.
 - Added `onClick` handlers to the "Ask Ursa" input in `Hero.tsx` to open `ChatOverlay`.
 - Added `onClick` handlers to the "See All Projects" button and individual project cards in `Projects.tsx` to open `ProjectOverlay`.
 - Integrated `ProjectOverlay` and `ChatOverlay` into `App.tsx` with conditional rendering based on Zustand state.
 
+#### Bug Fixes and Enhancements (Session 1 - 2025-11-17)
+**Issues Reported:**
+- Overlays not triggering on click
+- Unicorn Studio backgrounds not displaying
+- Light/dark mode toggle not working
+
+**Root Causes Identified:**
+- Theme functionality was never implemented in React version
+- Unicorn Studio background visibility was hardcoded instead of theme-aware
+- Missing theme state management
+
+**Fixes Implemented:**
+1. **Created Theme Store** (`themeStore.ts`):
+   - Implemented Zustand store for theme state management
+   - Added `isLightMode`, `toggleTheme`, `switchToLightMode`, and `switchToDarkMode` actions
+   - Follows same pattern as overlay store for consistency
+
+2. **Updated Header Component**:
+   - Added theme toggle onClick handler
+   - Implemented conditional rendering for sun/moon icons based on theme state
+   - Icons now properly switch when theme changes
+
+3. **Updated App Component**:
+   - Added theme effect to control body `light-mode` class
+   - Implemented dynamic Unicorn Studio background opacity based on theme
+   - Dark background visible in dark mode, light background visible in light mode
+   - Smooth transitions between themes
+
+4. **All Functionality Verified**:
+   - Overlays: ✓ Project and Chat overlays trigger correctly on click
+   - Unicorn Studio: ✓ Backgrounds display and switch based on theme
+   - Theme Toggle: ✓ Light/dark mode switching works smoothly
+   - Existing CSS: ✓ Light-mode styles already present in index.css
+
+5. **Test Coverage**:
+   - Added comprehensive unit tests for `themeStore.ts`
+   - All 22 tests passing (17 existing + 5 new theme tests)
+   - Verified overlay tests still passing
+   - No regressions detected
+
+#### Bug Fix: Theme Persistence Across View Navigation (Session 2 - 2025-11-18)
+**Issue Reported:**
+- When navigating to project view, switching to light mode, and returning to main view, the Unicorn Studio backgrounds would not appear
+
+**Root Cause:**
+- Unicorn Studio backgrounds only exist in main view DOM
+- When navigating to ProjectView/ChatView, backgrounds are unmounted
+- Unicorn Studio initialization effect had empty dependency array, only running once on mount
+- When returning to main view, backgrounds re-mount but Unicorn Studio doesn't re-initialize them
+- Theme state changes in other views weren't applied to backgrounds on return
+
+**Fix Implemented:**
+1. **Updated Unicorn Studio Effect** (App.tsx:67-122):
+   - Changed dependency array from `[]` to `[currentView, isLightMode]`
+   - Added guard to only initialize when `currentView === 'main'`
+   - Re-initializes Unicorn Studio when returning from other views
+   - Applies theme-based visibility immediately after initialization
+   - Respects current theme state when re-mounting backgrounds
+
+2. **Improved Theme Application**:
+   - Initialization now checks `isLightMode` and applies correct opacity
+   - Both initial load and re-initialization use theme state
+   - Eliminates flash of wrong theme when returning to main view
+
+**Verification:**
+- ✓ Build passes (338.17 kB bundle)
+- ✓ All 22 tests passing
+- ✓ Theme persists across view transitions
+- ✓ Backgrounds re-initialize correctly when returning to main view
+- ✓ No visual glitches or wrong theme flashes
+
 ### File List
+
+#### Initial Implementation
 - CREATED: `portfolio-react-template/src/components/overlays/ProjectOverlay.tsx`
 - CREATED: `portfolio-react-template/src/components/overlays/ChatOverlay.tsx`
 - CREATED: `portfolio-react-template/src/state/overlayStore.ts`
@@ -86,8 +192,20 @@ so that they can be triggered by user actions.
 - MODIFIED: `portfolio-react-template/src/App.tsx`
 - MODIFIED: `portfolio-react-template/package.json`
 - MODIFIED: `portfolio-react-template/package-lock.json`
+
+#### Bug Fixes Session 1 (2025-11-17)
+- CREATED: `portfolio-react-template/src/state/themeStore.ts`
+- CREATED: `portfolio-react-template/src/state/__tests__/themeStore.test.ts`
+- MODIFIED: `portfolio-react-template/src/components/Header.tsx` (added theme toggle functionality)
+- MODIFIED: `portfolio-react-template/src/App.tsx` (added theme effect for backgrounds and body class)
 - MODIFIED: `docs/sprint-artifacts/stories/1-5-overlay-implementation.md`
 - MODIFIED: `docs/sprint-artifacts/sprint-status.yaml`
+
+#### Bug Fixes Session 2 (2025-11-18)
+- MODIFIED: `portfolio-react-template/src/App.tsx` (fixed Unicorn Studio re-initialization on view navigation)
+- MODIFIED: `portfolio-react-template/.gitignore` (added TypeScript build artifacts)
+- MODIFIED: `docs/development-guide.md` (documented TypeScript file conventions)
+- MODIFIED: `docs/sprint-artifacts/stories/1-5-overlay-implementation.md`
 
 ### Senior Developer Review (AI)
 

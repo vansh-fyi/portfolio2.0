@@ -1,3 +1,5 @@
+import LeadGenChat from './LeadGenChat';
+
 const Contact = () => {
   return (
     <section className="scroll-animate lg:py-24 pt-20 pb-20 relative in-view" id="contact">
@@ -61,68 +63,9 @@ const Contact = () => {
               </div>
             </div>
           </div>
-          {/* Contact Form */}
+          {/* Lead Generation Chat */}
           <div className="lg:col-span-3">
-            <div className="lg:p-8 bg-gradient-to-b to-white/[0.02] border ring-1 rounded-2xl p-6 backdrop-blur-xl h-full flex flex-col from-white/5 border-white/10 ring-white/5">
-              <div className="mb-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="inline-flex bg-white/10 w-10 h-10 ring-white/10 ring-1 rounded-xl items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="text-white/80">
-                      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
-                      <path d="M20 3v4"></path>
-                      <path d="M22 5h-4"></path>
-                      <path d="M4 17v2"></path>
-                      <path d="M5 18H3"></path>
-                    </svg>
-                  </div>
-                  <div className="">
-                    <p className="font-semibold tracking-tight text-white">AI Personal Assistant</p>
-                    <p className="text-xs text-white/50">Online · Responds instantly</p>
-                  </div>
-                </div>
-                <div className="inline-flex items-center gap-2 text-xs text-white/50">
-                  <span className="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-                  Live
-                </div>
-              </div>
-              <div className="flex-1 min-h-[260px] overflow-auto max-h-[420px] pt-1 pr-1 pb-1 pl-1 space-y-4" id="chat-thread">
-                <div className="flex gap-x-3 gap-y-3 items-start">
-                  <div className="flex flex-shrink-0 text-xs font-medium bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center text-white">
-                    AI
-                  </div>
-                  <div className="relative">
-                    <div className="text-sm max-w-[680px] rounded-2xl py-3 px-4 shadow backdrop-blur-sm ring-1 bg-black/30 ring-white/10">
-                      <p className="text-white/80">
-                        Hi there! Nice to meet you. Text me for collaboration or opportunities !
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="group transition-all duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
-                <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
-                  <div className="hidden sm:flex w-9 h-9 border rounded-lg items-center justify-center text-white/80 bg-white/10 border-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-white/80">
-                      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" className=""></path>
-                      <path d="M20 3v4"></path>
-                      <path d="M22 5h-4"></path>
-                      <path d="M4 17v2"></path>
-                      <path d="M5 18H3"></path>
-                    </svg>
-                  </div>
-                  <input type="text" aria-label="Share the details with my AI agent" className="focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3" placeholder="Tell the details to my agent.." data-typed-placeholder="Tell the details to my agent" />
-                  <button className="inline-flex transition-colors active:scale-95 w-9 h-9 border rounded-lg items-center justify-center hover:bg-white bg-white/80 border-white/10" aria-label="Send message">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-black/80">
-                      <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" className=""></path>
-                      <path d="M6 12h16" className=""></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <p className="mt-3 text-xs text-white/50">
-                Your info is private and only used to respond to your message. Type “back” to revise or “summarise” anytime.
-              </p>
-            </div>
+            <LeadGenChat />
           </div>
         </div>
       </div>

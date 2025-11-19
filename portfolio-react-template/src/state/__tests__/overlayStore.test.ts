@@ -1,48 +1,49 @@
-import { useOverlayStore } from '../overlayStore';
+import { useViewStore } from '../overlayStore';
 import { act, renderHook } from '@testing-library/react';
 
-describe('useOverlayStore', () => {
+describe('useViewStore', () => {
+  beforeEach(() => {
+    // Reset to 'main' view before each test
+    useViewStore.setState({ currentView: 'main' });
+  });
+
   it('should have the correct initial state', () => {
-    const { result } = renderHook(() => useOverlayStore());
-    expect(result.current.isProjectOverlayVisible).toBe(false);
-    expect(result.current.isChatOverlayVisible).toBe(false);
+    const { result } = renderHook(() => useViewStore());
+    expect(result.current.currentView).toBe('main');
   });
 
-  it('should open the project overlay', () => {
-    const { result } = renderHook(() => useOverlayStore());
+  it('should navigate to projects view', () => {
+    const { result } = renderHook(() => useViewStore());
     act(() => {
-      result.current.openProjectOverlay();
+      result.current.goToProjects();
     });
-    expect(result.current.isProjectOverlayVisible).toBe(true);
+    expect(result.current.currentView).toBe('projects');
   });
 
-  it('should close the project overlay', () => {
-    const { result } = renderHook(() => useOverlayStore());
+  it('should navigate to chat view', () => {
+    const { result } = renderHook(() => useViewStore());
     act(() => {
-      result.current.openProjectOverlay();
+      result.current.goToChat();
     });
-    act(() => {
-      result.current.closeProjectOverlay();
-    });
-    expect(result.current.isProjectOverlayVisible).toBe(false);
+    expect(result.current.currentView).toBe('chat');
   });
 
-  it('should open the chat overlay', () => {
-    const { result } = renderHook(() => useOverlayStore());
+  it('should navigate back to main view', () => {
+    const { result } = renderHook(() => useViewStore());
     act(() => {
-      result.current.openChatOverlay();
+      result.current.goToProjects();
     });
-    expect(result.current.isChatOverlayVisible).toBe(true);
+    act(() => {
+      result.current.goToMain();
+    });
+    expect(result.current.currentView).toBe('main');
   });
 
-  it('should close the chat overlay', () => {
-    const { result } = renderHook(() => useOverlayStore());
+  it('should set view directly', () => {
+    const { result } = renderHook(() => useViewStore());
     act(() => {
-      result.current.openChatOverlay();
+      result.current.setView('chat');
     });
-    act(() => {
-      result.current.closeChatOverlay();
-    });
-    expect(result.current.isChatOverlayVisible).toBe(false);
+    expect(result.current.currentView).toBe('chat');
   });
 });

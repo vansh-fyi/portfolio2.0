@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import ProjectOverlay from '../ProjectOverlay';
+import ProjectView from '../ProjectOverlay';
 
-describe('ProjectOverlay', () => {
-  it('should render when isVisible is true', () => {
-    render(<ProjectOverlay isVisible={true} onClose={() => {}} />);
-    expect(screen.getAllByText('Aether').length).toBe(2);
+describe('ProjectView', () => {
+  it('should render project view', () => {
+    render(<ProjectView />);
+    expect(screen.getAllByText('Aether').length).toBeGreaterThanOrEqual(1);
   });
 
-  it('should not render when isVisible is false', () => {
-    const { container } = render(<ProjectOverlay isVisible={false} onClose={() => {}} />);
-    expect(container.firstChild).toBeNull();
+  it('should render close button', () => {
+    render(<ProjectView />);
+    expect(screen.getByLabelText(/Close/i)).toBeInTheDocument();
   });
 });

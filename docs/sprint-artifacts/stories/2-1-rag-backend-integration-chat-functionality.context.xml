@@ -1,0 +1,263 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>2</epicId>
+    <storyId>2.1</storyId>
+    <title>RAG Backend Integration & Chat Functionality</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-18</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/2-1-rag-backend-integration-chat-functionality.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>connect the existing chat view to the Mastra.AI RAG backend</iWant>
+    <soThat>Ursa can answer questions about Vansh and his projects</soThat>
+    <tasks>
+      - Task 1: Set up tRPC Client Infrastructure (AC: #1, #2)
+        - Install tRPC client dependencies in portfolio-react-template
+        - Create tRPC client configuration in `src/services/trpc.ts`
+        - Set up React Query integration for tRPC
+        - Configure API endpoint base URL (environment variable)
+
+      - Task 2: Implement RAG API Integration (AC: #1, #2, #3, #4)
+        - Create `useRAGQuery` custom hook in `src/hooks/useRAGQuery.ts`
+        - Implement tRPC procedure call to `rag.query` endpoint
+        - Pass `chatContext` ('personal' or 'project') from overlayStore
+        - Pass `projectId` when context is 'project'
+        - Handle loading state during API calls
+        - Handle error states with user-friendly messages
+
+      - Task 3: Integrate RAG API with ChatOverlay (AC: #1, #2, #3, #4)
+        - Modify `ChatOverlay.tsx` to use `useRAGQuery` hook
+        - Wire up send button to trigger RAG API call
+        - Display loading indicator (existing spinner) while processing
+        - Append RAG response to message history
+        - Handle streaming responses (tRPC subscription or polling)
+
+      - Task 4: Test RAG Integration (AC: #1, #2, #3, #4)
+        - Test personal chat context with sample questions
+        - Test project chat context with project-specific questions
+        - Verify loading indicator appears during processing
+        - Verify messages appear in correct order
+        - Test error handling (network failure, API timeout)
+        - Write unit tests for `useRAGQuery` hook
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    <criterion id="1">
+      <given>the chat view (ChatOverlay component from Epic 1)</given>
+      <when>I send a message in personal context (from hero section)</when>
+      <then>the message is sent to the RAG API with personal context and response is displayed</then>
+    </criterion>
+    <criterion id="2">
+      <when>I send a message in project context (from project view)</when>
+      <then>the message is sent to the RAG API with that project's context and response is displayed</then>
+    </criterion>
+    <criterion id="3">
+      <and>the chat displays a loading indicator while waiting for RAG response</and>
+    </criterion>
+    <criterion id="4">
+      <and>the RAG responses are streamed in real-time to the chat interface</and>
+    </criterion>
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/PRD.md</path>
+        <title>Product Requirements Document</title>
+        <section>FR8-FR12 - Ursa Conversational Agent</section>
+        <snippet>FR8: Ursa must answer user questions about Vansh and projects in conversational manner. FR10: Personal context from hero section uses documents about Vansh. FR11: Project context uses project-specific documents. FR12: RAG model retrieves from vector database using Mastra.AI framework.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Communication Patterns - tRPC</section>
+        <snippet>Frontend-Backend: Exclusively tRPC procedures for all API communication. Type-safe, end-to-end TypeScript. Frontend state: Zustand for view/theme, React Query (via tRPC) for server state.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>System Architecture</title>
+        <section>Technology Stack - Frontend</section>
+        <snippet>React with TypeScript (Vite), Zustand for state management. Backend communication via tRPC client. Architecture uses Zustand for UI state (navigation, theme) and React Query for server state (API calls).</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Epic 2 Story 2.1 - RAG Backend Integration</section>
+        <snippet>Story revised after Epic 1 learnings. Epic 1 delivered: ChatOverlay.tsx with dual-context support, conditional sidebar, message history UI. This story adds: tRPC client integration, RAG API calls, response streaming, loading states. Backend Required: Epic 4 Story 4.4 (RAG API Endpoint).</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/stories/1-5-overlay-implementation.md</path>
+        <title>Previous Story - Epic 1.5</title>
+        <section>Dev Agent Record - Architectural Pivot</section>
+        <snippet>View-state routing architecture implemented instead of overlays. currentView: 'main'|'projects'|'chat'. Dual-context chat: chatContext 'personal'|'project'. ChatOverlay.tsx has conditional sidebar, loading spinner (lines 110-119), message history UI already complete.</snippet>
+      </doc>
+      <doc>
+        <path>docs/development-guide.md</path>
+        <title>Development Guide</title>
+        <section>TypeScript File Conventions</section>
+        <snippet>CRITICAL: Edit .tsx and .ts files only. .d.ts files auto-generated by TypeScript emitDeclarationOnly mode. DO NOT manually create or edit .js or .d.ts files in src/.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <artifact>
+        <path>portfolio-react-template/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ChatView</symbol>
+        <lines>1-151</lines>
+        <reason>Complete chat UI component with message history, input field, send button, loading spinner (lines 110-119). Needs RAG API integration - DO NOT recreate, modify existing component to add tRPC hook.</reason>
+      </artifact>
+      <artifact>
+        <path>portfolio-react-template/src/state/overlayStore.ts</path>
+        <kind>store</kind>
+        <symbol>useViewStore</symbol>
+        <lines>1-58</lines>
+        <reason>Provides chatContext ('personal'|'project'), initialChatQuery, and projectId for RAG API calls. READ ONLY - use existing state, do not modify.</reason>
+      </artifact>
+      <artifact>
+        <path>portfolio-react-template/src/state/themeStore.ts</path>
+        <kind>store</kind>
+        <symbol>useThemeStore</symbol>
+        <lines>1-32</lines>
+        <reason>Reference for Zustand store patterns. Follow same structure for any new stores if needed.</reason>
+      </artifact>
+      <artifact>
+        <path>portfolio-react-template/src/components/overlays/OverlaySidebar.tsx</path>
+        <kind>component</kind>
+        <symbol>OverlaySidebar</symbol>
+        <lines>entire file</lines>
+        <reason>Shared sidebar component conditionally rendered in ChatOverlay. No changes needed for this story.</reason>
+      </artifact>
+      <artifact>
+        <path>portfolio-react-template/src/components/overlays/__tests__/ChatOverlay.test.tsx</path>
+        <kind>test</kind>
+        <symbol>ChatOverlay tests</symbol>
+        <lines>entire file</lines>
+        <reason>Existing test patterns for ChatOverlay. Follow structure when adding RAG integration tests.</reason>
+      </artifact>
+      <artifact>
+        <path>portfolio-react-template/src/state/__tests__/overlayStore.test.ts</path>
+        <kind>test</kind>
+        <symbol>overlayStore tests</symbol>
+        <lines>entire file</lines>
+        <reason>Reference for testing Zustand stores and hooks. Follow pattern for useRAGQuery hook tests.</reason>
+      </artifact>
+    </code>
+
+    <dependencies>
+      <node>
+        <react version="^19.2.0">Core UI library</react>
+        <react-dom version="^19.2.0">React DOM rendering</react-dom>
+        <zustand version="^5.0.8">State management (view, theme)</zustand>
+        <web-vitals version="^5.1.0">Performance monitoring</web-vitals>
+        <react-scroll version="^1.9.3">Smooth scrolling</react-scroll>
+        <typescript version="~5.9.3">TypeScript compiler</typescript>
+        <vite version="^7.2.2">Build tool</vite>
+        <jest version="^30.2.0">Testing framework</jest>
+        <testing-library-react version="^16.3.0">React testing utilities</testing-library-react>
+        <tailwindcss version="^4.1.17">CSS framework</tailwindcss>
+      </node>
+      <toInstall>
+        <trpc-client comment="Type-safe tRPC client for API calls">@trpc/client</trpc-client>
+        <trpc-react-query comment="React Query integration for tRPC">@trpc/react-query</trpc-react-query>
+        <tanstack-react-query comment="React Query (comes with tRPC, handles server state)">@tanstack/react-query</tanstack-react-query>
+      </toInstall>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>All API communication MUST use tRPC procedures - no REST or GraphQL [Source: docs/architecture.md#Communication-Patterns]</constraint>
+    <constraint>Frontend state management: Zustand for UI state (navigation, theme), React Query for server state (API data) [Source: docs/architecture.md]</constraint>
+    <constraint>REUSE existing ChatOverlay.tsx component - DO NOT recreate. Only add RAG API integration hooks and logic [Source: Story 1-5]</constraint>
+    <constraint>READ ONLY overlayStore.ts - use chatContext and initialChatQuery values, do not modify store [Source: Story 1-5]</constraint>
+    <constraint>TypeScript CRITICAL: Edit only .tsx and .ts files. Never manually create .js or .d.ts files [Source: docs/development-guide.md]</constraint>
+    <constraint>Tests must be co-located in __tests__/ directories following established patterns [Source: Epic 1]</constraint>
+    <constraint>Component modifications must not break existing tests (22 tests currently passing) [Source: Story 1-5]</constraint>
+    <constraint>BLOCKER: Requires Epic 4 Story 4.4 (RAG API Endpoint) backend to be complete. Can use mock API for parallel frontend development [Source: docs/epics.md]</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>RAG Query Input (tRPC)</name>
+      <kind>tRPC procedure input</kind>
+      <signature>
+        interface RagQueryInput {
+          query: string;
+          context: 'personal' | 'project';
+          projectId?: string; // Required if context is 'project'
+        }
+      </signature>
+      <path>Backend Epic 4 Story 4.4 (to be implemented)</path>
+    </interface>
+    <interface>
+      <name>RAG Query Output (tRPC)</name>
+      <kind>tRPC procedure output</kind>
+      <signature>
+        // Streaming version (preferred):
+        type RagQueryOutput = AsyncIterable&lt;{ token: string }&gt;;
+
+        // OR fallback non-streaming:
+        interface RagQueryOutput {
+          response: string;
+          sources?: { content: string; url?: string }[];
+        }
+      </signature>
+      <path>Backend Epic 4 Story 4.4 (to be implemented)</path>
+    </interface>
+    <interface>
+      <name>useViewStore (Zustand)</name>
+      <kind>Zustand store hook</kind>
+      <signature>
+        interface ViewStore {
+          currentView: 'main' | 'projects' | 'chat';
+          chatContext: 'personal' | 'project';
+          initialChatQuery: string;
+          projectId?: string;
+          goToChat: (query?: string) =&gt; void;
+          goToProjectChat: (query?: string) =&gt; void;
+          goToMain: () =&gt; void;
+          goToProjects: () =&gt; void;
+        }
+      </signature>
+      <path>portfolio-react-template/src/state/overlayStore.ts</path>
+    </interface>
+    <interface>
+      <name>ChatView Component Props</name>
+      <kind>React component interface</kind>
+      <signature>
+        // ChatView is default export, accepts no props
+        // Reads state from useViewStore hook internally
+        const ChatView: React.FC = () =&gt; { ... }
+      </signature>
+      <path>portfolio-react-template/src/components/overlays/ChatOverlay.tsx</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing framework: Jest with React Testing Library. Tests co-located in __tests__/ directories next to source files. Follow patterns from existing tests (overlayStore.test.ts, ChatOverlay.test.tsx). 22 tests currently passing. New tests must not break existing tests. Use @testing-library/jest-dom matchers. Mock external dependencies (tRPC client) for unit tests.
+    </standards>
+
+    <locations>
+      portfolio-react-template/src/hooks/__tests__/useRAGQuery.test.ts (NEW - create for this story)
+      portfolio-react-template/src/components/overlays/__tests__/ChatOverlay.test.tsx (EXISTING - may need updates)
+      portfolio-react-template/src/services/__tests__/trpc.test.ts (OPTIONAL - tRPC client config tests)
+    </locations>
+
+    <ideas>
+      <test ac="1,2">Test useRAGQuery hook calls tRPC with correct context (personal vs project)</test>
+      <test ac="1,2">Test hook passes projectId only when context is 'project'</test>
+      <test ac="3">Test loading state is true during API call, false after completion</test>
+      <test ac="4">Test streaming responses are accumulated correctly</test>
+      <test ac="1,2,3,4">Test error handling: network failure shows user-friendly message</test>
+      <test ac="1,2,3,4">Test ChatOverlay integration: send button triggers RAG query</test>
+      <test ac="3">Test loading spinner displays while waiting for response</test>
+      <test ac="4">Test message history updates with RAG response</test>
+      <test ac="1,2,3,4">Mock tRPC client responses to avoid backend dependency in tests</test>
+    </ideas>
+  </tests>
+</story-context>

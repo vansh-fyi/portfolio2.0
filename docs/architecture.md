@@ -37,17 +37,21 @@ This establishes the base architecture with these decisions:
 
 ```
 /Users/hp/Desktop/Work/Repositories/portfolio2.0/
-├── portfolio-react/          # New React project (created by Vite)
+├── portfolio-react-template/ # React project (created by Vite)
 │   ├── public/               # Static assets (images, fonts)
 │   │   └── assets/
 │   ├── src/                  # React source code
 │   │   ├── components/       # Reusable UI components
-│   │   ├── features/         # Feature-specific components (e.g., chat, projects)
-│   │   ├── hooks/            # Custom React hooks
-│   │   ├── services/         # API interaction logic (tRPC client)
-│   │   ├── state/            # Global state management (e.g., Zustand store)
+│   │   │   ├── overlays/     # View components (ProjectOverlay, ChatOverlay)
+│   │   │   └── __tests__/    # Component tests
+│   │   ├── state/            # Zustand stores
+│   │   │   ├── overlayStore.ts    # View-state routing (main/projects/chat)
+│   │   │   ├── themeStore.ts      # Theme management (light/dark mode)
+│   │   │   └── __tests__/         # Store tests
+│   │   ├── services/         # API interaction logic (tRPC client - Epic 2+)
 │   │   ├── App.tsx           # Main application component
-│   │   └── main.tsx          # Entry point
+│   │   ├── main.tsx          # Entry point
+│   │   └── index.css         # Global styles + Tailwind
 │   ├── package.json          # Frontend dependencies
 │   ├── tsconfig.json         # Frontend TypeScript config
 │   └── vite.config.ts        # Vite configuration
@@ -69,9 +73,9 @@ This establishes the base architecture with these decisions:
 
 | Epic Name | Architectural Components | Interacting Services |
 | :-------------------------------- | :--------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Epic 1: Core Application & React Migration | `portfolio-react/` (Frontend UI) | Backend (tRPC API), Supabase (for future data needs), Vercel (Deployment) |
-| Epic 2: Ursa - Conversational RAG Agent | `backend/` (Mastra.AI, tRPC API), Supabase (Vector DB), `portfolio-react/` (Chat UI) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Vercel (Deployment) |
-| Epic 3: Ursa - Lead Generation Agent | `backend/` (Mastra.AI, tRPC API), `portfolio-react/` (Contact UI) | Resend (Email Service), Vercel (Deployment) |
+| Epic 1: Core Application & React Migration | `portfolio-react-template/` (Frontend UI, View Routing, Theme System) | Vercel (Deployment) |
+| Epic 2: Ursa - Conversational RAG Agent | `backend/` (Mastra.AI, tRPC API), Supabase (Vector DB), `portfolio-react-template/` (Chat Views) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Vercel (Deployment) |
+| Epic 3: Ursa - Lead Generation Agent | `backend/` (Mastra.AI, tRPC API), `portfolio-react-template/` (Contact UI) | Resend (Email Service), Vercel (Deployment) |
 | Epic 4: Backend & Data Infrastructure | `backend/` (Mastra.AI, tRPC API, services), Supabase (Vector DB) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Resend (Email Service), Vercel (Deployment) |
 
 ## Technology Stack Details
@@ -125,7 +129,11 @@ These patterns ensure consistent implementation across all AI agents and the bro
 ### Communication Patterns
 
 *   **Frontend-Backend**: Exclusively tRPC procedures for all API communication.
-*   **Frontend State Management**: Use a lightweight state management library like **Zustand** for global state (e.g., overlay visibility, current project context). For local component state, use React's built-in `useState` and `useReducer` hooks.
+*   **Frontend State Management**: **Zustand** stores implemented for:
+  - **View Routing** (`overlayStore.ts`): View-state architecture with `currentView: 'main' | 'projects' | 'chat'`
+  - **Theme Management** (`themeStore.ts`): Light/dark mode toggle with `isLightMode` boolean
+  - **Chat Context** (`overlayStore.ts`): Dual-context chat system (`chatContext: 'personal' | 'project'`)
+  - For local component state, use React's built-in `useState` and `useReducer` hooks.
 
 ### Lifecycle Patterns
 
@@ -289,7 +297,7 @@ To set up the development environment, you will need:
 ```bash
 # 1. Clone the repository
 git clone <repository-url>
-cd portfolio-react # Navigate to the frontend project directory
+cd portfolio-react-template # Navigate to the frontend project directory
 
 # 2. Install frontend dependencies
 npm install # or yarn install
@@ -313,9 +321,9 @@ cd .. # Return to the project root
 # cd backend && npm run ingest-data && cd ..
 
 # 7. Start development servers
-# From the 'portfolio-react' directory:
+# From the 'portfolio-react-template' directory:
 # npm run dev
-# From the 'backend' directory:
+# From the 'backend' directory (Epic 2+):
 # npm run dev
 ```
 

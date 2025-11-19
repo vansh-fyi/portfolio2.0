@@ -1,7 +1,22 @@
-import { useOverlayStore } from '../state/overlayStore';
+import { useState } from 'react';
+import { useViewStore } from '../state/overlayStore';
 
 const Hero = () => {
-  const { openChatOverlay } = useOverlayStore();
+  const { goToChat } = useViewStore();
+  const [query, setQuery] = useState('');
+
+  const handleSendQuery = () => {
+    if (query.trim()) {
+      goToChat(query);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && query.trim()) {
+      handleSendQuery();
+    }
+  };
+
   return (
     <section className="overflow-hidden h-screen relative" id="hero">
       {/* Decorative grid lines */}
@@ -20,9 +35,9 @@ const Hero = () => {
         <div className="absolute inset-x-0 top-[80%] h-px bg-gradient-to-r from-transparent to-transparent via-white/10"></div>
       </div>
       {/* Background image */}
-      <img src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_dark_focus.jpg" alt="" className="transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" id="dark-bg-image" />
-      <img id="light-bg-image" src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_light_focus.jpg" alt="" className="transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
-      <div className="" id="wrapper">
+      <img src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_dark_focus.jpg" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" id="dark-bg-image" />
+      <img id="light-bg-image" src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_light_focus.jpg" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
+      <div className="pointer-events-none" id="wrapper">
         <div className="gradient-blur">
           <div className=""></div>
           <div></div>
@@ -32,7 +47,8 @@ const Hero = () => {
           <div></div>
         </div>
       </div>
-      <main className="flex h-[calc(100vh-80px)] z-10 relative items-end">
+      {/* Main content */}
+      <main className="flex h-screen z-10 pt-20 relative items-end">
         <section className="md:px-8 md:pb-16 lg:pb-20 w-full max-w-7xl mr-auto ml-auto pr-6 pb-16 pl-6">
           <div className="grid grid-cols-1 md:grid-cols-12 md:gap-6 lg:gap-10 gap-x-8 gap-y-8 items-end">
             {/* Column 1: Tag + Headline */}
@@ -56,8 +72,20 @@ const Hero = () => {
                         <path d="M5 18H3"></path>
                       </svg>
                     </div>
-                    <input type="text" aria-label="Chat with AI agent" className="placeholder:text-white/30 focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3" placeholder="Ask anything about me !" data-typed-placeholder="Ask anything about me !" onClick={openChatOverlay} readOnly />
-                    <button className="inline-flex transition-colors active:scale-95 w-9 h-9 border rounded-lg items-center justify-center hover:bg-white bg-white/80 border-white/10" aria-label="Send message">
+                    <input
+                      type="text"
+                      aria-label="Chat with AI agent"
+                      className="placeholder:text-white/30 focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3"
+                      placeholder="Ask anything about me !"
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                    />
+                    <button
+                      className="inline-flex transition-colors active:scale-95 w-9 h-9 border rounded-lg items-center justify-center hover:bg-white bg-white/80 border-white/10"
+                      aria-label="Send message"
+                      onClick={handleSendQuery}
+                    >
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-black/80">
                         <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" className=""></path>
                         <path d="M6 12h16" className=""></path>

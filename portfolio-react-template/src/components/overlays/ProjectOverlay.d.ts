@@ -1,7 +1,3 @@
 import React from 'react';
-interface ProjectOverlayProps {
-    onClose: () => void;
-    isVisible: boolean;
-}
-declare const ProjectOverlay: React.FC<ProjectOverlayProps>;
-export default ProjectOverlay;
+declare const ProjectView: React.FC;
+export default ProjectView;

@@ -56,7 +56,7 @@ This document provides the complete epic and story breakdown for portfolio2.0, d
 
 ## FR Coverage Map
 
-*   **Epic 1: Core Application & React Migration**: FR1, FR2, FR3, FR4, FR5, FR6, FR7
+*   **Epic 1: Core Application & React Migration**: FR1, FR2, FR3, FR4, FR5, FR6, FR7, FR7a, FR7b
 *   **Epic 2: Ursa - Conversational RAG Agent**: FR8, FR9, FR10, FR11, FR12
 *   **Epic 3: Ursa - Lead Generation Agent**: FR13, FR14, FR15, FR16
 *   **Epic 4: Backend & Data Infrastructure**: FR17, FR18, FR19, FR20, FR21
@@ -65,7 +65,9 @@ This document provides the complete epic and story breakdown for portfolio2.0, d
 
 ## Epic 1: Core Application & React Migration
 
-**Goal**: Migrate the existing static site to a performant React SPA while preserving the current UI and UX.
+**Goal**: Migrate the existing static site to a performant React SPA while preserving the current UI and UX. Implement view-state routing, dual-context chat system, and theme management.
+
+**Status**: ✅ COMPLETED (All 5 stories done)
 
 ### Story 1.1: Project Setup & Foundation
 
@@ -117,92 +119,84 @@ As a developer, I want to implement client-side routing and the main page's scro
 
 **Technical Notes:** Use a library like `react-scroll` for smooth scrolling.
 
-### Story 1.5: Overlay Implementation
+### Story 1.5: View-State Routing & Dual-Context Chat Implementation
 
-As a developer, I want to create the project display and chat overlays as conditionally rendered components, so that they can be triggered by user actions.
+As a developer, I want to create a view-state routing system with project display and chat views (supporting dual-context chat modes), so that navigation is performant and chat context is preserved.
 
 **Acceptance Criteria:**
 
 *   **Given** the main application component
 *   **When** I trigger the "See All Projects" button or a project tab
-*   **Then** the project display overlay is rendered.
-*   **And** the overlay components are rendered efficiently and do not impact the performance of the main page when not visible.
+*   **Then** the application navigates to the project view (view-state: 'projects').
+*   **When** the "Ask Ursa" input in the hero section is triggered
+*   **Then** the application navigates to chat view with personal context (no sidebar).
+*   **When** the "Ask Ursa" button in project view is triggered
+*   **Then** the application navigates to chat view with project context (with sidebar).
+*   **And** theme toggle persists across all view transitions.
+*   **And** Unicorn Studio backgrounds re-initialize correctly when returning to main view.
 
-**Technical Notes:** Use React state to manage the visibility of the overlay components.
+**Technical Notes:** Implemented view-state architecture with Zustand (`currentView: 'main' | 'projects' | 'chat'`). Created `themeStore.ts` for theme management. Dual-context chat system with conditional sidebar rendering.
 
 ---
 
 ## Epic 2: Ursa - Conversational RAG Agent
 
-**Goal**: Implement the context-aware, RAG-powered conversational agent.
+**Goal**: Integrate RAG backend with existing chat UI to enable AI-powered conversations about Vansh and his projects.
 
-### Story 2.1: Chat UI Component
+**Note**: Chat UI infrastructure and context-aware routing were implemented in Epic 1 Story 1.5.
 
-As a developer, I want to build a reusable React component for the chat interface, so that it can be used in both the hero and project overlays.
+### Story 2.1: RAG Backend Integration & Chat Functionality
 
-**Acceptance Criteria:**
-
-*   **Given** the chat component
-*   **When** I view it in the browser
-*   **Then** it displays a message history, a text input, and a send button.
-*   **And** the styling matches the existing `project-chat.html`.
-*   **And** when used for the personal chat (hero section), the sidebar is not displayed.
-
-**Technical Notes:** This component will manage its own state for the input field and message history. The component should accept a prop to control the visibility of the sidebar.
-
-### Story 2.2: Agent Personality & Conversational Flow
-
-As a developer, I want to implement the "Ursa" personality and a dynamic conversational flow in the chat component, so that the agent feels authentic and engaging.
+As a developer, I want to connect the existing chat view to the Mastra.AI RAG backend, so that Ursa can answer questions about Vansh and his projects.
 
 **Acceptance Criteria:**
 
-*   **Given** the chat component
-*   **When** I interact with the agent
-*   **Then** its responses reflect the tone, voice, and vocabulary defined in the personality guide.
-*   **And** when the chat overlay is opened, the agent sends a context-aware introductory message (e.g., "Hello! Ask anything about Aether: AI System generator here.").
-*   **And** if the user switches to a new project while the chat is open, the chat history is cleared and a new introductory message for the new project is displayed.
+*   **Given** the chat view (ChatOverlay component from Epic 1)
+*   **When** I send a message in personal context (from hero section)
+*   **Then** the message is sent to the RAG API with personal context and response is displayed.
+*   **When** I send a message in project context (from project view)
+*   **Then** the message is sent to the RAG API with that project's context and response is displayed.
+*   **And** the chat displays a loading indicator while waiting for RAG response.
+*   **And** the RAG responses are streamed in real-time to the chat interface.
 
-**Technical Notes:** Use the provided personality guide as a reference for all agent responses. The introductory message should be dynamically generated based on the current context (personal or project).
+**Technical Notes:**
+- **Epic 1 Delivered**: ChatOverlay.tsx with dual-context support, conditional sidebar, message history UI
+- **This Story Adds**: tRPC client integration, RAG API calls, response streaming, loading states
+- **Backend Required**: Epic 4 Story 4.4 (RAG API Endpoint) must be complete
 
-### Story 2.3: RAG API Integration
+### Story 2.2: Ursa Personality Implementation & Context-Aware Greetings
 
-As a developer, I want to connect the chat component to the backend RAG service, so that the agent can answer user questions.
-
-**Acceptance Criteria:**
-
-*   **Given** the chat component
-*   **When** I send a message
-*   **Then** the message is sent to the RAG API endpoint.
-*   **And** the response from the API is displayed in the chat history.
-
-**Technical Notes:** The component will make an asynchronous call to the backend API.
-
-### Story 2.4: Context-Aware RAG
-
-As a developer, I want to implement the context-aware functionality for the RAG agent, so that it provides relevant answers based on the user's location in the app.
+As a developer, I want to implement the "Ursa" personality in RAG responses and add context-aware greeting messages, so that the agent feels authentic and engaging.
 
 **Acceptance Criteria:**
 
-*   **Given** the chat overlay is triggered from the hero section
-*   **When** I ask a question
-*   **Then** the RAG API is called with the "personal" context.
-*   **And** when the chat overlay is triggered from a project display
-*   **Then** the RAG API is called with the context of that specific project.
+*   **Given** the RAG backend
+*   **When** I configure the Mastra.AI agent personality
+*   **Then** all responses reflect the tone, voice, and vocabulary defined in the Ursa personality guide.
+*   **And** when the chat view opens in personal context, the agent displays a greeting: "Hi! I'm Ursa. Ask me anything about Vansh."
+*   **And** when the chat view opens in project context, the agent displays a project-specific greeting: "Hello! Ask anything about [Project Name] here."
+*   **And** the greeting message adapts if the user switches projects.
 
-**Technical Notes:** The component will need to be aware of its context (e.g., via props) and pass this information to the API.
+**Technical Notes:** Personality configuration in Mastra.AI agent definition. Greeting messages generated based on `chatContext` and `projectId` from overlayStore. Reference personality guide document for Ursa's conversational style.
 
-### Story 2.5: Streaming & Loading Indicator
+### Story 2.3: Content Preparation for RAG
 
-As a developer, I want to implement response streaming for the chat agent and display a loading indicator while the agent is generating a response, so that the user has real-time feedback.
+As a developer, I want to create and organize markdown content files for Ursa's knowledge base, so that the RAG system has accurate information about Vansh and his projects.
 
 **Acceptance Criteria:**
 
-*   **Given** I have sent a query to the agent
-*   **When** the agent is processing the request
-*   **Then** the pre-built loading element is displayed.
-*   **And** the streaming implementation is performant and does not block the main thread during rendering.
+*   **Given** the `_content/` directory structure
+*   **When** I create markdown files in `_content/personal/` and `_content/projects/`
+*   **Then** files follow a consistent format with proper metadata (frontmatter).
+*   **And** personal content covers: bio, skills, experience, achievements, interests.
+*   **And** each project has its own directory with: overview, tech stack, challenges, outcomes, screenshots/links.
+*   **And** content is written in Ursa's voice (conversational, authentic, passionate).
 
-**Technical Notes:** The backend RAG service will need to support streaming responses. The frontend will need to handle the streamed response and update the UI accordingly.
+**Technical Notes:**
+- Markdown files with YAML frontmatter for metadata
+- Directory structure: `_content/personal/*.md` and `_content/projects/{project-name}/*.md`
+- **Vansh's Input Needed**: Guidance on content organization format and any existing content to migrate
+- This story can be done in parallel with backend setup (Epic 4)
 
 ---
 
@@ -322,18 +316,20 @@ As a developer, I want to build the email API endpoint using Mastra.AI, so that 
 
 ## FR Coverage Matrix
 
-*   **FR1**: Epic 1, Story 1.1, 1.2
-*   **FR2**: Epic 1, Story 1.2, 1.3
-*   **FR3**: Epic 1, Story 1.3
-*   **FR4**: Epic 1, Story 1.4
-*   **FR5**: Epic 1, Story 1.4
-*   **FR6**: Epic 1, Story 1.5
-*   **FR7**: Epic 1, Story 1.5
+*   **FR1**: Epic 1, Story 1.1, 1.2 ✅
+*   **FR2**: Epic 1, Story 1.2, 1.3 ✅
+*   **FR3**: Epic 1, Story 1.3 ✅
+*   **FR4**: Epic 1, Story 1.5 ✅ (view-state routing)
+*   **FR5**: Epic 1, Story 1.4 ✅
+*   **FR6**: Epic 1, Story 1.5 ✅
+*   **FR7**: Epic 1, Story 1.5 ✅
+*   **FR7a**: Epic 1, Story 1.5 ✅ (dual-context chat)
+*   **FR7b**: Epic 1, Story 1.5 ✅ (theme toggle)
 *   **FR8**: Epic 2, Story 2.1, 2.2
 *   **FR9**: Epic 2, Story 2.2
-*   **FR10**: Epic 2, Story 2.4
-*   **FR11**: Epic 2, Story 2.4
-*   **FR12**: Epic 2, Story 2.3; Epic 4, Story 4.4
+*   **FR10**: Epic 2, Story 2.1 (context routing in Epic 1 Story 1.5 ✅)
+*   **FR11**: Epic 2, Story 2.1 (context routing in Epic 1 Story 1.5 ✅)
+*   **FR12**: Epic 2, Story 2.1; Epic 4, Story 4.4
 *   **FR13**: Epic 3, Story 3.1, 3.2
 *   **FR14**: Epic 3, Story 3.2
 *   **FR15**: Epic 3, Story 3.3; Epic 4, Story 4.5
@@ -348,7 +344,13 @@ As a developer, I want to build the email API endpoint using Mastra.AI, so that 
 
 ## Summary
 
-The project has been broken down into four epics: Core Application & React Migration, Ursa - Conversational RAG Agent, Ursa - Lead Generation Agent, and Backend & Data Infrastructure. All 21 functional requirements from the PRD have been mapped to these epics and decomposed into a total of 17 user stories. This provides a clear and actionable backlog for development.
+The project has been broken down into four epics: Core Application & React Migration (COMPLETED ✅), Ursa - Conversational RAG Agent, Ursa - Lead Generation Agent, and Backend & Data Infrastructure. All 23 functional requirements from the PRD (including FR7a, FR7b added after Epic 1) have been mapped to these epics and decomposed into a total of 15 user stories (reduced from 17 after Epic 1 learnings consolidated Epic 2 stories). This provides a clear and actionable backlog for development.
+
+**Epic 1 Retrospective Findings:**
+- View-state architecture implemented instead of overlay visibility flags
+- Dual-context chat system (personal vs project) delivered ahead of schedule
+- Theme management system added (not originally planned)
+- Epic 2 stories revised to leverage Epic 1 infrastructure
 
 ---
 

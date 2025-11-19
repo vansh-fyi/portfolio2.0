@@ -203,9 +203,10 @@ The primary user interactions with Ursa are:
 
 ## Technology Stack
 
-*   **Frontend**: React
+*   **Frontend**: React with TypeScript (Vite)
+*   **State Management**: Zustand (view routing, theme management)
 *   **AI Backend**: Mastra.AI (TypeScript)
-*   **Styling**: Tailwind CSS
+*   **Styling**: Tailwind CSS + Custom CSS
 
 ---
 
@@ -216,10 +217,12 @@ The primary user interactions with Ursa are:
 *   **FR1**: The application must be migrated from static HTML/CSS/JS to a React-based Single-Page Application (SPA).
 *   **FR2**: All existing UI, layout, and user interactions from the original static pages must be preserved in the React application.
 *   **FR3**: The existing CSS and Tailwind styling must be unified and preserved within the React application, using `index.html` as the source of truth for the unified style.
-*   **FR4**: The application must implement a client-side routing system to manage the display of the main page content and the project-related overlays.
+*   **FR4**: The application must implement a view-state routing system to manage navigation between the main page, project view, and chat view.
 *   **FR5**: The main navigation bar links must scroll the user to the corresponding sections on the single page.
-*   **FR6**: The "See All Projects" button and each of the five project tabs must trigger the display of the project gallery overlay.
-*   **FR7**: The "Ask Ursa" input in the hero section must trigger the display of the conversational chat overlay.
+*   **FR6**: The "See All Projects" button and each of the five project tabs must trigger navigation to the project gallery view.
+*   **FR7**: The "Ask Ursa" input in the hero section must capture the user's query and trigger navigation to the conversational chat view with personal context.
+*   **FR7a**: The application must support dual-context chat modes: personal chat (triggered from hero section, no sidebar) and project chat (triggered from "Ask Ursa" button in project view, with sidebar).
+*   **FR7b**: The application must implement a light/dark theme toggle that persists across view navigation and controls Unicorn Studio background visibility.
 
 ### Ursa - Conversational Agent (RAG)
 
@@ -295,7 +298,7 @@ _No specific non-functional requirements identified for this project type._
 
 The project is broken down into the following four epics. For a detailed breakdown of stories, see the [epics.md](./epics.md) file.
 
-*   **Epic 1: Core Application & React Migration**: This epic covers the foundational work of migrating the static site to a React SPA, preserving the UI/UX, and implementing the core navigation and overlay triggers.
+*   **Epic 1: Core Application & React Migration**: This epic covers the foundational work of migrating the static site to a React SPA, preserving the UI/UX, implementing view-state routing, dual-context chat system, and theme management.
 *   **Epic 2: Ursa - Conversational RAG Agent**: This epic focuses on building the main conversational AI, including its context-aware RAG functionality and personality.
 *   **Epic 3: Ursa - Lead Generation Agent**: This epic covers the implementation of the contact form agent, including its conversational flow and email-sending capability.
 *   **Epic 4: Backend & Data Infrastructure**: This epic deals with all server-side components, including the Mastra.AI backend, vector database, API key management, and the context-aware logic.

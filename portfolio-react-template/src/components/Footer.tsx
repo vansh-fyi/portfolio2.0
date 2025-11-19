@@ -1,11 +1,21 @@
+import { useThemeStore } from '../state/themeStore';
+
 const Footer = () => {
+  const { isLightMode } = useThemeStore();
+
   return (
     <footer className="border-t pt-10 pb-10 border-white/10">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col md:flex-row gap-4 gap-x-4 gap-y-4 items-center justify-between">
           <div className="flex gap-3 gap-x-3 gap-y-3 items-center">
-            <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-full" id="logo-dark-footer"></span>
-            <span className="inline-flex items-center justify-center bg-center hidden w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_light.png)] bg-cover rounded-full" id="logo-light-footer"></span>
+            {/* White logo for dark mode */}
+            {!isLightMode && (
+              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-full" id="logo-dark-footer"></span>
+            )}
+            {/* Black logo for light mode */}
+            {isLightMode && (
+              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_light.png)] bg-cover rounded-full" id="logo-light-footer"></span>
+            )}
             <span className="font-medium text-white/80">Vansh.fyi</span>
           </div>
           <div className="flex gap-4 text-sm gap-x-2 gap-y-4 items-center">
