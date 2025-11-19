@@ -15,7 +15,7 @@ const Testimonials = () => {
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Testimonial 1 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
               <img src="https://i.pravatar.cc/80?img=12" alt="Photo of Ava Thompson" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
@@ -28,7 +28,7 @@ const Testimonials = () => {
             </div>
           </div>
           {/* Testimonial 2 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex gap-4 mb-5 gap-x-4 gap-y-4 items-center">
               <img src="https://i.pravatar.cc/80?img=22" alt="Photo of Marcus Reed" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
@@ -41,7 +41,7 @@ const Testimonials = () => {
             </div>
           </div>
           {/* Testimonial 3 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
               <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="w-12 h-12 rounded-full ring-white/20 ring-2" />
               <div className="">
@@ -54,7 +54,7 @@ const Testimonials = () => {
             </div>
           </div>
           {/* Testimonial 4 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
               <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
@@ -67,7 +67,7 @@ const Testimonials = () => {
             </div>
           </div>
           {/* Testimonial 5 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
               <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
@@ -78,7 +78,7 @@ const Testimonials = () => {
             <div className="leading-relaxed text-white/80">"Best teacher I ever had."</div>
           </div>
           {/* Testimonial 6 */}
-          <div className="fade-in-up hover:scale-105 hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
               <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">

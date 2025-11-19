@@ -112,15 +112,15 @@ const Hero = () => {
             {/* Column 3: Buttons */}
             <div className="md:col-span-12 lg:col-span-2 relative">
               <div className="flex flex-row lg:flex-col gap-x-3 gap-y-3">
-                <a href="#projects" className="inline-flex items-center justify-center gap-2 transition whitespace-nowrap [animation:fadeSlideIn_1s_ease-out_0.3s_both] active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 backdrop-blur-sm hover:bg-white/20 hover:ring-white/30 text-white/80 bg-white/10 ring-white/15">
+                <a href="#projects" className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 backdrop-blur-sm hover:bg-white/20 hover:ring-white/30 text-white/80 bg-white/10 ring-white/15">
                   View Projects
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right h-4 w-4">
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
                 </a>
-                <a href="#contact" className="inline-flex items-center justify-center gap-2 active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
-                  Schedule a call
+                <a href="#contact" className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
+                  Let's Connect
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar h-4 w-4">
                     <path d="M8 2v4"></path>
                     <path d="M16 2v4"></path>

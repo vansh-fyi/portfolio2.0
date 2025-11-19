@@ -134,7 +134,7 @@ const Projects = () => {
           </div>
         </div>
         <div className="text-center">
-          <button onClick={handleProjectClick} className="group inline-flex transition-all duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 text-base font-medium text-white/80 bg-white/5 border-white/10 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl gap-x-3 gap-y-3 items-center">
+          <button onClick={handleProjectClick} className="group inline-flex transition-all duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 text-base font-medium text-white/80 bg-black/30 border-white/30 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl gap-x-3 gap-y-3 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>

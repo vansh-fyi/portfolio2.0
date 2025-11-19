@@ -70,7 +70,7 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
   };
 
   return (
-    <div className={`lg:p-8 bg-gradient-to-b to-white/[0.02] border ring-1 rounded-2xl p-6 backdrop-blur-xl h-full flex flex-col from-white/5 border-white/10 ring-white/5 ${className}`}>
+    <div className={`lg:p-8 bg-black/30 border ring-1 rounded-2xl p-6 backdrop-blur-xl h-full flex flex-col from-white/5 border-white/10 ring-white/5 ${className}`}>
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -120,8 +120,8 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
             {/* FIX 2: The 80% constraint goes strictly on this wrapper, not the row */}
             <div className="max-w-[80%]">
               <div className={`text-sm rounded-2xl py-3 px-4 shadow backdrop-blur-sm ring-1 break-words whitespace-pre-wrap ${msg.sender === 'user'
-                ? 'bg-white/5 ring-white/10 text-white'
-                : 'bg-black/30 ring-white/10 text-white/80'
+                ? 'bg-white/10 ring-white/10 text-white'
+                : 'bg-black/30 ring-white/20 text-white/80'
                 }`}>
                 {msg.text}
               </div>

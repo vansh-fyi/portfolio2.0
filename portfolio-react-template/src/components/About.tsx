@@ -3,7 +3,7 @@ const About = () => {
     <section className="pt-24 pb-24 relative" style={{ opacity: 1, transform: 'translateY(0px)' }} id="about">
       <div className="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4">
         <div className="grid lg:grid-cols-12 gap-x-8 gap-y-8 h-full items-stretch">
-          <div className="fade-in-up transition-all duration-500 cursor-pointer group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-gradient-to-b from-white/8 to-white/4 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up transition-all duration-500 cursor-pointer group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
             <div className="mb-6">
               <div className="w-full h-64 bg-gradient-to-br from-blue-500 rounded-xl overflow-hidden ring-1 mb-4 via-purple-600 to-pink-600 ring-white/10">
                 <img src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80" alt="Alex Chen Portrait" className="w-full h-full object-cover" loading="lazy" decoding="async" />
@@ -38,7 +38,7 @@ const About = () => {
           <div className="lg:col-span-7 h-full flex flex-col">
             <div className="grid md:grid-cols-2 gap-6 gap-x-6 gap-y-6">
               {/* Education */}
-              <div className="transition-all duration-500 bg-gradient-to-b ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+              <div className="transition-all duration-500 bg-black/30 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
                 <h3 className="flex items-center gap-2 text-base font-medium text-white font-geist mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-graduation-cap w-4 h-4 text-white/80">
                     <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" className=""></path>
@@ -63,7 +63,7 @@ const About = () => {
                 </div>
               </div>
               {/* Interests */}
-              <div className="transition-all duration-500 bg-gradient-to-b ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+              <div className="transition-all duration-500 bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
                 <h3 className="flex items-center gap-2 text-base font-medium font-geist text-white mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-award w-4 h-4 text-white/80">
                     <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path>
@@ -89,7 +89,7 @@ const About = () => {
             </div>
             <div className="grid md:grid-cols-2 mt-6 gap-x-6 gap-y-6">
               {/* Certifications */}
-              <div className="transition-all duration-500 bg-gradient-to-b ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+              <div className="transition-all duration-500 bg-black/30 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
                 <h3 className="flex items-center gap-2 text-base font-medium font-geist text-white mb-3">
                   {' '}
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy w-4 h-4 text-white/80">
@@ -109,7 +109,7 @@ const About = () => {
                 </div>
               </div>
               {/* Achievements */}
-              <div className="transition-all duration-500 hover:from-white/12 hover:to-white/6 hover:ring-white/20 bg-gradient-to-b from-white/8 to-white/4 ring-white/10 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg">
+              <div className="transition-all duration-500 hover:from-white/12 hover:to-white/6 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg">
                 <h3 className="flex items-center gap-2 text-base font-medium font-geist text-white mb-3">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-heart w-[16px] h-[16px] text-white/80">
                     <path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" className=""></path>

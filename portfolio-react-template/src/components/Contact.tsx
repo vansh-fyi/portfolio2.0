@@ -16,12 +16,12 @@ const Contact = () => {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
           {/* Contact Info */}
           <div className="lg:col-span-2">
-            <div className="lg:p-8 bg-gradient-to-b to-white/[0.02] from-white/5 h-full border-white/10 border ring-white/5 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
+            <div className="lg:p-8 bg-black/30 from-white/5 h-full border-white/10 border ring-white/5 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
               <div className="flex flex-col h-full space-y-6">
                 <div className="">
                   <h3 className="text-xl text-white font-semibold mb-2">Contact details</h3>
                   <p className="text-white/80">
-                    Prefer email? Reach out directly at
+                    Prefer email? Reach out directly at: &ensp;
                     <a href="mailto:design@vansh.fyi" className="underline decoration-2 underline-offset-4 text-white decoration-white/30 hover:decoration-white">
                       design@vansh.fyi
                     </a>
@@ -51,7 +51,7 @@ const Contact = () => {
                   </div>
                 </div>
                 <div className="grow pt-24">
-                  <a href="mailto:design@vansh.fyi" className="group inline-flex transition-all duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 gap-x-3 gap-y-3 items-center text-base font-medium text-white/80 bg-white/5 border-white/10 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl">
+                  <a href="mailto:design@vansh.fyi" className="group inline-flex transition-all duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 gap-x-3 gap-y-3 items-center text-base font-medium text-white/80 bg-black/30 border-white/30 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
                       <path d="M5 12h14" className=""></path>
                       <path d="m12 5 7 7-7 7" className=""></path>
