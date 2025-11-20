@@ -53,9 +53,9 @@ development_status:
   3-3-email-api-integration: done # APPROVED 2025-11-20 - Integration tests deferred to Epic 4.5 (backend)
   epic-3-retrospective: optional
   epic-4: backlog
-  4-1-backend-service-setup: backlog
-  4-2-vector-database-ingestion: backlog
-  4-3-secure-api-key-management: backlog
-  4-4-rag-api-endpoint: backlog
-  4-5-email-api-endpoint: backlog
+  4-1-backend-service-setup: done # Code review approved 2025-11-20
+  4-2-vector-database-ingestion: done # Code review approved 2025-11-20 (migration executed)
+  4-3-secure-api-key-management: done # Code review approved 2025-11-20
+  4-4-rag-api-endpoint: done # Code review approved 2025-11-20
+  4-5-email-api-endpoint: done # Code review approved 2025-11-20
   epic-4-retrospective: optional

@@ -1,0 +1,127 @@
+<story-context id="portfolio2.0/docs/sprint-artifacts/4-1-backend-service-setup.context" v="1.0">
+  <metadata>
+    <epicId>4</epicId>
+    <storyId>1</storyId>
+    <title>Backend Service Setup</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-20</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/4-1-backend-service-setup.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>Developer</asA>
+    <iWant>to set up a secure backend service using a TypeScript framework (e.g., Express, Hono)</iWant>
+    <soThat>I have a platform for building the AI and email APIs</soThat>
+    <tasks>
+- [ ] Initialize Backend Project Structure (AC: 1)
+  - [ ] Create `backend/` directory at project root
+  - [ ] Initialize `package.json` with `npm init -y`
+  - [ ] Install core dependencies: `typescript`, `ts-node`, `nodemon` (dev), `dotenv`
+  - [ ] Install framework dependencies: `hono` (or `express`), `@hono/node-server` (if Hono)
+  - [ ] Initialize `tsconfig.json` with strict mode
+- [ ] Implement Basic Server (AC: 1)
+  - [ ] Create `backend/src/index.ts` entry point
+  - [ ] Implement basic server setup (Hono/Express app)
+  - [ ] Add `/health` endpoint returning 200 OK
+  - [ ] Configure port from environment variable (default 3000 or 8000)
+- [ ] Setup Environment Configuration (AC: 1)
+  - [ ] Create `.env` file (gitignored)
+  - [ ] Create `.env.example` with template variables
+  - [ ] Implement environment variable loading
+- [ ] Verify Build and Start Scripts (AC: 1)
+  - [ ] Add `dev` script to `package.json` (using nodemon/ts-node)
+  - [ ] Add `build` script to `package.json` (tsc)
+  - [ ] Add `start` script to `package.json` (node dist/index.js)
+  - [ ] Verify server starts and responds to health check
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** a new backend project is created
+    *   **When** I run the service
+    *   **Then** it starts without errors and can respond to a basic health check request.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Project Structure</section>
+        <snippet>
+/Users/hp/Desktop/Work/Repositories/portfolio2.0/
+├── backend/              # Mastra.AI backend service
+│   ├── src/              # Backend source code
+│   │   ├── agents/       # Ursa agent definitions
+│   │   ├── api/          # tRPC API routes
+│   │   ├── services/     # Email, Supabase integration
+│   │   └── index.ts      # Backend entry point
+│   ├── package.json      # Backend dependencies
+│   └── tsconfig.json     # Backend TypeScript config
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Technology Stack Details</section>
+        <snippet>
+*   **AI Backend Framework**: Mastra.AI (TypeScript)
+*   **API Communication**: tRPC
+*   **Deployment**: Vercel
+        </snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 4.1: Backend Service Setup</section>
+        <snippet>
+As a developer, I want to set up a secure backend service using a TypeScript framework (e.g., Express, Hono), so that I have a platform for building the AI and email APIs.
+        </snippet>
+      </doc>
+    </docs>
+    <code>
+      <!-- No existing backend code yet -->
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="typescript" version="latest" />
+        <package name="ts-node" version="latest" />
+        <package name="nodemon" version="latest" />
+        <package name="dotenv" version="latest" />
+        <package name="hono" version="latest" />
+        <package name="@hono/node-server" version="latest" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Directory: `backend/`</constraint>
+    <constraint>Framework: Hono or Express (as HTTP layer for Mastra.AI)</constraint>
+    <constraint>Deployment: Vercel (Serverless compatible)</constraint>
+    <constraint>Language: TypeScript (Strict mode)</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Health Check</name>
+      <kind>REST Endpoint</kind>
+      <signature>GET /health -> 200 OK</signature>
+      <path>backend/src/index.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Basic health check verification. Ensure the server starts and responds to a GET request on the configured port.
+    </standards>
+    <locations>
+      <location>Manual verification via curl or browser</location>
+    </locations>
+    <ideas>
+      <idea>Verify server starts on default port</idea>
+      <idea>Verify server starts on custom port from .env</idea>
+      <idea>Verify /health returns 200 OK</idea>
+    </ideas>
+  </tests>
+</story-context>

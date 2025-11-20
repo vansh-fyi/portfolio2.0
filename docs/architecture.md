@@ -58,6 +58,7 @@ This establishes the base architecture with these decisions:
 ├── backend/              # Mastra.AI backend service
 │   ├── src/              # Backend source code
 │   │   ├── agents/       # Ursa agent definitions
+│   │   ├── tools/        # Mastra.AI Tools (RAG, etc.)
 │   │   ├── api/          # tRPC API routes
 │   │   ├── services/     # Email, Supabase integration
 │   │   └── index.ts      # Backend entry point

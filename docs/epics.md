@@ -272,7 +272,11 @@ As a developer, I want to set up a vector database and create a script to proces
 *   **When** I run the ingestion script
 *   **Then** the documents are converted into vector embeddings and stored in the vector database.
 
-**Technical Notes:** Use Supabase for the vector database. The ingestion script should be runnable from the command line.
+**Technical Notes:**
+*   **Mastra.AI Integration:** Implement the RAG retrieval as a **Mastra Tool** (e.g., `VectorQueryTool`) that the agent can invoke. This aligns with Mastra's OOP-like tool composition.
+*   **Ingestion:** Create a modular ingestion script/workflow that processes markdown. Ensure it's scalable to support future data types (like email leads).
+*   **Database:** Use Supabase (pgvector).
+*   **Models:** Use the locked-in models (Qwen3 for embeddings) via Hugging Face integration.
 
 ### Story 4.3: Secure API Key Management
 
