@@ -242,7 +242,7 @@ As a developer, I want to connect the lead-gen chat component to the backend ema
 *   **Then** the information is sent to the email API endpoint.
 *   **And** I see a confirmation message in the chat.
 
-**Technical Notes:** The component will make an asynchronous call to the backend email API.
+**Technical Notes:** The component will make an asynchronous call to the backend email API. **Email handling uses Resend API directly** (not Mastra.AI). The backend tRPC endpoint (`trpc.email.sendLead`) calls Resend's Node.js SDK for transactional email delivery. Mastra.AI is used exclusively for RAG (conversational AI) functionality.
 
 ---
 
@@ -301,16 +301,16 @@ As a developer, I want to build the RAG API endpoint using Mastra.AI, so that th
 
 ### Story 4.5: Email API Endpoint
 
-As a developer, I want to build the email API endpoint using Mastra.AI, so that the lead-gen agent can send emails.
+As a developer, I want to build the email API endpoint using Resend directly, so that the lead-gen agent can send emails.
 
 **Acceptance Criteria:**
 
 *   **Given** the backend service
 *   **When** I send a POST request to the `/api/email` endpoint with the collected user information
-*   **Then** the service sends an email to Vansh's specified address.
+*   **Then** the service sends an email to Vansh's specified address using Resend API.
 *   **And** the service returns a success or failure response.
 
-**Technical Notes:** Use a transactional email service (e.g., SendGrid, Resend) for reliable email delivery. The Mastra.AI workflow will handle the conversational data collection and trigger the email sending.
+**Technical Notes:** **Use Resend Node.js SDK directly for email delivery** (not Mastra.AI). The tRPC endpoint `trpc.email.sendLead` will call Resend API with proper error handling. Mastra.AI is reserved for RAG (conversational AI) functionality only. Store Resend API key securely in backend environment variables.
 
 ---
 

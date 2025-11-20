@@ -74,9 +74,9 @@ This establishes the base architecture with these decisions:
 | Epic Name | Architectural Components | Interacting Services |
 | :-------------------------------- | :--------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Epic 1: Core Application & React Migration | `portfolio-react-template/` (Frontend UI, View Routing, Theme System) | Vercel (Deployment) |
-| Epic 2: Ursa - Conversational RAG Agent | `backend/` (Mastra.AI, tRPC API), Supabase (Vector DB), `portfolio-react-template/` (Chat Views) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Vercel (Deployment) |
-| Epic 3: Ursa - Lead Generation Agent | `backend/` (Mastra.AI, tRPC API), `portfolio-react-template/` (Contact UI) | Resend (Email Service), Vercel (Deployment) |
-| Epic 4: Backend & Data Infrastructure | `backend/` (Mastra.AI, tRPC API, services), Supabase (Vector DB) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Resend (Email Service), Vercel (Deployment) |
+| Epic 2: Ursa - Conversational RAG Agent | `backend/` (Mastra.AI for RAG, tRPC API), Supabase (Vector DB), `portfolio-react-template/` (Chat Views) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Vercel (Deployment) |
+| Epic 3: Ursa - Lead Generation Agent | `backend/` (tRPC API, Resend SDK), `portfolio-react-template/` (Contact UI) | Resend (Email Service - direct API, not Mastra.AI), Vercel (Deployment) |
+| Epic 4: Backend & Data Infrastructure | `backend/` (Mastra.AI for RAG, tRPC API, Resend SDK), Supabase (Vector DB) | Hugging Face (GLM 4.5 Air, Qwen3 Embedding 8B), Resend (Email Service), Vercel (Deployment) |
 
 ## Technology Stack Details
 
@@ -221,7 +221,8 @@ All API communication between the React frontend and the Mastra.AI backend will 
 ### Email API
 
 *   **Procedure**: `trpc.email.sendLead`
-*   **Description**: Sends collected lead information from the contact agent to Vansh via email.
+*   **Description**: Sends collected lead information from the contact agent to Vansh via email using Resend API directly.
+*   **Implementation Note**: **Email is handled directly via Resend API** (not through Mastra.AI). The backend tRPC endpoint calls Resend's Node.js SDK to send transactional emails. Mastra.AI is reserved for RAG functionality only.
 *   **Input**:
     ```typescript
     interface SendLeadInput {

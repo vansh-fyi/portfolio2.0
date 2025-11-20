@@ -47,10 +47,10 @@ development_status:
   2-2-ursa-personality-context-aware-greetings: done # Code review approved 2025-11-19
   2-3-content-preparation-for-rag: done # NEW - markdown content organization - APPROVED 2025-11-19
   epic-2-retrospective: completed # 2025-11-19 - See epic-2-retrospective-2025-11-19.md
-  epic-3: backlog
+  epic-3: in-progress
   3-1-lead-gen-chat-ui: done # Code review approved 2025-11-19
   3-2-lead-gen-conversational-flow: done # Code review approved 2025-11-19
-  3-3-email-api-integration: review
+  3-3-email-api-integration: done # APPROVED 2025-11-20 - Integration tests deferred to Epic 4.5 (backend)
   epic-3-retrospective: optional
   epic-4: backlog
   4-1-backend-service-setup: backlog

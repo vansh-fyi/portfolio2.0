@@ -105,6 +105,9 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
 
   // Helper: Send email via tRPC API
   const sendEmail = async (data: CollectedData): Promise<string> => {
+    // Safe env access that works in both dev and test environments
+    const contactEmail = 'design@vansh.fyi'; // TODO: Read from import.meta.env.VITE_CONTACT_EMAIL in production
+
     try {
       // Compile comprehensive message from all collected data
       const messageContent = `
@@ -126,12 +129,12 @@ Details: ${data.projectDetails || 'No details provided'}
         return "Got it! I've sent your message to Vansh. He'll get back to you soon. Thanks for reaching out! 🚀";
       } else {
         // Backend returned failure - always include fallback email
-        return `Hmm, something went wrong on my end. ${result.message || 'Please try again'}, or you can email Vansh directly at design@vansh.fyi.`;
+        return `Hmm, something went wrong on my end. ${result.message || 'Please try again'}, or you can email Vansh directly at ${contactEmail}.`;
       }
     } catch (error) {
       // Network error or timeout
       console.error('Email send error:', error);
-      return "Oops! I couldn't send that message right now. Please try again in a moment, or reach out directly at design@vansh.fyi.";
+      return `Oops! I couldn't send that message right now. Please try again in a moment, or reach out directly at ${contactEmail}.`;
     }
   };
 

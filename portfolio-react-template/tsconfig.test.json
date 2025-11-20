@@ -1,0 +1,22 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "strict": true,
+        "types": [
+            "vite/client",
+            "jest",
+            "@testing-library/jest-dom",
+            "node"
+        ],
+        "esModuleInterop": true,
+        "skipLibCheck": true
+    },
+    "include": [
+        "src",
+        "jest-setup.ts"
+    ]
+}
