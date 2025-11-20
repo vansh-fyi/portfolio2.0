@@ -21,7 +21,7 @@
     "react-dom": "^19.2.0",
     "react-scroll": "^1.9.3",
     "web-vitals": "^5.1.0",
-    "zod": "^3.25.76",
+    "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
@@ -38,6 +38,7 @@
     "@types/react-dom": "^19.2.2",
     "@types/react-test-renderer": "^19.1.0",
     "@vitejs/plugin-react": "^5.1.0",
+    "ai": "^5.0.97",
     "autoprefixer": "^10.4.22",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
