@@ -88,6 +88,16 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
 
     // If input looks like a plain name (2-100 chars, letters/spaces/hyphens/apostrophes only)
     if (trimmed.length >= 2 && trimmed.length <= 100) {
+      // Allow letters, spaces, hyphens, apostrophes, AND simple greetings followed by name
+      // e.g. "Hello Vansh", "Hi I'm Vansh"
+
+      // If it's just a single word or two (likely a name), accept it
+      // But filter out common greetings if they are the ONLY thing said
+      const commonGreetings = ['hi', 'hello', 'hey', 'greetings', 'sup', 'yo'];
+      if (commonGreetings.includes(trimmed.toLowerCase())) {
+        return null; // Ask for name again if they just said "Hi"
+      }
+
       const nameRegex = /^[a-zA-Z\s\-']+$/;
       if (nameRegex.test(trimmed)) {
         return trimmed;

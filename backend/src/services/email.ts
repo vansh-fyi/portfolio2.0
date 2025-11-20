@@ -9,7 +9,7 @@ import { config } from './config';
 const resend = new Resend(config.resendApiKey);
 
 // Recipient email address (Vansh's email)
-const RECIPIENT_EMAIL = 'vansh@example.com'; // TODO: Move to environment variable
+const RECIPIENT_EMAIL = 'vansh.s.bhatia@gmail.com'; // TODO: Move to environment variable
 
 export interface LeadEmailData {
     name: string;
@@ -49,7 +49,7 @@ Sent via Portfolio Lead Generation Form
 
         // Send email using Resend API
         const response = await resend.emails.send({
-            from: 'Portfolio Lead Gen <onboarding@resend.dev>', // Resend sandbox email
+            from: 'Portfolio Lead Gen <design@vansh.fyi>', // Verified domain
             to: [RECIPIENT_EMAIL],
             subject: `New Lead from ${name}`,
             text: emailContent,

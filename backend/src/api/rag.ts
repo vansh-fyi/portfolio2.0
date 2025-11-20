@@ -1,7 +1,7 @@
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 import { ursaAgent } from '../agents/ursa-agent';
-import type { ContextType } from '../services/rag-context';
+
 
 /**
  * tRPC RAG Router
