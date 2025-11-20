@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useThemeStore } from '../state/themeStore';
+import { trpc } from '../services/trpc';
 
 interface Message {
   sender: 'user' | 'agent';
@@ -11,6 +12,8 @@ type ConversationStep =
   | 'GREETING'
   | 'NAME'
   | 'EMAIL'
+  | 'PROJECT_NAME'
+  | 'SERVICE_TYPE'
   | 'PROJECT_DETAILS'
   | 'CONFIRMATION'
   | 'COMPLETE';
@@ -18,6 +21,8 @@ type ConversationStep =
 interface CollectedData {
   name?: string;
   email?: string;
+  projectName?: string;
+  serviceType?: string;
   projectDetails?: string;
 }
 
@@ -35,6 +40,11 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
   // _isLightMode kept for consistency with other components (ChatOverlay, etc.)
   // Future: implement light mode variants when Contact section gets theme support
   const { isLightMode: _isLightMode } = useThemeStore();
+
+  // tRPC mutation for sending email
+  // Type assertion needed until backend (Epic 4, Story 4.5) is implemented
+  const sendEmailMutation = (trpc as any).email.sendLead.useMutation();
+
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: 'agent',
@@ -93,33 +103,113 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     return emailRegex.test(email);
   };
 
+  // Helper: Send email via tRPC API
+  const sendEmail = async (data: CollectedData): Promise<string> => {
+    try {
+      // Compile comprehensive message from all collected data
+      const messageContent = `
+Project Name: ${data.projectName || 'Not provided'}
+Service Type: ${data.serviceType || 'Not provided'}
+Details: ${data.projectDetails || 'No details provided'}
+      `.trim();
+
+      // Map CollectedData to SendLeadInput format
+      const result = await sendEmailMutation.mutateAsync({
+        name: data.name!,
+        email: data.email!,
+        message: messageContent
+      });
+
+      // Check if email sent successfully
+      if (result.success) {
+        // Success message with Ursa personality
+        return "Got it! I've sent your message to Vansh. He'll get back to you soon. Thanks for reaching out! 🚀";
+      } else {
+        // Backend returned failure - always include fallback email
+        return `Hmm, something went wrong on my end. ${result.message || 'Please try again'}, or you can email Vansh directly at design@vansh.fyi.`;
+      }
+    } catch (error) {
+      // Network error or timeout
+      console.error('Email send error:', error);
+      return "Oops! I couldn't send that message right now. Please try again in a moment, or reach out directly at design@vansh.fyi.";
+    }
+  };
+
+  // Helper: Get summary of collected data
+  const getSummary = (data: CollectedData): string => {
+    const items: string[] = [];
+
+    if (data.name) items.push(`Name: ${data.name}`);
+    if (data.email) items.push(`Email: ${data.email}`);
+    if (data.projectName) items.push(`Project Name: ${data.projectName}`);
+    if (data.serviceType) items.push(`Service Type: ${data.serviceType}`);
+    if (data.projectDetails) items.push(`Details: ${data.projectDetails}`);
+
+    if (items.length === 0) {
+      return "I haven't collected any info yet! Let's start fresh - what's your name?";
+    }
+
+    return `Here's what I have so far:\n\n${items.join('\n')}\n\nAnything you'd like to change? Just type "back" to revise!`;
+  };
+
+  // Helper: Go back one step
+  const goBack = (): ConversationStep => {
+    const stepOrder: ConversationStep[] = ['NAME', 'EMAIL', 'PROJECT_NAME', 'SERVICE_TYPE', 'PROJECT_DETAILS', 'COMPLETE'];
+    const currentIndex = stepOrder.indexOf(conversationState.currentStep);
+
+    if (currentIndex > 0) {
+      return stepOrder[currentIndex - 1];
+    }
+    return conversationState.currentStep;
+  };
+
   // Process conversation based on current step
-  const processConversationStep = (userInput: string): Message => {
+  const processConversationStep = async (userInput: string): Promise<Message> => {
     const { currentStep, collectedData } = conversationState;
+    const input = userInput.trim();
     let responseText = '';
     let nextStep: ConversationStep = currentStep;
     const updatedData = { ...collectedData };
 
+    // Check for special commands first
+    if (input.toLowerCase() === 'summarise' || input.toLowerCase() === 'summarize') {
+      return {
+        sender: 'agent',
+        text: getSummary(collectedData),
+        timestamp: new Date()
+      };
+    }
+
+    if (input.toLowerCase() === 'back') {
+      const previousStep = goBack();
+      setConversationState({
+        currentStep: previousStep,
+        collectedData: updatedData
+      });
+
+      // Give contextual message based on which step we went back to
+      const backMessages: Record<string, string> = {
+        'NAME': "No problem! Let's start over. What's your name?",
+        'EMAIL': `Okay! Your name is ${updatedData.name}. What's your email address?`,
+        'PROJECT_NAME': `Got it! What's the name of your project?`,
+        'SERVICE_TYPE': `What kind of service does ${updatedData.projectName || 'your project'} offer? (e.g., E-commerce, Food delivery, SaaS, etc.)`,
+        'PROJECT_DETAILS': `Tell me more details about ${updatedData.projectName || 'your project'}.`
+      };
+
+      return {
+        sender: 'agent',
+        text: backMessages[previousStep] || "Let's go back!",
+        timestamp: new Date()
+      };
+    }
+
+    // Regular conversation flow
     switch (currentStep) {
       case 'NAME': {
-        // Try to extract name from input
-        const extractedName = extractName(userInput);
-
-        // Also check if input might contain project details
-        const hasProjectKeywords = /\b(project|website|app|application|help|need|build|create|develop)\b/i.test(userInput);
+        const extractedName = extractName(input);
 
         if (extractedName) {
           updatedData.name = extractedName;
-
-          // If input also mentions project details, extract them after "and" or similar separators
-          if (hasProjectKeywords) {
-            // Look for text after "and" or ","
-            const andMatch = userInput.match(/\b(?:and|,)\s+(.+)$/i);
-            if (andMatch && andMatch[1].length > 5) {
-              updatedData.projectDetails = andMatch[1].trim();
-            }
-          }
-
           responseText = `Nice to meet you, ${extractedName}! 👋 What's the best email to reach you?`;
           nextStep = 'EMAIL';
         } else {
@@ -129,33 +219,44 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
       }
 
       case 'EMAIL': {
-        const email = userInput.trim();
-
-        if (isValidEmail(email)) {
-          updatedData.email = email;
-
-          // Check if we already have project details from NAME step
-          if (updatedData.projectDetails && updatedData.projectDetails.length > 0) {
-            // Display confirmation summary immediately since we have all data
-            responseText = `Perfect! Got your email: ${email}\n\nGot it! Here's what I have:\n\n- Name: ${updatedData.name}\n- Email: ${email}\n- Project: ${updatedData.projectDetails}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
-            nextStep = 'COMPLETE';
-          } else {
-            responseText = `Perfect! Got your email: ${email}\n\nTell me more about your project or what you need help with.`;
-            nextStep = 'PROJECT_DETAILS';
-          }
+        if (isValidEmail(input)) {
+          updatedData.email = input;
+          responseText = `Perfect! Got your email: ${input}\n\nWhat's the name of your project?`;
+          nextStep = 'PROJECT_NAME';
         } else {
           responseText = "Hmm, that doesn't look like a valid email. Could you double-check it? 📧";
         }
         break;
       }
 
-      case 'PROJECT_DETAILS': {
-        const details = userInput.trim();
+      case 'PROJECT_NAME': {
+        if (input.length > 0) {
+          updatedData.projectName = input;
+          responseText = `Awesome! What kind of service does ${input} offer? (e.g., E-commerce, Food delivery, SaaS, Marketing, etc.)`;
+          nextStep = 'SERVICE_TYPE';
+        } else {
+          responseText = "Oops, looks like you forgot to type something! 😅";
+        }
+        break;
+      }
 
-        if (details.length > 0) {
-          updatedData.projectDetails = details;
-          // Display confirmation summary immediately
-          responseText = `Got it! Here's what I have:\n\n- Name: ${updatedData.name}\n- Email: ${updatedData.email}\n- Project: ${details}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
+      case 'SERVICE_TYPE': {
+        if (input.length > 0) {
+          updatedData.serviceType = input;
+          responseText = `Got it! Now tell me more about ${updatedData.projectName || 'your project'}. What are you looking to build or improve?`;
+          nextStep = 'PROJECT_DETAILS';
+        } else {
+          responseText = "Please tell me what type of service your project offers!";
+        }
+        break;
+      }
+
+      case 'PROJECT_DETAILS': {
+        if (input.length > 0) {
+          updatedData.projectDetails = input;
+
+          // Send email via API - we have all the data now
+          responseText = await sendEmail(updatedData);
           nextStep = 'COMPLETE';
         } else {
           responseText = "Oops, looks like you forgot to type something! 😅";
@@ -163,16 +264,8 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
         break;
       }
 
-      case 'CONFIRMATION': {
-        // Display summary and transition to COMPLETE
-        const { name, email, projectDetails } = updatedData;
-        responseText = `Got it! Here's what I have:\n\n- Name: ${name}\n- Email: ${email}\n- Project: ${projectDetails || 'Not specified'}\n\nI'll pass this along to Vansh. He'll be in touch soon! 🚀`;
-        nextStep = 'COMPLETE';
-        break;
-      }
-
       case 'COMPLETE': {
-        responseText = "Thanks! Your message has been recorded. Vansh will get back to you shortly!";
+        responseText = "Thanks! Your message has been sent. Vansh will get back to you shortly! 🚀";
         break;
       }
     }
@@ -190,7 +283,7 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     };
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     // Validate input (non-empty messages only)
     if (inputValue.trim() === '') return;
 
@@ -205,13 +298,26 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
     // Clear input field after send
     setInputValue('');
 
-    // Process conversation step
+    // Process conversation step (async now to handle email sending)
     setIsLoading(true);
-    setTimeout(() => {
-      const agentResponse = processConversationStep(userMessage.text);
+    try {
+      const [agentResponse] = await Promise.all([
+        processConversationStep(userMessage.text),
+        new Promise(resolve => setTimeout(resolve, 1500))
+      ]);
+
       setMessages(prev => [...prev, agentResponse]);
+    } catch (error) {
+      console.error('Error processing conversation:', error);
+      // Add error message
+      setMessages(prev => [...prev, {
+        sender: 'agent',
+        text: "Oops! Something went wrong. Please try again.",
+        timestamp: new Date()
+      }]);
+    } finally {
       setIsLoading(false);
-    }, 800);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {

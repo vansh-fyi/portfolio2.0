@@ -85,18 +85,51 @@ const ChatView: React.FC = () => {
   return (
     <div className="fixed inset-0 z-40 bg-black">
       <Header />
-      <div className="pt-[84px] px-6 md:px-8 pb-6">
+      <div className="pt-[84px] px-6 md:px-20 pb-6">
         <div className="z-10 relative">
           <div className="overflow-hidden h-[calc(100vh-84px-24px)] flex flex-col bg-neutral-900/80 ring-white/20 ring-1 bg-black/30 rounded-2xl shadow-[0_20px_120px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
             <div className="flex sm:px-6 border-white/5 border-b pt-3 pr-4 pb-3 pl-4 items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
+                <div onClick={goToMain} className="group flex items-center gap-2">
                   <button
-                    onClick={goToMain}
-                    className="h-3.5 w-3.5 rounded-full bg-red-500/90 hover:bg-red-500 cursor-pointer transition-colors"
+                    className="flex h-3.5 w-3.5 rounded-full text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
-                  />
-                  <span className="h-3.5 w-3.5 rounded-full bg-amber-400/90"></span>
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-3 h-3"
+                    >
+                      <path d="M18 6 6 18"></path>
+                      <path d="m6 6 12 12"></path>
+                    </svg>
+                  </button>
+                  <button
+                    className="flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
+                    aria-label="Minimise"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <path d="M5 12h14" />
+                    </svg>
+                  </button>
                   <span className="h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">

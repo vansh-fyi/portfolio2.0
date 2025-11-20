@@ -31,37 +31,30 @@ export interface SendLeadOutput {
 }
 
 /**
- * Placeholder AppRouter interface matching the backend API specification
- * This provides type safety for the tRPC client until the real backend is ready
+ * Placeholder AppRouter type compatible with tRPC React hooks
  *
- * Note: This is a simplified type definition for tRPC router structure.
- * The actual tRPC AppRouter from the backend will have more complex types
- * with procedure definitions, middleware, etc.
+ * This uses a type assertion approach since the actual tRPC router
+ * won't be available until the backend (Epic 4) is implemented.
+ *
+ * When the backend is ready, replace this with:
+ * import type { AppRouter } from '../../../backend/src/api/index';
  */
+
+// Using a simplified structure that works with createTRPCReact
 export type AppRouter = {
-  rag: {
-    query: {
-      _def: {
-        _config: unknown;
-        _meta: unknown;
-        _ctx_out: unknown;
-        _input_in: RagQueryInput;
-        _input_out: RagQueryInput;
-        _output_in: RagQueryOutput;
-        _output_out: RagQueryOutput;
-      };
-    };
-  };
   email: {
     sendLead: {
       _def: {
-        _config: unknown;
-        _meta: unknown;
-        _ctx_out: unknown;
-        _input_in: SendLeadInput;
         _input_out: SendLeadInput;
-        _output_in: SendLeadOutput;
         _output_out: SendLeadOutput;
+      };
+    };
+  };
+  rag: {
+    query: {
+      _def: {
+        _input_out: RagQueryInput;
+        _output_out: RagQueryOutput;
       };
     };
   };

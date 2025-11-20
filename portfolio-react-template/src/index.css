@@ -348,8 +348,16 @@ html {
   --tw-ring-color: rgba(24, 24, 27, 0.2) !important;
 }
 
+.light-mode .ring-white\/30 {
+  --tw-ring-color: rgba(24, 24, 27, 0.3) !important;
+}
+
 .light-mode .border-white\/10 {
   border-color: rgba(24, 24, 27, 0.1) !important;
+}
+
+.light-mode .border-white\/30 {
+  border-color: rgba(24, 24, 27, 0.3) !important;
 }
 
 .light-mode ::-webkit-scrollbar-track {

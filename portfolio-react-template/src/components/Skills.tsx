@@ -166,29 +166,29 @@ const Skills = () => {
             </div>
           </div>
           {/* Tools & Technologies */}
-          <div className="fade-in-up stagger-delay-4 lg:p-8 ring-1 rounded-2xl mt-8 pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg ring-white/10">
+          <div className="lg:p-8 ring-1 rounded-2xl bg-black/30 mt-8 pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg ring-white/10">
             <h4 className="text-lg font-semibold font-geist mb-4 text-white">Tools &amp; Technologies</h4>
             <div className="flex flex-wrap gap-x-3 gap-y-3 xl:gap-x-3">
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Figma</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Framer</span>
-              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Webflow</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Rive</span>
-              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">LottieLab</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Microsoft Clarity</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Google Colab</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Python</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">HTML</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">CSS</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Tailwind CSS</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">JavaScript</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">React</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Mastra</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Langchain</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Pytorch</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">TensorFlow</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Claude Code</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">Hugging Face</span>
-              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-black/30 ring-white/10">MCP</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Figma</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Framer</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Webflow</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Rive</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">LottieLab</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Microsoft Clarity</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Google Colab</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Python</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">HTML</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">CSS</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Tailwind CSS</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">JavaScript</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">React</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Mastra</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Langchain</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Pytorch</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">TensorFlow</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Claude Code</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">Hugging Face</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10">MCP</span>
             </div>
           </div>
         </div>

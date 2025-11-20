@@ -2,10 +2,50 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LeadGenChat from '../LeadGenChat';
 
+// Mock tRPC service
+jest.mock('../../services/trpc');
+
 describe('LeadGenChat Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
+  // Helper function to complete full lead-gen flow (5 steps)
+  const completeLeadGenFlow = async (
+    input: HTMLElement,
+    sendButton: HTMLElement,
+    data: {
+      name: string;
+      email: string;
+      projectName: string;
+      serviceType: string;
+      projectDetails: string;
+    }
+  ) => {
+    // Step 1: Name
+    fireEvent.change(input, { target: { value: data.name } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Step 2: Email
+    fireEvent.change(input, { target: { value: data.email } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Step 3: Project Name
+    fireEvent.change(input, { target: { value: data.projectName } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Step 4: Service Type
+    fireEvent.change(input, { target: { value: data.serviceType } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Step 5: Project Details
+    fireEvent.change(input, { target: { value: data.projectDetails } });
+    fireEvent.click(sendButton);
+  };
 
   it('renders without errors', () => {
     render(<LeadGenChat />);
@@ -262,38 +302,32 @@ describe('LeadGenChat Component', () => {
   });
 
   it('collects project details and displays confirmation summary (AC #2)', async () => {
+    // Mock successful email send (Story 3.3)
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
     render(<LeadGenChat />);
 
     const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
     const sendButton = screen.getByLabelText(/Send message/i);
 
-    // Step 1: Provide name
-    fireEvent.change(input, { target: { value: "John" } });
-    fireEvent.click(sendButton);
+    // Use helper to complete full 5-step flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "John",
+      email: "john@example.com",
+      projectName: "MyApp",
+      serviceType: "E-commerce",
+      projectDetails: "I need help building a web app"
+    });
 
+    // Wait for email success message
     await waitFor(() => {
-      expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // Step 2: Provide email
-    fireEvent.change(input, { target: { value: "john@example.com" } });
-    fireEvent.click(sendButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Tell me more about your project/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // Step 3: Provide project details
-    fireEvent.change(input, { target: { value: "I need help building a web app" } });
-    fireEvent.click(sendButton);
-
-    // Wait for final summary with all collected data
-    await waitFor(() => {
-      expect(screen.getByText(/Got it! Here's what I have:/i)).toBeInTheDocument();
-      expect(screen.getByText(/Name: John/i)).toBeInTheDocument();
-      expect(screen.getByText(/Project: I need help building a web app/i)).toBeInTheDocument();
-      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+      expect(screen.getByText(/Got it! I've sent your message to Vansh/i)).toBeInTheDocument();
+      expect(screen.getByText(/Thanks for reaching out! 🚀/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
   });
 
   it('displays Ursa personality in all responses (AC #3)', async () => {
@@ -316,6 +350,13 @@ describe('LeadGenChat Component', () => {
   });
 
   it('handles full conversation flow from NAME to COMPLETE (AC #1, #2, #3)', async () => {
+    // Mock successful email send (Story 3.3)
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
     render(<LeadGenChat />);
 
     const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
@@ -324,61 +365,49 @@ describe('LeadGenChat Component', () => {
     // Initial greeting
     expect(screen.getByText(/Hi! I am Ursa. Please mention your requirements./i)).toBeInTheDocument();
 
-    // NAME step
-    fireEvent.change(input, { target: { value: "Alice" } });
-    fireEvent.click(sendButton);
+    // Complete full 5-step flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "Alice",
+      email: "alice@example.com",
+      projectName: "ShopSmart",
+      serviceType: "E-commerce",
+      projectDetails: "Build an e-commerce site"
+    });
 
+    // Email success message with Ursa personality
     await waitFor(() => {
-      expect(screen.getByText(/Nice to meet you, Alice!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // EMAIL step
-    fireEvent.change(input, { target: { value: "alice@example.com" } });
-    fireEvent.click(sendButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Perfect! Got your email: alice@example.com/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // PROJECT_DETAILS step
-    fireEvent.change(input, { target: { value: "Build an e-commerce site" } });
-    fireEvent.click(sendButton);
-
-    await waitFor(() => {
-      expect(screen.getByText(/Got it!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // CONFIRMATION step - summary with Ursa personality
-    await waitFor(() => {
-      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon! 🚀/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+      expect(screen.getByText(/Got it! I've sent your message to Vansh/i)).toBeInTheDocument();
+      expect(screen.getByText(/Thanks for reaching out! 🚀/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
   });
 
-  it('handles combined name and project details in first message (AC #2)', async () => {
+  it('handles 5-step structured flow correctly (AC #2)', async () => {
+    // Mock successful email send
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
     render(<LeadGenChat />);
 
     const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
     const sendButton = screen.getByLabelText(/Send message/i);
 
-    // User provides both name and project info in first message
-    fireEvent.change(input, { target: { value: "I'm Sarah and I need help with a mobile app project" } });
-    fireEvent.click(sendButton);
+    // Complete structured 5-step flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "Sarah",
+      email: "sarah@example.com",
+      projectName: "MobileApp Pro",
+      serviceType: "Mobile Application",
+      projectDetails: "I need help with a mobile app project"
+    });
 
-    // Agent should extract both name and project details
+    // Should display email success message (Story 3.3 - email API integration)
     await waitFor(() => {
-      expect(screen.getByText(/Nice to meet you, Sarah!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
-
-    // Provide email
-    fireEvent.change(input, { target: { value: "sarah@example.com" } });
-    fireEvent.click(sendButton);
-
-    // Should display full confirmation with all collected data
-    await waitFor(() => {
-      expect(screen.getByText(/Got it! Here's what I have:/i)).toBeInTheDocument();
-      expect(screen.getByText(/Name: Sarah/i)).toBeInTheDocument();
-      expect(screen.getByText(/I'll pass this along to Vansh. He'll be in touch soon!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+      expect(screen.getByText(/Got it! I've sent your message to Vansh/i)).toBeInTheDocument();
+      expect(screen.getByText(/Thanks for reaching out! 🚀/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
   });
 
   it('handles unclear name input with clarifying question (AC #2, #3)', async () => {
@@ -394,6 +423,372 @@ describe('LeadGenChat Component', () => {
     // Agent should ask for clarification
     await waitFor(() => {
       expect(screen.getByText(/I didn't quite catch your name. What should I call you?/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  // NEW TESTS FOR EMAIL API INTEGRATION (Story 3.3)
+
+  it('calls tRPC email.sendLead API when all data collected (AC #1, #2)', async () => {
+    // Mock the tRPC mutation
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isLoading: false,
+      isError: false,
+      isSuccess: false
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Complete full 5-step flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "John Doe",
+      email: "john@example.com",
+      projectName: "WebApp Builder",
+      serviceType: "SaaS",
+      projectDetails: "Need help with a web app"
+    });
+
+    // Verify API was called with correct structured data
+    await waitFor(() => {
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: "John Doe",
+        email: "john@example.com",
+        message: expect.stringContaining("Project Name: WebApp Builder")
+      });
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: "John Doe",
+        email: "john@example.com",
+        message: expect.stringContaining("Service Type: SaaS")
+      });
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: "John Doe",
+        email: "john@example.com",
+        message: expect.stringContaining("Details: Need help with a web app")
+      });
+    }, { timeout: 3000 });
+  });
+
+  it('displays success message when email API returns success (AC #3, #6)', async () => {
+    // Mock successful API response
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Complete full flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "Alice",
+      email: "alice@example.com",
+      projectName: "ShopNow",
+      serviceType: "E-commerce",
+      projectDetails: "Build an e-commerce site"
+    });
+
+    // Verify success message with Ursa personality (conversational, emoji)
+    await waitFor(() => {
+      expect(screen.getByText(/Got it! I've sent your message to Vansh/i)).toBeInTheDocument();
+      expect(screen.getByText(/Thanks for reaching out! 🚀/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
+
+  it('displays error message when email API fails (AC #4, #6)', async () => {
+    // Mock failed API response
+    const mockMutateAsync = jest.fn().mockResolvedValue({
+      success: false,
+      message: 'Server error'
+    });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Complete full flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "Bob",
+      email: "bob@example.com",
+      projectName: "TestApp",
+      serviceType: "Testing",
+      projectDetails: "Testing error handling"
+    });
+
+    // Verify error message with Ursa personality and fallback contact
+    await waitFor(() => {
+      expect(screen.getByText(/Hmm, something went wrong on my end/i)).toBeInTheDocument();
+      expect(screen.getByText(/design@vansh.fyi/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
+
+  it('handles network timeout gracefully (AC #4)', async () => {
+    // Mock network error
+    const mockMutateAsync = jest.fn().mockRejectedValue(new Error('Network timeout'));
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Complete full flow
+    await completeLeadGenFlow(input, sendButton, {
+      name: "Carol",
+      email: "carol@example.com",
+      projectName: "TimeoutTest",
+      serviceType: "Testing",
+      projectDetails: "Testing timeout"
+    });
+
+    // Verify empathetic error message with fallback email
+    await waitFor(() => {
+      expect(screen.getByText(/Oops! I couldn't send that message right now/i)).toBeInTheDocument();
+      expect(screen.getByText(/design@vansh.fyi/i)).toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
+
+  it('shows loading indicator while email is being sent (AC #5)', async () => {
+    // Mock delayed API response
+    const mockMutateAsync = jest.fn().mockImplementation(() =>
+      new Promise(resolve => setTimeout(() => resolve({ success: true }), 1500))
+    );
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Complete flow up to last step
+    fireEvent.change(input, { target: { value: "David" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, David!/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "david@example.com" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "LoadTest" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "Testing" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Final step - trigger loading
+    fireEvent.change(input, { target: { value: "Testing loading state" } });
+    fireEvent.click(sendButton);
+
+    // Verify loading indicator appears during API call
+    await waitFor(() => {
+      expect(screen.getByText(/Typing.../i)).toBeInTheDocument();
+    }, { timeout: 500 });
+
+    // Verify loading clears after response
+    await waitFor(() => {
+      expect(screen.queryByText(/Typing.../i)).not.toBeInTheDocument();
+    }, { timeout: 3000 });
+  });
+
+  it('disables send button while email is being sent (AC #5)', async () => {
+    // Mock delayed API response
+    const mockMutateAsync = jest.fn().mockImplementation(() =>
+      new Promise(resolve => setTimeout(() => resolve({ success: true }), 1000))
+    );
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i) as HTMLButtonElement;
+
+    // Complete flow up to last step
+    fireEvent.change(input, { target: { value: "Eve" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Eve!/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "eve@example.com" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "ButtonTest" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "Testing" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Final step - trigger button disable
+    fireEvent.change(input, { target: { value: "Testing button disable" } });
+    fireEvent.click(sendButton);
+
+    // Verify button is disabled during loading
+    await waitFor(() => {
+      expect(sendButton.disabled).toBe(true);
+    }, { timeout: 500 });
+
+    // Verify button is re-enabled after completion
+    await waitFor(() => {
+      expect(sendButton.disabled).toBe(false);
+    }, { timeout: 2500 });
+  });
+
+  it('maps CollectedData to SendLeadInput.message with structured format (AC #2)', async () => {
+    const mockMutateAsync = jest.fn().mockResolvedValue({ success: true });
+    const { trpc } = require('../../services/trpc');
+    trpc.email.sendLead.useMutation.mockReturnValue({
+      mutateAsync: mockMutateAsync
+    });
+
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    const testData = {
+      name: "Frank",
+      email: "frank@example.com",
+      projectName: "CollabPlatform",
+      serviceType: "SaaS",
+      projectDetails: "Building a complex SaaS platform with real-time collaboration features"
+    };
+
+    await completeLeadGenFlow(input, sendButton, testData);
+
+    // Verify all data is correctly mapped to structured message format
+    await waitFor(() => {
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: testData.name,
+        email: testData.email,
+        message: expect.stringContaining(`Project Name: ${testData.projectName}`)
+      });
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: testData.name,
+        email: testData.email,
+        message: expect.stringContaining(`Service Type: ${testData.serviceType}`)
+      });
+      expect(mockMutateAsync).toHaveBeenCalledWith({
+        name: testData.name,
+        email: testData.email,
+        message: expect.stringContaining(`Details: ${testData.projectDetails}`)
+      });
+    }, { timeout: 3000 });
+  });
+
+  // NEW TESTS FOR SPECIAL COMMANDS (Story 3.3 enhancements)
+
+  it('handles "summarise" command and displays collected data', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Collect partial data
+    fireEvent.change(input, { target: { value: "George" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, George!/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "george@example.com" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Type "summarise" to see collected data
+    fireEvent.change(input, { target: { value: "summarise" } });
+    fireEvent.click(sendButton);
+
+    // Should display summary of collected data so far
+    await waitFor(() => {
+      const summaryMessage = screen.getByText(/Here's what I have so far/i);
+      expect(summaryMessage).toBeInTheDocument();
+      expect(summaryMessage.textContent).toContain('Name: George');
+      expect(summaryMessage.textContent).toContain('Email: george@example.com');
+    }, { timeout: 2000 });
+  });
+
+  it('handles "back" command and goes to previous step', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Progress to PROJECT_NAME step
+    fireEvent.change(input, { target: { value: "Helen" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Helen!/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    fireEvent.change(input, { target: { value: "helen@example.com" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Type "back" to go back to EMAIL step
+    fireEvent.change(input, { target: { value: "back" } });
+    fireEvent.click(sendButton);
+
+    // Should show EMAIL step prompt
+    await waitFor(() => {
+      expect(screen.getByText(/Your name is Helen. What's your email address?/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('handles "back" from first step gracefully', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Type "back" from NAME step (first step)
+    fireEvent.change(input, { target: { value: "back" } });
+    fireEvent.click(sendButton);
+
+    // Should stay at NAME step with fresh prompt
+    await waitFor(() => {
+      expect(screen.getByText(/Let's start over. What's your name?/i)).toBeInTheDocument();
+    }, { timeout: 2000 });
+  });
+
+  it('accepts "summarize" (American spelling) as well as "summarise"', async () => {
+    render(<LeadGenChat />);
+
+    const input = screen.getByPlaceholderText(/Tell the details to my agent/i);
+    const sendButton = screen.getByLabelText(/Send message/i);
+
+    // Collect some data
+    fireEvent.change(input, { target: { value: "Ian" } });
+    fireEvent.click(sendButton);
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Ian!/i)).toBeInTheDocument(), { timeout: 2000 });
+
+    // Type "summarize" (American spelling)
+    fireEvent.change(input, { target: { value: "summarize" } });
+    fireEvent.click(sendButton);
+
+    // Should display summary
+    await waitFor(() => {
+      expect(screen.getByText(/Here's what I have so far/i)).toBeInTheDocument();
+      expect(screen.getByText(/Name: Ian/i)).toBeInTheDocument();
     }, { timeout: 2000 });
   });
 });
