@@ -4,7 +4,7 @@ competition: BrandX by Pixopoly Arena (Winner)
 role: Brand Designer
 timeline: Competition Sprint
 deliverables: ["Logo Redesign", "Brand Strategy", "Packaging Design", "UI Mockups", "Social Media Kit"]
-brand_archetype: The Nostalgic Innovator
+brand_archetype: The Historical Innovator
 key_insight: "The Red Roof IS a Pizza Slice"
 related_documents: [personal_bio.md]
 ---
