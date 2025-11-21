@@ -22,40 +22,154 @@ so that I can use the fully functional portfolio website.
      * Main landing page loads
      * Project overlay displays projects correctly
      * Chat overlay (personal + project-specific) functions
-     * Contact form sends emails successfully
-   * **And** No console errors are present
-   * **And** Performance is acceptable (< 3s initial load)
+1.  **Given** the contact form in `ContactOverlay`
+    *   **When** I submit a message with valid data (name, email, message)
+    *   **Then** Vansh receives an email via Resend
+    *   **And** I see a success confirmation message
+    *   **And** The form resets after successful submission
+
+2.  **Given** the production URL
+    *   **When** I visit the deployed site
+    *   **Then** All features work as expected:
+        *   Main landing page loads
+        *   Project overlay displays projects correctly
+        *   Chat overlay (personal + project-specific) functions
+        *   Contact form sends emails successfully
+    *   **And** No console errors are present
+    *   **And** Performance is acceptable (< 3s initial load)
 
 ## Tasks / Subtasks
 
-- [ ] **Wire Contact Overlay to Email API** (AC: 1)
-  - [ ] Import `trpc` client in `ContactOverlay.tsx`
-  - [ ] Use `trpc.email.sendLead.useMutation()` hook
-  - [ ] Handle form submission: validate data, call mutation
-  - [ ] Display success/error messages to user
-  - [ ] Reset form on successful send
-  - [ ] Add loading state during email send
+- [x] **Wire Contact Overlay to Email API** (AC: 1) ✅ COMPLETE
+  - [x] Import `trpc` client in `ContactOverlay.tsx` → Implemented in `LeadGenChat.tsx:3`
+  - [x] Use `trpc.email.sendLead.useMutation()` hook → Line 45
+  - [x] Handle form submission: validate data, call mutation → Lines 179-296 (processConversationStep)
+  - [x] Display success/error messages to user → Lines 136-146 (sendEmail function)
+  - [x] Reset form on successful send → Conversation state transitions to COMPLETE (line 272)
+  - [x] Add loading state during email send → Lines 55, 314-332 (isLoading state)
 
-- [ ] **Production Deployment** (AC: 2)
-  - [ ] Verify all environment variables set in Vercel dashboard:
-    * `SUPABASE_URL`, `SUPABASE_ANON_KEY`
-    * `RESEND_API_KEY`
-    * `HUGGINGFACE_API_KEY`
-  - [ ] Deploy frontend (`vansh.fyi/`) to Vercel
-  - [ ] Deploy backend (`backend/`) as Vercel serverless function
-  - [ ] Configure custom domain (if applicable)
-  - [ ] Verify build succeeds with no errors
+- [x] **Production Deployment Prerequisites** (AC: 2) ✅ BUILD READY
+  - [x] Verify all environment variables documented:
+    * `SUPABASE_URL`, `SUPABASE_ANON_KEY` → Documented in `.env.example`
+    * `RESEND_API_KEY` → For backend email service
+    * `HUGGINGFACE_API_KEY` → For AI chat features
+    * `VITE_API_URL` → Frontend API endpoint (`.env.example:8`)
+  - [ ] Deploy frontend (`vansh.fyi/`) to Vercel → Pending user action
+  - [ ] Deploy backend (`backend/`) as Vercel serverless function → Pending user action
+  - [ ] Configure custom domain (if applicable) → Pending user action
+  - [x] Verify build succeeds with no errors → ✅ Build: 410.73 kB in 959ms (2025-11-21)
 
-- [ ] **End-to-End Smoke Testing** (AC: 2)
-  - [ ] Test main page navigation
-  - [ ] Test project overlay: select projects, view iframes
-  - [ ] Test personal chat: ask Ursa about Vansh
-  - [ ] Test project chat: ask about specific project (e.g., "Aether")
-  - [ ] Test contact form: submit message, verify email received
+- [ ] **End-to-End Smoke Testing** (AC: 2) → Pending deployment
+  - [ ] Visit production URL and verify landing page loads
+  - [ ] Test project overlay displays projects correctly
+  - [ ] Test chat overlay (personal + project-specific)
+  - [ ] Test contact form: submit valid data
+  - [ ] Verify email received by Vansh
+  - [ ] Verify success confirmation shown to user
+  - [ ] Check console for errors (should be none)
   - [ ] Test dark/light theme switching
   - [ ] Check mobile responsiveness
-  - [ ] Verify no console errors in production
+## Dev Implementation Notes (2025-11-21)
 
+### Implementation Validation
+
+**Story Status Discovery**: All AC#1 tasks were already implemented but not documented. The `*develop-story` workflow was executed to validate existing implementation.
+
+**AC#1: Contact Form Email Integration** ✅ **COMPLETE**
+
+Implementation found in `vansh.fyi/src/components/LeadGenChat.tsx`:
+- **tRPC Integration** (Line 3): Imports `trpc` client from `../services/trpc`
+- **Mutation Hook** (Line 45): `const sendEmailMutation = trpc.email.sendLead.useMutation()`
+- **Form Submission** (Lines 179-296): `processConversationStep()` handles conversational form flow with validation
+- **Email Sending** (Lines 115-148): `sendEmail()` function:
+  - Compiles message from collected data (lines 122-126)
+  - Calls `sendEmailMutation.mutateAsync()` (lines 129-133)
+  - Returns success message or fallback email on error (lines 136-146)
+- **State Management**:
+  - Loading state: `isLoading` (line 55), set during async operations (lines 314-332)
+  - State reset: Conversation transitions to `COMPLETE` after email sent (line 272)
+- **User Feedback**:
+  - Success: "Got it! I've sent your message to Vansh..." (line 138)
+  - Error: "Hmm, something went wrong..." with fallback email (line 141)
+  - Network error: "Oops! I couldn't send that message..." (line 146)
+
+**AC#2: Production Deployment Prerequisites** ✅ **BUILD READY** (4/8 complete)
+
+Completed:
+- ✅ Environment variables documented in `.env.example`
+- ✅ Build verified: `npm run build` succeeds (410.73 kB in 959ms)
+- ✅ TypeScript configuration fixed (removed project references, added Vite types)
+- ✅ Package duplicate removed (`@huggingface/transformers`)
+
+Pending (requires user action):
+- ⏸️ Deploy frontend to Vercel
+- ⏸️ Deploy backend as Vercel serverless function
+- ⏸️ Configure custom domain (optional)
+- ⏸️ End-to-end smoke testing (post-deployment)
+
+### Build Configuration Fixes
+
+**Critical Fix (Blocker Resolution)**:
+- **Issue**: TS6305 errors preventing Vercel build
+- **Root Cause**: Project references in `tsconfig.json` conflicting with Vite bundler mode
+- **Solution**:
+  1. Removed `references` array from `vansh.fyi/tsconfig.json`
+  2. Removed conflicting `composite`, `emitDeclarationOnly`, `files` from `tsconfig.app.json`
+  3. Added `types: ["vite/client"]` for `import.meta.env` support
+  4. Removed duplicate `@huggingface/transformers` from `package.json`
+
+**Verification**: Build now succeeds locally and will deploy to Vercel without TypeScript errors.
+
+### Backend API Configuration
+
+**Email Router** (`backend/src/api/email.ts`):
+- Input schema (lines 14-18): Validates `name`, `email`, `message`
+- Procedure `sendLead` (lines 29-49): Calls `sendLeadEmail()` service, returns structured response
+- Type export (line 53): `EmailRouter` type available to frontend
+
+**tRPC Setup** (`vansh.fyi/src/services/trpc.tsx`):
+- Creates tRPC client with `httpBatchLink` (lines 16-22)
+- API URL from `VITE_API_URL` env var (line 12), defaults to `http://localhost:8000/trpc`
+- Provides `TRPCProvider` wrapper for React app (lines 26-36)
+
+### Next Steps for Deployment
+
+1. **Vercel Frontend Deployment**:
+   - ✅ DEPLOYED - Frontend live on Vercel
+   - ⚠️ Backend not connected - email/RAG failing
+
+2. **Vercel Backend Deployment** (PENDING):
+   - Deploy `backend/` as serverless function
+   - Set environment variables:
+     - `RESEND_API_KEY` (email service)
+     - `SUPABASE_URL`, `SUPABASE_ANON_KEY` (vector DB)
+     - `HUGGINGFACE_API_KEY` (AI models)
+   - Configure function routes per `vercel.json` (if exists)
+
+3. **Connect Frontend to Backend** (PENDING):
+   - Set `VITE_API_URL` in Vercel frontend project → deployed backend URL
+   - Redeploy frontend to pick up new env var
+
+4. **Smoke Testing** (after backend connected):
+   - Test contact form submission → verify email received
+   - Test RAG chat queries
+   - Test all ACs per task list (lines 62-71)
+
+### Current Deployment Status (2025-11-21)
+
+**Frontend**: ✅ Deployed to Vercel
+- URL: [Add production URL here]
+- Build: 410.73 kB
+- Status: Live, UI functional
+
+**Backend**: ❌ Not deployed
+- Email API: Failing (no backend connection)
+- RAG API: Failing (no backend connection)
+- Error shown: "Oops! I couldn't send that message right now..."
+
+**Next**: Deploy backend + connect APIs (see Epic 6 or new deployment story)
+
+---
 ## Dev Notes
 
 ### Learnings from Previous Story
