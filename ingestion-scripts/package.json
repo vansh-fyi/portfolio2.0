@@ -1,0 +1,24 @@
+{
+    "name": "ingestion-scripts",
+    "version": "1.0.0",
+    "description": "Offline scripts for generating embeddings and populating Supabase vector database",
+    "main": "index.js",
+    "scripts": {
+        "ingest": "node --loader ts-node/esm src/ingest.ts"
+    },
+    "type": "module",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@huggingface/transformers": "^3.3.0",
+        "@supabase/supabase-js": "^2.84.0",
+        "dotenv": "^17.2.3",
+        "gray-matter": "^4.0.3"
+    },
+    "devDependencies": {
+        "@types/node": "^24.10.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    }
+}

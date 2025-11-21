@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>5.3</storyId>
+    <title>Granular RAG Context (Project-Specific)</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-21</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/5-3-granular-rag-context-project-specific.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>"Ask Ursa" to answer questions specifically about the currently viewed project</iWant>
+    <soThat>I get relevant and accurate answers tailored to that project's context</soThat>
+    <tasks>
+      - Update tRPC RAG Procedure (AC: 3)
+        - Modify backend/src/api/rag.ts to accept optional projectId parameter in input schema
+        - Pass projectId to RAG service layer
+        - Update TypeScript types for tRPC input/output
+      - Update RAG Service for Project Filtering (AC: 1, 3)
+        - Modify backend/src/services/rag.ts queryRAG() function
+        - Add conditional filtering logic: if projectId provided, filter by metadata->>'projectId'
+        - If no projectId, use current behavior (personal context or all content)
+        - Update Supabase query to use JSONB operator for metadata filtering
+      - Update Frontend to Pass Project Context (AC: 2)
+        - Modify ChatOverlay.tsx to read projectId from useViewStore()
+        - Pass projectId to trpc.rag.query.useMutation() when chatContext is 'project'
+        - Handle project context switches (clear chat history or show context change indicator)
+      - Testing & Verification (AC: 1, 2)
+        - Test querying with projectId='aether' returns only Aether content
+        - Test switching between projects clears/updates context appropriately
+        - Verify personal chat (no projectId) still works as expected
+        - Check Supabase query performance with metadata filter
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. Given I am viewing a specific project (e.g., "Aether")
+       * When I click "Ask Ursa" and ask a question
+       * Then the answer is based ONLY on the content/embeddings for that project
+       * And answers do not include information from other projects
+
+    2. Given I am in the chat overlay for a specific project
+       * When I switch to a different project in the sidebar
+       * Then the projectId context updates
+       * And subsequent questions are answered based on the new project's context
+
+    3. Given the RAG backend service
+       * When I inspect the code
+       * Then the trpc.rag.query procedure accepts a projectId parameter
+       * And the RAG service filters embeddings by metadata->>'projectId' in Supabase
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic 5 - System Integration & Production Launch</title>
+        <section>Story 5.3: Granular RAG Context</section>
+        <snippet>Implements project-specific RAG filtering. Story 5.1 added projectId to frontmatter and metadata during content migration. This story uses that metadata for filtering.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Epic 4 - Backend & Data Infrastructure</section>
+        <snippet>Supabase JS SDK v~2.42.0 for vector queries. Embeddings use 384-dimensional vectors (all-MiniLM-L6-v2). HuggingFace models via Vercel AI SDK.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/stories/5-2-dynamic-project-overlay-iframe-integration.md</path>
+        <title>Story 5.2 Context</title>
+        <section>Previous Story Learnings</section>
+        <snippet>Created projects.ts config with 10 projects. Modified ProjectOverlay to pass selectedProjectId to goToProjectChat(). overlayStore.projectId field now populated when project chat triggered.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <item>
+        <path>backend/src/api/rag.ts</path>
+        <kind>tRPC Router</kind>
+        <symbol>ragQuerySchema</symbol>
+        <lines>15-18</lines>  
+        <reason>Input schema validation - needs to accept optional projectId parameter</reason>
+      </item>
+      <item>
+        <path>backend/src/api/rag.ts</path>
+        <kind>tRPC Procedure</kind>
+        <symbol>ragRouter.query</symbol>
+        <lines>29-49</lines>
+        <reason>Main RAG query endpoint - needs to extract projectId from input and pass to service layer</reason>
+      </item>
+      <item>
+        <path>backend/src/services/rag.ts</path>
+        <kind>Service Function</kind>
+        <symbol>vectorQueryTool</symbol>
+        <lines>11-53</lines>
+        <reason>Vector query tool - needs projectId parameter added to execute function for filtering</reason>
+      </item>
+      <item>
+        <path>backend/src/services/rag.ts</path>
+        <kind>Service Function</kind>
+        <symbol>generateRagResponse</symbol>
+        <lines>58-96</lines>
+        <reason>Main RAG service - function signature needs projectId parameter, pass to vectorQueryTool</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>React Component</kind>
+        <symbol>ChatView</symbol>
+        <lines>13-20</lines>
+        <reason>Chat component - already reads projectId from store (line 14), needs to pass to useRAGQuery hook</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/hooks/useRAGQuery.ts</path>
+        <kind>Custom Hook</kind>
+        <symbol>useRAGQuery</symbol>
+        <reason>RAG query hook - needs to accept projectId parameter and include in tRPC mutation input</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/state/overlayStore.ts</path>
+        <kind>Zustand Store</kind>
+        <symbol>ViewStore</symbol>
+        <lines>1-42</lines>
+        <reason>State management - already has projectId field (line 10), populated by goToProjectChat() (line 35-37)</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/config/projects.ts</path>
+        <kind>Configuration</kind>
+        <symbol>projects</symbol>
+        <reason>Project metadata - contains all 10 projects with IDs matching those in Supabase metadata</reason>
+      </item>
+    </code>
+
+    <dependencies>
+      <node>
+        <package>@trpc/server</package>
+        <version>^11.0.0-rc</version>
+        <usage>tRPC router and procedures</usage>
+      </node>
+      <node>
+        <package>@trpc/react-query</package>
+        <version>^11.0.0-rc</version>
+        <usage>tRPC React hooks for frontend queries</usage>
+      </node>
+      <node>
+        <package>@ai-sdk/huggingface</package>
+        <usage>Vercel AI SDK HuggingFace provider for LLM and embeddings</usage>
+      </node>
+      <node>
+        <package>@supabase/supabase-js</package>
+        <version>~2.42.0</version>
+        <usage>Supabase client for vector database queries</usage>
+      </node>
+      <node>
+        <package>zod</package>
+        <usage>Schema validation for API inputs</usage>
+      </node>
+      <node>
+        <package>zustand</package>
+        <usage>State management for view and project context</usage>
+      </node>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - Supabase RPC function match_documents currently filters by source_type (personal/project) at line 27 in rag.ts
+    - Need to modify filtering to use projectId from metadata JSONB field when provided
+    - JSONB filtering syntax: metadata->>'projectId' for Supabase/PostgreSQL
+    - projectId is optional - when not provided, fallback to existing source_type filtering
+    - All project content was migrated in Story 5.1 with projectId in frontmatter and Supabase metadata
+    - Project IDs in config/projects.ts MUST match the projectId values in Supabase metadata
+    - TypeScript strict typing enforced - cannot pass partial input objects
+    - RAG tool context parameter is separate from projectId - do not conflate
+    - Chat history should reset or show indicator when projectId changes (UX decision needed)
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>ragQuerySchema</name>
+      <kind>Zod Schema</kind>
+      <signature>
+        z.object({
+          query: z.string().min(1).max(500),
+          context: z.enum(['personal', 'project']),
+          projectId: z.string().optional() // NEW - add this field
+        })
+      </signature>
+      <path>backend/src/api/rag.ts</path>
+      <lines>15-18</lines>
+    </interface>
+
+    <interface>
+      <name>generateRagResponse</name>
+      <kind>Function Signature</kind>
+      <signature>
+        async function generateRagResponse(
+          query: string, 
+          context: 'personal' | 'project',
+          projectId?: string // NEW - add this parameter
+        ): Promise&lt;{ text: string; sources: Array&lt;...&gt; }&gt;
+      </signature>
+      <path>backend/src/services/rag.ts</path>
+      <lines>58</lines>
+    </interface>
+
+    <interface>
+      <name>vectorQueryTool.execute</name>
+      <kind>Tool Execute Function</kind>
+      <signature>
+        execute: async ({ query, context, limit, projectId }) => { // NEW - add projectId to destructure
+          // Add conditional filtering:
+          // if (projectId) filter by metadata->>'projectId' = projectId
+          // else use existing source_type filter
+        }
+      </signature>
+      <path>backend/src/services/rag.ts</path>
+      <lines>18-52</lines>
+    </interface>
+
+    <interface>
+      <name>ViewStore.projectId</name>
+      <kind>Zustand State Field</kind>
+      <signature>
+        projectId?: string
+      </signature>
+      <path>vansh.fyi/src/state/overlayStore.ts</path>
+      <lines>10</lines>
+      <usage>Already available - set by goToProjectChat(), read in ChatOverlay</usage>
+    </interface>
+
+    <interface>
+      <name>useRAGQuery</name>
+      <kind>Custom React Hook</kind>
+      <signature>
+        // Current: useRAGQuery(query: string)
+        // NEW: useRAGQuery(query: string, projectId?: string)
+        // Or: useRAGQuery({ query: string, projectId?: string })
+      </signature>
+      <path>vansh.fyi/src/hooks/useRAGQuery.ts</path>
+      <usage>Needs to accept projectId and pass to tRPC mutation</usage>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Testing framework: Vitest (based on architecture.md). Backend tests in backend/src/**/__tests__/. Frontend tests in vansh.fyi/src/**/__tests__/. 
+      Integration tests for tRPC procedures test full request/response cycle. 
+      Unit tests for service layer functions with mocked dependencies.
+      Test files discovered: backend/src/api/__tests__/rag.test.ts, backend/src/services/__tests__/rag-context.test.ts.
+    </standards>
+
+    <locations>
+      - backend/src/api/__tests__/ (tRPC router tests)
+      - backend/src/services/__tests__/ (Service layer tests)
+      - vansh.fyi/src/hooks/__tests__/ (React hooks tests)
+      - vansh.fyi/src/components/overlays/__tests__/ (Component tests)
+    </locations>
+
+    <ideas>
+      - AC#1: Test projectId='aether' query returns only Aether-specific embeddings (mock Supabase response with aether projectId in metadata)
+      - AC#1: Test projectId='vibio' query returns different results than 'aether' query with same question
+      - AC#2: Test projectId update in store triggers chat context refresh in ChatOverlay component
+      - AC#3: Unit test vectorQueryTool with projectId parameter - verify Supabase filter applied correctly
+      - AC#3: Integration test trpc.rag.query with projectId input - verify end-to-end flow
+      - Edge case: Test query with projectId that doesn't exist in database (should return empty results, not error)
+      - Edge case: Test query without project Id (context='personal') - verify existing behavior unchanged
+      - Regression: Test existing personal chat flow still works after changes
+    </ideas>
+  </tests>
+
+</story-context>

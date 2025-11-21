@@ -5,14 +5,52 @@
     "useDefineForClassFields": true,
     "types": [
       "vite/client",
-      "node"
+      "node",
+      "react",
+      "react-dom"
     ],
     "moduleDetection": "force",
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
     "composite": true,
     "emitDeclarationOnly": true,
-    "noEmit": false
+    "noEmit": false,
+    "baseUrl": ".",
+    "paths": {
+      "@mastra/core": [
+        "node_modules/@mastra/core"
+      ],
+      "@trpc/server": [
+        "node_modules/@trpc/server"
+      ],
+      "zod": [
+        "node_modules/zod"
+      ],
+      "hono": [
+        "node_modules/hono"
+      ],
+      "hono/*": [
+        "node_modules/hono/*"
+      ],
+      "@hono/trpc-server": [
+        "node_modules/@hono/trpc-server"
+      ],
+      "dotenv": [
+        "node_modules/dotenv"
+      ],
+      "resend": [
+        "node_modules/resend"
+      ],
+      "@supabase/supabase-js": [
+        "node_modules/@supabase/supabase-js"
+      ],
+      "ai": [
+        "node_modules/ai"
+      ],
+      "@hono/node-server": [
+        "node_modules/@hono/node-server"
+      ]
+    }
   },
   "include": [
     "src",

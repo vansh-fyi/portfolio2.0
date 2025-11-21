@@ -42,8 +42,7 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
   const { isLightMode: _isLightMode } = useThemeStore();
 
   // tRPC mutation for sending email
-  // Type assertion needed until backend (Epic 4, Story 4.5) is implemented
-  const sendEmailMutation = (trpc as any).email.sendLead.useMutation();
+  const sendEmailMutation = trpc.email.sendLead.useMutation();
 
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -116,7 +115,7 @@ const LeadGenChat: React.FC<LeadGenChatProps> = ({ className = '' }) => {
   // Helper: Send email via tRPC API
   const sendEmail = async (data: CollectedData): Promise<string> => {
     // Safe env access that works in both dev and test environments
-    const contactEmail = 'design@vansh.fyi'; // TODO: Read from import.meta.env.VITE_CONTACT_EMAIL in production
+    const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'design@vansh.fyi';
 
     try {
       // Compile comprehensive message from all collected data

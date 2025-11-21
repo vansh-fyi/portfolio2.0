@@ -9,7 +9,7 @@ import { config } from './config';
 const resend = new Resend(config.resendApiKey);
 
 // Recipient email address (Vansh's email)
-const RECIPIENT_EMAIL = 'vansh.s.bhatia@gmail.com'; // TODO: Move to environment variable
+const RECIPIENT_EMAIL = config.contactEmail;
 
 export interface LeadEmailData {
     name: string;

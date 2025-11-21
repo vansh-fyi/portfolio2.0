@@ -16,11 +16,16 @@ export declare const ragRouter: import("@trpc/server").TRPCBuiltRouter<{
         input: {
             query: string;
             context: "personal" | "project";
+            projectId?: string | undefined;
         };
         output: {
             success: boolean;
             response: string;
-            sources: never[];
+            sources: {
+                content: string;
+                source: string;
+                similarity: number;
+            }[];
         };
         meta: object;
     }>;

@@ -1,0 +1,128 @@
+<story-context id="portfolio2.0/docs/sprint-artifacts/5-1-content-migration-metadata.context" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>1</storyId>
+    <title>Content Migration & Metadata</title>
+    <status>done</status>
+    <generatedAt>2025-11-21</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/5-1-content-migration-metadata.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>to migrate the project content from the `rag` directory to the application structure and ensure it has the necessary metadata</iWant>
+    <soThat>the RAG system can index it correctly and support granular project-specific queries</soThat>
+    <tasks>
+- [x] Migrate Content (AC: 1)
+  - [x] Copy files from `rag/case_studies` to `_content/projects`
+  - [x] Organize by category (flat structure with category metadata)
+- [x] Add Metadata (AC: 2)
+  - [x] Add YAML frontmatter to all markdown files
+  - [x] Fields: `projectId` (kebab-case), `title` (Display Name), `category` (e.g., "Product Design")
+- [x] Update Ingestion Script (AC: 3)
+  - [x] Modify `ingestion-scripts/src/ingest.ts` to parse frontmatter
+  - [x] Update `generateEmbedding` or upsert logic to include `projectId` in metadata
+- [x] Verify Data (AC: 3)
+  - [x] Run ingestion script
+  - [x] Check Supabase table for correct metadata
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1.  **Given** the `rag/case_studies` directory
+    *   **When** I migrate the files to `_content/projects`
+    *   **Then** all files are correctly placed and accessible.
+
+2.  **Given** the markdown files
+    *   **When** I inspect the content
+    *   **Then** all files have YAML frontmatter with `projectId`, `title`, and `category`.
+
+3.  **Given** the ingestion script
+    *   **When** I run it
+    *   **Then** it successfully parses the new frontmatter.
+    *   **And** populates the Supabase `embeddings` table with `metadata` containing `projectId`.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic Breakdown</title>
+        <section>Story 5.1: Content Migration & Metadata</section>
+        <snippet>
+As a developer, I want to migrate the project content from the `rag` directory to the application structure and ensure it has the necessary metadata, so that the RAG system can index it correctly.
+        </snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>ingestion-scripts/src/content-loader.ts</path>
+        <description>Loads markdown content and parses frontmatter using gray-matter</description>
+      </file>
+      <file>
+        <path>ingestion-scripts/src/ingest.ts</path>
+        <description>Main ingestion script that processes content and uploads to Supabase</description>
+      </file>
+      <file>
+        <path>_content/projects</path>
+        <description>Directory containing project markdown files with frontmatter metadata</description>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="gray-matter" version="latest" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Source Directory: `rag/case_studies`</constraint>
+    <constraint>Target Directory: `_content/projects`</constraint>
+    <constraint>Metadata Schema: YAML frontmatter with projectId, title, category</constraint>
+    <constraint>Supabase Schema: metadata column (JSONB) - no schema change needed</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>Frontmatter Structure</name>
+      <kind>YAML Metadata</kind>
+      <signature>
+projectId: "project-id"
+title: "Project Title"
+category: "Category Name"
+      </signature>
+      <path>_content/projects/*.md</path>
+    </interface>
+    <interface>
+      <name>Supabase Metadata</name>
+      <kind>JSONB Column</kind>
+      <signature>
+{
+  "projectId": "aether",
+  "title": "Aether",
+  "category": "Product Design",
+  "source_file": "project_aether.md",
+  "chunk_index": 0,
+  "total_chunks": 5
+}
+      </signature>
+      <path>public.embeddings.metadata</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Verify frontmatter is correctly parsed and stored in Supabase. Ensure metadata fields (projectId, title, category) are present in all ingested chunks.
+    </standards>
+    <locations>
+      <location>ingestion-scripts/src/verify_ingestion.ts</location>
+    </locations>
+    <ideas>
+      <idea>Verify all project files have frontmatter</idea>
+      <idea>Verify projectId is unique and kebab-case</idea>
+      <idea>Verify metadata is correctly stored in Supabase</idea>
+      <idea>Verify ingestion completes without errors</idea>
+    </ideas>
+  </tests>
+</story-context>

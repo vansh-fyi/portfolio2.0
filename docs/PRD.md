@@ -107,7 +107,7 @@ All AI functionality will be unified under the brand "Ursa." While presented to 
 **1. Ursa (Conversational RAG Agent)**
 
 *   **Function**: To provide information about Vansh and his projects through a conversational interface.
-*   **Technology**: This agent will be powered by a Retrieval-Augmented Generation (RAG) model connected to a vector database, implemented using the Mastra.AI framework.
+*   **Technology**: This agent will be powered by a Retrieval-Augmented Generation (RAG) model connected to a vector database, implemented using the Vercel AI SDK with HuggingFace provider.
 *   **Context-Awareness (Critical Requirement)**:
     *   **Hero Section Context**: When triggered from the hero section ("Ask Ursa"), the agent will exclusively use vector embeddings from documents containing Vansh's personal and professional information.
     *   **Project Context**: When triggered from a specific project's display overlay, the agent will exclusively use vector embeddings from documents related to that specific project.
@@ -118,7 +118,7 @@ All AI functionality will be unified under the brand "Ursa." While presented to 
 **2. Ursa (Lead Generation Agent)**
 
 *   **Function**: To engage with potential clients or recruiters via the contact form, collect their information and project inquiries, and email the details to Vansh.
-*   **Technology**: This agent does **not** use the RAG system. It will be a simpler, form-handling agent whose conversational flow and email-sending action will be implemented using the Mastra.AI framework.
+*   **Technology**: This agent does **not** use the RAG system. It will be a simpler, form-handling agent whose conversational flow is implemented in the frontend, with email-sending handled directly by Resend SDK in the backend.
 *   **Personality**: It will share the same "Ursa" personality as the conversational agent to maintain a consistent user experience.
 *   **Trigger**: Interacting with the chat interface in the main page's "Contact" section.
 
@@ -205,7 +205,7 @@ The primary user interactions with Ursa are:
 
 *   **Frontend**: React with TypeScript (Vite)
 *   **State Management**: Zustand (view routing, theme management)
-*   **AI Backend**: Mastra.AI (TypeScript)
+*   **AI Backend**: Vercel AI SDK (TypeScript) with HuggingFace provider
 *   **Styling**: Tailwind CSS + Custom CSS
 
 ---
@@ -230,14 +230,14 @@ The primary user interactions with Ursa are:
 *   **FR9**: Ursa's responses must adhere to the defined personality and writing style.
 *   **FR10**: When triggered from the hero section, Ursa must only use information from documents about Vansh to answer questions.
 *   **FR11**: When triggered from a specific project overlay, Ursa must only use information from documents about that specific project to answer questions.
-*   **FR12**: The agent must be powered by a RAG model that retrieves information from a vector database, implemented using the Mastra.AI framework.
+*   **FR12**: The agent must be powered by a RAG model that retrieves information from a vector database, implemented using the Vercel AI SDK with HuggingFace provider.
 
 ### Ursa - Lead Generation Agent
 
 *   **FR13**: The agent in the contact section, also named "Ursa," must be able to collect contact information and project inquiries from potential clients.
 *   **FR14**: The lead generation agent's responses must adhere to the defined "Ursa" personality.
 *   **FR15**: After collecting the information, the agent must send an email containing the details to Vansh's specified email address.
-*   **FR16**: This agent must not use the RAG system and should follow a more structured conversational flow for data collection, implemented using the Mastra.AI framework.
+*   **FR16**: This agent must not use the RAG system and should follow a more structured conversational flow for data collection. The backend uses Resend SDK directly for email functionality.
 
 ### Backend & Data
 

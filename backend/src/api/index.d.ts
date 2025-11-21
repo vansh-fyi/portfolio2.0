@@ -14,11 +14,16 @@ export declare const appRouter: import("@trpc/server").TRPCBuiltRouter<{
             input: {
                 query: string;
                 context: "personal" | "project";
+                projectId?: string | undefined;
             };
             output: {
                 success: boolean;
                 response: string;
-                sources: never[];
+                sources: {
+                    content: string;
+                    source: string;
+                    similarity: number;
+                }[];
             };
             meta: object;
         }>;
@@ -31,9 +36,9 @@ export declare const appRouter: import("@trpc/server").TRPCBuiltRouter<{
     }, import("@trpc/server").TRPCDecorateCreateRouterOptions<{
         sendLead: import("@trpc/server").TRPCMutationProcedure<{
             input: {
+                message: string;
                 name: string;
                 email: string;
-                message: string;
             };
             output: {
                 success: boolean;

@@ -42,20 +42,30 @@ development_status:
   1-4-spa-navigation-routing: done
   1-5-overlay-implementation: done
   epic-1-retrospective: completed # 2025-11-18 - See epic-1-retrospective-2025-11-18.md
-  epic-2: done # ✅ Completed 2025-11-19 (3/3 stories)
-  2-1-rag-backend-integration-chat-functionality: done # Code review approved 2025-11-19
-  2-2-ursa-personality-context-aware-greetings: done # Code review approved 2025-11-19
-  2-3-content-preparation-for-rag: done # NEW - markdown content organization - APPROVED 2025-11-19
-  epic-2-retrospective: completed # 2025-11-19 - See epic-2-retrospective-2025-11-19.md
+  epic-2: in-progress # 🚧 Reopened for verification & content
+  2-1-rag-backend-integration-chat-functionality: done # ✅ Approved - AC#2 fixed, tests passing
+  2-2-ursa-personality-context-aware-greetings: done
+  2-3-content-preparation-for-rag: done # ✅ Approved - Content verified ready for ingestion
+  epic-2-retrospective: optional
   epic-3: in-progress
-  3-1-lead-gen-chat-ui: done # Code review approved 2025-11-19
-  3-2-lead-gen-conversational-flow: done # Code review approved 2025-11-19
-  3-3-email-api-integration: done # APPROVED 2025-11-20 - Integration tests deferred to Epic 4.5 (backend)
+  3-1-lead-gen-chat-ui: done
+  3-2-lead-gen-conversational-flow: done
+  3-3-email-api-integration: done # ✅ Approved - Secure config implemented
   epic-3-retrospective: optional
-  epic-4: backlog
-  4-1-backend-service-setup: done # Code review approved 2025-11-20
-  4-2-vector-database-ingestion: done # Code review approved 2025-11-20 (migration executed)
-  4-3-secure-api-key-management: done # Code review approved 2025-11-20
-  4-4-rag-api-endpoint: done # Code review approved 2025-11-20
-  4-5-email-api-endpoint: done # Code review approved 2025-11-20
-  epic-4-retrospective: optional
+  epic-4: in-progress
+  4-1-backend-service-setup: done
+  4-2-vector-database-ingestion: done # ✅ Approved - Ingestion verified
+  4-3-secure-api-key-management: done # ✅ Approved - Secure config verified
+  4-4-rag-api-endpoint: done
+  4-5-email-api-endpoint: done
+  epic-4-retrospective: completed
+
+  epic-5: backlog
+  5-1-content-migration-metadata: done
+  5-2-dynamic-project-overlay-iframe-integration: review
+  5-3-granular-rag-context-project-specific: done
+  5-4-lead-gen-integration-production-launch: done # ✅ Approved - Implementation verified
+
+  epic-5-retrospective: optional
+ # 2025-11-21 - See epic-4-retrospective-2025-11-21.md
+```

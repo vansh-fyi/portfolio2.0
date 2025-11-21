@@ -40,10 +40,10 @@ export const config = {
     /** Server port (defaults to 8000 if not specified) */
     port: parseInt(process.env.PORT || '8000', 10),
 
-    /** Hugging Face API key for AI model inference */
+    /** HuggingFace API key for AI model inference and embeddings */
     huggingFaceApiKey: requireEnv(
         'HUGGINGFACE_API_KEY',
-        'Hugging Face API key for AI model inference'
+        'HuggingFace API key for AI model inference and embeddings'
     ),
 
     /** Supabase configuration for vector database */
@@ -63,11 +63,17 @@ export const config = {
         'RESEND_API_KEY',
         'Resend API key for email service'
     ),
+
+    /** Contact email address for lead notifications */
+    contactEmail: requireEnv(
+        'CONTACT_EMAIL',
+        'Email address to receive lead notifications'
+    ),
 } as const;
 
 // Validate configuration at module load time
 // This ensures the server fails fast if required keys are missing
 console.log('✅ Configuration validated successfully');
-console.log(`   - Hugging Face API Key: ${config.huggingFaceApiKey.substring(0, 10)}...`);
+console.log(`   - HuggingFace API Key: ${config.huggingFaceApiKey.substring(0, 10)}...`);
 console.log(`   - Supabase URL: ${config.supabase.url}`);
 console.log(`   - Resend API Key: ${config.resendApiKey.substring(0, 6)}...`);

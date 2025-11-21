@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>5</epicId>
+    <storyId>5.4</storyId>
+    <title>Lead Gen Integration & Production Launch</title>
+    <status>ready-for-dev</status>
+    <generatedAt>2025-11-21</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/5-4-lead-gen-integration-production-launch.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>the contact form to actually send emails and the site to be live</iWant>
+    <soThat>I can use the fully functional portfolio website</soThat>
+    <tasks>
+      - Wire Contact Overlay to Email API (AC: 1)
+        - Import trpc client in ContactOverlay.tsx
+        - Use trpc.email.sendLead.useMutation() hook
+        - Handle form submission: validate data, call mutation
+        - Display success/error messages to user
+        - Reset form on successful send
+        - Add loading state during email send
+      - Production Deployment (AC: 2)
+        - Verify all environment variables set in Vercel dashboard
+        - Deploy frontend (vansh.fyi/) to Vercel
+        - Deploy backend (backend/) as Vercel serverless function
+        - Configure custom domain (if applicable)
+        - Verify build succeeds with no errors
+      - End-to-End Smoke Testing (AC: 2)
+        - Test main page navigation
+        - Test project overlay: select projects, view iframes
+        - Test personal chat: ask Ursa about Vansh
+        - Test project chat: ask about specific project
+        - Test contact form: submit message, verify email received
+        - Test dark/light theme switching
+        - Check mobile responsiveness
+        - Verify no console errors in production
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    1. Given the contact form in ContactOverlay
+       * When I submit a message with valid data (name, email, message)
+       * Then Vansh receives an email via Resend
+       * And I see a success confirmation message
+       * And The form resets after successful submission
+
+    2. Given the production URL
+       * When I visit the deployed site
+       * Then All features work as expected:
+         * Main landing page loads
+         * Project overlay displays projects correctly
+         * Chat overlay (personal + project-specific) functions
+         * Contact form sends emails successfully
+       * And No console errors are present
+       * And Performance is acceptable (< 3s initial load)
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic 5 - System Integration & Production Launch</title>
+        <section>Story 5.4: Lead Gen Integration</section>
+        <snippet>Wire up ContactOverlay to trpc.email.sendLead. Final push to Vercel. Run end-to-end smoke tests.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Epic 3 - Ursa Lead Generation Agent</section>
+        <snippet>Backend uses Resend SDK (v~3.2.0) for transactional emails. tRPC endpoint trpc.email.sendLead already implemented.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/stories/5-3-granular-rag-context-project-specific.md</path>
+        <title>Story 5.3 Context</title>
+        <section>Previous Story Learnings</section>
+        <snippet>Story 5.4 deployment will enable testing of Story 5.3 project-specific RAG functionality. Manual testing plan requires deployment.</snippet>
+      </doc>
+    </docs>
+
+    <code>
+      <item>
+        <path>backend/src/api/email.ts</path>
+        <kind>tRPC Router</kind>
+        <symbol>emailRouter.sendLead</symbol>
+        <lines>23-50</lines>
+        <reason>Existing backend endpoint for sending emails - needs to be called from frontend</reason>
+      </item>
+      <item>
+        <path>backend/src/services/email.ts</path>
+        <kind>Service Function</kind>
+        <symbol>sendLeadEmail</symbol>
+        <lines>30-80</lines>
+        <reason>Service logic using Resend SDK to send formatted emails</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/components/overlays/ContactOverlay.tsx</path>
+        <kind>React Component</kind>
+        <symbol>ContactOverlay</symbol>
+        <lines>N/A</lines>
+        <reason>Target component to implement email sending logic (currently static/mocked)</reason>
+      </item>
+    </code>
+  </artifacts>
+
+  <interfaces>
+    <interface>
+      <name>trpc.email.sendLead</name>
+      <type>Mutation</type>
+      <signature>mutate({ name: string, email: string, message: string })</signature>
+      <location>backend/src/api/email.ts</location>
+      <description>tRPC mutation to send lead generation emails via Resend</description>
+    </interface>
+    <interface>
+      <name>LeadEmailData</name>
+      <type>Type</type>
+      <signature>{ name: string; email: string; message: string; }</signature>
+      <location>backend/src/services/email.ts</location>
+      <description>Data structure for lead email payload</description>
+    </interface>
+  </interfaces>
+
+  <constraints>
+    <constraint>
+      <type>Environment</type>
+      <description>Must have RESEND_API_KEY configured in Vercel environment variables</description>
+    </constraint>
+    <constraint>
+      <type>Environment</type>
+      <description>Must have SUPABASE_URL and SUPABASE_ANON_KEY configured in Vercel environment variables</description>
+    </constraint>
+    <constraint>
+      <type>UX</type>
+      <description>Must provide visual feedback (loading/success/error) during email submission</description>
+    </constraint>
+    <constraint>
+      <type>Performance</type>
+      <description>Initial load time should be under 3 seconds on production</description>
+    </constraint>
+  </constraints>
+
+  <testing>
+    <guidance>
+      <type>Manual</type>
+      <description>Submit contact form with valid data and verify email receipt in Vansh's inbox</description>
+    </guidance>
+    <guidance>
+      <type>Manual</type>
+      <description>Submit contact form with invalid email and verify error handling</description>
+    </guidance>
+    <guidance>
+      <type>Smoke Test</type>
+      <description>Navigate through all main flows (Projects, Chat, Contact) on deployed URL</description>
+    </guidance>
+  </testing>
+</story-context>

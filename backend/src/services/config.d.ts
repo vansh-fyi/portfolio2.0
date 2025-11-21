@@ -5,7 +5,7 @@
 export declare const config: {
     /** Server port (defaults to 8000 if not specified) */
     readonly port: number;
-    /** Hugging Face API key for AI model inference */
+    /** HuggingFace API key for AI model inference and embeddings */
     readonly huggingFaceApiKey: string;
     /** Supabase configuration for vector database */
     readonly supabase: {
@@ -14,4 +14,6 @@ export declare const config: {
     };
     /** Resend API key for email sending */
     readonly resendApiKey: string;
+    /** Contact email address for lead notifications */
+    readonly contactEmail: string;
 };

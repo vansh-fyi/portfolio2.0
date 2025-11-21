@@ -1,217 +1,134 @@
-<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.1">
   <metadata>
     <epicId>2</epicId>
-    <storyId>3</storyId>
-    <title>Content Preparation for RAG</title>
+    <storyId>2.3</storyId>
+    <title>Content Preparation for RAG (Refined)</title>
     <status>drafted</status>
-    <generatedAt>2025-11-18</generatedAt>
+    <generatedAt>2025-11-21</generatedAt>
     <generator>BMAD Story Context Workflow</generator>
     <sourceStoryPath>docs/sprint-artifacts/stories/2-3-content-preparation-for-rag.md</sourceStoryPath>
   </metadata>
 
   <story>
     <asA>developer</asA>
-    <iWant>to create and organize markdown content files for Ursa's knowledge base</iWant>
-    <soThat>the RAG system has accurate information about Vansh and his projects</soThat>
+    <iWant>verify the re-implemented content in the `_content/` directory</iWant>
+    <soThat>the RAG system has accurate, non-fictional data for ingestion</soThat>
     <tasks>
-      - Task 1: Create Content Directory Structure (AC: #1)
-        - Create `_content/` directory in project root
-        - Create `_content/personal/` subdirectory for Vansh's information
-        - Create `_content/projects/` subdirectory for project-specific content
-        - Define frontmatter schema (YAML) for metadata consistency
-        - Create `.gitkeep` or README files to document structure
+      - Task 1: Verify Content Integrity (AC: #1, #2)
+        - Check `_content/personal/` for `bio.md`, `skills.md`, `experience.md`, `interests.md`
+        - Verify content reflects actual background (Physics -> UX -> AI)
+        - Check `_content/projects/` for `portfolio-website` and other projects
+        - Verify no residual fictional/placeholder content remains
 
-      - Task 2: Create Personal Content Files (AC: #2, #4)
-        - Create `_content/personal/bio.md` - Personal background, introduction
-        - Create `_content/personal/skills.md` - Technical skills, expertise areas
-        - Create `_content/personal/experience.md` - Work history, achievements
-        - Create `_content/personal/interests.md` - Passions, side projects, learning
-        - Write all content in Ursa's voice (first-person, conversational)
-        - Add frontmatter metadata to each file (type, category, lastUpdated)
+      - Task 2: Verify Metadata & Structure (AC: #3, #4)
+        - Validate YAML frontmatter in all files
+        - Ensure `projectId` in project files matches `src/data/projects.ts`
+        - Ensure `type` field is correctly set (`personal` vs `project`)
 
-      - Task 3: Create Project Content Structure (AC: #3, #4)
-        - For each portfolio project, create directory: `_content/projects/{project-slug}/`
-        - In each project directory, create: overview.md, tech-stack.md, challenges.md, outcomes.md, links.md
-        - Write all content in Ursa's voice (storytelling, technical)
-        - Add frontmatter metadata (projectId, category, lastUpdated)
-
-      - Task 4: Content Quality Review (AC: #4)
-        - Review all content for Ursa's personality consistency
-        - Check frontmatter metadata completeness
-        - Verify directory structure matches architecture specification
-        - Ensure content provides sufficient detail for RAG retrieval
-        - Cross-reference with `docs/ursa-personality-guide.md`
+      - Task 3: Prepare for Ingestion (AC: #4)
+        - Confirm file paths align with what the ingestion script (Story 4.2) expects
+        - Add any missing "source of truth" documentation if needed
     </tasks>
   </story>
 
   <acceptanceCriteria>
-    <criterion id="AC1">
-      <description>Given the `_content/` directory structure, when I create markdown files in `_content/personal/` and `_content/projects/`, then files follow a consistent format with proper metadata (frontmatter).</description>
-      <verification>Check that all markdown files have YAML frontmatter with required fields: type, category, lastUpdated, and optionally projectId/tags</verification>
+    <criterion id="1">
+      <given>the `_content/` directory</given>
+      <when>I inspect the files</when>
+      <then>they contain real information about Vansh (not placeholder text)</then>
     </criterion>
-    <criterion id="AC2">
-      <description>Personal content covers: bio, skills, experience, achievements, interests.</description>
-      <verification>Verify 4-5 markdown files exist in `_content/personal/` covering all required topics with substantive content (300+ words each)</verification>
+    <criterion id="2">
+      <and>the directory structure matches the architecture requirements (`personal/`, `projects/`)</and>
     </criterion>
-    <criterion id="AC3">
-      <description>Each project has its own directory with: overview, tech stack, challenges, outcomes, screenshots/links.</description>
-      <verification>Check that project directories exist with 5 required markdown files per project, properly structured</verification>
+    <criterion id="3">
+      <and>all markdown files have valid YAML frontmatter with `type`, `category`, and `projectId` (where applicable)</and>
     </criterion>
-    <criterion id="AC4">
-      <description>Content is written in Ursa's voice (conversational, authentic, passionate).</description>
-      <verification>Review content samples to confirm first-person narrative, conversational tone, no corporate jargon, matches personality guide examples</verification>
+    <criterion id="4">
+      <and>the content is ready for the ingestion script (Epic 4.2) to process without errors</and>
     </criterion>
   </acceptanceCriteria>
 
   <artifacts>
     <docs>
       <doc>
-        <path>docs/PRD.md</path>
-        <title>Product Requirements Document</title>
-        <section>Ursa's Personality</section>
-        <snippet>Ursa's personality should mirror Vansh's own writing style. Key characteristics: Conversational tone, strongly first-person voice, clear direct language with informal touches, narrative flow, strategic emoji use.</snippet>
+        <path>_content/README.md</path>
+        <title>Content Directory Documentation</title>
+        <section>Directory Structure & Frontmatter Schema</section>
+        <snippet>Defines the required structure: `_content/personal/` and `_content/projects/`. Specifies YAML frontmatter schema including `type`, `category`, `projectId`, and `source`.</snippet>
       </doc>
       <doc>
         <path>docs/ursa-personality-guide.md</path>
         <title>Ursa Personality Guide</title>
-        <section>Complete Guide</section>
-        <snippet>Comprehensive specification for Ursa's conversational AI personality. Defines tone (conversational, authentic, passionate), voice (strongly first-person "I"), vocabulary (clear, direct, informal touches), narrative flow (stories not bullets), and emoji usage. Includes DO/DON'T examples and complete system prompt template.</snippet>
-      </doc>
-      <doc>
-        <path>docs/architecture.md</path>
-        <title>System Architecture</title>
-        <section>Data Architecture - Vector Database</section>
-        <snippet>Supabase vector database table `embeddings` with columns: id, content (TEXT), embedding (vector), metadata (JSONB with source_file, project_id, type: 'personal'|'project'), created_at. Metadata critical for context-aware RAG filtering.</snippet>
-      </doc>
-      <doc>
-        <path>docs/epics.md</path>
-        <title>Epic Breakdown</title>
-        <section>Story 2.3: Content Preparation for RAG</section>
-        <snippet>Create and organize markdown content files for Ursa's knowledge base. Directory structure: `_content/personal/*.md` and `_content/projects/{project-name}/*.md`. Markdown with YAML frontmatter. Content depth: Personal 300-800 words per file, Projects 200-600 words per file.</snippet>
-      </doc>
-      <doc>
-        <path>portfolio-react-template/src/data/projects.ts</path>
-        <title>Project Metadata</title>
-        <section>Project IDs and Structure</section>
-        <snippet>Defines ProjectMetadata interface (id, name, shortDescription, category, technologies, featured). Current project: 'portfolio-website'. Project IDs must match directory names in `_content/projects/`.</snippet>
+        <section>Core Personality Traits</section>
+        <snippet>Defines the voice (first-person), tone (conversational, authentic), and style (narrative flow) that all content must adhere to.</snippet>
       </doc>
     </docs>
 
     <code>
       <artifact>
-        <path>portfolio-react-template/src/data/projects.ts</path>
-        <kind>data source</kind>
-        <symbol>ProjectMetadata</symbol>
-        <lines>11-18</lines>
-        <reason>Interface defines project structure; projectId field must match `_content/projects/{projectId}/` directory names</reason>
+        <path>_content/personal/bio.md</path>
+        <kind>content</kind>
+        <symbol>Personal Bio</symbol>
+        <lines>1-7</lines>
+        <reason>Sample personal content file to verify frontmatter and voice.</reason>
       </artifact>
       <artifact>
-        <path>portfolio-react-template/src/data/projects.ts</path>
-        <kind>data source</kind>
+        <path>_content/projects/portfolio-website/overview.md</path>
+        <kind>content</kind>
+        <symbol>Project Overview</symbol>
+        <lines>1-7</lines>
+        <reason>Sample project content file to verify frontmatter and projectId alignment.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/data/projects.ts</path>
+        <kind>data</kind>
         <symbol>projects</symbol>
         <lines>23-31</lines>
-        <reason>Current project list with id='portfolio-website' - must create matching content directory</reason>
+        <reason>Source of truth for valid `projectId` values. Content directories must match these IDs.</reason>
       </artifact>
     </code>
 
     <dependencies>
-      <frontend>
-        <package name="react" version="^19.2.0" />
-        <package name="typescript" version="~5.9.3" />
-        <package name="@trpc/client" version="^11.7.1" />
-        <package name="zustand" version="^5.0.8" />
-      </frontend>
-      <note>No additional dependencies required for this story - content creation is file-based work</note>
+      <node>
+        <none>Content verification only - no code dependencies</none>
+      </node>
     </dependencies>
   </artifacts>
 
   <constraints>
-    <constraint type="content-quality">
-      All content MUST be written in first-person ("I", "my", "me") as Vansh, NOT about Vansh in third person. This is critical for RAG response authenticity.
-    </constraint>
-    <constraint type="metadata-schema">
-      YAML frontmatter MUST include: type (personal|project), category (bio|skills|experience|interests|overview|tech-stack|challenges|outcomes|links), lastUpdated (YYYY-MM-DD). For project content, MUST include projectId matching folder name.
-    </constraint>
-    <constraint type="directory-structure">
-      Directory structure MUST match architecture specification: `_content/personal/` for personal info, `_content/projects/{project-slug}/` for project-specific content. Project slugs must match IDs in `portfolio-react-template/src/data/projects.ts`.
-    </constraint>
-    <constraint type="rag-compatibility">
-      Content MUST provide sufficient semantic density for vector embedding search. Aim for 300+ words per file with varied vocabulary and specific technical details where applicable.
-    </constraint>
-    <constraint type="personality-consistency">
-      ALL content MUST align with Ursa Personality Guide (docs/ursa-personality-guide.md). Conversational tone, narrative flow, no corporate jargon, strategic emoji use (max 1-2 per file).
-    </constraint>
-    <constraint type="technical-accuracy">
-      Technical content (skills, tech-stack, challenges) must be factually accurate and reflect actual experience. Do not invent projects, skills, or achievements.
-    </constraint>
+    <constraint>Content must be derived from `/rag` source files where possible.</constraint>
+    <constraint>All content must be in first-person voice ("I", "my").</constraint>
+    <constraint>Frontmatter must be valid YAML.</constraint>
+    <constraint>Project IDs must match `src/data/projects.ts` exactly.</constraint>
   </constraints>
 
   <interfaces>
     <interface>
-      <name>YAML Frontmatter Schema</name>
-      <kind>Data Format</kind>
+      <name>YAML Frontmatter</name>
+      <kind>Data Schema</kind>
       <signature>
----
-type: personal | project
-category: bio | skills | experience | interests | overview | tech-stack | challenges | outcomes | links
-projectId: string  # Required for type: project only
-lastUpdated: YYYY-MM-DD
-tags: [string, ...]  # Optional
----
+        type: 'personal' | 'project'
+        category: string
+        projectId?: string
+        lastUpdated: string
+        tags?: string[]
+        source?: string
       </signature>
-      <path>Defined in story dev notes</path>
-      <note>This metadata schema is critical for RAG context filtering and must be consistent across all content files</note>
-    </interface>
-    <interface>
-      <name>ProjectMetadata Interface</name>
-      <kind>TypeScript Interface</kind>
-      <signature>
-export interface ProjectMetadata {
-  id: string;
-  name: string;
-  shortDescription: string;
-  category: string;
-  technologies: string[];
-  featured: boolean;
-}
-      </signature>
-      <path>portfolio-react-template/src/data/projects.ts</path>
-      <note>Project IDs in this interface must match directory names in `_content/projects/{id}/`</note>
+      <path>_content/README.md</path>
     </interface>
   </interfaces>
 
   <tests>
     <standards>
-      This story is primarily content creation (markdown files) rather than code. Testing approach:
-      - Manual verification of file structure and frontmatter
-      - Content quality review against personality guide
-      - Metadata completeness check
-      - Cross-reference project IDs with projects.ts
-      - Future: Epic 4 Story 4.2 will test content ingestion into vector database
+      Manual verification of file content and metadata.
     </standards>
-
     <locations>
-      - No automated test files for this story (content creation)
-      - Manual verification checklist in Task 4
-      - Integration testing will occur in Epic 4 Story 4.2 (data ingestion)
+      _content/
     </locations>
-
     <ideas>
-      <idea ac="AC1">
-        Verify all markdown files have valid YAML frontmatter with required fields. Can use a simple script or manual check.
-      </idea>
-      <idea ac="AC2">
-        Check that `_content/personal/` contains at least 4 files: bio.md, skills.md, experience.md, interests.md. Verify each has 300+ words.
-      </idea>
-      <idea ac="AC3">
-        For each project in projects.ts, verify directory exists in `_content/projects/` with 5 required files. Check file sizes are non-trivial.
-      </idea>
-      <idea ac="AC4">
-        Sample 3-5 content files and verify: first-person voice, conversational tone, narrative flow, no third-person references to "Vansh", matches personality guide examples.
-      </idea>
-      <idea ac="general">
-        After content creation, test a sample by running it through the ingestion pipeline (Epic 4) to verify embeddings generate successfully and metadata extracts correctly.
-      </idea>
+      <test ac="1">Read `_content/personal/bio.md` to ensure it mentions Physics background.</test>
+      <test ac="3">Check `_content/projects/portfolio-website/overview.md` for `projectId: portfolio-website`.</test>
+      <test ac="2">Verify `_content/projects/` contains a folder named `portfolio-website`.</test>
     </ideas>
   </tests>
 </story-context>

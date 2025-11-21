@@ -1,16 +1,14 @@
 import { ragRouter } from '../rag';
 
-// Mock the ursa agent
-jest.mock('../../agents/ursa-agent', () => ({
-    ursaAgent: {
-        generate: jest.fn()
-    }
+// Mock the RAG service
+jest.mock('../../services/rag', () => ({
+    generateRagResponse: jest.fn()
 }));
 
-import { ursaAgent } from '../../agents/ursa-agent';
+import { generateRagResponse } from '../../services/rag';
 
 describe('RAG API Router', () => {
-    const mockGenerate = ursaAgent.generate as jest.MockedFunction<typeof ursaAgent.generate>;
+    const mockGenerateRagResponse = generateRagResponse as jest.MockedFunction<typeof generateRagResponse>;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -18,10 +16,10 @@ describe('RAG API Router', () => {
 
     describe('query procedure', () => {
         it('should process personal context RAG query', async () => {
-            mockGenerate.mockResolvedValueOnce({
+            mockGenerateRagResponse.mockResolvedValueOnce({
                 text: 'Vansh is a software engineer with expertise in TypeScript and React.',
-                // Mock other response properties as needed
-            } as any);
+                sources: []
+            });
 
             const caller = ragRouter.createCaller({});
             const result = await caller.query({
@@ -31,18 +29,17 @@ describe('RAG API Router', () => {
 
             expect(result.success).toBe(true);
             expect(result.response).toContain('software engineer');
-            expect(mockGenerate).toHaveBeenCalledWith(
-                expect.stringContaining('Context: personal')
-            );
-            expect(mockGenerate).toHaveBeenCalledWith(
-                expect.stringContaining('Tell me about Vansh')
+            expect(mockGenerateRagResponse).toHaveBeenCalledWith(
+                'Tell me about Vansh',
+                'personal'
             );
         });
 
         it('should process project context RAG query', async () => {
-            mockGenerate.mockResolvedValueOnce({
+            mockGenerateRagResponse.mockResolvedValueOnce({
                 text: 'The portfolio project uses React, TypeScript, and Vite.',
-            } as any);
+                sources: []
+            });
 
             const caller = ragRouter.createCaller({});
             const result = await caller.query({
@@ -52,13 +49,14 @@ describe('RAG API Router', () => {
 
             expect(result.success).toBe(true);
             expect(result.response).toContain('React');
-            expect(mockGenerate).toHaveBeenCalledWith(
-                expect.stringContaining('Context: project')
+            expect(mockGenerateRagResponse).toHaveBeenCalledWith(
+                'What technologies does the portfolio use?',
+                'project'
             );
         });
 
         it('should handle errors gracefully', async () => {
-            mockGenerate.mockRejectedValueOnce(new Error('API error'));
+            mockGenerateRagResponse.mockRejectedValueOnce(new Error('API error'));
 
             const caller = ragRouter.createCaller({});
 

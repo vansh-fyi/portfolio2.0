@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
+import { projects } from '../../config/projects';
 
 const ProjectView: React.FC = () => {
   const { goToMain, goToProjectChat } = useViewStore();
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('aether');
+
+  const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
+
+  const handleProjectSelect = (projectId: string) => {
+    setSelectedProjectId(projectId);
+  };
 
   return (
     <div className="fixed inset-0 z-40 bg-black">
@@ -59,14 +67,14 @@ const ProjectView: React.FC = () => {
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="inline-flex bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-md items-center justify-center"></div>
                   <div className="flex">
-                    <span className="text-sm text-white/80 font-geist">Aether</span>
-                    <span className="hidden lg:inline text-sm text-white/50 font-geist">:AI Design System Generator</span>
+                    <span className="text-sm text-white/80 font-geist">{selectedProject.title}</span>
+                    <span className="hidden lg:inline text-sm text-white/50 font-geist">:{selectedProject.subtitle}</span>
                   </div>
                 </a>
               </div>
               <div className="flex gap-2 sm:gap-3 gap-x-2 gap-y-2 items-center">
                 <button
-                  onClick={() => goToProjectChat('aether')}
+                  onClick={() => goToProjectChat(selectedProjectId)}
                   className="inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -84,14 +92,20 @@ const ProjectView: React.FC = () => {
               </div>
             </div>
             <div className="grid grid-cols-12 flex-1 min-h-0">
-              {/* Shared Sidebar */}
-              <OverlaySidebar />
+              <OverlaySidebar
+                onProjectSelect={handleProjectSelect}
+                selectedProjectId={selectedProjectId}
+              />
 
-              {/* Main content area */}
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div className="flex-1 sm:space-y-6">
-                    <iframe src="https://www.vansh.fyi/projects/personal/aether" className="w-full h-full border-0" title="Project Display"></iframe>
+                    <iframe
+                      key={selectedProject.url}
+                      src={selectedProject.url}
+                      className="w-full h-full border-0"
+                      title={`${selectedProject.title} - ${selectedProject.subtitle}`}
+                    ></iframe>
                   </div>
                 </div>
               </section>
