@@ -13,14 +13,9 @@
     "allowImportingTsExtensions": false,
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
-    "composite": true,
-    "emitDeclarationOnly": true,
-    "noEmit": false,
+    "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
       "@/*": [
         "./src/*"
       ],
