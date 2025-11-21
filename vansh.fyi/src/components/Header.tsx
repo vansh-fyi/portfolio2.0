@@ -12,7 +12,7 @@ const Header = () => {
     <header className="z-20 fixed top-0 right-0 left-0">
       <div className="flex max-w-7xl mr-auto ml-auto pt-4 pr-6 pb-4 pl-6 items-center justify-between">
         {/* Left: brand + primary nav */}
-        <div className="flex md:gap-x-8 md:pl-2 md:pt-2 md:pr-2 md:pb-2 bg-black/80 ring-white/10 ring-1 rounded-full pt-2 pr-2 pb-2 pl-2 backdrop-blur-sm gap-x-8 gap-y-4 items-center">
+        <div className="flex md:gap-x-8 md:pl-2 md:pt-2 md:pr-2 md:pb-2 bg-black/80 ring-white/10 ring-1 rounded-full pt-2 pr-4 pb-2 pl-2 backdrop-blur-sm gap-x-8 gap-y-4 items-center">
           <Link to="hero" smooth={true} duration={500} className="flex gap-x-2 gap-y-2 items-center cursor-pointer transition opacity-90">
             {/* White logo for dark mode */}
             {!isLightMode && (
