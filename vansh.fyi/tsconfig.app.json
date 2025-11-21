@@ -55,8 +55,7 @@
     }
   },
   "include": [
-    "src",
-    "../backend/src"
+    "src"
   ],
   "exclude": [
     "src/**/__tests__/**",
@@ -64,12 +63,6 @@
     "src/**/*.test.ts",
     "src/**/*.test.tsx",
     "src/**/*.spec.ts",
-    "src/**/*.spec.tsx",
-    "../backend/**/__tests__/**",
-    "../backend/**/__mocks__/**",
-    "../backend/**/*.test.ts",
-    "../backend/**/*.spec.ts",
-    "../backend/src/index.ts",
-    "../backend/src/scripts/**"
+    "src/**/*.spec.tsx"
   ]
 }
