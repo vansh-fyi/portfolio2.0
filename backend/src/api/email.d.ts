@@ -14,9 +14,9 @@ export declare const emailRouter: import("@trpc/server").TRPCBuiltRouter<{
      */
     sendLead: import("@trpc/server").TRPCMutationProcedure<{
         input: {
-            message: string;
             name: string;
             email: string;
+            message: string;
         };
         output: {
             success: boolean;

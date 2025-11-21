@@ -10,6 +10,7 @@
       "react-dom"
     ],
     "moduleDetection": "force",
+    "allowImportingTsExtensions": false,
     "erasableSyntaxOnly": true,
     "noUncheckedSideEffectImports": true,
     "composite": true,
@@ -20,8 +21,8 @@
       "@/*": [
         "./src/*"
       ],
-      "@mastra/core": [
-        "./node_modules/@mastra/core"
+      "@/*": [
+        "./src/*"
       ],
       "@trpc/server": [
         "./node_modules/@trpc/server"

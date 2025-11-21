@@ -36,9 +36,9 @@ export declare const appRouter: import("@trpc/server").TRPCBuiltRouter<{
     }, import("@trpc/server").TRPCDecorateCreateRouterOptions<{
         sendLead: import("@trpc/server").TRPCMutationProcedure<{
             input: {
-                message: string;
                 name: string;
                 email: string;
+                message: string;
             };
             output: {
                 success: boolean;
