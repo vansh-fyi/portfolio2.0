@@ -9,9 +9,9 @@ import type { AppRouter } from '../../../backend/src/api/index';
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
 // Get API URL from environment
-const API_URL = typeof window !== 'undefined' && (window as any).ENV_VITE_API_URL
-  ? (window as any).ENV_VITE_API_URL
-  : 'http://localhost:8000/trpc';
+const API_URL = import.meta.env.VITE_API_URL ||
+  (typeof window !== 'undefined' && (window as any).ENV_VITE_API_URL) ||
+  'http://localhost:8000/trpc';
 
 const trpcClient = trpc.createClient({
   links: [
