@@ -72,6 +72,8 @@
     "../backend/**/__tests__/**",
     "../backend/**/__mocks__/**",
     "../backend/**/*.test.ts",
-    "../backend/**/*.spec.ts"
+    "../backend/**/*.spec.ts",
+    "../backend/src/index.ts",
+    "../backend/src/scripts/**"
   ]
 }
