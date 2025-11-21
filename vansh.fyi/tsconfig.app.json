@@ -19,6 +19,42 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@mastra/core": [
+        "./node_modules/@mastra/core"
+      ],
+      "@trpc/server": [
+        "./node_modules/@trpc/server"
+      ],
+      "zod": [
+        "./node_modules/zod"
+      ],
+      "hono": [
+        "./node_modules/hono"
+      ],
+      "hono/*": [
+        "./node_modules/hono/*"
+      ],
+      "@hono/trpc-server": [
+        "./node_modules/@hono/trpc-server"
+      ],
+      "dotenv": [
+        "./node_modules/dotenv"
+      ],
+      "resend": [
+        "./node_modules/resend"
+      ],
+      "@supabase/supabase-js": [
+        "./node_modules/@supabase/supabase-js"
+      ],
+      "ai": [
+        "./node_modules/ai"
+      ],
+      "@ai-sdk/huggingface": [
+        "./node_modules/@ai-sdk/huggingface"
+      ],
+      "@hono/node-server": [
+        "./node_modules/@hono/node-server"
       ]
     }
   },
