@@ -8,7 +8,7 @@ export const config = {
     runtime: 'nodejs',
 };
 
-const app = new Hono().basePath('/api');
+const app = new Hono();
 
 app.use('/*', cors({
     origin: '*',
@@ -16,12 +16,17 @@ app.use('/*', cors({
     allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
+// Debug: catch both /api/health and /health to see what Vercel passes
+app.get('/api/health', (c) => {
+    return c.json({ status: 'OK', path: '/api/health', environment: 'vercel-node' }, 200);
+});
+
 app.get('/health', (c) => {
-    return c.json({ status: 'OK', environment: 'vercel-edge' }, 200);
+    return c.json({ status: 'OK', path: '/health', environment: 'vercel-node' }, 200);
 });
 
 app.use(
-    '/trpc/*',
+    '/api/trpc/*',
     trpcServer({
         router: appRouter,
     })

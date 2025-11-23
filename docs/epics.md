@@ -25,6 +25,9 @@ This document provides the complete epic and story breakdown for portfolio2.0, d
 *   **Epic 2: Ursa - Conversational RAG Agent**: This epic focuses on building the main conversational AI, including its context-aware RAG functionality and personality.
 *   **Epic 3: Ursa - Lead Generation Agent**: This epic covers the implementation of the contact form agent, including its conversational flow and email-sending capability.
 *   **Epic 4: Backend & Data Infrastructure**: This epic deals with all server-side components, including the Mastra.AI backend, vector database, API key management, and the context-aware logic.
+*   **Epic 5: System Integration & Production Launch**: This epic covers connecting the frontend to the backend, implementing dynamic project content, ensuring granular RAG context, and the final production launch.
+*   **Epic 6: Backend Deployment & API Integration**: This epic focuses on deploying the backend to Vercel serverless functions, configuring environment variables, and verifying API connectivity.
+*   **Epic 7: Mobile Optimization & Performance**: This epic addresses critical mobile performance issues, specifically focusing on preventing JavaScript leaks and ensuring stability during extended sessions.
 
 ---
 
@@ -344,9 +347,95 @@ As a user, I want the contact form to actually send emails and the site to be li
 
 ---
 
+## Epic 6: Backend Deployment & API Integration
+
+**Goal**: Deploy backend to Vercel serverless and connect frontend to backend APIs.
+
+**Status**: 🚧 IN PROGRESS
+
+### Story 6.1: Deploy Backend to Vercel Serverless
+
+As a developer, I want to deploy the backend to Vercel so that the API endpoints are accessible in production.
+
+**Acceptance Criteria:**
+*   **Given** the backend code
+*   **When** I deploy to Vercel
+*   **Then** the serverless functions are active.
+*   **And** environment variables (Resend, Supabase, HuggingFace) are configured.
+
+**Technical Tasks:**
+*   [ ] **Create Project**: New Vercel project for `backend/`.
+*   [ ] **Config Env Vars**: Set all API keys in Vercel.
+*   [ ] **Deploy**: Push to production.
+
+### Story 6.2: Connect Frontend to Backend
+
+As a developer, I want to configure the frontend to talk to the deployed backend, so that the app works for users.
+
+**Acceptance Criteria:**
+*   **Given** the deployed backend URL
+*   **When** I configure `VITE_API_URL` in the frontend
+*   **Then** the frontend successfully makes tRPC calls to the backend.
+
+**Technical Tasks:**
+*   [ ] **Set Env Var**: Add `VITE_API_URL` to frontend Vercel project.
+*   [ ] **Redeploy Frontend**: Trigger new build.
+
+### Story 6.3: Verify Email & RAG Functionality
+
+As a developer, I want to verify that the core features work in production, so that I can sign off on the release.
+
+**Acceptance Criteria:**
+*   **Given** the live site
+*   **When** I send a contact form
+*   **Then** an email is received.
+*   **When** I ask Ursa a question
+*   **Then** I get a RAG-generated response.
+
+**Technical Tasks:**
+*   [ ] **Smoke Test**: Manual verification of features.
+
+---
+
+## Epic 7: Mobile Optimization & Performance
+
+**Goal**: Ensure the application runs smoothly on mobile devices without crashing or leaking memory, addressing the critical stability issues reported.
+
+**Status**: � IN PROGRESS
+
+### Story 7.1: Verify Mobile Stability (Post-Optimization)
+
+As a developer, I want to verify that removing the Unicorn background on mobile has resolved the crash/leak issue, so that I can confirm the fix or identify remaining leaks.
+
+**Acceptance Criteria:**
+*   **Given** the application on a mobile device (small breakpoint)
+*   **When** I use the site for >30 seconds
+*   **Then** the application does NOT crash or reload.
+*   **And** the Unicorn background is NOT present (verified manual fix).
+
+**Technical Tasks:**
+*   [ ] **Verify Fix**: Check that background is removed on mobile.
+*   [ ] **Stress Test**: Run the app for 10 minutes on mobile to ensure no other leaks exist.
+
+### Story 7.2: Mobile Interaction Stability
+
+As a developer, I want to ensure that touch interactions and scrolling are smooth and do not cause jank or crashes, so that the mobile experience is premium.
+
+**Acceptance Criteria:**
+*   **Given** the application on mobile
+*   **When** I scroll and interact with overlays
+*   **Then** the experience is smooth and responsive.
+*   **And** no "Aw Snap" or browser reloads occur.
+
+**Technical Tasks:**
+*   [ ] **Optimize Scroll Handlers**: Ensure scroll events are passive where possible.
+*   [ ] **Fix Touch Events**: Resolve any conflicting touch/scroll interactions.
+
+---
+
 ## Summary
 
-The project has been broken down into four epics: Core Application & React Migration (COMPLETED ✅), Ursa - Conversational RAG Agent, Ursa - Lead Generation Agent, and Backend & Data Infrastructure. All 23 functional requirements from the PRD (including FR7a, FR7b added after Epic 1) have been mapped to these epics and decomposed into a total of 15 user stories (reduced from 17 after Epic 1 learnings consolidated Epic 2 stories). This provides a clear and actionable backlog for development.
+The project has been broken down into seven epics: Core Application & React Migration (COMPLETED ✅), Ursa - Conversational RAG Agent, Ursa - Lead Generation Agent, Backend & Data Infrastructure, System Integration, Backend Deployment, and Mobile Optimization. This provides a clear and actionable backlog for development.
 
 **Epic 1 Retrospective Findings:**
 - View-state architecture implemented instead of overlay visibility flags

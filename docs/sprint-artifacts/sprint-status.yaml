@@ -58,19 +58,22 @@ development_status:
   4-3-secure-api-key-management: done # ✅ Approved - Secure config verified
   4-4-rag-api-endpoint: done
   4-5-email-api-endpoint: done
-  epic-4-retrospective: completed
+  epic-4-retrospective: completed # 2025-11-21 - See epic-4-retrospective-2025-11-21.md
 
   epic-5: backlog
   5-1-content-migration-metadata: done
   5-2-dynamic-project-overlay-iframe-integration: review
   5-3-granular-rag-context-project-specific: done
-  5-4-lead-gen-integration-production-launch: review # 🔍 2025-11-21 - Frontend deployed, backend pending
-
-  epic-6: backlog
-  6-1-deploy-backend-to-vercel-serverless: backlog # Backend deployment + env vars
-  6-2-connect-frontend-to-backend: backlog # Set VITE_API_URL
-  6-3-verify-email-and-rag-functionality: backlog # Production smoke tests
-
+  5-4-lead-gen-integration-production-launch: review # 🔍 Frontend deployed, backend needs env vars
   epic-5-retrospective: optional
- # 2025-11-21 - See epic-4-retrospective-2025-11-21.md
-```
+
+  epic-6: in-progress # ⏸️ PAUSED - Backend deployed, needs env vars (15 min to complete)
+  6-1-deploy-backend-to-vercel-serverless: ready-for-dev # Backend at https://portfolio2-0-backend-blond.vercel.app (500 error - needs env vars)
+  6-2-connect-frontend-to-backend: backlog # Set VITE_API_URL after backend fixed
+  6-3-verify-email-and-rag-functionality: backlog # Test after connection
+  epic-6-retrospective: optional
+
+  epic-7: in-progress
+  7-1-verify-mobile-stability-post-optimization: in-progress
+  7-2-mobile-interaction-stability: backlog
+  epic-7-retrospective: optional

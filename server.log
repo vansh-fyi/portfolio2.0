@@ -1,0 +1,41 @@
+
+> backend@1.0.0 dev
+> nodemon --exec ts-node src/index.ts
+
+[33m[nodemon] 3.1.11[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: ts,json[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting child process[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc

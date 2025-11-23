@@ -1,0 +1,134 @@
+<story-context id="6-1-deploy-backend-to-vercel-serverless" v="1.0">
+  <metadata>
+    <epicId>epic-6</epicId>
+    <storyId>6.1</storyId>
+    <title>Deploy Backend to Vercel Serverless</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-23</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/6-1-deploy-backend-to-vercel-serverless.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>to deploy the backend to Vercel as serverless functions</iWant>
+    <soThat>the API endpoints (RAG and Email) are accessible to the production frontend.</soThat>
+    <tasks>
+- [ ] **Prepare Backend for Deployment** (AC: 1)
+  - [ ] Verify `backend/package.json` has correct build/start scripts for Vercel.
+  - [ ] Create or verify `backend/vercel.json` configuration (rewrites/headers).
+  - [ ] Fix known TypeScript errors (e.g., `embeddings.ts:11` noted in Story 5.4) to ensure clean build.
+  - [ ] Ensure `tsconfig.json` is compatible with Vercel's build environment.
+
+- [ ] **Vercel Project Setup** (AC: 1, 2)
+  - [ ] Initialize Vercel project for `backend/` directory (using Vercel CLI or Dashboard).
+  - [ ] Configure "Root Directory" to `backend`.
+  - [ ] Set environment variables in Vercel Project Settings:
+    - `SUPABASE_URL`
+    - `SUPABASE_ANON_KEY` (or `SUPABASE_KEY`)
+    - `RESEND_API_KEY`
+    - `HUGGINGFACE_API_KEY`
+
+- [ ] **Deployment & Verification** (AC: 3)
+  - [ ] Trigger deployment to Production.
+  - [ ] Monitor build logs for errors.
+  - [ ] Verify deployment URL is active (e.g., `https://portfolio-backend.vercel.app`).
+  - [ ] Test a simple tRPC query (if possible via curl or browser) or verify 404/200 on root.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1. **Given** the backend code in `backend/`
+   * **When** I deploy the project to Vercel
+   * **Then** the build succeeds without errors.
+   * **And** serverless functions are created for the API routes.
+
+2. **Given** the deployed backend project
+   * **When** I configure the environment variables
+   * **Then** the application has access to:
+     * `SUPABASE_URL` and `SUPABASE_ANON_KEY` (for vector DB)
+     * `RESEND_API_KEY` (for email service)
+     * `HUGGINGFACE_API_KEY` (for AI models)
+     * `OPENAI_API_KEY` (if applicable, check implementation)
+
+3. **Given** the deployed backend URL
+   * **When** I hit the health check or a simple endpoint
+   * **Then** I receive a 200 OK response.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture - Deployment Architecture</title>
+        <section>Deployment Architecture</section>
+        <snippet>The backend (using Vercel AI SDK) will be deployed as serverless functions on Vercel. These functions will handle API requests for the RAG agent and email sending.</snippet>
+      </doc>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epics - Epic 6</title>
+        <section>Epic 6: Backend Deployment & API Integration</section>
+        <snippet>This epic focuses on deploying the backend to Vercel serverless functions, configuring environment variables, and verifying API connectivity.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>backend/package.json</path>
+        <kind>config</kind>
+        <reason>Defines build scripts and dependencies for the backend.</reason>
+      </file>
+      <file>
+        <path>backend/vercel.json</path>
+        <kind>config</kind>
+        <reason>Configures Vercel rewrites for the Hono/tRPC API.</reason>
+      </file>
+      <file>
+        <path>backend/api/index.ts</path>
+        <kind>server-entry</kind>
+        <reason>Likely entry point for the serverless function.</reason>
+      </file>
+      <file>
+        <path>backend/src/index.ts</path>
+        <kind>server-entry</kind>
+        <reason>Development server entry point (reference).</reason>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="hono" version="^4.10.6" />
+        <package name="@hono/node-server" version="^1.19.6" />
+        <package name="typescript" version="^5.9.3" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>Backend must run as a Vercel Serverless Function.</constraint>
+    <constraint>All environment variables must be securely configured in Vercel.</constraint>
+    <constraint>Build must pass Vercel's strict checks (no TS errors).</constraint>
+    <constraint>Do not expose API keys in client-side code.</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>tRPC API Endpoint</name>
+      <kind>HTTP/REST</kind>
+      <signature>POST /api/trpc/{procedure}</signature>
+      <path>backend/api/index.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Verify deployment by accessing the deployed URL. Smoke test endpoints. Ensure no 500 errors on health checks.
+    </standards>
+    <locations>
+      <location>Production URL (once deployed)</location>
+    </locations>
+    <ideas>
+      <idea id="1">Deploy and verify build logs show success.</idea>
+      <idea id="2">Access /api/trpc or /api/health to confirm function is running.</idea>
+      <idea id="3">Verify env vars are loaded by checking a protected endpoint (if safe) or relying on functionality.</idea>
+    </ideas>
+  </tests>
+</story-context>

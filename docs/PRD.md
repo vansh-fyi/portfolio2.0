@@ -255,7 +255,10 @@ The primary user interactions with Ursa are:
 
 ### Performance
 
-{{performance_requirements}}
+*   **NFR-P1**: The application must load the main content (LCP) within 2.5 seconds on mobile devices (4G network).
+*   **NFR-P2**: The application must maintain a stable frame rate (minimum 30fps) during scroll and animations on mobile devices.
+*   **NFR-P3 (Critical)**: The application must run continuously on mobile browsers (iOS Safari, Chrome Android) for at least 10 minutes without crashing or exhibiting significant memory leaks (heap usage must not grow unbounded).
+*   **NFR-P4**: WebGL context must be handled efficiently, with context loss restored gracefully if it occurs.
 {{/if}}
 
 {{#if security_requirements}}
@@ -302,6 +305,9 @@ The project is broken down into the following four epics. For a detailed breakdo
 *   **Epic 2: Ursa - Conversational RAG Agent**: This epic focuses on building the main conversational AI, including its context-aware RAG functionality and personality.
 *   **Epic 3: Ursa - Lead Generation Agent**: This epic covers the implementation of the contact form agent, including its conversational flow and email-sending capability.
 *   **Epic 4: Backend & Data Infrastructure**: This epic deals with all server-side components, including the Mastra.AI backend, vector database, API key management, and the context-aware logic.
+*   **Epic 5: System Integration & Production Launch**: This epic covers connecting the frontend to the backend, implementing dynamic project content, ensuring granular RAG context, and the final production launch.
+*   **Epic 6: Backend Deployment & API Integration**: This epic focuses on deploying the backend to Vercel serverless functions, configuring environment variables, and verifying API connectivity.
+*   **Epic 7: Mobile Optimization & Performance**: This epic addresses critical mobile performance issues, specifically focusing on preventing JavaScript leaks and ensuring stability during extended sessions.
 
 ### Epic Breakdown Required
 

@@ -1,9 +1,47 @@
 # Epic 6: Backend Deployment & API Integration
 
-**Status**: `backlog`  
+**Status**: `in-progress` → **PAUSED (2025-11-21 20:23)**  
 **Priority**: High (Blocker for email/RAG functionality)  
 **Owner**: Vansh  
 **Created**: 2025-11-21
+
+---
+
+## 🔴 CURRENT STATUS & NEXT ACTIONS
+
+**What's Done:**
+- ✅ Frontend deployed to Vercel (UI working)
+- ✅ Backend deployed to Vercel: https://portfolio2-0-backend-blond.vercel.app
+- ✅ Backend code ready (`/api/index.ts` wrapper configured)
+- ✅ Documentation complete (Epic 6, Story 5.4 updates)
+
+**What's Blocking:**
+- ❌ Backend returning 500 error - **missing environment variables**
+- ❌ Frontend not connected to backend (no `VITE_API_URL` set)
+
+**Next Session Actions (15 min to complete):**
+
+1. **Set Backend Environment Variables** (5 min)
+   - Go to: [Vercel Dashboard](https://vercel.com) → Backend Project → Settings → Environment Variables
+   - Add 4 variables:
+     - `RESEND_API_KEY` (get from resend.com)
+     - `SUPABASE_URL` (get from Supabase dashboard)
+     - `SUPABASE_ANON_KEY` (get from Supabase dashboard)
+     - `HUGGINGFACE_API_KEY` (get from huggingface.co/settings/tokens)
+   - Redeploy backend after adding vars
+
+2. **Connect Frontend to Backend** (5 min)
+   - Go to: Vercel Dashboard → Frontend Project → Settings → Environment Variables
+   - Add: `VITE_API_URL=https://portfolio2-0-backend-blond.vercel.app/api/trpc`
+   - Redeploy frontend
+
+3. **Test Email Functionality** (5 min)
+   - Visit deployed site
+   - Open contact chat
+   - Submit test message
+   - Verify email received at design@vansh.fyi
+
+**Then:** Mark Story 6.1-6.3 as done, move to RAG debugging if needed.
 
 ---
 
