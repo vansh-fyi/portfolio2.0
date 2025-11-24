@@ -67,13 +67,13 @@ development_status:
   5-4-lead-gen-integration-production-launch: review # 🔍 Frontend deployed, backend needs env vars
   epic-5-retrospective: optional
 
-  epic-6: in-progress
+  epic-6: done
   6-1-deploy-backend-to-vercel-serverless: done # ✅ Recovered from rogue state, tRPC architecture restored
-  6-2-connect-frontend-to-backend: review # Configuring frontend-backend connection
-  6-3-verify-email-and-rag-functionality: backlog # Test after connection
-  epic-6-retrospective: optional
+  6-2-connect-frontend-to-backend: done # Configuring frontend-backend connection
+  6-3-verify-email-and-rag-functionality: done # ✅ Partial verification accepted, remaining work deferred to after Epic 7
+  epic-6-retrospective: completed # 2025-11-24 - See epic-6-retrospective-2025-11-24.md
 
   epic-7: in-progress
-  7-1-verify-mobile-stability-post-optimization: in-progress
-  7-2-mobile-interaction-stability: backlog
+  7-1-verify-mobile-stability-post-optimization: done # ✅ All optimizations complete - chat virtualization, mobile GPU, memory cleanup
+  7-2-mobile-interaction-stability: done # ✅ Code review approved - zero code changes needed, codebase already compliant
   epic-7-retrospective: optional

@@ -1,0 +1,67 @@
+<context>
+  <story>
+    <id>7.1</id>
+    <key>7-1-verify-mobile-stability-post-optimization</key>
+    <title>Optimize Performance and Fix Long-Session Lag</title>
+    <status>ready-for-dev</status>
+    <user_story>
+      <as_a>user</as_a>
+      <i_want>the portfolio to remain fast and responsive on all devices</i_want>
+      <so_that>I can have a smooth experience without lag or freezing, even during long sessions.</so_that>
+    </user_story>
+    <acceptance_criteria>
+      <criterion>AC1: Chat Performance - The chat overlay remains responsive (>30fps) even with a long conversation history (50+ messages).</criterion>
+      <criterion>AC2: Mobile GPU Performance - The hero section does not cause freezing or significant jank on mobile devices.</criterion>
+      <criterion>AC3: Memory Stability - The Unicorn Studio script element is removed from the DOM if the App component unmounts, preventing a dangling node.</criterion>
+      <criterion>AC4: UI Preservation - CRITICAL: The visual design and UI elements must remain unchanged. Optimization should be internal only.</criterion>
+    </acceptance_criteria>
+    <tasks>
+      <task>Task 1 (Chat Lag): Implement list virtualization (e.g., `react-window` or `react-virtual`) for the `messages` array in `ChatOverlay.tsx`.</task>
+      <task>Task 2 (Mobile Freezing): In `index.css`, create a mobile-specific media query to replace the expensive multi-layered `backdrop-filter` on `.gradient-blur` with a simple, static gradient.</task>
+      <task>Task 3 (Memory Leak): In `App.tsx`, add a cleanup function to the `UnicornStudio` `useEffect` hook to remove the appended script element on component unmount.</task>
+      <task>Task 4: Verification - Test all fixes on a physical mobile device and profile performance on desktop.</task>
+    </tasks>
+  </story>
+
+  <artifacts>
+    <code>
+      <item>
+        <path>vansh.fyi/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ChatOverlay</symbol>
+        <reason>Primary cause of long-session lag. The `messages` array is re-rendered on every update, causing performance to degrade as the array grows.</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/index.css</path>
+        <kind>styling</kind>
+        <symbol>.gradient-blur</symbol>
+        <reason>Likely cause of mobile freezing. The stacked `backdrop-filter: blur()` properties are extremely GPU-intensive on mobile.</reason>
+      </item>
+      <item>
+        <path>vansh.fyi/src/App.tsx</path>
+        <kind>component</kind>
+        <symbol>App</symbol>
+        <reason>Contains a minor memory leak where the `UnicornStudio` script is injected via `useEffect` without a proper cleanup function to remove the script tag.</reason>
+      </item>
+    </code>
+  </artifacts>
+
+  <constraints>
+    <constraint>
+      <type>UI Preservation</type>
+      <description>Do not remove visual features. The `.gradient-blur` should be simplified for mobile only, and virtualization should not alter the chat's appearance.</description>
+    </constraint>
+    <constraint>
+      <type>Unicorn Studio Keys</type>
+      <description>Do not alter the `data-us-project` keys. The fix should be in the script loading/cleanup logic, not the configuration.</description>
+    </constraint>
+  </constraints>
+
+  <tests>
+    <ideas>
+      <idea>Send 100 messages in the chat overlay and confirm the UI remains responsive.</idea>
+      <idea>Profile the Hero section on a simulated mobile device in Chrome DevTools to confirm GPU usage is reduced after the CSS fix.</idea>
+      <idea>Inspect the DOM to ensure the Unicorn Studio script tag is removed if the main App component were to unmount.</idea>
+    </ideas>
+  </tests>
+</context>

@@ -1372,3 +1372,130 @@ Require stack:
 
 Node.js v25.2.1
 [31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+node:internal/modules/cjs/loader:1423
+  throw err;
+  ^
+
+Error: Cannot find module './index.ts'
+Require stack:
+- /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1420:15)
+    at require.resolve (node:internal/modules/helpers:163:19)
+    at requireResolveNonCached (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:549:16)
+    at getProjectSearchDir (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:519:40)
+    at phase3 (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:267:27)
+    at bootstrap (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:47:30)
+    at main (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:33:12)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:579:5)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1892:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript'
+  ]
+}
+
+Node.js v25.2.1
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+[32m[nodemon] clean exit - waiting for changes before restart[39m

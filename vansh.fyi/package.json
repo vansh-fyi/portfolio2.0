@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.10",
+    "@tanstack/react-virtual": "^3.13.12",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@trpc/client": "^11.7.1",

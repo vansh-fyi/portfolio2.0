@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
@@ -19,6 +20,14 @@ const ChatView: React.FC = () => {
 
   const { data, error, isLoading, refetch } = useRAGQuery(pendingQuery);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  // Virtualization setup for performance with long message lists
+  const virtualizer = useVirtualizer({
+    count: messages.length,
+    getScrollElement: () => chatContainerRef.current,
+    estimateSize: useCallback(() => 80, []), // Estimated message height
+    overscan: 5, // Render 5 extra items above/below viewport
+  });
 
   useEffect(() => {
     if (chatContext === 'personal') {
@@ -46,11 +55,12 @@ const ChatView: React.FC = () => {
     }
   }, [pendingQuery, refetch]);
 
+  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    if (messages.length > 0) {
+      virtualizer.scrollToIndex(messages.length - 1, { align: 'end' });
     }
-  }, [messages, isLoading]);
+  }, [messages.length, isLoading, virtualizer]);
 
   useEffect(() => {
     if (isLoading) {
@@ -179,26 +189,51 @@ const ChatView: React.FC = () => {
               {chatContext === 'project' && <OverlaySidebar />}
               <section className={`${chatContext === 'project' ? 'col-span-12 md:col-span-9 lg:col-span-9' : 'col-span-12'} min-h-0 flex flex-col relative`}>
                 <div className="flex flex-col min-h-0 h-full relative">
-                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto sm:px-8 pt-8 pr-4 pb-8 pl-4 space-y-6">
-                    {messages.map((msg, index) => (
-                      <div key={index} className={`flex gap-x-3 gap-y-3 items-start ${msg.sender === 'user' ? 'justify-end' : ''}`}>
-                        {msg.sender === 'ai' && (
-                          <div className="flex flex-shrink-0 text-xs font-medium text-white bg-white/10 w-8 h-8 rounded-full ring-white/10 ring-1 items-center justify-center">AI</div>
-                        )}
-                        <div className={`text-sm max-w-[75%] ring-1 rounded-2xl pt-2.5 pr-4 pb-2.5 pl-4 shadow-sm backdrop-blur-sm ${msg.sender === 'user' ? 'bg-white/5 ring-white/10' : 'bg-black/30 ring-white/10'}`}>
-                          <p className="text-white">{msg.text}</p>
-                        </div>
-                        {msg.sender === 'user' && (
-                          <div className="inline-flex transition text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-user lucide-user w-[18px] h-[18px]">
-                              <circle cx="12" cy="12" r="10"></circle>
-                              <circle cx="12" cy="10" r="3"></circle>
-                              <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
-                            </svg>
+                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto sm:px-8 pt-8 pr-4 pb-8 pl-4">
+                    <div
+                      style={{
+                        height: `${virtualizer.getTotalSize()}px`,
+                        width: '100%',
+                        position: 'relative',
+                      }}
+                    >
+                      {virtualizer.getVirtualItems().map((virtualRow) => {
+                        const msg = messages[virtualRow.index];
+                        return (
+                          <div
+                            key={virtualRow.index}
+                            data-index={virtualRow.index}
+                            ref={virtualizer.measureElement}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              transform: `translateY(${virtualRow.start}px)`,
+                              paddingBottom: '24px', // Equivalent to space-y-6
+                            }}
+                          >
+                            <div className={`flex gap-x-3 gap-y-3 items-start ${msg.sender === 'user' ? 'justify-end' : ''}`}>
+                              {msg.sender === 'ai' && (
+                                <div className="flex flex-shrink-0 text-xs font-medium text-white bg-white/10 w-8 h-8 rounded-full ring-white/10 ring-1 items-center justify-center">AI</div>
+                              )}
+                              <div className={`text-sm max-w-[75%] ring-1 rounded-2xl pt-2.5 pr-4 pb-2.5 pl-4 shadow-sm backdrop-blur-sm ${msg.sender === 'user' ? 'bg-white/5 ring-white/10' : 'bg-black/30 ring-white/10'}`}>
+                                <p className="text-white">{msg.text}</p>
+                              </div>
+                              {msg.sender === 'user' && (
+                                <div className="inline-flex transition text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-user lucide-user w-[18px] h-[18px]">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
+                                  </svg>
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        );
+                      })}
+                    </div>
                     {isSending && (
                       <div className="flex gap-3 gap-x-3 gap-y-3 items-center">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-medium ring-1 ring-white/10 text-white">AI</div>

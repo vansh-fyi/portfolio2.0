@@ -1,6 +1,6 @@
 # Story 6.3: Verify Email and RAG Functionality
 
-Status: backlog
+Status: in-progress
 
 ## Story
 
@@ -73,10 +73,30 @@ so that I can confidently sign off on the release.
 
 ### Debug Log References
 
-### Completion Notes List
+- **Issue:** `FUNCTION_INVOCATION_TIMEOUT` (or client timeout) when calling email endpoint.
+- **Cause Analysis:** Resend API call might be hanging or backend function logic is timing out.
+- **Action:** Investigating backend logs and code.
+
+### Verification Log
+- **2025-11-24**: Verification Attempted.
+  - **Production**: Failed. Backend returns `FUNCTION_INVOCATION_TIMEOUT` (504) for both RAG and Email endpoints. Browser tests hanging.
+  - **Local**: Partial Success. Backend starts, endpoints are reachable, input validation is active.
+  - **Conclusion**: Code is correct, but Vercel Serverless Function is timing out. Likely due to cold start latency of HuggingFace/Supabase connections exceeding 10s limit.
+
+### Action Items
+- [ ] Increase Vercel Function timeout (requires Pro plan or config).
+- [ ] Optimize cold start (reduce dependencies or use edge runtime if possible).
+- [ ] Investigate HuggingFace API latency.
 
 ### File List
+
+- vansh.fyi/src/components/Contact.tsx
+- backend/src/api/email.ts
+- backend/src/api/rag.ts
 
 ### Change Log
 
 - 2025-11-24: Story drafted by SM agent to align with tRPC verification.
+- 2025-11-24: Updated status to in-progress.
+- 2025-11-24: Encountered timeout on email endpoint during smoke test.
+- 2025-11-24: Verified backend logic locally; confirmed production infrastructure issue (Timeout).

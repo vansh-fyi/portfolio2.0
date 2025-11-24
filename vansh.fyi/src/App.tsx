@@ -74,6 +74,12 @@ function App() {
     };
 
     initUnicornStudio();
+
+    // Cleanup: Remove Unicorn Studio script when component unmounts
+    return () => {
+      const scripts = document.querySelectorAll('script[src*="unicornstudio"]');
+      scripts.forEach(script => script.remove());
+    };
   }, [currentView, isLightMode]);
 
   // Render different views based on currentView
