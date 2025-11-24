@@ -49,12 +49,7 @@ Sent via Portfolio Lead Generation Form
 
         // Use a timeout to prevent hanging indefinitely
         const sendPromise = resend.emails.send({
-            from: 'Portfolio Lead Gen <onboarding@resend.dev>', // Use testing domain if custom domain not verified, or revert to verified if sure. Let's try default testing for safety first, or custom if verified.
-            // NOTE: 'design@vansh.fyi' requires domain verification. If not verified, it hangs or fails.
-            // Let's revert to 'onboarding@resend.dev' for testing if 'design@vansh.fyi' is causing issues, 
-            // BUT the 'to' must be the verified email (Vansh's).
-            // Assuming 'design@vansh.fyi' IS verified as a sender. 
-            // If it hangs, it might be a Vercel/Resend interaction issue.
+            from: 'Portfolio Lead Gen <design@vansh.fyi>',
             to: [RECIPIENT_EMAIL],
             subject: `New Lead from ${name}`,
             text: emailContent,
