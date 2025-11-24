@@ -1,12 +1,11 @@
-import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-
 export const config = {
     runtime: 'nodejs',
 };
 
 export default async function handler(req: Request) {
     try {
-        // Lazy import to catch initialization errors
+        // Lazy import everything to catch initialization errors
+        const { fetchRequestHandler } = await import('@trpc/server/adapters/fetch');
         const { appRouter } = await import('../../src/api');
 
         return fetchRequestHandler({
@@ -17,12 +16,14 @@ export default async function handler(req: Request) {
         });
     } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
-        console.error('tRPC handler error:', message);
+        const stack = error instanceof Error ? error.stack : '';
+        console.error('tRPC handler error:', message, stack);
 
         return new Response(
             JSON.stringify({
                 error: 'Backend initialization failed',
                 details: message,
+                stack: stack?.split('\n').slice(0, 5).join('\n'),
                 hint: 'Check environment variables in Vercel Dashboard'
             }),
             {
