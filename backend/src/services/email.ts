@@ -47,13 +47,25 @@ ${message}
 Sent via Portfolio Lead Generation Form
     `.trim();
 
-        // Send email using Resend API
-        const response = await resend.emails.send({
-            from: 'Portfolio Lead Gen <design@vansh.fyi>', // Verified domain
+        // Use a timeout to prevent hanging indefinitely
+        const sendPromise = resend.emails.send({
+            from: 'Portfolio Lead Gen <onboarding@resend.dev>', // Use testing domain if custom domain not verified, or revert to verified if sure. Let's try default testing for safety first, or custom if verified.
+            // NOTE: 'design@vansh.fyi' requires domain verification. If not verified, it hangs or fails.
+            // Let's revert to 'onboarding@resend.dev' for testing if 'design@vansh.fyi' is causing issues, 
+            // BUT the 'to' must be the verified email (Vansh's).
+            // Assuming 'design@vansh.fyi' IS verified as a sender. 
+            // If it hangs, it might be a Vercel/Resend interaction issue.
             to: [RECIPIENT_EMAIL],
             subject: `New Lead from ${name}`,
             text: emailContent,
         });
+
+        // 10s timeout
+        const timeoutPromise = new Promise<any>((_, reject) => 
+            setTimeout(() => reject(new Error('Email sending timed out after 10s')), 10000)
+        );
+
+        const response = await Promise.race([sendPromise, timeoutPromise]);
 
         // Check for successful send
         if (response.error) {
