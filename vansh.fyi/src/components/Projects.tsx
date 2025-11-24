@@ -32,7 +32,7 @@ const Projects = () => {
             onClick={handleProjectClick}
             className="group relative overflow-hidden rounded-2xl border ring-1 md:col-span-2 lg:row-span-2 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80"
+              src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/aether.jpg"
               alt="Abstract Portrait"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -52,7 +52,7 @@ const Projects = () => {
             onClick={handleProjectClick}
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=1080&q=80"
+              src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/driq.jpeg"
               alt="Abstract Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -72,7 +72,7 @@ const Projects = () => {
             onClick={handleProjectClick}
             className="group overflow-hidden aspect-auto border ring-1 rounded-2xl relative lg:row-span-2 md:row-span-3 xs:row-span-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=1080&q=80"
+              src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/sparto.jpg"
               alt="Surreal Landscape"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -94,7 +94,7 @@ const Projects = () => {
             onClick={handleProjectClick}
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1642615835477-d303d7dc9ee9?w=1080&q=80"
+              src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/sparto_admin.jpg"
               alt="Futuristic Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
@@ -116,7 +116,7 @@ const Projects = () => {
             onClick={handleProjectClick}
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
-              src="https://images.unsplash.com/photo-1635151227785-429f420c6b9d?w=1080&q=80"
+              src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/vibio.jpg"
               alt="Digital Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
