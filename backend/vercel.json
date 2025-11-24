@@ -1,17 +1,6 @@
 {
-    "functions": {
-        "api/index.ts": {
-            "runtime": "nodejs20.x"
-        }
-    },
     "rewrites": [
-        {
-            "source": "/health",
-            "destination": "/api"
-        },
-        {
-            "source": "/api/trpc/(.*)",
-            "destination": "/api"
-        }
+        { "source": "/health", "destination": "/api" },
+        { "source": "/trpc/(.*)", "destination": "/api" }
     ]
 }

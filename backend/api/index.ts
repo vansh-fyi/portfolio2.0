@@ -1,12 +1,14 @@
 import { handle } from 'hono/vercel';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { trpcServer } from '@hono/trpc-server';
+import { appRouter } from '../src/api';
 
 export const config = {
-    runtime: 'nodejs20.x',
+    runtime: 'nodejs',
 };
 
-const app = new Hono().basePath('/api');
+const app = new Hono();
 
 app.use('/*', cors({
     origin: '*',
@@ -14,30 +16,17 @@ app.use('/*', cors({
     allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Health check - no dependencies, always works
+// Health check
 app.get('/health', (c) => {
-    return c.json({ status: 'OK', environment: 'vercel-node', timestamp: new Date().toISOString() }, 200);
+    return c.json({ status: 'OK' }, 200);
 });
 
-// tRPC routes - lazy load to avoid config validation on health checks
-app.all('/trpc/*', async (c) => {
-    try {
-        const { trpcServer } = await import('@hono/trpc-server');
-        const { appRouter } = await import('../src/api');
-
-        const middleware = trpcServer({
-            router: appRouter,
-        });
-
-        return middleware(c, async () => {});
-    } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-        console.error('tRPC initialization error:', message);
-        return c.json({
-            error: 'Service configuration error',
-            details: message
-        }, 500);
-    }
-});
+// tRPC routes
+app.use(
+    '/trpc/*',
+    trpcServer({
+        router: appRouter,
+    })
+);
 
 export default handle(app);
