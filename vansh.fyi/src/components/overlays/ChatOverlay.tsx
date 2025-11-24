@@ -203,9 +203,37 @@ const ChatView: React.FC = () => {
                       <div className="flex gap-3 gap-x-3 gap-y-3 items-center">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-medium ring-1 ring-white/10 text-white">AI</div>
                         <div className="flex gap-2 text-sm text-white/80 gap-x-2 gap-y-2 items-center">
-                          <svg className="animate-spin h-4 w-4 text-white/80" viewBox="0 0 24 24">
-                            <circle className="opacity-20" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                            <path className="opacity-80" fill="currentColor" d="M4 12a8 8 0 018-8v4A4 4 0 008 12H4z"></path>
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            style={{
+                              width: '16px',
+                              height: '16px',
+                              animation: 'spin 1s linear infinite'
+                            }}
+                          >
+                            <style>{`
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                `}</style>
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8v4A4 4 0 008 12H4z"
+                            ></path>
                           </svg>
                           Processing your request...
                         </div>

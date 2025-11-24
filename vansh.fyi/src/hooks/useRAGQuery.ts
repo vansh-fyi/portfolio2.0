@@ -1,6 +1,6 @@
 import { trpc } from '../services/trpc';
 import { useViewStore } from '../state/overlayStore';
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
  * Custom hook for RAG queries with support for both streaming and non-streaming responses
@@ -15,40 +15,20 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 export const useRAGQuery = (query: string) => {
   const { chatContext, projectId } = useViewStore.getState();
 
-  // Use ref to always have current query value in callback
-  const queryRef = useRef(query);
-  useEffect(() => {
-    queryRef.current = query;
-  }, [query]);
-
   // Type assertion needed due to placeholder AppRouter type
   // This will be properly typed when backend AppRouter is imported
   const ragQuery = (trpc as any).rag.query.useQuery(
     {
-      query: query || '__skip__', // Placeholder when empty - won't be sent due to enabled check
+      query,
       context: chatContext,
       projectId: chatContext === 'project' ? projectId : undefined,
     },
     {
-      // Only enable query when there's actual content to query
-      enabled: false,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
+      enabled: false, // We will call this query manually
     }
   );
 
-  // Wrap refetch to prevent empty query requests - use ref for current value
-  const safeRefetch = useCallback(() => {
-    const currentQuery = queryRef.current;
-    if (currentQuery && currentQuery.trim().length > 0) {
-      return ragQuery.refetch();
-    }
-    // Return a resolved promise to maintain consistent API
-    return Promise.resolve();
-  }, [ragQuery]);
-
-  return { ...ragQuery, refetch: safeRefetch };
+  return ragQuery;
 };
 
 /**
