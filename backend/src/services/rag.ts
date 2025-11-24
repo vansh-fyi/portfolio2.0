@@ -23,8 +23,14 @@ const vectorQueryTool = tool({
     description: 'Search for relevant information in the knowledge base about Vansh and his projects.',
     parameters: toolParams,
     // @ts-ignore - Vercel AI SDK type inference issue
-    execute: async ({ query, context, limit, projectId }: z.infer<typeof toolParams>) => {
+    execute: async (params: z.infer<typeof toolParams>) => {
+        console.log('🔧 Tool called with:', JSON.stringify(params));
+        const { query, context, limit, projectId } = params || {};
         try {
+            if (!query) {
+                console.error('❌ Tool received no query!');
+                return { error: 'No query provided to vector search tool' };
+            }
             const resultLimit = limit || 5;
             const embedding = await generateEmbedding(query);
 
@@ -72,44 +78,75 @@ const vectorQueryTool = tool({
 });
 
 /**
- * Generate RAG response using Vercel AI SDK with HuggingFace models
+ * Generate RAG response - simplified approach without tool calling
+ * 1. Do vector search directly
+ * 2. Pass results to LLM for response generation
  */
 export async function generateRagResponse(query: string, context: 'personal' | 'project', projectId?: string): Promise<{ text: string; sources: Array<{ content: string; source: string; similarity: number }> }> {
-    const result = await generateText({
-        model: huggingface('meta-llama/Llama-3.2-3B-Instruct'),
-        system: `You are Ursa, Vansh's AI assistant. You are helpful, conversational, and knowledgeable about Vansh's professional work.
+    console.log('🔍 RAG Query:', { query, context, projectId });
 
-**Your Role:**
-- Answer questions about Vansh's skills, experience, and projects
-- Provide accurate, helpful information using the knowledge base
-- Be friendly and approachable, but remain professional
+    try {
+        // Step 1: Vector search directly
+        const embedding = await generateEmbedding(query);
+        console.log('✅ Embedding generated');
 
-**Context Awareness:**
-- Personal context: Focus on Vansh's bio, skills, interests, and background
-- Project context: Focus on specific project details, challenges, and technical implementations${projectId ? `\n- Current project filter: ${projectId}` : ''}
+        let supabaseQuery = supabase.rpc('match_documents', {
+            query_embedding: embedding,
+            match_threshold: 0.3,
+            match_count: 5,
+        });
 
-**Communication Style:**
-- Be concise and clear
-- Use technical terminology when discussing projects
-- Be casual and friendly when discussing personal background
-- Always cite sources when pulling from the knowledge base
+        if (projectId) {
+            supabaseQuery = supabaseQuery.filter('metadata->>projectId', 'eq', projectId);
+        } else {
+            supabaseQuery = supabaseQuery.filter('metadata->>source_type', 'eq', context);
+        }
 
-Use the vectorQuery tool with context="${context}"${projectId ? ` and projectId="${projectId}"` : ''} to find relevant information before answering.`,
-        prompt: query,
-        tools: {
-            vectorQuery: vectorQueryTool
-        },
-        toolChoice: 'auto',
-    });
+        const { data: searchResults, error: searchError } = await supabaseQuery;
 
-    // Extract sources from tool results
-    // Note: Tool results in Vercel AI SDK are complex to extract due to type constraints
-    // Returning empty array for now - AC#2 specifies "if applicable"
-    // TODO: Implement proper source extraction when Vercel AI SDK provides clearer typing
-    const sources: Array<{ content: string; source: string; similarity: number }> = [];
+        if (searchError) {
+            console.error('❌ Vector search error:', searchError);
+            throw new Error('Vector search failed');
+        }
 
-    return {
-        text: result.text,
-        sources
-    };
+        console.log('✅ Vector search results:', searchResults?.length || 0);
+
+        // Step 2: Build context from search results
+        const contextText = searchResults && searchResults.length > 0
+            ? searchResults.map((doc: any) => doc.content).join('\n\n---\n\n')
+            : 'No relevant information found in the knowledge base.';
+
+        // Step 3: Generate response with LLM
+        const result = await generateText({
+            model: huggingface('meta-llama/Llama-3.2-3B-Instruct'),
+            system: `You are Ursa, Vansh's AI assistant. You are helpful, conversational, and knowledgeable about Vansh's professional work.
+
+Use the following context to answer the user's question. If the context doesn't contain relevant information, say so politely.
+
+**Context from knowledge base:**
+${contextText}
+
+**Guidelines:**
+- Be concise and friendly
+- Reference the context when answering
+- If you don't have enough information, be honest about it`,
+            prompt: query,
+        });
+
+        console.log('✅ LLM Response:', result.text?.substring(0, 100));
+
+        const sources = searchResults?.map((doc: any) => ({
+            content: doc.content?.substring(0, 200) || '',
+            source: doc.metadata?.source_file || 'Unknown',
+            similarity: doc.similarity || 0
+        })) || [];
+
+        return {
+            text: result.text || 'I apologize, but I could not generate a response.',
+            sources
+        };
+    } catch (error) {
+        console.error('❌ RAG Error:', error);
+        throw error;
+    }
 }

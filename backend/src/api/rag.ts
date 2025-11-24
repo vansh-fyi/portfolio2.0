@@ -29,7 +29,7 @@ export const ragRouter = t.router({
      */
     query: t.procedure
         .input(ragQuerySchema)
-        .mutation(async ({ input }) => {
+        .query(async ({ input }) => {
             try {
                 const { query, context, projectId } = input;
 
