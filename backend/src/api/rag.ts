@@ -13,7 +13,7 @@ const t = initTRPC.create();
 
 // Input validation schema for RAG query
 const ragQuerySchema = z.object({
-    query: z.string().min(1, 'Query is required').max(500, 'Query too long'),
+    query: z.string().max(500, 'Query too long'), // Allow empty string for initial load
     context: z.enum(['personal', 'project']).describe('Context type for search'),
     projectId: z.string().optional().describe('Optional project ID for project-specific filtering'),
 });
@@ -32,6 +32,16 @@ export const ragRouter = t.router({
         .query(async ({ input }) => {
             try {
                 const { query, context, projectId } = input;
+
+                // Return empty response for empty queries (initial chat load / polling)
+                // Frontend should handle displaying a greeting if needed
+                if (!query || query.trim() === '') {
+                    return {
+                        success: true,
+                        response: null,
+                        sources: []
+                    };
+                }
 
                 // Generate response using Vercel AI SDK
                 const { text, sources } = await generateRagResponse(query, context, projectId);

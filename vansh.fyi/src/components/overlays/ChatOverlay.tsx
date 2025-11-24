@@ -14,9 +14,10 @@ const ChatView: React.FC = () => {
   const { goToMain, goToProjects, chatContext, initialChatQuery, projectId } = useViewStore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
   const [isSending, setIsSending] = useState(false);
 
-  const { data, error, isLoading, refetch } = useRAGQuery(input);
+  const { data, error, isLoading, refetch } = useRAGQuery(pendingQuery);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,12 +33,18 @@ const ChatView: React.FC = () => {
 
   useEffect(() => {
     if (initialChatQuery) {
-      setInput(initialChatQuery);
       setMessages((prev) => [...prev, { sender: 'user', text: initialChatQuery }]);
+      setPendingQuery(initialChatQuery); // Use pendingQuery instead
       useViewStore.setState({ initialChatQuery: '' }); // Clear it after use
+    }
+  }, [initialChatQuery]);
+
+  // Trigger refetch when pendingQuery changes (and is not empty)
+  useEffect(() => {
+    if (pendingQuery.trim()) {
       refetch();
     }
-  }, [initialChatQuery, refetch]);
+  }, [pendingQuery, refetch]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -52,13 +59,18 @@ const ChatView: React.FC = () => {
       setIsSending(false);
     }
 
-    if (data) {
-      // @ts-ignore
-      setMessages((prev) => [...prev, { sender: 'ai', text: data.response || 'I am sorry, I could not find an answer to that.' }]);
+    // Only process response if we were expecting one (pendingQuery is set)
+    if (!pendingQuery) return;
+
+    // @ts-ignore - Only add message if there's an actual response (not null from empty queries)
+    if (data && data.response) {
+      setMessages((prev) => [...prev, { sender: 'ai', text: data.response }]);
+      setPendingQuery(''); // Clear pending query after receiving response
     } else if (error) {
       setMessages((prev) => [...prev, { sender: 'ai', text: 'Ursa is having trouble connecting. Please try again.' }]);
+      setPendingQuery(''); // Clear on error too
     }
-  }, [data, error, isLoading]);
+  }, [data, error, isLoading, pendingQuery]);
 
   const handleClose = () => {
     if (chatContext === 'project') {
@@ -71,8 +83,8 @@ const ChatView: React.FC = () => {
   const handleSend = () => {
     if (input.trim() === '') return;
     setMessages((prev) => [...prev, { sender: 'user', text: input }]);
-    refetch();
-    setInput('');
+    setPendingQuery(input); // Set the query to send
+    setInput(''); // Clear input field immediately for UX
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
