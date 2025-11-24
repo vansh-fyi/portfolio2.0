@@ -19,16 +19,29 @@ export const useRAGQuery = (query: string) => {
   // This will be properly typed when backend AppRouter is imported
   const ragQuery = (trpc as any).rag.query.useQuery(
     {
-      query,
+      query: query || '__skip__', // Placeholder when empty - won't be sent due to enabled check
       context: chatContext,
       projectId: chatContext === 'project' ? projectId : undefined,
     },
     {
-      enabled: false, // We will call this query manually
+      // Only enable query when there's actual content to query
+      enabled: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     }
   );
 
-  return ragQuery;
+  // Wrap refetch to prevent empty query requests
+  const safeRefetch = useCallback(() => {
+    if (query && query.trim().length > 0) {
+      return ragQuery.refetch();
+    }
+    // Return a resolved promise to maintain consistent API
+    return Promise.resolve();
+  }, [query, ragQuery]);
+
+  return { ...ragQuery, refetch: safeRefetch };
 };
 
 /**
