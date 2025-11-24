@@ -1,10 +1,10 @@
 {
     "functions": {
-        "api/trpc/[...path].ts": {
-            "includeFiles": "src/**"
+        "api/chat.js": {
+            "maxDuration": 30
         },
-        "api/test-import.ts": {
-            "includeFiles": "src/**"
+        "api/contact.js": {
+            "maxDuration": 10
         }
     }
 }
