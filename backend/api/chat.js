@@ -1,5 +1,6 @@
 // Simple RAG chat endpoint for Vercel
 // Bypasses tRPC to avoid TypeScript compilation issues
+// v2 - force rebuild
 
 export default async function handler(req, res) {
     // CORS headers
