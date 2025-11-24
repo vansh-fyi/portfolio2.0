@@ -15,13 +15,13 @@ const About = () => {
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-white/80">
               <p className="">
-                Hello! I'm Vansh. I'm a Product Designer with 2.5+ years of experience, but I didn't start here. My journey began in Physics (I still qualify as a physics nerd), but I made the jump to design coz I needed an artistic flair and human stories to go with my numbers and stats.
+                Hello! I'm Vansh. I'm a Product Designer, but I didn't start here. My journey began in Physics, into the mind boggling stories of the universe and the art of playing with math. I absolutely love the subject to this day but I only did a partial job of defining me. I needed to have a multidisciplinary discipline which defines me. And that's how I found design.
               </p>
               <p className="">
-                Today, I specialize in simplifying overwhelming user-flows, building modern web applications, designing intuitive user interfaces, and creating interactive experiences that captivate and engage users. I believe great design should be accessible, performant, and meaningful.
+                Today, I specialize in simplifying overwhelming user-flows, building modern web applications with AI, designing intuitive interfaces, helping out in cross functional settings to communicate design needs and creating interactive experiences that captivate and engage. I believe great design should be accessible, performant, and meaningful.
               </p>
               <p className="">
-                When I'm not working, you'll find me exploring my personal passions. I'm always reading papers, getting lost in Music, planning my next big travel adventure or just daydreaming. I'm just endlessly curious about how things work... and how to make them work better.
+                When I'm not working, you'll find me exploring my personal passions. I'm always reading research papers, getting lost in Music, planning my next big travel adventure or just daydreaming. I'm just endlessly curious about how things work... and how to make them work better.
               </p>
             </div>
             <div className="flex flex-wrap pt-10 pb-10 gap-x-2 gap-y-2">
@@ -58,7 +58,7 @@ const About = () => {
                   </div>
                   <div className="">
                     <p className="text-xs font-medium text-white/80">Post Graduate Program in Artificial Intelligence and Machine Learning</p>
-                    <p className="text-xs text-white/50">Caltech CTME • 2020</p>
+                    <p className="text-xs text-white/50">Caltech CTME • 2025</p>
                   </div>
                 </div>
               </div>
@@ -105,7 +105,7 @@ const About = () => {
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Winner-BrandX</span>
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">DST-INSPIRE Scholar</span>
                   <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Runner-Up VibeX Designathon</span>
-                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Runner-Up Code Red 4.0 Design-a-thon</span>
+                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Runner-Up Code-Red 4.0 Design-a-thon</span>
                 </div>
               </div>
               {/* Achievements */}
@@ -117,8 +117,8 @@ const About = () => {
                   Interests
                 </h3>
                 <div className="flex flex-wrap gap-x-2 gap-y-2">
-                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">HCI Research</span>
-                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Robotics</span>
+                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">HCI</span>
+                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">HRI</span>
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Psychology</span>
                   <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Mixed Media Art</span>
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10">Music</span>
