@@ -36,12 +36,12 @@ const Projects = () => {
               alt="Abstract Portrait"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-6 left-6 right-6 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-6 left-6 right-6 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
-                <h4 className="text-lg font-semibold text-white mb-2">Aether: AI Powered Design System Generator</h4>
-                <p className="text-sm max-w-md text-white/80">
-                  Generate code components and create your design system for vibe coding tools. Use your moodboard or let AI do everything.
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-2">Aether: AI Powered Design System Generator</h4>
+                <p className="text-xs md:text-sm max-w-md text-white/80">
+                  Customise your design system and generate code components.
                 </p>
               </div>
             </div>
@@ -56,11 +56,11 @@ const Projects = () => {
               alt="Abstract Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold text-white mb-1">DriQ Health 🔒</h4>
-                <p className="text-xs text-white/80">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">DriQ Health 🔒</h4>
+                <p className="text-xs md:text-sm max-w-md text-white/80">
                   Incontinence Monitoring for Seniors
                 </p>
               </div>
@@ -76,13 +76,13 @@ const Projects = () => {
               alt="Surreal Landscape"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Sparto
                 </h4>
-                <p className="text-xs text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80">
                   Request based Ecommerce application to sell spare parts.
                 </p>
               </div>
@@ -98,13 +98,13 @@ const Projects = () => {
               alt="Futuristic Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Sparto Admin
                 </h4>
-                <p className="text-xs text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80">
                   Enterprise application for managing Sparto
                 </p>
               </div>
@@ -120,13 +120,13 @@ const Projects = () => {
               alt="Digital Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t via-transparent to-transparent opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="font-semibold mb-1 text-white">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Vibio
                 </h4>
-                <p className="text-xs text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80">
                   Event Platform for Creatives
                 </p>
               </div>

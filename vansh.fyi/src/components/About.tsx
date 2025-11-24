@@ -15,16 +15,21 @@ const About = () => {
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-white/80">
               <p className="">
-                Hello! I'm Vansh. I'm a Product Designer, but I didn't start here. My journey began in Physics, into the mind boggling stories of the universe and the art of playing with math. I absolutely love the subject to this day but I only did a partial job of defining me. I needed to have a multidisciplinary discipline which defines me. And that's how I found design.
+                Hello! I'm Vansh. I'm a Product Designer, but I didn't start here. My journey began in Physics, into the mind boggling stories of the universe and the art of playing with math. I absolutely love the subject to this day but it only did a partial job of defining me. I needed to have a multidisciplinary discipline which defines me. And then, I found design...
               </p>
               <p className="">
-                Today, I specialize in simplifying overwhelming user-flows, building modern web applications with AI, designing intuitive interfaces, helping out in cross functional settings to communicate design needs and creating interactive experiences that captivate and engage. I believe great design should be accessible, performant, and meaningful.
+                Today, I specialize in simplifying user-flows, building modern web applications with AI, designing intuitive interfaces, helping out in cross functional settings, communicating design needs and creating interactive experiences that captivate and engage. I believe great design should be accessible, performant, and meaningful.
               </p>
               <p className="">
                 When I'm not working, you'll find me exploring my personal passions. I'm always reading research papers, getting lost in Music, planning my next big travel adventure or just daydreaming. I'm just endlessly curious about how things work... and how to make them work better.
               </p>
             </div>
-            <div className="flex flex-wrap pt-10 pb-10 gap-x-2 gap-y-2">
+
+            <h3 className="text-md md:text-lg leading-[1.05] font-medium tracking-tight mt-8 font-geist text-white">
+              "You draw for yourself, You design for others."
+            </h3>
+
+            <div className="flex flex-wrap pt-10 pb-2 gap-x-2 gap-y-2">
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2">Explorer</span>
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2">Wanderer</span>
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2">Daydreamer</span>
