@@ -67,9 +67,9 @@ development_status:
   5-4-lead-gen-integration-production-launch: review # 🔍 Frontend deployed, backend needs env vars
   epic-5-retrospective: optional
 
-  epic-6: in-progress # ⏸️ PAUSED - Backend deployed, needs env vars (15 min to complete)
-  6-1-deploy-backend-to-vercel-serverless: ready-for-dev # Backend at https://portfolio2-0-backend-blond.vercel.app (500 error - needs env vars)
-  6-2-connect-frontend-to-backend: backlog # Set VITE_API_URL after backend fixed
+  epic-6: in-progress
+  6-1-deploy-backend-to-vercel-serverless: done # ✅ Recovered from rogue state, tRPC architecture restored
+  6-2-connect-frontend-to-backend: in-progress # Configuring frontend-backend connection
   6-3-verify-email-and-rag-functionality: backlog # Test after connection
   epic-6-retrospective: optional
 

@@ -1,0 +1,150 @@
+<story-context id="6-2-connect-frontend-to-backend" v="1.0">
+  <metadata>
+    <epicId>epic-6</epicId>
+    <storyId>6.2</storyId>
+    <title>Connect Frontend to Backend</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-24</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/stories/6-2-connect-frontend-to-backend.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>to configure the frontend to communicate with the deployed backend</iWant>
+    <soThat>the application's AI chat and email features work for users in production</soThat>
+    <tasks>
+- [ ] **Configure Frontend Environment Variable** (AC: 1)
+  - [ ] Add `VITE_API_URL=https://portfolio2-0-backend-blond.vercel.app/api/trpc` to frontend Vercel project settings.
+  - [ ] Verify the env var is accessible in the build (check `import.meta.env.VITE_API_URL`).
+
+- [ ] **Verify tRPC Client Configuration** (AC: 1, 2)
+  - [ ] Check `src/services/trpc.tsx` uses `VITE_API_URL` for the tRPC client endpoint.
+  - [ ] Ensure the tRPC client is configured with the correct path.
+  - [ ] Verify CORS is handled (backend already has `cors()` middleware with `origin: '*'`).
+
+- [ ] **Redeploy Frontend** (AC: 1, 2, 3)
+  - [ ] Trigger a new production deployment of the frontend.
+  - [ ] Monitor build logs for any environment variable issues.
+
+- [ ] **Test Connection** (AC: 2, 3)
+  - [ ] Verify chat requests go to backend tRPC endpoint.
+  - [ ] Verify contact form requests reach email endpoint.
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+1. **Given** the deployed backend URL (`https://portfolio2-0-backend-blond.vercel.app`)
+   * **When** I configure `VITE_API_URL` in the frontend Vercel project
+   * **Then** the frontend successfully makes tRPC calls to the backend.
+
+2. **Given** the configured frontend
+   * **When** I open the chat overlay and send a message
+   * **Then** the request reaches the backend `/api/trpc/rag.query` endpoint.
+
+3. **Given** the configured frontend
+   * **When** I submit the contact form
+   * **Then** the request reaches the backend `/api/trpc/email.sendLead` endpoint.
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/epics.md</path>
+        <title>Epic 6: Backend Deployment &amp; API Integration</title>
+        <section>Story 6.2</section>
+        <snippet>Configure the frontend to talk to the deployed backend by setting VITE_API_URL and redeploying.</snippet>
+      </doc>
+      <doc>
+        <path>docs/sprint-artifacts/stories/6-1-deploy-backend-to-vercel-serverless.md</path>
+        <title>Story 6.1 - Backend Deployment</title>
+        <section>Dev Notes</section>
+        <snippet>Backend deployed at https://portfolio2-0-backend-blond.vercel.app. Health endpoint at /api/health. tRPC at /api/trpc/*.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <file>
+        <path>vansh.fyi/src/services/trpc.tsx</path>
+        <kind>service</kind>
+        <symbol>TRPCProvider, trpc, API_URL</symbol>
+        <lines>1-37</lines>
+        <reason>tRPC client configuration - reads VITE_API_URL env var, connects to backend. CRITICAL: Already configured correctly, just needs env var set.</reason>
+      </file>
+      <file>
+        <path>vansh.fyi/src/hooks/useRAGQuery.ts</path>
+        <kind>hook</kind>
+        <symbol>useRAGQuery, useRAGQueryStreaming</symbol>
+        <lines>1-103</lines>
+        <reason>RAG query hook - uses trpc.rag.query. Will work once backend is connected.</reason>
+      </file>
+      <file>
+        <path>vansh.fyi/src/components/LeadGenChat.tsx</path>
+        <kind>component</kind>
+        <symbol>LeadGenChat</symbol>
+        <reason>Contact form component - uses trpc.email.sendLead for email submission.</reason>
+      </file>
+      <file>
+        <path>vansh.fyi/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ChatOverlay</symbol>
+        <reason>Chat overlay component - displays RAG responses from backend.</reason>
+      </file>
+      <file>
+        <path>backend/api/trpc/[...path].ts</path>
+        <kind>server-entry</kind>
+        <symbol>handler</symbol>
+        <reason>Backend tRPC catch-all handler - serves at /api/trpc/*.</reason>
+      </file>
+      <file>
+        <path>backend/api/health.ts</path>
+        <kind>server-entry</kind>
+        <symbol>handler</symbol>
+        <reason>Backend health check - serves at /api/health for verification.</reason>
+      </file>
+    </code>
+    <dependencies>
+      <ecosystem name="node">
+        <package name="@trpc/react-query" version="used by frontend" />
+        <package name="@trpc/client" version="used by frontend" />
+        <package name="@tanstack/react-query" version="used by frontend" />
+      </ecosystem>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    <constraint>VITE_API_URL must include the full path: `https://portfolio2-0-backend-blond.vercel.app/api/trpc`</constraint>
+    <constraint>Environment variable must be set in Vercel Dashboard (cannot be done programmatically)</constraint>
+    <constraint>Frontend must be redeployed after setting env var for changes to take effect</constraint>
+    <constraint>Backend CORS is configured with `origin: '*'` - no additional CORS config needed</constraint>
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>tRPC RAG Query</name>
+      <kind>tRPC mutation</kind>
+      <signature>trpc.rag.query.useMutation({ query: string, context: 'personal' | 'project', projectId?: string })</signature>
+      <path>backend/src/api/rag.ts</path>
+    </interface>
+    <interface>
+      <name>tRPC Email Send</name>
+      <kind>tRPC mutation</kind>
+      <signature>trpc.email.sendLead.useMutation({ name: string, email: string, message: string })</signature>
+      <path>backend/src/api/email.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Manual verification via browser DevTools Network tab. Verify requests reach correct backend endpoints and responses are received.
+    </standards>
+    <locations>
+      <location>Browser DevTools → Network tab</location>
+      <location>Vercel deployment logs</location>
+    </locations>
+    <ideas>
+      <idea id="1">AC1: Set env var, redeploy, check build logs for VITE_API_URL presence</idea>
+      <idea id="2">AC2: Open chat, send message, verify Network request to /api/trpc/rag.query</idea>
+      <idea id="3">AC3: Submit contact form, verify Network request to /api/trpc/email.sendLead</idea>
+    </ideas>
+  </tests>
+</story-context>

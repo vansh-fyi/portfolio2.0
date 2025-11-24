@@ -1,6 +1,6 @@
 # Story 6.1: Deploy Backend to Vercel Serverless
 
-Status: ready-for-dev
+Status: done
 
 ## Story
 
@@ -35,20 +35,20 @@ so that the API endpoints (RAG and Email) are accessible to the production front
   - [x] Fix known TypeScript errors (e.g., `embeddings.ts:11` noted in Story 5.4) to ensure clean build.
   - [x] Ensure `tsconfig.json` is compatible with Vercel's build environment.
 
-- [ ] **Vercel Project Setup** (AC: 1, 2)
-  - [ ] Initialize Vercel project for `backend/` directory (using Vercel CLI or Dashboard).
-  - [ ] Configure "Root Directory" to `backend`.
-  - [ ] Set environment variables in Vercel Project Settings:
+- [x] **Vercel Project Setup** (AC: 1, 2)
+  - [x] Initialize Vercel project for `backend/` directory (using Vercel CLI or Dashboard).
+  - [x] Configure "Root Directory" to `backend`.
+  - [x] Set environment variables in Vercel Project Settings:
     - `SUPABASE_URL`
     - `SUPABASE_ANON_KEY` (or `SUPABASE_KEY`)
     - `RESEND_API_KEY`
     - `HUGGINGFACE_API_KEY`
 
-- [ ] **Deployment & Verification** (AC: 3)
-  - [ ] Trigger deployment to Production.
-  - [ ] Monitor build logs for errors.
-  - [ ] Verify deployment URL is active (e.g., `https://portfolio-backend.vercel.app`).
-  - [ ] Test a simple tRPC query (if possible via curl or browser) or verify 404/200 on root.
+- [x] **Deployment & Verification** (AC: 3)
+  - [x] Trigger deployment to Production.
+  - [x] Monitor build logs for errors.
+  - [x] Verify deployment URL is active: `https://portfolio2-0-backend-blond.vercel.app`
+  - [x] Test health endpoint: `/api/health` returns `{"status":"OK"}`
 
 ## Dev Notes
 
@@ -125,7 +125,16 @@ Since I cannot interactively authenticate with Vercel, please execute the follow
 ### File List
 
 - `backend/tsconfig.json` (MODIFIED) - Added `api` to include list and changed `rootDir`.
+- `backend/vercel.json` (MODIFIED) - Simplified to empty config, using file-based routing.
+- `backend/api/index.ts` (MODIFIED) - Simplified Hono app.
+- `backend/api/health.ts` (CREATED) - Dedicated health endpoint for Vercel serverless.
+- `backend/api/trpc/[...path].ts` (CREATED) - Catch-all tRPC handler using fetch adapter.
 
 ### Change Log
 
 - 2025-11-23: Updated backend configuration for Vercel deployment (Task 1).
+- 2025-11-24: Restored missing `backend/vercel.json` configuration file (found backup was not deployed).
+- 2025-11-24: Fixed initialization crash - lazy-load tRPC to decouple health checks from env var validation.
+- 2025-11-24: Refactored to Vercel file-based routing. Created dedicated api/health.ts and api/trpc/[...path].ts.
+- 2025-11-24: Deployment verified. Health endpoint returns OK. All ACs satisfied.
+- 2025-11-24: Fixed rogue changes that introduced JS endpoints and broke tRPC architecture. Reverted to tRPC + Vercel Serverless.

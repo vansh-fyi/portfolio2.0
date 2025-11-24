@@ -39,3 +39,1118 @@ Server starting on port 8000...
 ✅ Server running at http://localhost:8000
 Health check available at http://localhost:8000/health
 TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🗂️ backup and recover secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859
+    return new TSError(diagnosticText, diagnosticCodes, diagnostics);
+           ^
+TSError: ⨯ Unable to compile TypeScript:
+src/services/rag.ts(119,1): error TS1472: 'catch' or 'finally' expected.
+
+    at createTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  diagnosticCodes: [ 1472 ]
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+🔍 RAG Query: { query: 'hi', context: 'personal', projectId: undefined }
+Vector query tool error: Error: HuggingFace API error: 410 - {"error":"https://api-inference.huggingface.co is no longer supported. Please use https://router.huggingface.co instead."}
+    at generateEmbedding (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/embeddings.ts:23:15)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Object.execute (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/rag.ts:29:31)
+    at async executeTool (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/node_modules/@ai-sdk/provider-utils/src/types/execute-tool.ts:25:36)
+    at async fn (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/src/generate-text/generate-text.ts:683:30)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/src/telemetry/record-span.ts:18:22
+    at async Promise.all (index 0)
+    at async executeTools (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/src/generate-text/generate-text.ts:644:23)
+    at async fn (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/src/generate-text/generate-text.ts:515:19)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ai/src/telemetry/record-span.ts:18:22
+✅ RAG Result: { text: '', toolCalls: 1 }
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+(node:6386) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [Bus]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+🔍 RAG Query: { query: 'hi', context: 'personal', projectId: undefined }
+📤 Embedding request: { text: 'hi', bodyLength: 15 }
+❌ Embedding error: {
+  status: 400,
+  error: `{"error":"SentenceSimilarityPipeline.__call__() missing 1 required positional argument: 'sentences'"}`
+}
+❌ RAG Error: Error: HuggingFace API error: 400 - {"error":"SentenceSimilarityPipeline.__call__() missing 1 required positional argument: 'sentences'"}
+    at generateEmbedding (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/embeddings.ts:27:15)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async generateRagResponse (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/rag.ts:90:27)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/api/rag.ts:37:43
+    at async resolveMiddleware (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:221:17)
+    at async callRecursive (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:256:18)
+    at async callRecursive (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:256:18)
+    at async procedure (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:281:18)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/resolveResponse-OV7qVwiT.cjs:1948:18
+    at async Object.resolveResponse (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/resolveResponse-OV7qVwiT.cjs:1973:28)
+❌ Error in RAG query: Error: HuggingFace API error: 400 - {"error":"SentenceSimilarityPipeline.__call__() missing 1 required positional argument: 'sentences'"}
+    at generateEmbedding (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/embeddings.ts:27:15)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async generateRagResponse (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/services/rag.ts:90:27)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/api/rag.ts:37:43
+    at async resolveMiddleware (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:221:17)
+    at async callRecursive (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:256:18)
+    at async callRecursive (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:256:18)
+    at async procedure (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/initTRPC-D-fJXPDf.cjs:281:18)
+    at async /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/resolveResponse-OV7qVwiT.cjs:1948:18
+    at async Object.resolveResponse (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@trpc/server/dist/resolveResponse-OV7qVwiT.cjs:1973:28)
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  override existing env vars with { override: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+🔍 RAG Query: {
+  query: 'tell me about vansh',
+  context: 'personal',
+  projectId: undefined
+}
+📤 Embedding request: { text: 'tell me about vansh' }
+Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers.
+Auto selected provider: hf-inference
+✅ Embedding success: { dimensions: 384 }
+✅ Embedding generated
+🔍 All matching docs (no filter): 0 error: none
+✅ Vector search results: 0
+✅ LLM Response: Unfortunately, I don't have any information about a person named Vansh in my knowledge base. Can you
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+🔍 RAG Query: { query: 'hi', context: 'personal', projectId: undefined }
+📤 Embedding request: { text: 'hi' }
+Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers.
+Auto selected provider: hf-inference
+✅ Embedding success: { dimensions: 384 }
+✅ Embedding generated
+✅ Vector search results: 0
+✅ LLM Response: Hello! I'm Ursa, Vansh's AI assistant. It's nice to meet you. I'm here to help with any questions or
+✅ Lead email sent successfully. ID: f8402685-5897-4f4d-811c-50d72341e883
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+🔍 RAG Query: { query: 'hi', context: 'personal', projectId: undefined }
+📤 Embedding request: { text: 'hi' }
+Defaulting to 'auto' which will select the first provider available for the model, sorted by the user's order in https://hf.co/settings/inference-providers.
+Auto selected provider: hf-inference
+✅ Embedding success: { dimensions: 384 }
+✅ Embedding generated
+✅ Vector search results: 0
+✅ LLM Response: Hello! It's nice to chat with you. However, I don't have much to go on just yet. Our conversation se
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 📡 add observability to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ✅ audit secrets and track compliance: https://dotenvx.com/ops
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[dotenv@17.2.3] injecting env (6) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+✅ Configuration validated successfully
+   - HuggingFace API Key: hf_pOWJsNp...
+   - Supabase URL: https://dhwhdzlfekvlcydagsbj.supabase.co
+   - Resend API Key: re_Tem...
+Server starting on port 8000...
+✅ Server running at http://localhost:8000
+Health check available at http://localhost:8000/health
+TRPC endpoint available at http://localhost:8000/trpc
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at serve (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/@hono/node-server/dist/index.js:611:10)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/index.ts:36:6)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1618:23)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859
+    return new TSError(diagnosticText, diagnosticCodes, diagnostics);
+           ^
+TSError: ⨯ Unable to compile TypeScript:
+src/index.ts(1,23): error TS2307: Cannot find module '@hono/node-server' or its corresponding type declarations.
+src/index.ts(2,22): error TS2307: Cannot find module 'hono' or its corresponding type declarations.
+src/index.ts(3,22): error TS2307: Cannot find module 'hono/cors' or its corresponding type declarations.
+src/index.ts(4,28): error TS2307: Cannot find module '@hono/trpc-server' or its corresponding type declarations.
+src/index.ts(22,21): error TS7006: Parameter 'c' implicitly has an 'any' type.
+
+    at createTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  diagnosticCodes: [ 2307, 2307, 2307, 2307, 7006 ]
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859
+    return new TSError(diagnosticText, diagnosticCodes, diagnostics);
+           ^
+TSError: ⨯ Unable to compile TypeScript:
+src/index.ts(1,23): error TS2307: Cannot find module '@hono/node-server' or its corresponding type declarations.
+src/index.ts(2,22): error TS2307: Cannot find module 'hono' or its corresponding type declarations.
+src/index.ts(3,22): error TS2307: Cannot find module 'hono/cors' or its corresponding type declarations.
+src/index.ts(4,28): error TS2307: Cannot find module '@hono/trpc-server' or its corresponding type declarations.
+src/index.ts(22,21): error TS7006: Parameter 'c' implicitly has an 'any' type.
+
+    at createTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:859:12)
+    at reportTSError (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:863:19)
+    at getOutput (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1077:36)
+    at Object.compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1433:41)
+    at Module.m._compile (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1617:30)
+    at node:internal/modules/cjs/loader:1892:10
+    at Object.require.extensions.<computed> [as .ts] (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1480:32)
+    at Module._load (node:internal/modules/cjs/loader:1299:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14) {
+  diagnosticCodes: [ 2307, 2307, 2307, 2307, 7006 ]
+}
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+node:internal/modules/cjs/loader:1423
+  throw err;
+  ^
+
+Error: Cannot find module './index.ts'
+Require stack:
+- /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1420:15)
+    at require.resolve (node:internal/modules/helpers:163:19)
+    at requireResolveNonCached (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:549:16)
+    at getProjectSearchDir (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:519:40)
+    at phase3 (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:267:27)
+    at bootstrap (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:47:30)
+    at main (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:33:12)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:579:5)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1892:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript'
+  ]
+}
+
+Node.js v25.2.1
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `ts-node src/index.ts`[39m
+node:internal/modules/cjs/loader:1423
+  throw err;
+  ^
+
+Error: Cannot find module './index.ts'
+Require stack:
+- /Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1420:15)
+    at require.resolve (node:internal/modules/helpers:163:19)
+    at requireResolveNonCached (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:549:16)
+    at getProjectSearchDir (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:519:40)
+    at phase3 (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:267:27)
+    at bootstrap (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:47:30)
+    at main (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:33:12)
+    at Object.<anonymous> (/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/node_modules/ts-node/dist/bin.js:579:5)
+    at Module._compile (node:internal/modules/cjs/loader:1760:14)
+    at Object..js (node:internal/modules/cjs/loader:1892:10) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/hp/Desktop/Work/Repositories/portfolio2.0/backend/src/imaginaryUncacheableRequireResolveScript'
+  ]
+}
+
+Node.js v25.2.1
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
