@@ -1,6 +1,6 @@
 import { trpc } from '../services/trpc';
 import { useViewStore } from '../state/overlayStore';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 
 /**
  * Custom hook for RAG queries with support for both streaming and non-streaming responses
@@ -14,6 +14,12 @@ import { useState, useCallback } from 'react';
  */
 export const useRAGQuery = (query: string) => {
   const { chatContext, projectId } = useViewStore.getState();
+
+  // Use ref to always have current query value in callback
+  const queryRef = useRef(query);
+  useEffect(() => {
+    queryRef.current = query;
+  }, [query]);
 
   // Type assertion needed due to placeholder AppRouter type
   // This will be properly typed when backend AppRouter is imported
@@ -32,14 +38,15 @@ export const useRAGQuery = (query: string) => {
     }
   );
 
-  // Wrap refetch to prevent empty query requests
+  // Wrap refetch to prevent empty query requests - use ref for current value
   const safeRefetch = useCallback(() => {
-    if (query && query.trim().length > 0) {
+    const currentQuery = queryRef.current;
+    if (currentQuery && currentQuery.trim().length > 0) {
       return ragQuery.refetch();
     }
     // Return a resolved promise to maintain consistent API
     return Promise.resolve();
-  }, [query, ragQuery]);
+  }, [ragQuery]);
 
   return { ...ragQuery, refetch: safeRefetch };
 };
