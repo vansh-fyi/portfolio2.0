@@ -16,10 +16,9 @@ app.use('/*', cors({
     allowHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Health check
-app.get('/health', (c) => {
-    return c.json({ status: 'OK' }, 200);
-});
+// Health check - multiple path patterns for reliability
+app.get('/health', (c) => c.json({ status: 'OK' }, 200));
+app.get('/', (c) => c.json({ status: 'OK', path: c.req.path }, 200));
 
 // tRPC routes
 app.use(
