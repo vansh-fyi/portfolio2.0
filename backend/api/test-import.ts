@@ -1,8 +1,6 @@
-export const config = {
-    runtime: 'nodejs',
-};
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-export default async function handler(req: Request) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
     const steps: string[] = [];
 
     try {
@@ -24,21 +22,14 @@ export default async function handler(req: Request) {
             steps.push('4. Importing appRouter...');
             const { appRouter } = await import('../src/api');
             steps.push('5. appRouter imported');
-            steps.push(`   - Router procedures: ${Object.keys(appRouter._def.procedures || {}).join(', ')}`);
         } catch (err) {
             steps.push(`4. appRouter import FAILED: ${err instanceof Error ? err.message : 'Unknown'}`);
         }
 
-        return new Response(
-            JSON.stringify({ success: true, steps }),
-            { status: 200, headers: { 'Content-Type': 'application/json' } }
-        );
+        res.status(200).json({ success: true, steps });
     } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
         steps.push(`FATAL: ${message}`);
-        return new Response(
-            JSON.stringify({ success: false, steps, error: message }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
-        );
+        res.status(500).json({ success: false, steps, error: message });
     }
 }
