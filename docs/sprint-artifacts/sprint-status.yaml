@@ -69,7 +69,7 @@ development_status:
 
   epic-6: in-progress
   6-1-deploy-backend-to-vercel-serverless: done # ✅ Recovered from rogue state, tRPC architecture restored
-  6-2-connect-frontend-to-backend: in-progress # Configuring frontend-backend connection
+  6-2-connect-frontend-to-backend: review # Configuring frontend-backend connection
   6-3-verify-email-and-rag-functionality: backlog # Test after connection
   epic-6-retrospective: optional
 
