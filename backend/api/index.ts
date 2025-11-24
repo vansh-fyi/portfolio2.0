@@ -3,10 +3,10 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
 export const config = {
-    runtime: 'nodejs',
+    runtime: 'nodejs20.x',
 };
 
-const app = new Hono();
+const app = new Hono().basePath('/api');
 
 app.use('/*', cors({
     origin: '*',
@@ -15,16 +15,12 @@ app.use('/*', cors({
 }));
 
 // Health check - no dependencies, always works
-app.get('/api/health', (c) => {
-    return c.json({ status: 'OK', path: '/api/health', environment: 'vercel-node' }, 200);
-});
-
 app.get('/health', (c) => {
-    return c.json({ status: 'OK', path: '/health', environment: 'vercel-node' }, 200);
+    return c.json({ status: 'OK', environment: 'vercel-node', timestamp: new Date().toISOString() }, 200);
 });
 
 // tRPC routes - lazy load to avoid config validation on health checks
-app.all('/api/trpc/*', async (c) => {
+app.all('/trpc/*', async (c) => {
     try {
         const { trpcServer } = await import('@hono/trpc-server');
         const { appRouter } = await import('../src/api');
