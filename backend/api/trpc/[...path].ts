@@ -3,21 +3,31 @@ export const config = {
 };
 
 export default async function handler(req: Request) {
-    try {
-        // Lazy import everything to catch initialization errors
-        const { fetchRequestHandler } = await import('@trpc/server/adapters/fetch');
-        const { appRouter } = await import('../../src/api');
+    console.log('[tRPC] Handler invoked:', req.method, req.url);
 
-        return fetchRequestHandler({
+    try {
+        console.log('[tRPC] Importing fetchRequestHandler...');
+        const { fetchRequestHandler } = await import('@trpc/server/adapters/fetch');
+        console.log('[tRPC] fetchRequestHandler imported');
+
+        console.log('[tRPC] Importing appRouter...');
+        const { appRouter } = await import('../../src/api');
+        console.log('[tRPC] appRouter imported');
+
+        console.log('[tRPC] Calling fetchRequestHandler...');
+        const response = await fetchRequestHandler({
             endpoint: '/api/trpc',
             req,
             router: appRouter,
             createContext: () => ({}),
         });
+        console.log('[tRPC] Response generated');
+        return response;
     } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error';
         const stack = error instanceof Error ? error.stack : '';
-        console.error('tRPC handler error:', message, stack);
+        console.error('[tRPC] Handler error:', message);
+        console.error('[tRPC] Stack:', stack);
 
         return new Response(
             JSON.stringify({

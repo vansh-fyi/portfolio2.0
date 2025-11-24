@@ -1,1 +1,10 @@
-{}
+{
+    "functions": {
+        "api/trpc/[...path].ts": {
+            "includeFiles": "src/**"
+        },
+        "api/test-import.ts": {
+            "includeFiles": "src/**"
+        }
+    }
+}
