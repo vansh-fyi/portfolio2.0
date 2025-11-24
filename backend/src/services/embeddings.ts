@@ -1,18 +1,7 @@
-import { HfInference } from '@huggingface/inference';
 import { config } from './config';
 
-// Lazy-initialized HuggingFace client
-let hfClient: HfInference | null = null;
-
-function getHfClient(): HfInference {
-    if (!hfClient) {
-        hfClient = new HfInference(config.huggingFaceApiKey);
-    }
-    return hfClient;
-}
-
 /**
- * Generate embedding using HuggingFace Inference SDK
+ * Generate embedding using HuggingFace Inference SDK (dynamically imported)
  * Uses sentence-transformers/all-MiniLM-L6-v2 model
  * Returns 384-dimensional vector
  */
@@ -20,7 +9,10 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     console.log('📤 Embedding request:', { text: text.substring(0, 50) });
 
     try {
-        const hf = getHfClient();
+        // Dynamic import to avoid Vercel bundling issues
+        const { HfInference } = await import('@huggingface/inference');
+        const hf = new HfInference(config.huggingFaceApiKey);
+
         const result = await hf.featureExtraction({
             model: 'sentence-transformers/all-MiniLM-L6-v2',
             inputs: text,
