@@ -1,7 +1,25 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// CORS headers for cross-origin requests
+const CORS_HEADERS = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log('[tRPC] Handler invoked:', req.method, req.url);
+
+    // Set CORS headers on all responses
+    Object.entries(CORS_HEADERS).forEach(([key, value]) => {
+        res.setHeader(key, value);
+    });
+
+    // Handle preflight OPTIONS request
+    if (req.method === 'OPTIONS') {
+        res.status(204).end();
+        return;
+    }
 
     try {
         // Import dynamically
