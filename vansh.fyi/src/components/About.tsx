@@ -25,8 +25,8 @@ const About = () => {
               </p>
             </div>
 
-            <h3 className="text-md md:text-lg leading-[1.05] font-medium tracking-tight mt-8 font-geist text-white">
-              "You draw for yourself, You design for others."
+            <h3 className="text-md md:text-xl leading-[1.05] tracking-tight mt-8 font-geist font-light text-white/80">
+              "you <span className="tracking-wide font-semibold text-white">Draw</span> for yourself, you <span className="tracking-wide font-semibold text-white">Design</span> for others."
             </h3>
 
             <div className="flex flex-wrap pt-10 pb-2 gap-x-2 gap-y-2">
