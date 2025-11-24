@@ -1,8 +1,15 @@
 import { HfInference } from '@huggingface/inference';
 import { config } from './config';
 
-// Initialize HuggingFace Inference client
-const hf = new HfInference(config.huggingFaceApiKey);
+// Lazy-initialized HuggingFace client
+let hfClient: HfInference | null = null;
+
+function getHfClient(): HfInference {
+    if (!hfClient) {
+        hfClient = new HfInference(config.huggingFaceApiKey);
+    }
+    return hfClient;
+}
 
 /**
  * Generate embedding using HuggingFace Inference SDK
@@ -13,6 +20,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     console.log('📤 Embedding request:', { text: text.substring(0, 50) });
 
     try {
+        const hf = getHfClient();
         const result = await hf.featureExtraction({
             model: 'sentence-transformers/all-MiniLM-L6-v2',
             inputs: text,
