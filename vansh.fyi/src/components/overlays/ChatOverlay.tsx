@@ -294,7 +294,7 @@ const ChatView: React.FC = () => {
                         <div className="relative flex-1">
                           <textarea
                             rows={2}
-                            className="resize-none focus:outline-none text-sm text-slate-200 bg-transparent w-full rounded-xl pt-2.5 pr-3 pb-2.5 pl-3"
+                            className="resize-none focus:outline-none text-sm text-white bg-transparent w-full rounded-xl pt-2.5 pr-3 pb-2.5 pl-3"
                             placeholder="Ask anything about the project in detail..."
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
