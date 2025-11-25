@@ -70,7 +70,7 @@ const Projects = () => {
 
           {/* Project 3 */}
           <div
-            onClick={handleProjectClick('sparto-app')}
+            onClick={handleProjectClick('sparto')}
             className="group overflow-hidden aspect-auto border ring-1 rounded-2xl relative lg:row-span-2 md:row-span-3 xs:row-span-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/sparto.jpg"

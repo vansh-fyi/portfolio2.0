@@ -2,13 +2,14 @@ import React from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
-import { projects } from '../../config/projects';
+import { getAllProjects } from '../../config/projects';
 
 const ProjectView: React.FC = () => {
   const { goToMain, goToProjectChat, projectId, selectProject } = useViewStore();
-  
+
   // Use projectId from store, default to first project (aether) if undefined
   const currentProjectId = projectId || 'aether';
+  const projects = getAllProjects();
   const selectedProject = projects.find(p => p.id === currentProjectId) || projects[0];
 
   const handleProjectSelect = (id: string) => {
@@ -66,7 +67,6 @@ const ProjectView: React.FC = () => {
                   <span className="h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
-                  <div className="inline-flex bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-md items-center justify-center"></div>
                   <div className="flex">
                     <span className="text-sm text-white/80 font-geist">{selectedProject.title}</span>
                     <span className="hidden lg:inline text-sm text-white/50 font-geist">:{selectedProject.subtitle}</span>
