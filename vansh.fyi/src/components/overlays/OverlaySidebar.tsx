@@ -54,7 +54,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                 </summary>
-                <ul className="absolute left-0 mt-2 min-w-[14rem] rounded-xl bg-black/80 ring-1 ring-white/10 backdrop-blur-md p-1 shadow-xl z-50">
+                <ul className="absolute left-0 mt-2 min-w-[14rem] rounded-xl bg-black/80 ring-1 ring-white/10 p-1 shadow-xl z-50">
                   {projectCategories.map((category) => (
                     <li key={category.id}>
                       <a
@@ -66,7 +66,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                           const details = e.currentTarget.closest('details');
                           if (details) details.removeAttribute('open');
                         }}
-                        className="group flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/10 text-sm text-white/80 active:scale-95">
+                        className="group flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-sm text-white/80 hover:text-white active:scale-95">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-layout-dashboard flex-shrink-0">
                           <rect width="7" height="9" x="3" y="3" rx="1"></rect>
                           <rect width="7" height="5" x="14" y="3" rx="1"></rect>
@@ -124,7 +124,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
           </div>
         </nav>
       </div>
-      <div className="sm:p-6 border-white/10 border-t pt-4 pr-4 pb-4 pl-4">
+      <div className="sm:p-2 border-white/10 border-t pt-2 pr-2 pb-2 pl-2">
         <div className="flex items-center gap-3 rounded-xl bg-black/80 p-3 ring-1 ring-white/10">
           <div className="inline-flex transition active:scale-95 text-white/80 bg-white/10 w-8 h-8 rounded-full ring-white/10 ring-1 items-center justify-center flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copyright lucide-train-front lucide-circle-user lucide-user w-[20px] h-[20px] text-white/80 flex-shrink-0">

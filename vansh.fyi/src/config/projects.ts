@@ -75,7 +75,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'ovik-finance',
             title: 'Ovik Finance',
             subtitle: 'Enterprise App for Ovik Finance',
-            url: 'https://vansh.fyi/portfolio/product-design/ovik-finance'
+            url: 'https://vansh.fyi/portfolio/product-design/ovik'
           }
         ]
       },
@@ -196,7 +196,7 @@ export const projectCategories: ProjectCategory[] = [
         title: 'Personal Projects',
         projects: [
           {
-            id: 'aether-ai',
+            id: 'aether',
             title: 'Aether',
             subtitle: 'AI-Powered Design System Generator',
             url: 'https://vansh.fyi/portfolio/ai/aether'
@@ -219,7 +219,7 @@ export const projectCategories: ProjectCategory[] = [
         title: 'Healthcare',
         projects: [
           {
-            id: 'driq-health-ai',
+            id: 'driq-health',
             title: 'DriQ Health',
             subtitle: 'Fall & Incontinence Monitoring',
             url: 'https://vansh.fyi/portfolio/ai/driq-health',
