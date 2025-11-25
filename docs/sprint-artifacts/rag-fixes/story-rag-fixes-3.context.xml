@@ -1,0 +1,296 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>3</storyId>
+    <title>Mobile Memory Leak & Performance Fix</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-25</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/rag-fixes/story-rag-fixes-3.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>the app to remain responsive on mobile and desktop after extended use</iWant>
+    <soThat>I don't experience freezing or lag that requires force restarting my device or browser</soThat>
+    <tasks>
+      - Add cleanup to ChatOverlay (AC: #1, #4)
+        - Review all useEffect hooks in ChatOverlay.tsx
+        - Add return cleanup functions to each useEffect
+        - Clear chat history state on unmount: `setChatHistory([])`
+        - Cancel tRPC queries on unmount using React Query's cancel method
+        - Add console.log for debugging cleanup execution
+      - Add cleanup to LeadGenChat (AC: #1, #4)
+        - Review all useEffect hooks in LeadGenChat.tsx
+        - Add return cleanup functions
+        - Ensure form state is cleared on unmount
+        - Cancel any pending tRPC mutations
+      - Fix useRAGQuery hook (AC: #4)
+        - Add useEffect cleanup in `vansh.fyi/src/hooks/useRAGQuery.ts`
+        - Cancel query on unmount: `queryClient.cancelQueries({ queryKey: [...] })`
+        - Configure React Query options: `gcTime: 0, staleTime: 0`
+        - Use `enabled` flag with manual refetch for better control
+      - Optimize re-renders (AC: #3)
+        - Wrap ChatOverlay with React.memo if rendering is expensive
+        - Wrap ProjectOverlay with React.memo if rendering is expensive
+        - Use useCallback for event handlers to prevent recreation
+        - Verify Zustand selectors are optimized (only subscribe to needed state)
+      - Verify tRPC client config (AC: #4)
+        - Review `vansh.fyi/src/services/trpc.tsx`
+        - Check React Query default config
+        - Adjust gcTime and staleTime if needed for aggressive cleanup
+        - Ensure queries don't auto-refetch unnecessarily
+      - Audit root App component (AC: #1)
+        - Review `vansh.fyi/src/App.tsx` for memory leaks
+        - Check for event listeners that aren't cleaned up
+        - Verify no large objects stored in state unnecessarily
+      - Performance testing on desktop (AC: #1, #3)
+        - Open Chrome DevTools → Performance → Memory
+        - Take baseline heap snapshot
+        - Navigate through app 10+ times
+        - Take final heap snapshot
+        - Compare: Memory growth should be &lt;50MB
+        - Check for detached DOM nodes
+        - Run 15+ minute sustained usage test
+      - Performance testing on mobile (AC: #2)
+        - Test on real iOS device (iPhone with iOS 15+)
+        - Test on real Android device (Android 10+)
+        - Perform 5+ chat cycles on each device
+        - Monitor for freezing, lag, or crashes
+        - Verify smooth scrolling and interactions
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    AC #1: No memory leaks on navigation
+    - GIVEN user on main view with baseline heap snapshot taken
+    - WHEN user navigates main → projects → chat → back (repeat 10 cycles)
+    - THEN heap memory increases by less than 50MB total
+    - AND no detached DOM nodes accumulate
+    - AND Chrome DevTools memory profile shows clean sawtooth pattern (memory freed on navigation)
+    - AND no console errors or warnings
+
+    AC #2: Mobile remains responsive
+    - GIVEN user on mobile device (iOS Safari or Android Chrome)
+    - WHEN user opens chat, sends 3 messages, closes chat, repeats 5 times
+    - THEN device remains responsive (no lag, no freeze)
+    - AND scrolling is smooth throughout
+    - AND touch interactions remain snappy
+    - AND no force restart required
+
+    AC #3: Desktop sustained performance
+    - GIVEN user on desktop browser (Chrome, Firefox, or Safari)
+    - WHEN user uses app continuously for 15+ minutes with frequent navigation between views
+    - THEN app remains responsive throughout entire session
+    - AND no noticeable lag or slowdown occurs
+    - AND all interactions feel snappy (clicks respond within 100ms)
+    - AND memory stays under 300MB
+
+    AC #4: tRPC queries properly cleaned up
+    - GIVEN ChatOverlay component mounted with active tRPC queries
+    - WHEN component unmounts (user navigates away from chat)
+    - THEN all tRPC queries are cancelled immediately
+    - AND React Query cache is cleared for that component's queries
+    - AND no pending requests remain in DevTools Network tab
+    - AND query cleanup function is called (verified in tests)
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Issue #3: Mobile Responsive Freezing (Severe UX Issue)</section>
+        <snippet>On mobile devices (tested on multiple devices), the application becomes completely unresponsive and requires force restart after: Opening the chat or lead-gen agent, Navigating back and forth between main view and overlays, Performing 2-3 navigation cycles. Likely causes: Memory leaks, uncleared tRPC queries, excessive re-renders, or React state thrashing during overlay transitions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Solution #3: Fix Mobile Memory Leak &amp; Freezing</section>
+        <snippet>Audit Component Lifecycle: Review useEffect cleanup in ChatOverlay, ProjectOverlay, LeadGenChat. Ensure tRPC queries are properly cancelled on unmount. Check for uncleared intervals/timeouts. Optimize Re-renders with React.memo. Fix Memory Leaks: Abort pending tRPC requests, clear large state objects (chat history).</snippet>
+      </doc>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Memory Leak Diagnosis</section>
+        <snippet>Common React Memory Leaks: 1) Uncleared tRPC queries - React Query keeps queries in cache, 2) Event listeners not removed - addEventListener without removeEventListener, 3) Timers not cleared - setTimeout/setInterval without cleanup, 4) Large state objects - Chat history accumulating in memory.</snippet>
+      </doc>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Performance Impact &amp; Targets</section>
+        <snippet>Mobile browsers: ~100-300MB memory limit before throttling. Desktop browsers: ~500MB-1GB before issues. Performance Target: Keep memory under 150MB on mobile, under 300MB on desktop for sustained smooth performance. Test Duration: App must remain responsive after 15+ minutes of continuous use with multiple overlay transitions.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Performance Considerations - Frontend Optimization</section>
+        <snippet>React Best Practices: Leverage React's reconciliation process, memoization (React.memo, useMemo, useCallback), and efficient state management to minimize unnecessary re-renders. Code Splitting &amp; Lazy Loading for reduced initial bundle size.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ChatOverlay</symbol>
+        <lines>all</lines>
+        <reason>Primary source of memory leak - needs useEffect cleanup for tRPC queries and chat history. Must cancel queries on unmount and clear state.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/LeadGenChat.tsx</path>
+        <kind>component</kind>
+        <symbol>LeadGenChat</symbol>
+        <lines>all</lines>
+        <reason>Secondary leak source - needs useEffect cleanup for form state and tRPC mutations.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/hooks/useRAGQuery.ts</path>
+        <kind>hook</kind>
+        <symbol>useRAGQuery</symbol>
+        <lines>15-32</lines>
+        <reason>Custom tRPC query hook without cleanup. Must add query cancellation on unmount and configure gcTime/staleTime.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/ProjectOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ProjectOverlay</symbol>
+        <lines>all</lines>
+        <reason>Needs optimization with React.memo to prevent unnecessary re-renders during navigation cycles.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/services/trpc.tsx</path>
+        <kind>service</kind>
+        <symbol>trpc client configuration</symbol>
+        <lines>all</lines>
+        <reason>tRPC and React Query configuration - verify default gcTime, staleTime, and auto-refetch settings.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/App.tsx</path>
+        <kind>component</kind>
+        <symbol>App</symbol>
+        <lines>all</lines>
+        <reason>Root component - audit for event listeners, large state objects, and memory leaks in top-level hooks.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/__tests__/ChatOverlay.test.tsx</path>
+        <kind>test</kind>
+        <symbol>ChatOverlay tests</symbol>
+        <lines>all</lines>
+        <reason>Extend tests to verify cleanup functions are called on unmount.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/hooks/__tests__/useRAGQuery.test.ts</path>
+        <kind>test</kind>
+        <symbol>useRAGQuery tests</symbol>
+        <lines>all</lines>
+        <reason>Add tests for query cancellation on unmount.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <node>
+        <react>^19.2.0</react>
+        <react-dom>^19.2.0</react-dom>
+        <typescript>~5.9.3</typescript>
+        <@trpc/client>^11.7.1</@trpc/client>
+        <@trpc/react-query>^11.7.1</@trpc/react-query>
+        <@tanstack/react-query>^5.90.10</@tanstack/react-query>
+        <zustand>^5.0.8</zustand>
+      </node>
+      <node-dev>
+        <jest>^30.2.0</jest>
+        <@testing-library/react>^16.3.0</@testing-library/react>
+        <@testing-library/jest-dom>^6.9.1</@testing-library/jest-dom>
+        <jest-environment-jsdom>^30.2.0</jest-environment-jsdom>
+      </node-dev>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - NO UI/VISUAL CHANGES WHATSOEVER - Only internal cleanup and performance optimizations
+    - Every useEffect that creates subscriptions/listeners must return cleanup function
+    - Cancel all tRPC queries on component unmount
+    - Clear large state objects (chat history) on unmount 
+    - Use React.memo sparingly - only on expensive components
+    - Use useCallback to stabilize event handlers
+    - Configure React Query with aggressive cleanup: gcTime: 0, staleTime: 0 for non-cached queries
+    - Functional components only (no class components)
+    - Explicit types on function parameters and return values
+    - Single quotes for strings
+    - Semicolons required at end of statements
+    - 4 spaces indentation (TypeScript files)
+    - Trailing commas in multi-line objects/arrays
+    - Import order: External deps first, blank line, then internal modules
+    - Performance targets: Mobile &lt;150MB, Desktop &lt;300MB
+    - Test duration: 15+ minutes continuous use without degradation
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>useEffect cleanup pattern</name>
+      <kind>React pattern</kind>
+      <signature>
+useEffect(() => {
+    // Setup
+    const subscription = something.subscribe();
+
+    // Cleanup function
+    return () => {
+        subscription.unsubscribe();
+        setChatHistory([]); // Clear state
+        queryClient.cancelQueries({ queryKey: [...] }); // Cancel queries
+    };
+}, [dependencies]);
+      </signature>
+      <path>React documentation</path>
+    </interface>
+    <interface>
+      <name>React Query cleanup</name>
+      <kind>React Query pattern</kind>
+      <signature>
+const query = trpc.rag.query.useQuery(params, {
+    enabled: false,
+    gcTime: 0,  // Don't cache results
+    staleTime: 0,  // Mark stale immediately
+});
+
+// On unmount:
+useEffect(() => {
+    return () => {
+        queryClient.cancelQueries({ queryKey: [...] });
+    };
+}, []);
+      </signature>
+      <path>@tanstack/react-query</path>
+    </interface>
+    <interface>
+      <name>React.memo optimization</name>
+      <kind>React pattern</kind>
+      <signature>export const ChatOverlay = React.memo((): JSX.Element => { ... });</signature>
+      <path>React documentation</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Frontend testing uses Jest 30.2.0 with @testing-library/react 16.3.0. Tests co-located in __tests__ folders. File naming: ComponentName.test.tsx. Use describe/it/expect BDD-style. Mock tRPC and React Query. Manual performance testing required with Chrome DevTools Memory Profiler and real mobile devices. Coverage focus: Verify cleanup functions execute on unmount.
+    </standards>
+    <locations>
+      - vansh.fyi/src/components/overlays/__tests__/
+      - vansh.fyi/src/hooks/__tests__/
+      - Manual testing: Chrome DevTools → Performance → Memory
+      - Manual testing: Real iOS/Android devices
+    </locations>
+    <ideas>
+      - AC #1: Test ChatOverlay cleanup function clears chat history on unmount
+      - AC #1: Test useRAGQuery cancels query on unmount (verify cleanup called)
+      - AC #4: Mock React Query cancelQueries and verify it's called on unmount
+      - AC #4: Test that component unmount stops all in-flight tRPC requests
+      - Manual AC #1: Take heap snapshots before/after 10 navigation cycles, verify &lt;50MB growth
+      - Manual AC #1: Check for detached DOM nodes in DevTools memory profile
+      - Manual AC #2: Test 5 chat cycles on iPhone and Android, ensure no freezing
+      - Manual AC #3: Run app for 15+ minutes continuously, verify memory stays &lt;300MB
+      - Integration: Test complete navigation cycle (main → projects → chat → back) 10x
+      - Performance: Profile with Chrome DevTools to identify re-render bottlenecks
+    </ideas>
+  </tests>
+</story-context>

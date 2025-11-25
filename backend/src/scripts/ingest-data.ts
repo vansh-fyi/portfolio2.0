@@ -15,6 +15,11 @@ async function ingestData() {
         new MarkdownSource(contentDir)
     ];
 
+    // Clear existing data
+    console.log('🧹 Clearing existing documents...');
+    const { error: deleteError } = await supabase.from('documents').delete().neq('id', '00000000-0000-0000-0000-000000000000'); // Hack to delete all
+    if (deleteError) console.error('Error clearing documents:', deleteError);
+
     for (const source of sources) {
         console.log(`Processing source: ${source.name}`);
         const documents = await source.fetchDocuments();
@@ -29,9 +34,14 @@ async function ingestData() {
             for (const [index, chunk] of chunks.entries()) {
                 try {
                     const embedding = await generateEmbedding(chunk);
+                    
+                    // Log sample for debugging
+                    if (index === 0 && doc.metadata.source_file.includes('bio.md')) {
+                        console.log('🔍 Bio Embedding Sample:', embedding.slice(0, 5));
+                    }
 
-                    // Upsert into Supabase
-                    const { error } = await supabase.from('embeddings').upsert({
+                    // Insert into Supabase
+                    const { error } = await supabase.from('documents').insert({
                         content: chunk,
                         embedding,
                         metadata: {
@@ -42,7 +52,7 @@ async function ingestData() {
                     });
 
                     if (error) {
-                        console.error(`Error upserting chunk ${index} of ${doc.metadata.source_file}:`, error);
+                        console.error(`Error inserting chunk ${index} of ${doc.metadata.source_file}:`, error);
                     }
                 } catch (err) {
                     console.error(`Error generating embedding for chunk ${index} of ${doc.metadata.source_file}:`, err);

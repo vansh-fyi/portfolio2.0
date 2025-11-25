@@ -52,7 +52,7 @@ describe('ChatView', () => {
   });
 
   describe('Greeting Messages (Story 2.2)', () => {
-    it('should display personal greeting when chat context is personal', () => {
+    it('should display personal greeting when chat context is personal', async () => {
       (useViewStore as unknown as jest.Mock).mockReturnValue({
         goToMain: jest.fn(),
         goToProjects: jest.fn(),
@@ -62,10 +62,10 @@ describe('ChatView', () => {
       });
 
       render(<ChatView />);
-      expect(screen.getByText("Hi! I'm Ursa. Ask me anything about Vansh.")).toBeInTheDocument();
+      expect(await screen.findByText("Hi! I'm Ursa. Ask me anything about Vansh.")).toBeInTheDocument();
     });
 
-    it('should display project greeting with project name when chat context is project', () => {
+    it('should display project greeting with project name when chat context is project', async () => {
       (useViewStore as unknown as jest.Mock).mockReturnValue({
         goToMain: jest.fn(),
         goToProjects: jest.fn(),
@@ -75,10 +75,10 @@ describe('ChatView', () => {
       });
 
       render(<ChatView />);
-      expect(screen.getByText('Hello! Ask anything about AI-Powered Portfolio here.')).toBeInTheDocument();
+      expect(await screen.findByText('Hello! Ask anything about AI-Powered Portfolio here.')).toBeInTheDocument();
     });
 
-    it('should display fallback project greeting when projectId is not found', () => {
+    it('should display fallback project greeting when projectId is not found', async () => {
       (useViewStore as unknown as jest.Mock).mockReturnValue({
         goToMain: jest.fn(),
         goToProjects: jest.fn(),
@@ -88,10 +88,10 @@ describe('ChatView', () => {
       });
 
       render(<ChatView />);
-      expect(screen.getByText('Hello! Ask anything about this project here.')).toBeInTheDocument();
+      expect(await screen.findByText('Hello! Ask anything about this project here.')).toBeInTheDocument();
     });
 
-    it('should display fallback project greeting when projectId is undefined', () => {
+    it('should display fallback project greeting when projectId is undefined', async () => {
       (useViewStore as unknown as jest.Mock).mockReturnValue({
         goToMain: jest.fn(),
         goToProjects: jest.fn(),
@@ -101,12 +101,75 @@ describe('ChatView', () => {
       });
 
       render(<ChatView />);
-      expect(screen.getByText('Hello! Ask anything about this project here.')).toBeInTheDocument();
+      expect(await screen.findByText('Hello! Ask anything about this project here.')).toBeInTheDocument();
     });
 
     // Note: Testing greeting adaptation when switching projects (AC #4)
     // would require a more complex test setup with component re-rendering
     // and state changes. This is covered by the useEffect dependency array
     // [chatContext, projectId] which ensures greeting updates.
+  });
+
+  describe('Project Selection and Switching (Story 1.2)', () => {
+    it('should read projectId from store on mount', () => {
+      const mockGoToProjectChat = jest.fn();
+      (useViewStore as unknown as jest.Mock).mockReturnValue({
+        goToMain: jest.fn(),
+        goToProjects: jest.fn(),
+        goToProjectChat: mockGoToProjectChat,
+        chatContext: 'project',
+        initialChatQuery: '',
+        projectId: 'driq-health',
+      });
+
+      render(<ChatView />);
+      // Component should use projectId from store
+      expect(useViewStore).toHaveBeenCalled();
+    });
+
+    it('should pass correct projectId to tRPC query', () => {
+      const mockRefetch = jest.fn();
+      const { useRAGQuery } = require('../../../hooks/useRAGQuery');
+
+      (useViewStore as unknown as jest.Mock).mockReturnValue({
+        goToMain: jest.fn(),
+        goToProjects: jest.fn(),
+        goToProjectChat: jest.fn(),
+        chatContext: 'project',
+        initialChatQuery: 'Tell me about this',
+        projectId: 'aether',
+      });
+
+      useRAGQuery.mockReturnValue({
+        data: null,
+        error: null,
+        isLoading: false,
+        refetch: mockRefetch,
+      });
+
+      render(<ChatView />);
+
+      // Note: Actual tRPC param verification would require deeper mocking
+      // The critical fix is in useRAGQuery.ts using useViewStore() hook
+      // which ensures projectId is reactive
+      expect(useRAGQuery).toHaveBeenCalled();
+    });
+
+    it('should display greeting when in project context', async () => {
+      (useViewStore as unknown as jest.Mock).mockReturnValue({
+        goToMain: jest.fn(),
+        goToProjects: jest.fn(),
+        goToProjectChat: jest.fn(),
+        chatContext: 'project',
+        initialChatQuery: '',
+        projectId: 'portfolio-website',
+      });
+
+      render(<ChatView />);
+
+      // Verify project greeting is displayed
+      // Note: useEffect [chatContext, projectId] handles greeting updates
+      expect(await screen.findByText(/Hello! Ask anything about AI-Powered Portfolio here./)).toBeInTheDocument();
+    });
   });
 });

@@ -1,0 +1,286 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>1</epicId>
+    <storyId>2</storyId>
+    <title>Project Selection State Management</title>
+    <status>drafted</status>
+    <generatedAt>2025-11-25</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/rag-fixes/story-rag-fixes-2.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>user</asA>
+    <iWant>project context to persist when I open chat and be able to switch projects via the sidebar</iWant>
+    <soThat>I can ask questions about different projects without losing my selection or reloading the page</soThat>
+    <tasks>
+      - Fix ChatOverlay to read projectId from store (AC: #1, #2)
+        - Add `const { projectId, chatContext } = useViewStore();` at component top
+        - Subscribe to projectId changes in useEffect
+        - Pass projectId to RAG query params: `{ query, context, projectId }`
+        - Reset chat history when projectId changes (useEffect with projectId dependency)
+      - Make OverlaySidebar interactive (AC: #2)
+        - Import `useViewStore` and destructure `goToProjectChat`
+        - Add onClick handler to each project item
+        - Call `goToProjectChat(project.id)` on click
+        - Add conditional className for highlighting based on `projectId === project.id`
+        - Ensure visual highlight uses EXISTING CSS classes only (NO new styles)
+        - Add `cursor-pointer` class if not already present
+      - Fix close button navigation (AC: #3)
+        - Locate close button in ChatOverlay component
+        - Update onClick to call appropriate navigation function
+        - Verify ProjectOverlay shows correct project after close
+        - Test on both desktop and mobile views
+        - Ensure projectId is preserved when returning from chat
+      - Write tests for state management (AC: #1, #2, #3, #4)
+        - Update `vansh.fyi/src/state/__tests__/overlayStore.test.ts`
+        - Test `goToProjectChat(projectId)` sets all required state
+        - Test projectId persists through view transitions
+        - Test `goToMain()` clears projectId
+        - Test `goToProjects()` preserves last projectId
+      - Write tests for ChatOverlay (AC: #1, #2, #4)
+        - Update `vansh.fyi/src/components/overlays/__tests__/ChatOverlay.test.tsx`
+        - Test component reads projectId from store on mount
+        - Test chat resets when projectId changes
+        - Mock tRPC and verify correct params passed (context, projectId)
+        - Test chat history clears on project switch
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    AC #1: Project context persists when opening chat
+    - GIVEN user viewing "DriQ Health" project in ProjectOverlay
+    - WHEN user clicks "Ask Ursa" button
+    - THEN ChatOverlay opens
+    - AND sidebar shows "DriQ Health" highlighted
+    - AND projectId is "driq-health" in overlayStore state
+    - AND chat queries use projectId="driq-health" filter
+
+    AC #2: Sidebar is interactive in chat view
+    - GIVEN ChatOverlay is open with projectId="driq-health"
+    - WHEN user clicks different project in sidebar (e.g., "Aether")
+    - THEN `goToProjectChat("aether")` is called
+    - AND chat history clears completely
+    - AND new chat starts with projectId="aether"
+    - AND sidebar highlight updates to show "Aether" selected
+    - AND subsequent RAG queries only use Aether context
+
+    AC #3: Close button returns to correct view
+    - GIVEN ChatOverlay open (entered from ProjectOverlay with projectId="driq-health")
+    - WHEN user clicks "Close Ursa" button (desktop) or "Close" button (mobile)
+    - THEN ChatOverlay closes
+    - AND ProjectOverlay opens with "DriQ Health" project still selected/displayed
+    - AND project iframe shows DriQ Health website
+    - AND sidebar shows correct project highlighted
+
+    AC #4: No chat history persistence (ephemeral chats)
+    - GIVEN user has chat history with Project A (e.g., 5 messages)
+    - WHEN user switches to Project B via sidebar
+    - THEN all previous chat messages disappear from UI
+    - AND chat component state resets
+    - AND chat starts fresh with initial greeting for Project B
+    - AND no message history stored anywhere
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Issue #2: Project Context Lost When Opening Chat</section>
+        <snippet>When a user views a project (e.g., "DriQ Health") in the ProjectOverlay and clicks "Ask Ursa", the chat opens but: The selected project highlight disappears from the sidebar, Clicking other projects in the sidebar does nothing (unresponsive), The projectId is not properly passed to the chat context.</snippet>
+      </doc>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>Solution #2: Fix Project Selection State Management</section>
+        <snippet>Ensure `goToProjectChat()` properly sets and persists projectId in overlayStore. ChatOverlay must read projectId on mount and maintain it. Fix sidebar to remain interactive and highlight selected project. Implement project switching with complete chat history reset.</snippet>
+      </doc>
+      <doc>
+        <path>docs/tech-spec.md</path>
+        <title>Technical Specification</title>
+        <section>State Management Flow</section>
+        <snippet>ChatOverlay must use `useViewStore()` to subscribe to projectId changes. Sidebar must be interactive - add onClick handlers that call `goToProjectChat(newProjectId)`. Close button must call `goToProjects()` to return to projects view with correct selection.</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Frontend State Management</section>
+        <snippet>Zustand stores implemented for View Routing (`overlayStore.ts`): View-state architecture with `currentView: 'main' | 'projects' | 'chat'`, Chat Context (`overlayStore.ts`): Dual-context chat system (`chatContext: 'personal' | 'project'`).</snippet>
+      </doc>
+      <doc>
+        <path>docs/architecture.md</path>
+        <title>Architecture</title>
+        <section>Communication Patterns</section>
+        <snippet>Frontend-Backend: Exclusively tRPC procedures for all API communication. Frontend State Management uses Zustand stores with TypeScript interfaces.</snippet>
+      </doc>
+    </docs>
+    <code>
+      <artifact>
+        <path>vansh.fyi/src/state/overlayStore.ts</path>
+        <kind>store</kind>
+        <symbol>useViewStore</symbol>
+        <lines>1-46</lines>
+        <reason>Central state store for view routing and project selection. Contains `goToProjectChat` action that must be called by sidebar. ChatOverlay must subscribe to this store to read projectId.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/state/overlayStore.ts</path>
+        <kind>store</kind>
+        <symbol>goToProjectChat</symbol>
+        <lines>36-38</lines>
+        <reason>Action that sets chat view with project context. Currently sets state correctly, but components not reading it properly.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/ChatOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ChatOverlay</symbol>
+        <lines>all</lines>
+        <reason>Main component that needs fixing - must subscribe to projectId from store and handle project switching with chat reset.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/OverlaySidebar.tsx</path>
+        <kind>component</kind>
+        <symbol>OverlaySidebar</symbol>
+        <lines>all</lines>
+        <reason>Sidebar component that needs onClick handlers added to make project items interactive in chat view.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/ProjectOverlay.tsx</path>
+        <kind>component</kind>
+        <symbol>ProjectOverlay</symbol>
+        <lines>all</lines>
+        <reason>Project view component containing "Ask Ursa" button and close logic. Close button navigation needs verification.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/hooks/useRAGQuery.ts</path>
+        <kind>hook</kind>
+        <symbol>useRAGQuery</symbol>
+        <lines>all</lines>
+        <reason>Custom hook for tRPC RAG queries. Must accept and pass projectId parameter to backend.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/data/projects.ts</path>
+        <kind>data</kind>
+        <symbol>projects</symbol>
+        <lines>all</lines>
+        <reason>Project metadata array containing project IDs, names, and URLs for sidebar rendering.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/state/__tests__/overlayStore.test.ts</path>
+        <kind>test</kind>
+        <symbol>overlayStore tests</symbol>
+        <lines>all</lines>
+        <reason>Existing test file to extend with project context persistence tests.</reason>
+      </artifact>
+      <artifact>
+        <path>vansh.fyi/src/components/overlays/__tests__/ChatOverlay.test.tsx</path>
+        <kind>test</kind>
+        <symbol>ChatOverlay tests</symbol>
+        <lines>all</lines>
+        <reason>Existing test file to extend with projectId subscription and switching tests.</reason>
+      </artifact>
+    </code>
+    <dependencies>
+      <node>
+        <zustand>^5.0.8</zustand>
+        <react>^19.2.0</react>
+        <react-dom>^19.2.0</react-dom>
+        <typescript>~5.9.3</typescript>
+        <@trpc/client>^11.7.1</@trpc/client>
+        <@trpc/react-query>^11.7.1</@trpc/react-query>
+        <@tanstack/react-query>^5.90.10</@tanstack/react-query>
+      </node>
+      <node-dev>
+        <jest>^30.2.0</jest>
+        <@testing-library/react>^16.3.0</@testing-library/react>
+        <@testing-library/jest-dom>^6.9.1</@testing-library/jest-dom>
+        <jest-environment-jsdom>^30.2.0</jest-environment-jsdom>
+        <@types/react>^19.2.2</@types/react>
+        <@types/jest>^30.0.0</@types/jest>
+      </node-dev>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - NO UI/VISUAL CHANGES WHATSOEVER - The existing UI design, layout, styling, colors, fonts, spacing, animations must remain 100% identical
+    - DO NOT modify Tailwind classes for styling/layout purposes
+    - DO NOT change component visual structure or DOM hierarchy
+    - DO NOT modify CSS animations or transitions
+    - ONLY acceptable UI changes: Adding onClick handlers, adding conditional CSS classes for state highlighting using existing styles, adding data-testid attributes
+    - Use Zustand's get/set pattern for atomic state updates
+    - Every useEffect that creates subscriptions/listeners must return cleanup function
+    - Functional components only (no class components)
+    - Props interface defined above component
+    - Return type annotation on component function
+    - Named event handlers (not inline lambdas): handleProjectClick, handleClose, etc.
+    - Explicit types on function parameters and return values
+    - Use interface for object shapes, type for unions/intersections
+    - No any types - use unknown and type guards if needed
+    - Single quotes for strings
+    - Semicolons required at end of statements
+    - 4 spaces indentation (TypeScript files)
+    - Trailing commas in multi-line objects/arrays
+    - Import order: External deps first, blank line, then internal modules
+  </constraints>
+
+  <interfaces>
+    <interface>
+      <name>ViewStore</name>
+      <kind>Zustand store interface</kind>
+      <signature>
+interface ViewStore {
+  currentView: ViewState;
+  initialChatQuery: string;
+  chatContext: ChatContext;
+  projectId?: string;
+  setView: (view: ViewState) => void;
+  goToMain: () => void;
+  goToProjects: () => void;
+  goToChat: (query?: string) => void;
+  goToProjectChat: (projectId: string, query?: string) => void;
+  selectProject: (projectId: string) => void;
+}
+      </signature>
+      <path>vansh.fyi/src/state/overlayStore.ts</path>
+    </interface>
+    <interface>
+      <name>trpc.rag.query</name>
+      <kind>tRPC API endpoint</kind>
+      <signature>
+interface RagQueryInput {
+  query: string;
+  context: 'personal' | 'project';
+  projectId?: string; // Required if context is 'project'
+}
+      </signature>
+      <path>backend/src/api/rag.ts</path>
+    </interface>
+    <interface>
+      <name>useViewStore hook</name>
+      <kind>React hook</kind>
+      <signature>const { currentView, projectId, chatContext, goToProjectChat, goToProjects } = useViewStore();</signature>
+      <path>vansh.fyi/src/state/overlayStore.ts</path>
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Frontend testing uses Jest 30.2.0 with @testing-library/react 16.3.0 and jest-environment-jsdom 30.2.0. Tests are co-located in __tests__ folders next to source files. File naming: ComponentName.test.tsx or functionName.test.ts. Use describe/it/expect BDD-style assertions. Mock external dependencies (tRPC) in __mocks__ folders. Coverage target: Focus on critical paths rather than specific percentage.
+    </standards>
+    <locations>
+      - vansh.fyi/src/state/__tests__/
+      - vansh.fyi/src/components/overlays/__tests__/
+      - vansh.fyi/src/hooks/__tests__/
+    </locations>
+    <ideas>
+      - AC #1: Test that ChatOverlay reads projectId from useViewStore on mount
+      - AC #1: Test that calling goToProjectChat sets currentView='chat', chatContext='project', and projectId in store
+      - AC #2: Test that clicking different project in sidebar calls goToProjectChat with new ID
+      - AC #2: Test that chat messages clear when projectId changes (useEffect dependency)
+      - AC #2: Mock tRPC query and verify it receives correct projectId parameter
+      - AC #3: Test that close button calls goToProjects and preserves projectId
+      - AC #4: Test that switching projects via sidebar does NOT persist chat history
+      - Integration: Test full flow from ProjectOverlay -> ChatOverlay -> sidebar click -> chat reset
+    </ideas>
+  </tests>
+</story-context>

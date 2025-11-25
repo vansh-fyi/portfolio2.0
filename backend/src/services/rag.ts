@@ -90,24 +90,27 @@ export async function generateRagResponse(query: string, context: 'personal' | '
         const embedding = await generateEmbedding(query);
         console.log('✅ Embedding generated');
 
-        let supabaseQuery = supabase.rpc('match_documents', {
+        // Note: .filter() after .rpc() doesn't work in Supabase JS
+        // So we fetch all results and filter in JavaScript
+        const { data: allResults, error: searchError } = await supabase.rpc('match_documents', {
             query_embedding: embedding,
-            match_threshold: 0.3,
-            match_count: 5,
+            match_threshold: 0.10, // Lowered to capture personal bio docs
+            match_count: 50, // Get more results to filter
         });
-
-        if (projectId) {
-            supabaseQuery = supabaseQuery.filter('metadata->>projectId', 'eq', projectId);
-        } else {
-            supabaseQuery = supabaseQuery.filter('metadata->>source_type', 'eq', context);
-        }
-
-        const { data: searchResults, error: searchError } = await supabaseQuery;
 
         if (searchError) {
             console.error('❌ Vector search error:', searchError);
             throw new Error('Vector search failed');
         }
+
+        // Filter results in JavaScript based on metadata
+        const searchResults = allResults?.filter((doc: any) => {
+            if (projectId) {
+                return doc.metadata?.projectId === projectId;
+            } else {
+                return doc.metadata?.source_type === context;
+            }
+        }).slice(0, 5); // Limit to 5 after filtering
 
         console.log('✅ Vector search results:', searchResults?.length || 0);
 
@@ -118,18 +121,21 @@ export async function generateRagResponse(query: string, context: 'personal' | '
 
         // Step 3: Generate response with LLM (with timeout)
         const llmPromise = generateText({
-            model: huggingface('meta-llama/Llama-3.2-3B-Instruct'),
-            system: `You are Ursa, Vansh's AI assistant. You are helpful, conversational, and knowledgeable about Vansh's professional work.
+            model: huggingface('meta-llama/Llama-3.1-8B-Instruct'),
+            system: `You are Ursa, Vansh Grover's AI assistant. You help people learn about Vansh's background, skills, and projects.
 
-Use the following context to answer the user's question. If the context doesn't contain relevant information, say so politely.
+**IMPORTANT INSTRUCTIONS:**
+- Answer questions about Vansh in third person ("Vansh is...", "He has...", etc.)
+- Use ONLY the context provided below to answer questions
+- If the context contains relevant information, use it to give a clear, detailed answer
+- If the context doesn't contain the information needed, say: "I don't have that specific information in my knowledge base"
+- Be conversational and friendly, but factual
+- Keep responses concise (2-3 sentences unless more detail is needed)
 
-**Context from knowledge base:**
+**Context from Vansh's portfolio:**
 ${contextText}
 
-**Guidelines:**
-- Be concise and friendly
-- Reference the context when answering
-- If you don't have enough information, be honest about it`,
+Now answer the user's question based on this context.`,
             prompt: query,
         });
 

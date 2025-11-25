@@ -12,7 +12,7 @@ interface Message {
 }
 
 const ChatView: React.FC = () => {
-  const { goToMain, goToProjects, chatContext, initialChatQuery, projectId } = useViewStore();
+  const { goToMain, goToProjects, goToProjectChat, chatContext, initialChatQuery, projectId } = useViewStore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
@@ -104,6 +104,14 @@ const ChatView: React.FC = () => {
     }
   };
 
+  // Cleanup on unmount - defensive measure to clear chat state
+  useEffect(() => {
+    return () => {
+      setMessages([]);
+      setPendingQuery('');
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 z-40 bg-black">
       <Header />
@@ -186,7 +194,12 @@ const ChatView: React.FC = () => {
               </div>
             </div>
             <div className="grid grid-cols-12 flex-1 min-h-0">
-              {chatContext === 'project' && <OverlaySidebar />}
+              {chatContext === 'project' && (
+                <OverlaySidebar
+                  selectedProjectId={projectId}
+                  onProjectSelect={(id) => goToProjectChat(id)}
+                />
+              )}
               <section className={`${chatContext === 'project' ? 'col-span-12 md:col-span-9 lg:col-span-9' : 'col-span-12'} min-h-0 flex flex-col relative`}>
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div ref={chatContainerRef} className="flex-1 overflow-y-auto sm:px-8 pt-8 pr-4 pb-8 pl-4">

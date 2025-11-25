@@ -23,9 +23,9 @@ export class MarkdownSource implements IngestionSource {
                     documents.push({
                         content,
                         metadata: {
-                            source_file: file,
-                            type: 'personal',
-                            project_id: null
+                            source_file: `personal/${file}`,
+                            source_type: 'personal',
+                            projectId: undefined
                         }
                     });
                 }
@@ -34,35 +34,44 @@ export class MarkdownSource implements IngestionSource {
             console.warn(`Could not read personal content directory: ${personalDir}`, error);
         }
 
-        // Process project content
+        // Process project content recursively
         const projectsDir = path.join(this.contentDir, 'projects');
-        try {
-            const projectDirs = await fs.readdir(projectsDir);
-            for (const project of projectDirs) {
-                const projectPath = path.join(projectsDir, project);
-                const stat = await fs.stat(projectPath);
+        await this.processProjectsRecursively(projectsDir, documents);
 
-                if (stat.isDirectory()) {
-                    const projectFiles = await fs.readdir(projectPath);
-                    for (const file of projectFiles) {
-                        if (file.endsWith('.md')) {
-                            const content = await fs.readFile(path.join(projectPath, file), 'utf-8');
-                            documents.push({
-                                content,
-                                metadata: {
-                                    source_file: file,
-                                    type: 'project',
-                                    project_id: project
-                                }
-                            });
+        return documents;
+    }
+
+    private async processProjectsRecursively(dir: string, documents: Document[], relativePath: string = 'projects'): Promise<void> {
+        try {
+            const entries = await fs.readdir(dir, { withFileTypes: true });
+
+            for (const entry of entries) {
+                const fullPath = path.join(dir, entry.name);
+                const relativeFilePath = `${relativePath}/${entry.name}`;
+
+                if (entry.isDirectory()) {
+                    // Recurse into subdirectories
+                    await this.processProjectsRecursively(fullPath, documents, relativeFilePath);
+                } else if (entry.isFile() && entry.name.endsWith('.md') && entry.name !== 'README.md') {
+                    // Read markdown files (skip README)
+                    const content = await fs.readFile(fullPath, 'utf-8');
+
+                    // Extract projectId from the filename (e.g., project_aether.md -> aether)
+                    const projectIdMatch = entry.name.match(/^project[_-](.+)\.md$/);
+                    const projectId = projectIdMatch ? projectIdMatch[1].replace(/_/g, '-') : undefined;
+
+                    documents.push({
+                        content,
+                        metadata: {
+                            source_file: relativeFilePath,
+                            source_type: 'project',
+                            projectId: projectId
                         }
-                    }
+                    });
                 }
             }
         } catch (error) {
-            console.warn(`Could not read projects content directory: ${projectsDir}`, error);
+            console.warn(`Could not read directory: ${dir}`, error);
         }
-
-        return documents;
     }
 }

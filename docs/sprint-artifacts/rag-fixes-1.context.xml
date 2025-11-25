@@ -1,0 +1,174 @@
+<story-context id=".bmad/bmm/workflows/4-implementation/story-context/template" v="1.0">
+  <metadata>
+    <epicId>rag-fixes</epicId>
+    <storyId>1</storyId>
+    <title>RAG Database Setup & Data Ingestion</title>
+    <status>Draft</status>
+    <generatedAt>2025-11-25</generatedAt>
+    <generator>BMAD Story Context Workflow</generator>
+    <sourceStoryPath>docs/sprint-artifacts/rag-fixes/story-rag-fixes-1.md</sourceStoryPath>
+  </metadata>
+
+  <story>
+    <asA>developer</asA>
+    <iWant>the Supabase documents table created and populated with RAG data</iWant>
+    <soThat>the conversational AI chatbot can retrieve relevant context and answer user questions</soThat>
+    <tasks>
+      - Create SQL migration script at backend/sql/create-documents-table.sql (AC #1)
+      - Execute migration in Supabase SQL Editor (AC #1)
+      - Add TypeScript type definitions to backend/src/services/supabase.ts (AC #1)
+      - Verify and update ingestion script backend/src/scripts/ingest-data.ts (AC #2)
+      - Run ingestion script locally: cd backend && npm run ingest (AC #2)
+      - Test RAG queries end-to-end (AC #3, #4)
+      - Create documentation: docs/supabase-schema.md and update backend/README.md (AC #1, #2)
+    </tasks>
+  </story>
+
+  <acceptanceCriteria>
+    AC #1: Database schema created successfully
+    - GIVEN Supabase SQL Editor
+    - WHEN migration script is executed
+    - THEN documents table exists with vector(384) column
+    - AND match_documents RPC function exists
+    - AND indexes are created (GIN on metadata, IVFFlat on embedding)
+    - AND no SQL errors occur
+
+    AC #2: Data ingestion completes successfully
+    - GIVEN markdown files in /_content/personal/ and /_content/projects/
+    - WHEN ingestion script runs locally via npm run ingest
+    - THEN all files are processed and chunked
+    - AND embeddings generated for each chunk (384 dimensions using all-MiniLM-L6-v2)
+    - AND documents inserted into Supabase with correct metadata
+    - AND at least 50 documents exist in table (verify with SELECT COUNT(*) FROM documents;)
+
+    AC #3: RAG queries return relevant results
+    - GIVEN documents in Supabase
+    - WHEN user asks "What is Vansh's experience?" via chat interface
+    - THEN system returns relevant chunks with similarity score >0.3
+    - AND LLM generates coherent response based on retrieved context
+    - AND response is NOT "I don't have knowledge about this"
+
+    AC #4: Project-specific queries work correctly
+    - GIVEN projectId filter in RAG query
+    - WHEN user asks about specific project (e.g., "Tell me about Aether" with projectId="aether")
+    - THEN only documents with matching projectId in metadata are returned
+    - AND response is specific to that project only
+    - AND no cross-project information bleeds through
+  </acceptanceCriteria>
+
+  <artifacts>
+    <docs>
+      <doc path="docs/tech-spec.md" title="Technical Specification" section="Story 1: Supabase Schema & Vector Search">
+        Complete SQL schema design for documents table with vector(384) column, match_documents RPC function using cosine similarity, and indexing strategy (GIN on metadata JSONB, IVFFlat on embedding vector).
+      </doc>
+      <doc path="docs/tech-spec.md" title="Technical Specification" section="Implementation Guide">
+        Step-by-step implementation instructions for creating SQL migration, executing in Supabase, running ingestion script locally, and verifying RAG queries.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Technology Stack Details">
+        Embedding model: sentence-transformers/all-MiniLM-L6-v2 (384 dimensions), Supabase integration patterns, Vector database design decisions.
+      </doc>
+      <doc path="docs/architecture.md" title="Architecture" section="Epic to Architecture Mapping">
+        Epic 2 & 4 details on RAG implementation using Vercel AI SDK with HuggingFace, Supabase vector DB, and tRPC API communication.
+      </doc>
+    </docs>
+    <code>
+      <file path="backend/src/services/embeddings.ts" kind="service" symbol="generateEmbedding" lines="12-36" reason="Generates 384-dimensional embeddings using HuggingFace all-MiniLM-L6-v2 model - already correctly configured">
+        Returns 384-dimensional vector, uses @huggingface/inference SDK, includes 10s timeout and error handling.
+      </file>
+      <file path="backend/src/services/supabase.ts" kind="service" symbol="supabase" lines="8" reason="Supabase client initialization - needs Document interface type definitions added">
+        Currently exports supabase client, need to add Document interface for type safety.
+      </file>
+      <file path="backend/src/api/rag.ts" kind="api" symbol="generateRagResponse" lines="85-130" reason="RAG query function that calls supabase.rpc('match_documents') - will fail until table exists">
+        Uses supabase.rpc with match_documents function, filters by projectId, returns similarity-scored documents.
+      </file>
+      <file path="backend/src/scripts/ingest-data.ts" kind="script" symbol="N/A" lines="N/A" reason="Complete ingestion script - needs verification to ensure schema compatibility">
+        Reads markdown from _content/, chunks text, generates embeddings, inserts to Supabase with metadata.
+      </file>
+    </code>
+    <dependencies>
+      <backend>
+        @supabase/supabase-js: ^2.84.0
+        @huggingface/inference: ^4.13.3
+        @ai-sdk/huggingface: ^0.0.4
+        ai: ^5.0.97
+        @trpc/server: ^11.7.2
+        typescript: ^5.9.3
+        ts-node: ^10.9.2
+        jest: ^30.2.0
+        ts-jest: ^29.4.5
+      </backend>
+    </dependencies>
+  </artifacts>
+
+  <constraints>
+    - Vector dimensions MUST be 384 (matches all-MiniLM-L6-v2 output)
+    - Similarity function: Cosine similarity using PostgreSQL <=> operator (1 - cosine_distance)
+    - Minimum similarity threshold: 0.3 for relevant results
+    - Ingestion MUST run locally only (not in backend runtime) to reduce load
+    - SQL migration MUST be executed manually in Supabase SQL Editor (not automated)
+    - File naming: kebab-case for all TypeScript files (create-documents-table.sql)
+    - Error handling: Try-catch with console.error, throw errors up to caller
+    - NO NEW DEPENDENCIES - all packages already installed
+    - Metadata structure: {source_type: "personal"|"project", source_file: string, projectId?: string, chunk_index: number}
+  </constraints>
+
+  <interfaces>
+    <interface name="documents table schema" kind="PostgreSQL table">
+      CREATE TABLE documents (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        content TEXT NOT NULL,
+        embedding vector(384) NOT NULL,
+        metadata JSONB NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      );
+    </interface>
+    <interface name="match_documents RPC function" kind="PostgreSQL function">
+      CREATE OR REPLACE FUNCTION match_documents(
+        query_embedding vector(384),
+        match_threshold float,
+        match_count int
+      ) RETURNS TABLE (
+        id uuid,
+        content text,
+        metadata jsonb,
+        similarity float
+      );
+    </interface>
+    <interface name="Document TypeScript interface" kind="TypeScript interface">
+      interface Document {
+        id: string;
+        content: string;
+        embedding: number[];
+        metadata: {
+          source_type: 'personal' | 'project';
+          source_file: string;
+          projectId?: string;
+          chunk_index: number;
+        };
+        created_at: string;
+      }
+    </interface>
+  </interfaces>
+
+  <tests>
+    <standards>
+      Backend testing uses Jest 30.2.0 with ts-jest 29.4.5. Tests located in __tests__/ folders co-located with source files. Use describe/it/expect BDD-style assertions. Mock Supabase and HuggingFace API calls in unit tests. Integration tests use real Supabase connection (test database).
+    </standards>
+    <locations>
+      - backend/src/api/__tests__/rag.test.ts (integration tests)
+      - backend/src/services/__tests__/ (unit tests for embeddings, supabase)
+      - backend/src/scripts/__tests__/ (ingestion script tests - if needed)
+    </locations>
+    <ideas>
+      AC #1: Test SQL migration executes without errors (manual verification)
+      AC #1: Test documents table schema matches specification (manual SQL query)
+      AC #1: Test match_documents RPC function exists (manual SQL query)
+      AC #2: Test ingestion script processes markdown files (integration test with sample file)
+      AC #2: Test embeddings are 384 dimensions (unit test for generateEmbedding)
+      AC #2: Test metadata structure is correct (verify inserted documents)
+      AC #3: Test RAG query returns results with similarity >0.3 (integration test)
+      AC #3: Test LLM generates coherent response (end-to-end test via chat interface)
+      AC #4: Test projectId filtering works (integration test with projectId parameter)
+    </ideas>
+  </tests>
+</story-context>

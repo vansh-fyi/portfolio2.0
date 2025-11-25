@@ -36,8 +36,8 @@ const Projects = () => {
               alt="Abstract Portrait"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-6 left-6 right-6 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute lg:left-6 lg:right-6 lg:bottom-6 bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
                 <h4 className="text-sm md:text-lg font-semibold text-white mb-2">Aether: AI Powered Design System Generator</h4>
                 <p className="text-xs md:text-sm max-w-md text-white/80">
@@ -56,8 +56,8 @@ const Projects = () => {
               alt="Abstract Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
                 <h4 className="text-sm md:text-lg font-semibold text-white mb-1">DriQ Health 🔒</h4>
                 <p className="text-xs md:text-sm max-w-md text-white/80">
@@ -76,8 +76,8 @@ const Projects = () => {
               alt="Surreal Landscape"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
                 <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Sparto
@@ -98,8 +98,8 @@ const Projects = () => {
               alt="Futuristic Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
                 <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Sparto Admin
@@ -120,8 +120,8 @@ const Projects = () => {
               alt="Digital Art"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="md:group-hover:opacity-100 md:transition-opacity md:duration-300 bg-gradient-to-t via-transparent to-transparent md:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 md:transform md:translate-y-4 md:group-hover:translate-y-0 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
+            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
                 <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
                   Vibio

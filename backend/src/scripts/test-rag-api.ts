@@ -6,7 +6,7 @@ async function testRagApi() {
     const caller = ragRouter.createCaller({});
 
     try {
-        const query = 'Who is Vansh?';
+        const query = 'Tell me about Vansh\'s background and experience';
         console.log(`\n📝 Sending query: "${query}" (context: personal)`);
 
         const result = await caller.query({

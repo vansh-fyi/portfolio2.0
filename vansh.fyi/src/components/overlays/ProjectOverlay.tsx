@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
 import { projects } from '../../config/projects';
 
 const ProjectView: React.FC = () => {
-  const { goToMain, goToProjectChat } = useViewStore();
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('aether');
+  const { goToMain, goToProjectChat, projectId, selectProject } = useViewStore();
+  
+  // Use projectId from store, default to first project (aether) if undefined
+  const currentProjectId = projectId || 'aether';
+  const selectedProject = projects.find(p => p.id === currentProjectId) || projects[0];
 
-  const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
-
-  const handleProjectSelect = (projectId: string) => {
-    setSelectedProjectId(projectId);
+  const handleProjectSelect = (id: string) => {
+    selectProject(id);
   };
 
   return (
@@ -74,7 +75,7 @@ const ProjectView: React.FC = () => {
               </div>
               <div className="flex gap-2 sm:gap-3 gap-x-2 gap-y-2 items-center">
                 <button
-                  onClick={() => goToProjectChat(selectedProjectId)}
+                  onClick={() => goToProjectChat(currentProjectId)}
                   className="inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
@@ -94,7 +95,7 @@ const ProjectView: React.FC = () => {
             <div className="grid grid-cols-12 flex-1 min-h-0">
               <OverlaySidebar
                 onProjectSelect={handleProjectSelect}
-                selectedProjectId={selectedProjectId}
+                selectedProjectId={currentProjectId}
               />
 
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">
@@ -117,4 +118,4 @@ const ProjectView: React.FC = () => {
   );
 };
 
-export default ProjectView;
+export default React.memo(ProjectView);

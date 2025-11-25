@@ -13,7 +13,7 @@ import { useState, useCallback } from 'react';
  * @returns Query result with data, loading state, error, and refetch function
  */
 export const useRAGQuery = (query: string) => {
-  const { chatContext, projectId } = useViewStore.getState();
+  const { chatContext, projectId } = useViewStore();
 
   // Type assertion needed due to placeholder AppRouter type
   // This will be properly typed when backend AppRouter is imported
@@ -25,6 +25,8 @@ export const useRAGQuery = (query: string) => {
     },
     {
       enabled: false, // We will call this query manually
+      gcTime: 0, // Don't cache results to save memory
+      staleTime: 0, // Mark as stale immediately
     }
   );
 

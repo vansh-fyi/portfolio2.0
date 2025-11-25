@@ -56,6 +56,8 @@ describe('useRAGQuery', () => {
       },
       {
         enabled: false,
+        gcTime: 0,
+        staleTime: 0,
       }
     );
   });
@@ -85,6 +87,8 @@ describe('useRAGQuery', () => {
       },
       {
         enabled: false,
+        gcTime: 0,
+        staleTime: 0,
       }
     );
   });

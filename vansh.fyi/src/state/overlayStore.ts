@@ -13,6 +13,7 @@ interface ViewStore {
   goToProjects: () => void;
   goToChat: (query?: string) => void;
   goToProjectChat: (projectId: string, query?: string) => void;
+  selectProject: (projectId: string) => void;
 }
 
 export const useViewStore = create<ViewStore>((set) => ({
@@ -34,6 +35,9 @@ export const useViewStore = create<ViewStore>((set) => ({
   },
   goToProjectChat: (projectId: string, query = '') => {
     set({ currentView: 'chat', initialChatQuery: query, chatContext: 'project', projectId });
+  },
+  selectProject: (projectId: string) => {
+    set({ projectId });
   },
 }));
 

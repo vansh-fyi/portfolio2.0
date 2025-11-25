@@ -1,34 +1,41 @@
-import { HfInference } from '@huggingface/inference';
-import { config } from './config';
+import { pipeline, FeatureExtractionPipeline } from '@huggingface/transformers';
 
-// Initialize HuggingFace client at module level to reduce cold start
-const hf = new HfInference(config.huggingFaceApiKey);
+// Singleton to hold the pipeline
+let embeddingPipeline: FeatureExtractionPipeline | null = null;
 
 /**
- * Generate embedding using HuggingFace Inference SDK
- * Uses sentence-transformers/all-MiniLM-L6-v2 model
+ * Get or initialize the embedding pipeline
+ */
+async function getPipeline() {
+    if (!embeddingPipeline) {
+        console.log('📥 Loading local embedding model (Xenova/all-MiniLM-L6-v2)...');
+        embeddingPipeline = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+        console.log('✅ Model loaded');
+    }
+    return embeddingPipeline;
+}
+
+/**
+ * Generate embedding using local HuggingFace Transformers
+ * Uses Xenova/all-MiniLM-L6-v2 model (ONNX)
  * Returns 384-dimensional vector
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
-    console.log('📤 Embedding request:', { text: text.substring(0, 50) });
+    // console.log('📤 Embedding request:', { text: text.substring(0, 50) });
 
     try {
-        // Add 10s timeout for embedding generation
-        const embeddingPromise = hf.featureExtraction({
-            model: 'sentence-transformers/all-MiniLM-L6-v2',
-            inputs: text,
-        });
-
-        const timeoutPromise = new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error('Embedding generation timed out after 10s')), 10000)
-        );
-
-        const result = await Promise.race([embeddingPromise, timeoutPromise]);
-
-        // Result can be number[] or number[][] - ensure we return flat array
-        const embedding = Array.isArray(result[0]) ? result[0] as number[] : result as number[];
-        console.log('✅ Embedding success:', { dimensions: embedding.length });
-        return embedding;
+        const pipe = await getPipeline();
+        
+        // Generate embedding
+        // pooling: 'mean' is standard for sentence-transformers
+        // normalize: true ensures cosine similarity works with dot product logic
+        const output = await pipe(text, { pooling: 'mean', normalize: true });
+        
+        // Output is a Tensor, we need to convert to plain array
+        const embedding = Array.from(output.data);
+        
+        // console.log('✅ Embedding success:', { dimensions: embedding.length });
+        return embedding as number[];
     } catch (error) {
         console.error('❌ Embedding error:', error);
         throw error;
@@ -40,9 +47,13 @@ export async function generateEmbedding(text: string): Promise<number[]> {
  */
 export function chunkText(text: string, maxChunkSize: number = 1000): string[] {
     const chunks: string[] = [];
+    
+    // Remove YAML frontmatter (--- ... ---)
+    const cleanText = text.replace(/^---\n[\s\S]*?\n---\n/, '');
+    
     let currentChunk = '';
 
-    const paragraphs = text.split('\n\n');
+    const paragraphs = cleanText.split('\n\n');
 
     for (const paragraph of paragraphs) {
         if ((currentChunk + paragraph).length > maxChunkSize && currentChunk.length > 0) {

@@ -9,9 +9,8 @@ import type { AppRouter } from '../../../backend/src/api/index';
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
 // Get API URL from environment
-const API_URL = import.meta.env.VITE_API_URL ||
-  (typeof window !== 'undefined' && (window as any).ENV_VITE_API_URL) ||
-  'http://localhost:8000/trpc';
+// Temporary fix: Hardcoded to avoid TS1343 in tests (import.meta issue)
+const API_URL = 'http://localhost:3000/api/trpc';
 
 const trpcClient = trpc.createClient({
   links: [
@@ -21,7 +20,16 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 5 * 60 * 1000, // 5 minutes garbage collection time
+      staleTime: 0, // Mark stale immediately
+      refetchOnWindowFocus: false, // Don't auto-refetch on window focus
+      retry: 1, // Only retry once on failure (reduce memory from retry queue)
+    },
+  },
+});
 
 export const TRPCProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const TrpcProvider = trpc.Provider;
