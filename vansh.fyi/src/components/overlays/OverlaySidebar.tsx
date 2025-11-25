@@ -54,7 +54,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                     <path d="m6 9 6 6 6-6"></path>
                   </svg>
                 </summary>
-                <ul className="absolute left-0 mt-2 min-w-[14rem] rounded-xl bg-black/80 ring-1 ring-white/10 p-1 shadow-xl z-50">
+                <ul className="absolute left-0 mt-2 min-w-[14rem] backdrop-blur-md rounded-xl bg-black/80 ring-1 ring-white/10 p-1 shadow-xl z-50">
                   {projectCategories.map((category) => (
                     <li key={category.id}>
                       <a
@@ -100,7 +100,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                         }}
                         className={`group flex items-top gap-2 active:scale-95 text-sm text-white/80 ring-transparent ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 relative ${selectedProjectId === project.id
                           ? 'bg-white/10 ring-white/10'
-                          : 'hover:bg-white/10 hover:ring-white/5'
+                          : 'hover:bg-white/5 hover:ring-white/5'
                           }`}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-[16px] h-[24px] flex-shrink-0" strokeWidth="2">
