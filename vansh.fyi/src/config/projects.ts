@@ -29,13 +29,13 @@ export const projectCategories: ProjectCategory[] = [
             id: 'aether',
             title: 'Aether',
             subtitle: 'AI Design System Generator',
-            url: 'https://vansh.fyi/projects/product-design/aether'
+            url: 'https://vansh.fyi/portfolio/product-design/aether'
           },
           {
             id: 'vibio',
             title: 'Vibio',
             subtitle: 'Event Platform for Creatives',
-            url: 'https://vansh.fyi/projects/product-design/vibio'
+            url: 'https://vansh.fyi/portfolio/product-design/vibio'
           }
         ]
       },
@@ -46,7 +46,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'driq-health',
             title: 'DriQ Health',
             subtitle: 'Fall & Incontinence Monitoring',
-            url: 'https://vansh.fyi/projects/healthcare/driq-health',
+            url: 'https://vansh.fyi/portfolio/product-design/driq-health',
             isNDA: true
           }
         ]
@@ -58,7 +58,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'sparto',
             title: 'Sparto',
             subtitle: 'Order Auto Spare Parts',
-            url: 'https://vansh.fyi/projects/e-commerce/sparto'
+            url: 'https://vansh.fyi/portfolio/product-design/sparto'
           }
         ]
       },
@@ -69,13 +69,13 @@ export const projectCategories: ProjectCategory[] = [
             id: 'sparto-admin',
             title: 'Sparto Admin',
             subtitle: 'Enterprise App for Sparto',
-            url: 'https://vansh.fyi/projects/enterprise/sparto-admin'
+            url: 'https://vansh.fyi/portfolio/product-design/sparto-admin'
           },
           {
             id: 'ovik-finance',
             title: 'Ovik Finance',
             subtitle: 'Enterprise App for Ovik Finance',
-            url: 'https://vansh.fyi/projects/enterprise/ovik-finance'
+            url: 'https://vansh.fyi/portfolio/product-design/ovik-finance'
           }
         ]
       },
@@ -86,19 +86,19 @@ export const projectCategories: ProjectCategory[] = [
             id: 'syno-vein',
             title: 'Syno Vein',
             subtitle: 'Loan Authentication System',
-            url: 'https://vansh.fyi/projects/b2b-saas/syno-vein'
+            url: 'https://vansh.fyi/portfolio/product-design/syno-vein'
           },
           {
             id: 'synofin-lms',
             title: 'Synofin LMS',
             subtitle: 'Loan Management System',
-            url: 'https://vansh.fyi/projects/b2b-saas/synofin-lms'
+            url: 'https://vansh.fyi/portfolio/product-design/synofin-lms'
           },
           {
             id: 'syno-assess',
             title: 'Syno Assess',
             subtitle: 'Online Assessment Platform',
-            url: 'https://vansh.fyi/projects/b2b-saas/syno-assess'
+            url: 'https://vansh.fyi/portfolio/product-design/syno-assess'
           }
         ]
       },
@@ -109,7 +109,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'dit-university',
             title: 'DIT University',
             subtitle: 'School of Design Website',
-            url: 'https://vansh.fyi/projects/academia/dit-university'
+            url: 'https://vansh.fyi/portfolio/product-design/dit-university'
           }
         ]
       },
@@ -120,7 +120,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'lalaverse',
             title: 'Lalaverse',
             subtitle: 'Customised VR solutions',
-            url: 'https://vansh.fyi/projects/vr-metaverse/lalaverse',
+            url: 'https://vansh.fyi/portfolio/product-design/lalaverse',
             isNDA: true
           }
         ]
@@ -138,7 +138,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'vibio-branding',
             title: 'Vibio',
             subtitle: 'Event Platform for Creatives',
-            url: 'https://vansh.fyi/projects/branding/vibio'
+            url: 'https://vansh.fyi/portfolio/branding/vibio'
           }
         ]
       },
@@ -149,7 +149,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'sparto-branding',
             title: 'Sparto',
             subtitle: 'Auto Spare Parts',
-            url: 'https://vansh.fyi/projects/branding/sparto'
+            url: 'https://vansh.fyi/portfolio/branding/sparto'
           }
         ]
       },
@@ -160,7 +160,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'rama-rajasthan',
             title: 'RAMA Rajasthan',
             subtitle: "State's Assosciation for multimedia",
-            url: 'https://vansh.fyi/projects/branding/rama-rajasthan'
+            url: 'https://vansh.fyi/portfolio/branding/rama-rajasthan'
           }
         ]
       },
@@ -171,7 +171,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'pizza-hut-rebrand',
             title: 'Pizza Hut Rebrand',
             subtitle: "Rethinking Pizza Hut's identity",
-            url: 'https://vansh.fyi/projects/branding/pizza-hut-rebrand'
+            url: 'https://vansh.fyi/portfolio/branding/pizza-hut-rebrand'
           }
         ]
       },
@@ -182,7 +182,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'unite-creatives',
             title: 'Unite Creatives',
             subtitle: 'Online Community for creatives',
-            url: 'https://vansh.fyi/projects/branding/unite-creatives'
+            url: 'https://vansh.fyi/portfolio/branding/unite-creatives'
           }
         ]
       }
@@ -199,19 +199,19 @@ export const projectCategories: ProjectCategory[] = [
             id: 'aether-ai',
             title: 'Aether',
             subtitle: 'AI-Powered Design System Generator',
-            url: 'https://vansh.fyi/projects/ai/aether'
+            url: 'https://vansh.fyi/portfolio/ai/aether'
           },
           {
             id: 'ursa-ai',
             title: 'Ursa AI',
             subtitle: 'My personal chat assistant',
-            url: 'https://vansh.fyi/projects/ai/ursa-ai'
+            url: 'https://vansh.fyi/portfolio/ai/ursa-ai'
           },
           {
             id: 'portfolio-website',
             title: 'This Website',
             subtitle: 'Spec Coded portfolio Website',
-            url: 'https://vansh.fyi/projects/ai/portfolio-website'
+            url: 'https://vansh.fyi/portfolio/ai/portfolio-website'
           }
         ]
       },
@@ -222,7 +222,7 @@ export const projectCategories: ProjectCategory[] = [
             id: 'driq-health-ai',
             title: 'DriQ Health',
             subtitle: 'Fall & Incontinence Monitoring',
-            url: 'https://vansh.fyi/projects/ai/driq-health',
+            url: 'https://vansh.fyi/portfolio/ai/driq-health',
             isNDA: true
           }
         ]
