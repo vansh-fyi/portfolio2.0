@@ -29,7 +29,6 @@
   "dependencies": {
     "@ai-sdk/huggingface": "^0.0.4",
     "@huggingface/inference": "^4.13.3",
-    "@huggingface/transformers": "^3.8.0",
     "@supabase/supabase-js": "^2.84.0",
     "@trpc/client": "^11.7.2",
     "@trpc/server": "^11.7.2",

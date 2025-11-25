@@ -1,41 +1,35 @@
-import { pipeline, FeatureExtractionPipeline } from '@huggingface/transformers';
+import { HfInference } from '@huggingface/inference';
+import { config } from './config';
 
-// Singleton to hold the pipeline
-let embeddingPipeline: FeatureExtractionPipeline | null = null;
-
-/**
- * Get or initialize the embedding pipeline
- */
-async function getPipeline() {
-    if (!embeddingPipeline) {
-        console.log('📥 Loading local embedding model (Xenova/all-MiniLM-L6-v2)...');
-        embeddingPipeline = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
-        console.log('✅ Model loaded');
-    }
-    return embeddingPipeline;
-}
+// Initialize HuggingFace Inference client
+const hf = new HfInference(config.huggingFaceApiKey);
 
 /**
- * Generate embedding using local HuggingFace Transformers
- * Uses Xenova/all-MiniLM-L6-v2 model (ONNX)
+ * Generate embedding using HuggingFace Inference API
+ * Uses sentence-transformers/all-MiniLM-L6-v2
  * Returns 384-dimensional vector
  */
 export async function generateEmbedding(text: string): Promise<number[]> {
-    // console.log('📤 Embedding request:', { text: text.substring(0, 50) });
-
     try {
-        const pipe = await getPipeline();
-        
-        // Generate embedding
-        // pooling: 'mean' is standard for sentence-transformers
-        // normalize: true ensures cosine similarity works with dot product logic
-        const output = await pipe(text, { pooling: 'mean', normalize: true });
-        
-        // Output is a Tensor, we need to convert to plain array
-        const embedding = Array.from(output.data);
-        
-        // console.log('✅ Embedding success:', { dimensions: embedding.length });
-        return embedding as number[];
+        // Use feature extraction task for embeddings
+        const output = await hf.featureExtraction({
+            model: 'sentence-transformers/all-MiniLM-L6-v2',
+            inputs: text,
+        });
+
+        // Output can be (number | number[] | number[][])[]
+        // For a single string input, it should be number[] (the embedding)
+        // or number[][] if it returns [embedding]
+
+        if (Array.isArray(output)) {
+            // Check if it's a flat array or nested
+            if (output.length > 0 && Array.isArray(output[0])) {
+                return output[0] as number[];
+            }
+            return output as number[];
+        }
+
+        throw new Error('Unexpected output format from HuggingFace API');
     } catch (error) {
         console.error('❌ Embedding error:', error);
         throw error;
@@ -47,10 +41,10 @@ export async function generateEmbedding(text: string): Promise<number[]> {
  */
 export function chunkText(text: string, maxChunkSize: number = 1000): string[] {
     const chunks: string[] = [];
-    
+
     // Remove YAML frontmatter (--- ... ---)
     const cleanText = text.replace(/^---\n[\s\S]*?\n---\n/, '');
-    
+
     let currentChunk = '';
 
     const paragraphs = cleanText.split('\n\n');
