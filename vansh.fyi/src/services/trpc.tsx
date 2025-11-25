@@ -9,8 +9,7 @@ import type { AppRouter } from '../../../backend/src/api/index';
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
 // Get API URL from environment
-// Temporary fix: Hardcoded to avoid TS1343 in tests (import.meta issue)
-const API_URL = 'http://localhost:3000/api/trpc';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/trpc';
 
 const trpcClient = trpc.createClient({
   links: [
