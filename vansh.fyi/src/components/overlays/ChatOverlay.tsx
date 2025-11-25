@@ -163,10 +163,9 @@ const ChatView: React.FC = () => {
                   <span className="h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
-                  <div className="inline-flex bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-md items-center justify-center"></div>
                   <div className="flex">
-                    <span className="text-sm text-white/80 font-geist">Ursa</span>
-                    <span className="hidden lg:inline text-sm text-white/50 font-geist">:AI Agent</span>
+                    <span className="text-sm text-white/80 font-geist">Ask Ursa:</span>
+                    <span className="hidden lg:inline text-sm text-white/50 font-geist">Know More about projects</span>
                   </div>
                 </a>
               </div>
