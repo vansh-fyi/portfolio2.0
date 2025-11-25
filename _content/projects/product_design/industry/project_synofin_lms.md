@@ -1,13 +1,14 @@
 ---
-project_name: Synofin LMS (Customization & Implementation)
-client: Synoriq (Deployed at CSL Finance, Noida)
-role: Product Design Trainee (Co-Designer)
-timeline: Aug 2021 - Sep 2021
-platform: B2B Web Application (SaaS)
+projectId: synofin-lms
+project_name: "Synofin LMS (Customization & Implementation)"
+client: "Synoriq (Deployed at CSL Finance, Noida)"
+role: "Product Design Trainee (Co-Designer)"
+timeline: "Aug 2021 - Sep 2021"
+platform: "B2B Web Application (SaaS)"
 competitor_context: "Replacing Finova (Established Market Leader)"
 key_contributions: ["Data Table Standardization", "Form Flow Optimization", "Competitor Analysis/Adaptation"]
 challenges: ["Migration Anxiety", "Strict Daily Feedback Loops", "Split Workload"]
-related_documents: [personal_bio.md, project_synovein.md]
+related_documents: ["personal_bio.md", "project_synovein.md"]
 ---
 
 # Case Study: Synofin LMS – The Art of Adaptation

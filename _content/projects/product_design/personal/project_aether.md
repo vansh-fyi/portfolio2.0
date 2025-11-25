@@ -1,8 +1,16 @@
+---
+projectId: aether
+project_name: Aether
+role: Product Designer & Full-Stack Developer
+timeline: 2024 - Present
+platform: Web Application (AI Tool)
+---
+
 # Aether: AI-Powered Design System Generator
 
-**Status**: In Development  
-**Type**: AI-Powered Design Tool  
-**Role**: Product Designer & Full-Stack Developer  
+**Status**: In Development
+**Type**: AI-Powered Design Tool
+**Role**: Product Designer & Full-Stack Developer
 **Timeline**: 2024 - Present
 
 ## Project Overview

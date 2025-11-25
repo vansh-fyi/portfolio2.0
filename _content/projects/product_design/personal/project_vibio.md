@@ -1,14 +1,15 @@
 ---
+projectId: vibio
 project_name: Vibio
-event: Vibe-X Designathon (by Sandcup Design Studio)
-[cite_start]award: Runner-Up [cite: 66]
-role: Product Strategy, Branding Lead, & Unofficial Team Lead
-team_size: 4 Members (Vansh, Udit, Surubhi, Anoop)
-timeline: 7 Days (Design Sprint)
-platform: Mobile Application (Community & Event Platform)
+event: "Vibe-X Designathon (by Sandcup Design Studio)"
+award: "Runner-Up"
+role: "Product Strategy, Branding Lead, & Unofficial Team Lead"
+team_size: "4 Members (Vansh, Udit, Surubhi, Anoop)"
+timeline: "7 Days (Design Sprint)"
+platform: "Mobile Application (Community & Event Platform)"
 key_features: ["The Lounge (Immersive Spaces)", "Design Spirit (AI Avatar)", "Vent Wall", "Gamified Challenges"]
 business_model: ["Freemium Event Hosting", "Ticket Commissions", "B2B Partnerships"]
-related_documents: [personal_bio.md, project_sparto_brand.md]
+related_documents: ["personal_bio.md", "project_sparto_brand.md"]
 ---
 
 # Case Study: Vibio – The Event Platform for Creatives

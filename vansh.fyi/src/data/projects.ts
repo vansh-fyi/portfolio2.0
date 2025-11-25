@@ -149,6 +149,22 @@ export const projects: ProjectMetadata[] = [
     technologies: ['LLM', 'RAG', 'Chatbot'],
     featured: false,
   },
+  {
+    id: 'vibio-branding',
+    name: 'Vibio',
+    shortDescription: 'Event Platform branding for Creatives',
+    category: 'Branding',
+    technologies: ['Brand Identity', 'Visual Design', 'Logo Design'],
+    featured: false,
+  },
+  {
+    id: 'sparto-branding',
+    name: 'Sparto',
+    shortDescription: 'Auto Spare Parts branding',
+    category: 'Branding',
+    technologies: ['Brand Identity', 'Visual Design', 'Logo Design'],
+    featured: false,
+  },
 ];
 
 /**

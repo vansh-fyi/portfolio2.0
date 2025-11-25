@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import matter from 'gray-matter';
 import { IngestionSource, Document } from './types';
 
 export class MarkdownSource implements IngestionSource {
@@ -19,13 +20,16 @@ export class MarkdownSource implements IngestionSource {
             const personalFiles = await fs.readdir(personalDir);
             for (const file of personalFiles) {
                 if (file.endsWith('.md')) {
-                    const content = await fs.readFile(path.join(personalDir, file), 'utf-8');
+                    const fileContent = await fs.readFile(path.join(personalDir, file), 'utf-8');
+                    const { data: frontmatter, content } = matter(fileContent);
+
                     documents.push({
                         content,
                         metadata: {
                             source_file: `personal/${file}`,
                             source_type: 'personal',
-                            projectId: undefined
+                            projectId: undefined,
+                            ...frontmatter // Spread frontmatter into metadata
                         }
                     });
                 }
@@ -54,18 +58,20 @@ export class MarkdownSource implements IngestionSource {
                     await this.processProjectsRecursively(fullPath, documents, relativeFilePath);
                 } else if (entry.isFile() && entry.name.endsWith('.md') && entry.name !== 'README.md') {
                     // Read markdown files (skip README)
-                    const content = await fs.readFile(fullPath, 'utf-8');
+                    const fileContent = await fs.readFile(fullPath, 'utf-8');
+                    const { data: frontmatter, content } = matter(fileContent);
 
-                    // Extract projectId from the filename (e.g., project_aether.md -> aether)
+                    // Extract projectId from the filename as fallback (e.g., project_aether.md -> aether)
                     const projectIdMatch = entry.name.match(/^project[_-](.+)\.md$/);
-                    const projectId = projectIdMatch ? projectIdMatch[1].replace(/_/g, '-') : undefined;
+                    const filenameProjectId = projectIdMatch ? projectIdMatch[1].replace(/_/g, '-') : undefined;
 
                     documents.push({
                         content,
                         metadata: {
                             source_file: relativeFilePath,
                             source_type: 'project',
-                            projectId: projectId
+                            projectId: filenameProjectId, // Fallback from filename
+                            ...frontmatter, // Spread frontmatter (will override projectId if present in frontmatter)
                         }
                     });
                 }

@@ -1,12 +1,13 @@
 ---
+projectId: ovik-finance
 project_name: Ovik Finance
-client: Synoriq (Client: Ovik Finance)
-role: Sole On-Site Product Designer (Trainee)
-timeline: Aug 2021 (2-Week Intensive Sprint)
-platform: Mobile Application (Supply Chain Finance)
+client: "Synoriq (Client: Ovik Finance)"
+role: "Sole On-Site Product Designer (Trainee)"
+timeline: "Aug 2021 (2-Week Intensive Sprint)"
+platform: "Mobile Application (Supply Chain Finance)"
 challenge: "Translating vague client visions into UI in real-time"
 key_features: ["Supply Chain Operation Management", "Jargon-Free Tooltips", "Onboarding Walkthrough", "Integrated Communication"]
-related_documents: [personal_bio.md, project_synoriq_ecosystem.md]
+related_documents: ["personal_bio.md", "project_synoriq_ecosystem.md"]
 ---
 
 # Case Study: Ovik Finance

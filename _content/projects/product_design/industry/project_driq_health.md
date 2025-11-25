@@ -1,9 +1,18 @@
+---
+projectId: driq-health
+project_name: DriQ Health
+role: Lead Product Designer & Full-Stack Developer
+timeline: 2023
+platform: Healthcare IoT + Mobile Application
+confidential: true
+---
+
 # DriQ Health: Incontinence Monitoring for Seniors 🔒
 
-**Status**: Confidential Healthcare Project  
-**Type**: Healthcare IoT + Mobile Application  
-**Role**: Lead Product Designer & Full-Stack Developer  
-**Timeline**: 2023  
+**Status**: Confidential Healthcare Project
+**Type**: Healthcare IoT + Mobile Application
+**Role**: Lead Product Designer & Full-Stack Developer
+**Timeline**: 2023
 **Note**: This is a confidential healthcare project. Details are limited due to NDA.
 
 ## Project Overview

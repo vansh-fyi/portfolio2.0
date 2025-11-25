@@ -1,12 +1,13 @@
 ---
-project_name: Synovein (Loan Authentication Platform)
-client: Synoriq (Deployed at CSL Finance, Noida)
-role: Sole Product Designer (On-Site)
-timeline: Aug 2021 - Sep 2021 (1 Month Sprint)
-platform: B2B Web Application
+projectId: syno-vein
+project_name: "Synovein (Loan Authentication Platform)"
+client: "Synoriq (Deployed at CSL Finance, Noida)"
+role: "Sole Product Designer (On-Site)"
+timeline: "Aug 2021 - Sep 2021 (1 Month Sprint)"
+platform: "B2B Web Application"
 key_features: ["Role-Based Dynamic Navigation", "Structured Decision Hub", "Top-Nav Architecture"]
 challenges: ["Solo Design Role", "Strict 9-to-5 Constraints", "Split Workload", "Complex Financial Domain"]
-related_documents: [personal_bio.md, project_synofin_lms.md]
+related_documents: ["personal_bio.md", "project_synofin_lms.md"]
 ---
 
 # Case Study: Synovein – The Loan Authentication Engine

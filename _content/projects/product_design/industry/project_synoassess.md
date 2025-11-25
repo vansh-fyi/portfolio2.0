@@ -1,12 +1,13 @@
 ---
+projectId: syno-assess
 project_name: SynoAssess
 client: Synoriq
-role: Product Design Trainee (Collaborator)
-timeline: 2021 (Pandemic EdTech Surge)
-platform: Web Application (Two-Sided Assessment Platform)
+role: "Product Design Trainee (Collaborator)"
+timeline: "2021 (Pandemic EdTech Surge)"
+platform: "Web Application (Two-Sided Assessment Platform)"
 design_principle: "Jakob's Law (Familiarity > Novelty)"
 key_features: ["Proctoring/Anti-Cheat UI", "Google Forms-style Builder", "Question Bank Library", "Destructive Action Safety"]
-related_documents: [personal_bio.md, project_synofin_lms.md]
+related_documents: ["personal_bio.md", "project_synofin_lms.md"]
 ---
 
 # Case Study: SynoAssess – Balancing Simplicity & Security

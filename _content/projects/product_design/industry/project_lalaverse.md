@@ -1,14 +1,15 @@
 ---
+projectId: lalaverse
 project_name: Lalaverse
-client: App Mechanic (Client: Lalaverse)
+client: "App Mechanic (Client: Lalaverse)"
 role: UI Designer & UI Artist
 timeline: Sep 2022 - Nov 2022
-platform: [Web, Metaverse/PC Client]
-tech_stack: [Figma, Unreal Engine (Collab)]
-project_type: Hyper-Realistic Metaverse (Digital Twin of Dubai)
+platform: ["Web", "Metaverse/PC Client"]
+tech_stack: ["Figma", "Unreal Engine (Collab)"]
+project_type: "Hyper-Realistic Metaverse (Digital Twin of Dubai)"
 key_features: ["In-Game HUD", "Inventory Management", "Avatar Customization", "Public Website"]
-nda_status: Strict NDA (Conceptual & Process details only)
-related_documents: [personal_bio.md]
+nda_status: "Strict NDA (Conceptual & Process details only)"
+related_documents: ["personal_bio.md"]
 ---
 
 # Case Study: Lalaverse – UI for a Hyper-Realistic Dubai Metaverse

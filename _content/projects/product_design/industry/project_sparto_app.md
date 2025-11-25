@@ -1,8 +1,17 @@
+---
+projectId: sparto
+project_name: Sparto
+client: Partlink Solutions
+role: Product Designer & Frontend Developer
+timeline: 2022-2023
+platform: Web Application (B2B E-Commerce)
+---
+
 # Sparto: Request-Based E-Commerce for Spare Parts
 
-**Status**: Completed & Deployed  
-**Type**: B2B E-Commerce Platform  
-**Role**: Product Designer & Frontend Developer  
+**Status**: Completed & Deployed
+**Type**: B2B E-Commerce Platform
+**Role**: Product Designer & Frontend Developer
 **Timeline**: 2022-2023
 
 ## Project Overview
