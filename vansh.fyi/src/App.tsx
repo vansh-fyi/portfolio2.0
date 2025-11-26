@@ -69,8 +69,8 @@ function App() {
 
   // Initialize Unicorn Studio when on main view or theme changes
   useEffect(() => {
-    // Only initialize when on main view
-    if (currentView !== 'main') return;
+    // Only initialize when on main view AND on desktop (width >= 768px)
+    if (currentView !== 'main' || window.innerWidth < 768) return;
 
     const initUnicornStudio = () => {
       if (!window.UnicornStudio) {

@@ -25,8 +25,8 @@ export const useRAGQuery = (query: string) => {
     },
     {
       enabled: false, // We will call this query manually
-      gcTime: 0, // Don't cache results to save memory
-      staleTime: 0, // Mark as stale immediately
+      gcTime: 1000 * 60 * 5, // Cache for 5 minutes to prevent GC thrashing
+      staleTime: Infinity, // Keep data fresh to avoid refetches
     }
   );
 
