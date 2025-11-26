@@ -200,7 +200,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
           </div>
         </nav>
       </div>
-      <div className="sm:p-2 border-white/10 border-t pt-4 pr-2 pb-2 pl-2">
+      <div className="border-white/10 border-t pt-6 pr-2 pb-4 pl-2">
         <div className="flex items-center gap-3 rounded-xl bg-black/80 p-3 ring-1 ring-white/10">
           <div className="inline-flex transition active:scale-95 text-white/80 bg-white/10 w-8 h-8 rounded-full ring-white/10 ring-1 items-center justify-center flex-shrink-0">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copyright lucide-train-front lucide-circle-user lucide-user w-[20px] h-[20px] text-white/80 flex-shrink-0">

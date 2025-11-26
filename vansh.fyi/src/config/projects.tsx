@@ -169,7 +169,7 @@ export const projectCategories: ProjectCategory[] = [
           {
             id: 'vibio-branding',
             title: 'Vibio',
-            subtitle: 'Event Platform for Creatives',
+            subtitle: 'Vibio Brand Guidelines',
             url: 'https://vansh.fyi/portfolio/branding/vibio',
             logo: DEFAULT_PROJECT_LOGO
           }
@@ -181,7 +181,7 @@ export const projectCategories: ProjectCategory[] = [
           {
             id: 'sparto-branding',
             title: 'Sparto',
-            subtitle: 'Auto Spare Parts',
+            subtitle: 'Sparto Brand Guidelines',
             url: 'https://vansh.fyi/portfolio/branding/sparto',
             logo: DEFAULT_PROJECT_LOGO
           }
@@ -236,7 +236,7 @@ export const projectCategories: ProjectCategory[] = [
           {
             id: 'aether-ai',
             title: 'Aether',
-            subtitle: 'AI-Powered Design System Generator',
+            subtitle: 'AI-Driven Design System Generator',
             url: 'https://vansh.fyi/portfolio/ai/aether',
             logo: DEFAULT_PROJECT_LOGO
           },
@@ -250,7 +250,7 @@ export const projectCategories: ProjectCategory[] = [
           {
             id: 'portfolio-website',
             title: 'This Website',
-            subtitle: 'Spec Coded portfolio Website',
+            subtitle: 'Spec Coded Portfolio Website',
             url: 'https://vansh.fyi/portfolio/ai/portfolio-website',
             logo: DEFAULT_PROJECT_LOGO
           }

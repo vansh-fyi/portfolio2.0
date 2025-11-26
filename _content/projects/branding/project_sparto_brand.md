@@ -1,5 +1,5 @@
 ---
-projectId: sparto
+projectId: sparto-branding
 project_name: Sparto Brand Identity
 client: Partlink Solutions
 role: Lead Brand & Product Designer

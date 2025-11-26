@@ -1,5 +1,5 @@
 ---
-projectId: sparto
+projectId: sparto-admin
 project_name: Sparto Admin Panel
 client: Partlink Solutions
 role: Lead Product Designer
