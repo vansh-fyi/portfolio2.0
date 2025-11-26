@@ -196,6 +196,7 @@ html {
 }
 
 .hover-glow:hover {
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
   transform: translateY(-2px);
 }
@@ -206,7 +207,8 @@ html {
 }
 
 .light-mode .hover-glow:hover {
-  box-shadow: 0 20px 40px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(10, 10, 10, 0.2);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.6);
 }
 
 /*text overrides*/
