@@ -37,7 +37,7 @@ const ProjectView: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div onClick={goToMain} className="group flex items-center gap-2">
                   <button
-                    className="flex h-3.5 w-3.5 rounded-full text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
+                    className="flex md:h-3.5 md:w-3.5 h-4 w-4 rounded-full text-red-900 md:text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
                   >
                     <svg
@@ -57,7 +57,7 @@ const ProjectView: React.FC = () => {
                     </svg>
                   </button>
                   <button
-                    className="flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
+                    className="hidden md:inline flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Minimise"
                   >
                     <svg
@@ -75,7 +75,7 @@ const ProjectView: React.FC = () => {
                       <path d="M5 12h14" />
                     </svg>
                   </button>
-                  <span className="h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
+                  <span className="hidden md:inline h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="flex">

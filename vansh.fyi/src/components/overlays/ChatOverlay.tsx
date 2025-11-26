@@ -124,7 +124,7 @@ const ChatView: React.FC = () => {
               <div className="flex items-center gap-3">
                 <div onClick={goToMain} className="group flex items-center gap-2">
                   <button
-                    className="flex h-3.5 w-3.5 rounded-full text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
+                    className="flex md:h-3.5 md:w-3.5 h-4 w-4 rounded-full text-red-900 md:text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
                   >
                     <svg
@@ -144,7 +144,7 @@ const ChatView: React.FC = () => {
                     </svg>
                   </button>
                   <button
-                    className="flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
+                    className="hidden md:inline flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Minimise"
                   >
                     <svg
@@ -162,7 +162,7 @@ const ChatView: React.FC = () => {
                       <path d="M5 12h14" />
                     </svg>
                   </button>
-                  <span className="h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
+                  <span className="hidden md:inline h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
                 <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="flex">
@@ -177,11 +177,9 @@ const ChatView: React.FC = () => {
                   className="inline-flex active:scale-95 flex-shrink-0 text-sm bg-white/5 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[16px] h-[16px] text-white/80">
-                    <path d="M18 6 6 18"></path>
-                    <path d="m6 6 12 12"></path>
+                    <path d="M15 18l-6-6 6-6"></path>
                   </svg>
-                  <span className="hidden lg:inline text-white/80">Close Ursa</span>
-                  <span className="inline lg:hidden text-white/80">Close</span>
+                  <span className="text-white/80">Back</span>
                 </button>
                 {chatContext === 'project' && (
                   <button
