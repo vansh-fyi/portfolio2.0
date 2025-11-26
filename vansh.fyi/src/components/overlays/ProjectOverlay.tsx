@@ -8,6 +8,7 @@ const ProjectView: React.FC = () => {
   const { goToMain, goToProjectChat, projectId, selectProject } = useViewStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
   // Use projectId from store, default to first project (aether) if undefined
   const currentProjectId = projectId || 'aether';
@@ -17,6 +18,14 @@ const ProjectView: React.FC = () => {
   const handleProjectSelect = (id: string) => {
     selectProject(id);
   };
+
+  // Progressive loading: Delay iframe mount to allow GC to run
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsIframeLoaded(true);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-40 bg-black">
@@ -122,12 +131,13 @@ const ProjectView: React.FC = () => {
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div className="flex-1 sm:space-y-6">
-                    <iframe
-                      key={selectedProject.url}
-                      src={selectedProject.url}
-                      className="w-full h-full border-0"
-                      title={`${selectedProject.title} - ${selectedProject.subtitle}`}
-                    ></iframe>
+                    {isIframeLoaded && (
+                      <iframe
+                        src={selectedProject.url}
+                        className="w-full h-full border-0"
+                        title={`${selectedProject.title} - ${selectedProject.subtitle}`}
+                      ></iframe>
+                    )}
                   </div>
                 </div>
               </section>

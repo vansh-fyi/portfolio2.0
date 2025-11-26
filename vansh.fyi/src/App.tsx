@@ -97,10 +97,22 @@ function App() {
 
     initUnicornStudio();
 
-    // Cleanup: Remove Unicorn Studio script when component unmounts
+    // Cleanup: Remove Unicorn Studio script and canvas when component unmounts
     return () => {
       const scripts = document.querySelectorAll('script[src*="unicornstudio"]');
       scripts.forEach(script => script.remove());
+
+      // Strict cleanup: Remove the canvas element created by Unicorn Studio
+      const canvas = document.querySelector('canvas[data-us-canvas]');
+      if (canvas) {
+        canvas.remove();
+      }
+
+      // Nullify the global object to allow GC
+      if (window.UnicornStudio) {
+        // @ts-ignore
+        window.UnicornStudio = undefined;
+      }
     };
   }, [currentView, isLightMode]);
 
