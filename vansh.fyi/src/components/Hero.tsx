@@ -22,7 +22,7 @@ const Hero = () => {
       {/* Decorative grid lines */}
       <div className="pointer-events-none z-10 absolute top-0 right-0 bottom-0 left-0">
         {/* Vertical lines */}
-        <div className="w-px bg-gradient-to-b from-transparent to-transparent absolute top-0 bottom-0 left-[12.5%] via-white/10"></div>
+        <div className="absolute inset-y-0 left-[12.5%] w-px bg-gradient-to-b from-transparent to-transparent via-white/10"></div>
         <div className="absolute inset-y-0 left-[25%] w-px bg-gradient-to-b from-transparent to-transparent via-white/10"></div>
         <div className="absolute inset-y-0 left-[37.5%] w-px bg-gradient-to-b from-transparent to-transparent via-white/10"></div>
         <div className="absolute inset-y-0 left-[62.5%] w-px bg-gradient-to-b from-transparent to-transparent via-white/10"></div>
@@ -38,7 +38,7 @@ const Hero = () => {
       <img id="dark-bg-image" src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/hero_dark_focus.webp" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
       <img id="light-bg-image" src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/hero_light_focus.webp" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
       <div className="pointer-events-none" id="wrapper">
-        <div className="gradient-blur">
+        <div className="bg-transparent md:gradient-blur">
           <div className=""></div>
           <div></div>
           <div></div>
