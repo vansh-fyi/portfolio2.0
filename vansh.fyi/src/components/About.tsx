@@ -6,7 +6,7 @@ const About = () => {
           <div className="fade-in-up transition-all duration-500 cursor-pointer group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
             <div className="mb-6">
               <div className="w-full h-64 bg-gradient-to-br from-blue-500 rounded-xl overflow-hidden ring-1 mb-4 via-purple-600 to-pink-600 ring-white/10">
-                <img src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/about_main.jpg" alt="Vansh Portrait" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/about_main.jpg" alt="Vansh Portrait" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               </div>
               {/* New content added below the image */}
             </div>
@@ -134,7 +134,7 @@ const About = () => {
               </div>
             </div>
             <div className="grid md:grid-cols-1 flex-grow pt-6 gap-x-6 gap-y-6">
-              <img src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/about_theme.jpg" alt="Vansh Grover" className="w-full h-full object-cover rounded-xl" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/about_theme.jpg" alt="Vansh Grover" className="w-full h-full object-cover rounded-xl" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>

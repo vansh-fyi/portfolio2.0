@@ -35,8 +35,8 @@ const Hero = () => {
         <div className="absolute inset-x-0 top-[80%] h-px bg-gradient-to-r from-transparent to-transparent via-white/10"></div>
       </div>
       {/* Background image */}
-      <img id="dark-bg-image" src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_dark_focus.png" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
-      <img id="light-bg-image" src="https://raw.githubusercontent.com/vansh-fyi/portfolio2.0/main/Images/hero_light_focus.png" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
+      <img id="dark-bg-image" src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/hero_dark_focus.png" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
+      <img id="light-bg-image" src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/hero_light_focus.png" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
       <div className="pointer-events-none" id="wrapper">
         <div className="gradient-blur">
           <div className=""></div>

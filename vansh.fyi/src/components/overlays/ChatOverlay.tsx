@@ -117,9 +117,9 @@ const ChatView: React.FC = () => {
   return (
     <div className="fixed inset-0 z-40 bg-black">
       <Header />
-      <div className="pt-[84px] px-6 md:px-20 pb-6">
+      <div className="pt-[80px] md:pt-[84px] px-6 lg:px-20 pb-16 lg:pb-6">
         <div className="z-10 relative">
-          <div className="overflow-hidden h-[calc(100vh-84px-24px)] flex flex-col bg-neutral-900/80 ring-white/20 ring-1 bg-black/30 rounded-2xl shadow-[0_20px_120px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
+          <div className="overflow-hidden h-[calc(100vh-120px-24px)] lg:h-[calc(100vh-84px-24px)] flex flex-col bg-neutral-900/80 ring-white/20 ring-1 bg-black/30 rounded-2xl shadow-[0_20px_120px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
             <div className="flex sm:px-6 border-white/5 border-b pt-3 pr-4 pb-3 pl-4 items-center justify-between">
               <div className="flex items-center gap-3">
                 <div onClick={goToMain} className="group flex items-center gap-2">
