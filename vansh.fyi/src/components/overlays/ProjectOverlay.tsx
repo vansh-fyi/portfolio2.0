@@ -89,7 +89,7 @@ const ProjectView: React.FC = () => {
                   onClick={() => goToProjectChat(currentProjectId)}
                   className="inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-[16px] h-[32px] flex-shrink-0" stroke-width="2" data-icon-replaced="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-[16px] h-[16px] flex-shrink-0" stroke-width="2" data-icon-replaced="true">
                     <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M11.8401 2.3723C12.1332 2.32759 12.4306 2.29559 12.7316 2.27688C12.5229 2.26391 12.3125 2.25732 12.1005 2.25732C11.8001 2.25732 11.5027 2.27055 11.209 2.29645C11.4213 2.31518 11.6317 2.34053 11.8401 2.3723Z" />
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M7.13151 9.67024C7.25322 9.67024 7.35188 9.57157 7.35188 9.44987C7.35188 9.32816 7.25322 9.22949 7.13151 9.22949C7.0098 9.22949 6.91113 9.32816 6.91113 9.44987C6.91113 9.57157 7.0098 9.67024 7.13151 9.67024Z" />
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M16.0075 9.67024C16.1292 9.67024 16.2279 9.57157 16.2279 9.44987C16.2279 9.32816 16.1292 9.22949 16.0075 9.22949C15.8858 9.22949 15.7871 9.32816 15.7871 9.44987C15.7871 9.57157 15.8858 9.67024 16.0075 9.67024Z" />
