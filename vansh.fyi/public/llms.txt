@@ -1,0 +1,27 @@
+# Vansh Grover - Portfolio
+
+## Summary
+Vansh Grover is a Product Designer and multidisciplinary creative. He specializes in simplifying user flows, building modern web applications with AI, and designing intuitive interfaces. He has a background in Physics (B.Sc. Honors) and User Experience Design (M.Des), with additional certifications in AI/ML from Caltech.
+
+## Skills
+- Product Design
+- User Experience (UX) Design
+- User Interface (UI) Design
+- AI System Design
+- Web Development (React, Modern Web Tech)
+- Physics & Mathematics
+
+## Education
+- Master of Design, User Experience Design - DIT University (2020)
+- Bachelor of Science (Honors), Physics - University of Delhi (2019)
+- Post Graduate Program in AI & ML - Caltech CTME (2025)
+
+## Interests
+- Human-Computer Interaction (HCI)
+- Human-Robot Interaction (HRI)
+- Psychology
+- Mixed Media Art
+- Music, Poetry, Reading, Travel
+
+## Contact
+- Website: https://portfolio.vansh.fyi
