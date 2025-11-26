@@ -17,7 +17,7 @@ const Testimonials = () => {
           {/* Testimonial 1 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://i.pravatar.cc/80?img=12" alt="Photo of Ava Thompson" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Greg.webp" alt="Photo of Dr, Gregory Dean" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
                 <p className="font-medium text-white/80">Dr. Gregory Dean</p>
                 <p className="text-sm text-white/50">CEO, DriQ Health</p>
@@ -30,7 +30,7 @@ const Testimonials = () => {
           {/* Testimonial 2 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex gap-4 mb-5 gap-x-4 gap-y-4 items-center">
-              <img src="https://i.pravatar.cc/80?img=22" alt="Photo of Marcus Reed" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Varun.webp" alt="Photo of Varun Goyal" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
                 <p className="font-medium text-white/80">Varun Goyal</p>
                 <p className="text-sm text-white/50">Co-Founder, Partlink Solutions</p>
@@ -43,7 +43,7 @@ const Testimonials = () => {
           {/* Testimonial 3 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="w-12 h-12 rounded-full ring-white/20 ring-2" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Narendra.webp" alt="Photo of Narendra Khudania" className="w-12 h-12 rounded-full ring-white/20 ring-2" />
               <div className="">
                 <p className="font-medium text-white/80">Narendra Khudania</p>
                 <p className="text-sm text-white/50">Product Manager, Synoriq</p>
@@ -56,7 +56,7 @@ const Testimonials = () => {
           {/* Testimonial 4 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Shreyas.webp" alt="Photo of Shreyas Dutta" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
                 <p className="font-medium text-white/80">Shreyas Dutta</p>
                 <p className="text-sm text-white/50">Assistant Professor, DIT University</p>
@@ -69,7 +69,7 @@ const Testimonials = () => {
           {/* Testimonial 5 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Subrat.webp" alt="Photo of Subrat Rao" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
                 <p className="font-medium text-white/80">Subrat Rao</p>
                 <p className="text-sm text-white/50">Design Student, DIT University</p>
@@ -80,7 +80,7 @@ const Testimonials = () => {
           {/* Testimonial 6 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://i.pravatar.cc/80?img=36" alt="Photo of Lina Park" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Ankit.webp" alt="Photo of Ankit Kumar Vishwakarma" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
                 <p className="font-medium text-white/80">Ankit Kumar Vishwakarma</p>
                 <p className="text-sm text-white/50">Design Student, DIT University</p>
