@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
@@ -6,6 +6,8 @@ import { getAllProjects } from '../../config/projects';
 
 const ProjectView: React.FC = () => {
   const { goToMain, goToProjectChat, projectId, selectProject } = useViewStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Use projectId from store, default to first project (aether) if undefined
   const currentProjectId = projectId || 'aether';
@@ -83,12 +85,27 @@ const ProjectView: React.FC = () => {
                   </svg>
                   Ask Ursa
                 </button>
+                <button
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  className="md:hidden inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                  </svg>
+                </button>
                 <div className="hidden md:flex bg-black/30 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search w-4 h-4 text-white/50">
                     <path d="m21 21-4.34-4.34"></path>
                     <circle cx="11" cy="11" r="8"></circle>
                   </svg>
-                  <input placeholder="Search projects..." className="w-48 bg-transparent text-sm focus:outline-none" />
+                  <input
+                    placeholder="Search projects..."
+                    className="w-48 bg-transparent text-sm focus:outline-none"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
               </div>
             </div>
@@ -96,6 +113,10 @@ const ProjectView: React.FC = () => {
               <OverlaySidebar
                 onProjectSelect={handleProjectSelect}
                 selectedProjectId={currentProjectId}
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+                searchQuery={searchQuery}
+                onClearSearch={() => setSearchQuery('')}
               />
 
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">

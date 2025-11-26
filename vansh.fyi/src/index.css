@@ -627,6 +627,7 @@ html {
 /* Mobile performance optimization for gradient-blur
    Replaces expensive stacked backdrop-filter with simple gradient on mobile */
 @media (max-width: 768px) {
+
   .gradient-blur,
   .gradient-blur::before,
   .gradient-blur::after,
@@ -637,11 +638,7 @@ html {
   }
 
   .gradient-blur::after {
-    background: linear-gradient(to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.3) 40%,
-        rgba(0, 0, 0, 0.7) 70%,
-        rgba(0, 0, 0, 0.9) 100%);
+    background: none !important;
   }
 
   /* Global disable for backdrop blurs */
@@ -653,7 +650,7 @@ html {
   .backdrop-blur-3xl {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background-color: rgba(10, 10, 10, 0.95) !important;
+    background-color: rgba(10, 10, 10, 0.9) !important;
   }
 
   /* Light mode fallback */
@@ -663,6 +660,6 @@ html {
   .light-mode .backdrop-blur-xl,
   .light-mode .backdrop-blur-2xl,
   .light-mode .backdrop-blur-3xl {
-    background-color: rgba(255, 255, 255, 0.95) !important;
+    background-color: rgba(255, 255, 255, 0.9) !important;
   }
 }

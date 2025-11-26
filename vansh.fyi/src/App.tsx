@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Element } from 'react-scroll';
 
 declare global {
@@ -25,6 +25,7 @@ import ChatView from './components/overlays/ChatOverlay';
 function App() {
   const { currentView } = useViewStore();
   const { isLightMode } = useThemeStore();
+  const previousViewRef = useRef(currentView);
 
 
   // Handle body lock for non-main views
@@ -34,6 +35,27 @@ function App() {
     } else {
       document.body.classList.remove('body-lock');
     }
+  }, [currentView]);
+
+  // Handle scroll restoration when closing project overlay
+  useEffect(() => {
+    if (previousViewRef.current === 'projects' && currentView === 'main') {
+      // Small timeout to ensure DOM is ready
+      setTimeout(() => {
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection) {
+          const headerOffset = 85;
+          const elementPosition = projectsSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    }
+    previousViewRef.current = currentView;
   }, [currentView]);
 
   // Handle theme changes
@@ -111,7 +133,7 @@ function App() {
       <Element name="features">
         <Skills />
       </Element>
-      <Element name="projects">
+      <Element name="projects" id="projects">
         <Projects />
       </Element>
       <Element name="about">

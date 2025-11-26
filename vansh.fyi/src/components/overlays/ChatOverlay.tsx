@@ -17,6 +17,8 @@ const ChatView: React.FC = () => {
   const [input, setInput] = useState('');
   const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
   const [isSending, setIsSending] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const { data, error, isLoading, refetch } = useRAGQuery(pendingQuery);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -182,12 +184,29 @@ const ChatView: React.FC = () => {
                   <span className="inline lg:hidden text-white/80">Close</span>
                 </button>
                 {chatContext === 'project' && (
+                  <button
+                    onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                    className="md:hidden inline-flex active:scale-95 flex-shrink-0 text-sm bg-white/5 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[16px] h-[16px] text-white/80">
+                      <line x1="3" y1="12" x2="21" y2="12"></line>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                  </button>
+                )}
+                {chatContext === 'project' && (
                   <div className="hidden md:flex bg-black/30 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/50">
                       <path d="m21 21-4.34-4.34"></path>
                       <circle cx="11" cy="11" r="8"></circle>
                     </svg>
-                    <input placeholder="Search projects..." className="w-48 bg-transparent text-sm focus:outline-none" />
+                    <input
+                      placeholder="Search projects..."
+                      className="w-48 bg-transparent text-sm focus:outline-none"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
                 )}
               </div>
@@ -197,6 +216,10 @@ const ChatView: React.FC = () => {
                 <OverlaySidebar
                   selectedProjectId={projectId}
                   onProjectSelect={(id) => goToProjectChat(id)}
+                  isOpen={isSidebarOpen}
+                  onClose={() => setIsSidebarOpen(false)}
+                  searchQuery={searchQuery}
+                  onClearSearch={() => setSearchQuery('')}
                 />
               )}
               <section className={`${chatContext === 'project' ? 'col-span-12 md:col-span-9 lg:col-span-9' : 'col-span-12'} min-h-0 flex flex-col relative`}>

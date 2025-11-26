@@ -165,6 +165,22 @@ export const projects: ProjectMetadata[] = [
     technologies: ['Brand Identity', 'Visual Design', 'Logo Design'],
     featured: false,
   },
+  {
+    id: 'aether-ai',
+    name: 'Aether',
+    shortDescription: 'AI-powered design system generator that creates customized, production-ready design systems',
+    category: 'AI Tool',
+    technologies: ['React', 'TypeScript', 'OpenAI GPT-4', 'Node.js', 'Figma API'],
+    featured: true,
+  },
+  {
+    id: 'driq-health-ai',
+    name: 'DriQ Health',
+    shortDescription: 'Healthcare IoT solution for incontinence monitoring in seniors',
+    category: 'Healthcare IoT',
+    technologies: ['React Native', 'Node.js', 'IoT Sensors', 'PostgreSQL', 'AWS IoT'],
+    featured: true,
+  },
 ];
 
 /**
