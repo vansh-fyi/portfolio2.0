@@ -34,13 +34,13 @@ const Projects = () => {
             className="group relative overflow-hidden rounded-2xl border ring-1 md:col-span-2 lg:row-span-2 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/aether.webp"
-              alt="Abstract Portrait"
+              alt="Aether: AI Powered Design System Generator"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute lg:left-6 lg:right-6 lg:bottom-6 bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-2">Aether: AI Powered Design System Generator</h4>
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-2">Aether: AI Powered Design Systems</h4>
                 <p className="text-xs md:text-sm max-w-md text-white/80">
                   Customise your design system and generate code components.
                 </p>
@@ -54,7 +54,7 @@ const Projects = () => {
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/driq.webp"
-              alt="Abstract Art"
+              alt="DriQ Health: Incontinence Monitoring for Seniors"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
@@ -74,7 +74,7 @@ const Projects = () => {
             className="group overflow-hidden aspect-auto border ring-1 rounded-2xl relative lg:row-span-2 md:row-span-3 xs:row-span-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/sparto.webp"
-              alt="Surreal Landscape"
+              alt="Sparto: Request based Ecommerce Application to sell Spare parts"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
@@ -96,7 +96,7 @@ const Projects = () => {
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/sparto_admin.webp"
-              alt="Futuristic Art"
+              alt="Sparto Admin: Enterprise App for Sparto"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
@@ -118,7 +118,7 @@ const Projects = () => {
             className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
             <img
               src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/vibio.webp"
-              alt="Digital Art"
+              alt="Vibio: Event Platform for Creatives"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>

@@ -3,7 +3,7 @@ const About = () => {
     <section className="pt-24 pb-24 relative" style={{ opacity: 1, transform: 'translateY(0px)' }} id="about">
       <div className="sm:px-6 lg:px-8 max-w-7xl mr-auto ml-auto pt-8 pr-4 pb-8 pl-4">
         <div className="grid lg:grid-cols-12 gap-x-8 gap-y-8 h-full items-stretch">
-          <div className="fade-in-up hover:-translate-y-1 transition-all duration-500 cursor-pointer group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
+          <div className="fade-in-up hover:-translate-y-1 transition-all duration-500 group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
             <div className="mb-6">
               <div className="w-full h-64 bg-gradient-to-br from-blue-500 rounded-xl overflow-hidden ring-1 mb-4 via-purple-600 to-pink-600 ring-white/10">
                 <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/about_main.webp" alt="Vansh Portrait" className="w-full h-full object-cover" loading="lazy" decoding="async" />

@@ -14,7 +14,7 @@ const Skills = () => {
         <div className="max-w-7xl mr-auto ml-auto">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-6" id="industry-cards">
             {/* Card 1 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 to-white/4 ring-white/10 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 to-white/4 ring-white/10 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -33,7 +33,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 2 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -53,7 +53,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 3 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 w-12 h-12 rounded-xl ring-1 bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -73,7 +73,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 4 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -91,7 +91,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 5 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 w-12 h-12 rounded-xl ring-1 bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -109,7 +109,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 6 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -129,7 +129,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 7 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
@@ -148,7 +148,7 @@ const Skills = () => {
               </p>
             </div>
             {/* Card 8 */}
-            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 cursor-pointer group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
+            <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-all duration-300 bg-white/5 ring-white/10">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-all duration-300 text-white/80">
