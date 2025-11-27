@@ -24,19 +24,26 @@ I build the "brains" behind the beauty. My experience includes:
 
 ## Background & Education
 
-I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. I completed my **BSc. Honors** in **Physics** from **Sri Venkateswara College(University of Delhi)** at 2020. This scientific background complements my creative side which was followed by a **Master's in Design** in **User Experience Design** which I completed at 2022, allowing me to approach design challenges with rigorous logic.
+I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. I completed my **BSc. Honors** in **Physics** from **Sri Venkateswara College (University of Delhi)** in 2020 (started 2017). This scientific background complements my creative side. I then pursued a **Master of Design (M.Des)** in **User Experience Design** at **IT University**, which I completed in 2022. During my studies, I also worked as a **Product Design Trainee** at **Synoriq** in 2021.
 
-In November 2022, a life-changing accident (a gas leak resulting in 70% burns) forced me to pause my career. During my recovery, I learnt front-end development and enhanced my learning of psychology. This experience taught me resilience.
+After graduating, I worked as a **UI Designer** at **App Mechanic** in 2022, working on game design and the Lalaverse platform. In November 2022, a life-changing accident (a gas leak resulting in 70% burns) forced me to pause my career. During my recovery until July 2023, I learnt front-end development and enhanced my understanding of psychology. This experience taught me resilience.
 
-Post that I worked as an **Assistant Professor** at **DIT University** for a year (ending in September 2024) where I discovered a passion for mentorship and enhanced my communication skills to deliver design ideas and concepts to students and stakeholders.
+Post recovery, I worked as an **Assistant Professor** at **DIT University** from **July 2023 to September 2024**, where I discovered a passion for mentorship and enhanced my communication skills.
 
-Post that, I was appointed as **Director of Product Design** at **DriQ Health** alongside which I also completed my 9 month certification in **Post Graduate Program in AI and Machine Learning** from **Caltech University** at October 2025.
+Following that, I joined **DriQ Health** initially as a **Freelance Web Designer** (October 2024 – February 2025). After pitching improvement ideas and creating a design system, I was promoted to **Director of Product Design** (February 2025 – October 2025). During my tenure at DriQ, I also completed a **Post Graduate Program in AI and Machine Learning** from **Caltech University** (February 2025 – October 2025) and worked on a freelance project for **Sparto** (Partlink Solutions) from **April 2025 to July 2025** with the approval of the DriQ CEO.
 
-Up until recently, I have been leading the product strategy for DriQ Health, a startup that uses AI to solve incontinence problems for seniors and nursing staff. I worked there as **Director of Product Design**. He completed his contract at October 2025 and now he is actively looking for new opportunities to use his diverse skillset to scale businesses and solve and real-world problems. 
+I completed my contract at DriQ Health in October 2025 and am now actively looking for new opportunities to use my diverse skillset to scale businesses and solve real-world problems.
+
+## Certifications
+
+- **Python for Data Science**: IBM
+- **CS50's Introduction to Computer Science**: HarvardX
+- **Brand Management: Aligning Business, Brand and Behavior**: London Business School
+- **Figma to Lottie Certification**: Lottie Files 
 
 ## Vision
 
-I am driven by the goal of **bridging the physical and digital worlds through AI**. I believe the future of software lies in "Spatial Computing" and "Ambient Intelligence" where technology anticipates our needs and enhances our capabilities without getting in the way. I am a strong believer of **Function and Form** rather than their existing notion and debate of them following each other.
+I am driven by the goal of **bridging the physical and digital worlds through design**. I believe the future of software lies in "Spatial Computing" and "Ambient Intelligence" where technology anticipates our needs and enhances our capabilities without getting in the way. I am a strong believer of **Function and Form** rather than their existing notion and debate of them following each other.
 
 ## Let's Connect
 

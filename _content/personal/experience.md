@@ -12,9 +12,10 @@ I have **about 3 years of cumulative professional experience** in product design
 
 ## The Peak: Leading Design at Scale
 
-### DriQ Health - Director of Product Design (October 2024 – September 2025)
+### DriQ Health - Director of Product Design (February 2025 – October 2025)
+*Previously Freelance Web Designer (October 2024 – February 2025)*
 
-This role represents the culmination of my experience so far. I served as the **Director of Product Design** at **DriQ Health**, a Philadelphia-based healthcare technology company. Reporting directly to the CEO, I was responsible for the entire product design lifecycle and digital strategy.
+This role represents the culmination of my experience so far. I started as a freelance web designer, where I pitched improvement ideas and created a comprehensive design system. Recognizing my impact, I was promoted to **Director of Product Design** in February 2025. Reporting directly to the CEO, I was responsible for the entire product design lifecycle and digital strategy.
 
 **Key Achievements:**
 - **Strategic Leadership:** Transformed the company's digital presence from a broken, non-functional state into a high-performing brand ecosystem.
@@ -28,7 +29,7 @@ The CEO described me as an *"all-round problem solver who doesn't say no,"* high
 ## The Foundation: Early Career & Freelance
 
 ### Partlink Solutions (Sparto) - Product & Brand Designer (April 2025 – July 2025)
-*Freelance Project*
+*Freelance Project (Concurrent with DriQ Health)*
 
 I led the end-to-end design for **Sparto**, an automotive spare parts platform.
 - **Scope:** Designed the mobile app, enterprise admin panel, and complete brand identity.
