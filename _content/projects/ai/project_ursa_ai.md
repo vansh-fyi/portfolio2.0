@@ -5,7 +5,8 @@ role: AI Engineer & Designer
 timeline: 2024 - Present
 platform: Conversational AI Agent
 key_features: ["RAG Pipeline", "Context Awareness", "Natural Language Processing", "Personality System"]
-technologies: ["Mastra.AI", "Llama-3.1-8B-Instruct", "RAG", "Vector Database", "HuggingFace"]
+tech_stack: ["Typescript", "Hugging Face", "Llama API", "Supabase", "Resend", "Vercel AI SDK", "Node.js", "Hono", "React 19", "TypeScript", "tRPC"]
+technologies: ["Vercel AI SDK", "Llama-3.1-8B-Instruct", "RAG", "Generative AI", "Vector Database", "HuggingFace", "Supabase", "Resend", "Node.js", "Hono", "React 19", "TypeScript", "tRPC", "PostgreSQL", "pgvector", "TypeScript", "pgvector"]
 ---
 
 # Ursa AI: My Personal Chat Assistant
@@ -31,6 +32,7 @@ Ursa uses Retrieval-Augmented Generation to provide accurate, context-aware resp
 Ursa understands different contexts and adapts accordingly:
 - **Personal Context**: When asked about me generally, focuses on skills, experience, and background
 - **Project Context**: When viewing a specific project, provides detailed technical information about that project
+- **Lead Gen Context**: Powers the Resend lead generation chat, guiding visitors through a contact flow while maintaining the Ursa persona
 - **Dynamic Switching**: Automatically adjusts context based on where the user is in the portfolio
 
 ### 3. Natural Personality
@@ -40,6 +42,32 @@ Unlike robotic chatbots, Ursa has a carefully crafted personality:
 - **Strategic Emoji Use**: Adds warmth and emphasis without overdoing it
 - **Narrative Flow**: Responses tell stories rather than listing bullet points
 
+## Technical Architecture
+
+### RAG Pipeline
+1. **Content Ingestion**:
+   - Source: Markdown files in `_content/` directory
+   - Chunking: Paragraph-based splitting (max 1000 chars)
+   - Embeddings: `sentence-transformers/all-MiniLM-L6-v2` (384d) via HuggingFace Inference API
+   - Storage: Supabase `documents` table with `pgvector`
+
+2. **Query Processing**:
+   - Vector Search: `match_documents` RPC using cosine similarity (threshold: 0.10)
+   - Filtering: In-memory JavaScript filtering for `projectId` or `source_type`
+   - Context Window: Top 5 most relevant chunks
+
+3. **Response Generation**:
+   - Model: `meta-llama/Llama-3.1-8B-Instruct` via Vercel AI SDK
+   - System Prompt: Enforces third-person voice ("Vansh is...") and strict context adherence
+   - Reliability: 20s timeout protection for serverless execution
+
+### Technology Stack
+- **Framework**: Vercel AI SDK (`ai`)
+- **Inference**: HuggingFace Inference API (`@huggingface/inference`)
+- **Database**: Supabase (PostgreSQL + pgvector)
+- **Backend**: Node.js + Hono (tRPC Adapter) on Vercel Serverless
+- **Frontend**: React 19 + TypeScript + tRPC Clients
+
 ### 4. Multi-Context Intelligence
 Ursa handles various types of questions intelligently:
 - Technical questions about specific technologies or implementations
@@ -47,33 +75,7 @@ Ursa handles various types of questions intelligently:
 - Project-specific questions about challenges, solutions, and outcomes
 - Open-ended questions about my work philosophy and approach
 
-## Technical Architecture
 
-### RAG Pipeline
-1. **Content Ingestion**:
-   - Markdown files in `_content/` directory organized by topic
-   - Text chunking (500 tokens with 50-token overlap)
-   - Embedding generation using Xenova/all-MiniLM-L6-v2 (384 dimensions)
-   - Storage in Supabase with metadata (projectId, source_type)
-
-2. **Query Processing**:
-   - User question → embedding generation
-   - Cosine similarity search in pgvector (threshold: 0.10)
-   - Context-aware filtering (personal vs project-specific)
-   - Returns top 5 most relevant chunks
-
-3. **Response Generation**:
-   - Retrieved context + user query → Llama-3.1-8B-Instruct
-   - Personality-driven system prompt for consistent voice
-   - Structured prompts for factual, engaging responses
-
-### Technology Stack
-- **AI Model**: Llama-3.1-8B-Instruct via HuggingFace Inference API
-- **Framework**: Mastra.AI for agent orchestration
-- **Embeddings**: all-MiniLM-L6-v2 (optimized for semantic similarity)
-- **Vector Database**: Supabase with pgvector extension
-- **Backend**: Node.js with tRPC for type-safe API communication
-- **Frontend**: React + TypeScript for the chat interface
 
 ## Design Decisions
 

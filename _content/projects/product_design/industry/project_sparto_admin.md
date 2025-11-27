@@ -7,10 +7,24 @@ timeline: April 2025 - July 2025
 platform: Web / Desktop Enterprise Application
 key_features: ["Request Editing & Triage", "User Profile Management", "Notification Control", "Data Export"]
 design_strategy: "Task-Based UX over Metric-Heavy Dashboard"
+tech_stack: ["Figma", "Lottie", Rive"]
+key_achievements:
+  - "Designed task-centric operational dashboard"
+  - "Optimized Atomic Design System for desktop"
+  - "Streamlined complex B2B workflows"
+process: "Task-based UX strategy & desktop adaptation"
 related_documents: [project_sparto_app.md, project_sparto_brand.md]
 ---
 
 # Case Study: Sparto Admin Panel (The Enterprise Brain)
+
+## Key Achievements & Contributions
+- **Task-Centric Design**: Successfully challenged the industry standard of "vanity dashboards" by implementing a highly functional, task-based interface.
+- **Desktop Optimization**: Adapted the mobile-first Atomic Design System for desktop precision, creating a "Compact Field" standard for high-density data.
+- **Operational Efficiency**: Streamlined complex workflows for request editing, quoting, and order management, directly empowering the operations team.
+
+## Process
+*See Section 2: The Design Philosophy below*
 
 ## 1. Context: The "Backstage" Engine
 While the Sparto Mobile App was the "Request Generator" for mechanics, the **Sparto Admin Panel** was the engine required to process those requests. It serves as the central command center for the Sparto operations team to manage the marketplace, quote prices, and handle logistics.

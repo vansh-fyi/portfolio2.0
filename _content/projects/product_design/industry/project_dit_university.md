@@ -8,10 +8,25 @@ project_type: Website Redesign & Design System Strategy
 key_conflict: "Sophistication (Dean) vs. Clarity (Parents) vs. Cool Factor (Gen Z)"
 deliverables: ["High-Fidelity Responsive Design", "Interactive Prototype", "Design System v1"]
 outcome: "Project shelved due to budget, but served as a critical leadership case study."
+tech_stack: ["Figma"]
+key_achievements:
+  - "Led student team in live redesign project"
+  - "Reverse-engineered legacy template constraints"
+  - "Balanced conflicting stakeholder requirements"
+process: "Research, Golden Ratio concept, & Iterative Design"
 related_documents: [personal_bio.md]
 ---
 
 # Case Study: DIT University School of Design – The Stakeholder Balancing Act
+
+## Key Achievements & Contributions
+- **Leadership & Mentorship**: Led a student team through a high-stakes redesign, turning a live project into a practical "Design Management" curriculum.
+- **Strategic Redesign**: Personally architected the core site structure and "Hero Section," balancing the Dean's need for sophistication with parents' need for clarity.
+- **Technical Ingenuity**: "Reverse-engineered" a rigid legacy template to implement a modern Design System without access to source code.
+- **Content Strategy**: Directed a custom photography shoot of student work to replace stock imagery, enhancing authenticity.
+
+## Process
+*See Section 4: The Design Process below*
 
 ## 1. Context: The Professor as Practitioner
 While serving as an Assistant Professor at DIT University, Vansh Grover identified a critical gap in the department's digital presence. He presided over a team of students tasked with redesigning the website.

@@ -12,7 +12,7 @@ Beyond my day-to-day work in design and AI, there's a whole world of interests t
 
 ## The Moonshot: Mathematics of Aesthetics
 
-Here's my ultimate ambition, the problem that keeps me up at night in the best way possible: **Can aesthetics be converted into mathematics?**
+Here's my ultimate ambition, the problem that keeps me up at night in the best way possible: **Can aesthetics be converted into a mathematical model?**
 
 I know it sounds abstract, but hear me out. Throughout my career, I've noticed that "good design" is often defined subjectively. We say something is beautiful, intuitive, or well-designed, but these are qualitative assessments. What if we could move beyond subjective definitions and find a way to quantify beauty, to calculate good design into measurable, replicable metrics?
 

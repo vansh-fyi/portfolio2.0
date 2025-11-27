@@ -7,10 +7,25 @@ timeline: "Aug 2021 (2-Week Intensive Sprint)"
 platform: "Mobile Application (Supply Chain Finance)"
 challenge: "Translating vague client visions into UI in real-time"
 key_features: ["Supply Chain Operation Management", "Jargon-Free Tooltips", "Onboarding Walkthrough", "Integrated Communication"]
+tech_stack: ["Figma"]
+key_achievements:
+  - "Led design as sole trainee in 2-week sprint"
+  - "Conducted guerilla user research with real clients"
+  - "Created jargon-free financial UX"
+process: "On-site real-time design & guerilla research"
 related_documents: ["personal_bio.md", "project_synoriq_ecosystem.md"]
 ---
 
 # Case Study: Ovik Finance
+
+## Key Achievements & Contributions
+- **Solo Leadership**: Successfully led the design of a complex fintech product as a trainee, chosen over seniors for superior communication skills.
+- **Rapid Delivery**: Delivered a comprehensive design system and high-fidelity prototype within a grueling **2-week sprint**.
+- **User-Centric Shift**: Conducted guerilla research with actual clients to pivot the product from a "vague vision" to a problem-solving tool.
+- **Financial Accessibility**: Simplified dense supply chain finance concepts into a jargon-free, educational user interface.
+
+## Process
+*See Section 3: The Process below*
 
 ## 1. Context: The Intern in the Lead
 Just one month into his design career at **Synoriq**, Vansh Grover was selected for a high-stakes opportunity: to act as the **sole, on-site designer** for Ovik Finance.

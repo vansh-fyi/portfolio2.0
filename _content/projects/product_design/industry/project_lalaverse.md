@@ -9,10 +9,24 @@ tech_stack: ["Figma", "Unreal Engine (Collab)"]
 project_type: "Hyper-Realistic Metaverse (Digital Twin of Dubai)"
 key_features: ["In-Game HUD", "Inventory Management", "Avatar Customization", "Public Website"]
 nda_status: "Strict NDA (Conceptual & Process details only)"
+key_achievements:
+  - "Designed high-fidelity UI matching Unreal Engine photorealism"
+  - "Created unified design system for Web and Metaverse"
+  - "Developed assets for complex inventory and avatar systems"
+process: "Can not disclose due to NDA"
 related_documents: ["personal_bio.md"]
 ---
 
 # Case Study: Lalaverse – UI for a Hyper-Realistic Dubai Metaverse
+
+## Key Achievements & Contributions
+- **UI Artist Role**: Bridged the gap between functional UI and high-fidelity "game art," ensuring interfaces matched the photorealistic Unreal Engine world.
+- **Cross-Platform Consistency**: Designed a unified visual language for both the 3D Metaverse client and the 2D public-facing website.
+- **Complex Systems**: Successfully architected HUDs, inventory management, and avatar customization flows for a multi-faceted virtual economy.
+- **Technical Handoff**: Pioneered a workflow to translate Figma designs into game-ready assets for Unreal and Unity developers.
+
+## Process
+*Can not disclose due to NDA*
 
 ## 1. Context: Mirroring Reality
 Lalaverse was an ambitious project aimed at creating a **hyper-realistic metaverse mirroring the city of Dubai**.

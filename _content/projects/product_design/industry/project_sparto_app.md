@@ -2,16 +2,23 @@
 projectId: sparto
 project_name: Sparto
 client: Partlink Solutions
-role: Product Designer & Frontend Developer
+role: Product Designer
 timeline: 2022-2023
-platform: Web Application (B2B E-Commerce)
+platform: Flutter Application (B2B B2C E-Commerce)
+tech_stack: ["Figma", "Lottie", "Rive"]
+key_achievements:
+  - "Streamlined complex user flows"
+  - "50% reduction in average task on time"
+  - "Improved and faster onboarding"
+  - "Created Atomic Design System"
+process: "On-site qualitative research & usability testing"
 ---
 
 # Sparto: Request-Based E-Commerce for Spare Parts
 
 **Status**: Completed & Deployed
-**Type**: B2B E-Commerce Platform
-**Role**: Product Designer & Frontend Developer
+**Type**: B2B B2C E-Commerce Platform
+**Role**: Product Designer
 **Timeline**: 2022-2023
 
 ## Project Overview
@@ -72,25 +79,7 @@ Sparto flips the traditional e-commerce model:
 - **Logistics Integration**: Track shipments from multiple carriers
 - **Dispute Resolution**: Mediation system for transaction issues
 
-## Technical Architecture
 
-**Frontend**:
-- Next.js (React) for server-side rendering and SEO
-- TailwindCSS for responsive design
-- React Query for efficient data fetching
-- Socket.io for real-time notifications
-
-**Backend**:
-- Node.js + Express REST API
-- PostgreSQL for transactional data
-- Redis for caching and real-time features
-- Stripe for payment processing
-
-**Infrastructure**:
-- Vercel for frontend hosting
-- AWS EC2 for backend services
-- AWS S3 for file uploads (part images, documents)
-- CloudFlare for CDN and DDoS protection
 
 ## Design Challenges & Solutions
 
@@ -106,13 +95,17 @@ Sparto flips the traditional e-commerce model:
 **Problem**: Suppliers often work from warehouses without desktop access  
 **Solution**: Mobile-optimized quoting interface with one-tap actions
 
-## User Metrics & Impact
+## Key Achievements & Contributions
 
 - **25,000+ registered users** (15,000 buyers, 10,000 suppliers)
 - **$2M+ in transaction volume** within first year
 - **Average of 4.2 quotes per request** (higher competition benefits buyers)
 - **85% buyer satisfaction rate**
 - **60% repeat buyer rate** (strong retention)
+- **Design System**: Created a comprehensive **Atomic Design System** ensuring consistency across mobile and web platforms.
+
+## Process
+The design process was heavily anchored in **on-site qualitative research** and **rigorous usability testing**. Vansh worked directly with mechanics and auto enthusiasts to validate every design decision, ensuring the product solved real-world problems.
 
 ## Revenue Model
 

@@ -7,10 +7,25 @@ timeline: "2021 (Pandemic EdTech Surge)"
 platform: "Web Application (Two-Sided Assessment Platform)"
 design_principle: "Jakob's Law (Familiarity > Novelty)"
 key_features: ["Proctoring/Anti-Cheat UI", "Google Forms-style Builder", "Question Bank Library", "Destructive Action Safety"]
+tech_stack: ["Figma"]
+key_achievements:
+  - "Designed secure Two-Sided Assessment Platform"
+  - "Implemented Google Forms-style linear builder"
+  - "Created robust Anti-Cheating UI"
+process: "Jakob's Law application & Iterative Refinement"
 related_documents: ["personal_bio.md", "project_synofin_lms.md"]
 ---
 
 # Case Study: SynoAssess – Balancing Simplicity & Security
+
+## Key Achievements & Contributions
+- **Two-Sided Platform**: Designed distinct interfaces for Admins (Simplicity) and Students (Security/Integrity).
+- **Adoption Strategy**: Leveraged **Jakob's Law** to mimic Google Forms, drastically reducing the learning curve for non-technical teachers.
+- **Security UI**: Engineered a robust Anti-Cheating interface with proctoring alerts, focus tracking, and copy-paste blocks.
+- **Scalability**: Designed a Question Bank system allowing institutions to reuse and categorize content efficiently.
+
+## Process
+*See Section 2 & 3 below*
 
 ## 1. Context: The EdTech Surge
 During the 2021 surge in online learning, Synoriq needed a platform for creating and grading online tests.

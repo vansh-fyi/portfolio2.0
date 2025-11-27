@@ -24,7 +24,7 @@ I created a fully functional portfolio application that goes far beyond the trad
 - Type-safe API communication throughout the entire stack
 - Structured content organization optimized for vector embedding and semantic search
 
-**Technical Architecture:**
+
 - React components with proper separation of concerns
 - Zustand stores for state management (overlay routing, theme, chat context)
 - Type-safe tRPC procedures for frontend-backend communication

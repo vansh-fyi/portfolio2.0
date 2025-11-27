@@ -4,21 +4,36 @@ project_name: Vibio
 event: "Vibe-X Designathon (by Sandcup Design Studio)"
 award: "Runner-Up"
 role: "Product Strategy, Branding Lead, & Unofficial Team Lead"
-team_size: "4 Members (Vansh, Udit, Surubhi, Anoop)"
+team_size: "4 Members (Vansh, Udit, Surabhi, Anup)"
 timeline: "7 Days (Design Sprint)"
 platform: "Mobile Application (Community & Event Platform)"
 key_features: ["The Lounge (Immersive Spaces)", "Design Spirit (AI Avatar)", "Vent Wall", "Gamified Challenges"]
 business_model: ["Freemium Event Hosting", "Ticket Commissions", "B2B Partnerships"]
 related_documents: ["personal_bio.md", "project_sparto_brand.md"]
+tech_stack: ["Figma"]
+key_achievements:
+  - "Runner-Up in Vibe-X Designathon"
+  - "Developed holistic business & design strategy"
+  - "Innovated engagement features (Lounge, Spirit)"
+process: "7-Day Design Sprint & Research-driven Ideation"
 ---
 
 # Case Study: Vibio – The Event Platform for Creatives
+
+## Key Achievements & Contributions
+- **Award Winner**: Secured **Runner-Up** position in Vibe-X Designathon against competitive teams.
+- **Holistic Strategy**: Combined UI design with a robust business model and psychological engagement hooks (Vent Wall, Spirit).
+- **Leadership**: Managed cross-functional concerns (Business, Design, Tech) under a strict 7-day deadline.
+- **Innovation**: Introduced "The Lounge" and "Design Spirit" to solve specific pain points of online event sterility and user retention.
+
+## Process
+*See Section 2: Phase 1 & Section 3: The Vibio Solution*
 
 ## 1. Context: The 7-Day Sprint
 [cite_start]Vibio was conceptualized and designed during the **Vibe-X Designathon** organized by **Sandcup Design Studio**, where Vansh Grover’s team secured the **Runner-Up** position[cite: 66].
 * **The Challenge:** Design a platform specifically for "Creatives."
 * **The Constraint:** A high-pressure 7-day timeline to go from abstract problem statement to a holistic, viable product.
-* **The Team Dynamic:** While there was no assigned leader, Vansh naturally stepped into the role of the "glue"—aligning Business (Surubhi), UI (Anoop/Udit), and Strategy to ensure a cohesive product launch.
+* **The Team Dynamic:** While there was no assigned leader, Vansh naturally stepped into the role of the "glue"—aligning Business (Surabhi), UI (Anup/Udit), and Strategy to ensure a cohesive product launch.
 
 ## 2. Phase 1: Research & Definition
 ### Defining "Creative"
@@ -28,13 +43,13 @@ The first hurdle was the ambiguity of the prompt.
 
 ### Research Methodology
 * **Primary Research:** Vansh conducted telephonic interviews with creative professionals to identify specific pain points (isolation, lack of constructive feedback).
-* **Secondary Research:** Anoop analyzed Reddit threads for community frustrations.
+* **Secondary Research:** Anup analyzed Reddit threads for community frustrations.
 * **Strategic Analysis:** Vansh studied the growth documentaries of Facebook, LinkedIn, and Instagram to understand the mechanics of **community building** and **engagement loops**.
 
 ## 3. The "Vibio" Solution: Features & Innovation
 
 ### A. The Lounge (Immersive Event Experience)
-Vansh pitched a feature called **"The Lounge"** to solve the sterility of online events.
+Vansh pitched a feature called **"The Lounge"** to solve the sterility of online events. which was designed by his team mate Udit.
 * **Concept:** Replicating "Offline Energy" in an online space.
 * **Nomenclature:** Instead of "Channels" or "Tabs," the app uses terms like **"Auditorium," "Conference Hall," and "Room 1."**
 * **Networking Hub:** A LinkedIn-style sub-feature within the Lounge allowing real-time connection during events.
@@ -49,7 +64,7 @@ To drive retention, Vansh introduced a metaphorical concept given form.
 Recognizing that creative work can be frustrating, the team added a **"Vent Wall"**—a safe, communal space for creatives to express frustrations, fostering emotional bonding among users.
 
 ## 4. Business Strategy & Go-To-Market
-Unlike many designathon entries that focus only on UI, Vansh and Surubhi built a robust business case.
+Unlike many designathon entries that focus only on UI, Vansh and Surabhi built a robust business case.
 
 ### Revenue Model
 * **Generous Free Tier:** Solo hosts can hold workshops for up to 10 attendees for free.

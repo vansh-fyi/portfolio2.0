@@ -8,10 +8,25 @@ platform: "B2B Web Application (SaaS)"
 competitor_context: "Replacing Finova (Established Market Leader)"
 key_contributions: ["Data Table Standardization", "Form Flow Optimization", "Competitor Analysis/Adaptation"]
 challenges: ["Migration Anxiety", "Strict Daily Feedback Loops", "Split Workload"]
+tech_stack: ["Figma"]
+key_achievements:
+  - "Customized enterprise LMS for CSL Finance"
+  - "Standardized Data Tables for financial data"
+  - "Optimized Loan Origination forms"
+process: "Daily Agile Loop & On-site Prototyping"
 related_documents: ["personal_bio.md", "project_synovein.md"]
 ---
 
 # Case Study: Synofin LMS – The Art of Adaptation
+
+## Key Achievements & Contributions
+- **Enterprise Customization**: Successfully adapted a massive Loan Management System for a major client (CSL Finance), replacing an established competitor.
+- **Data Standardization**: Created a new design standard for Data Tables, improving readability for high-density financial information.
+- **Form Optimization**: Redesigned complex Loan Origination forms to reduce friction and speed up data entry.
+- **Strategic UX**: Implemented "Cognitive Ease" by aligning UI patterns with the client's previous tool (Finova) to minimize migration anxiety.
+
+## Process
+*See Section 3: The Process below*
 
 ## 1. Context: The High-Stakes Migration
 While Synovein was a "Build from Scratch" project, **Synofin LMS** was a "Customize and conquer" mission.

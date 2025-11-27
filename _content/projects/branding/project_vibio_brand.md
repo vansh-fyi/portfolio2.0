@@ -7,6 +7,14 @@ timeline: 7 Days (Sprint)
 deliverables: ["Logo System", "Brand Guidelines", "Typography System", "UI Assets", "Merch & Outdoor Mockups"]
 brand_archetype: The Creative Sanctuary (Hybrid Playground)
 related_documents: [project_vibio.md]
+tech_stack: ["Adobe Illustrator", "Photoshop", "Figma"]
+key_achievements:
+  - "Created the branding within 6 hours for Vibe-X challenge"
+  - "Ensured holistic system of the product's design"
+  - "Defined the product's design guidelines for consistency"
+  - "Unified product's design language across all touchpoints"
+  - "Secured runner's Up at Vibe-X Designathon"
+process: "AI Driven Research and branding principles"
 ---
 
 # Case Study: Vibio – Visual Identity System

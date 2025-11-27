@@ -3,7 +3,7 @@ type: project
 category: tech-stack
 projectId: portfolio-website
 lastUpdated: 2025-11-19
-tags: [react, typescript, mastra-ai, rag, trpc, supabase, vite, zustand]
+tags: [react, typescript, vercel-ai-sdk, rag, trpc, supabase, vite, zustand]
 ---
 
 # Technology Stack: Building an Intelligent Portfolio
@@ -31,7 +31,7 @@ The view-state routing system I built is custom, not using traditional React Rou
 
 ## Backend & AI Infrastructure
 
-**Mastra.AI** orchestrates the entire AI workflow. It's a TypeScript-based AI framework that makes building intelligent agents straightforward. I use it to manage the RAG pipeline, handle context switching, and generate responses.
+**Vercel AI SDK** orchestrates the entire AI workflow. It's a TypeScript-based AI framework that makes building intelligent agents straightforward. I use it to manage the RAG pipeline, handle context switching, and generate responses.
 
 **tRPC** provides end-to-end type safety between frontend and backend. When I define an API endpoint on the backend with input and output types, the frontend automatically knows the exact shape of that API. No more API documentation going out of sync or runtime errors from mismatched types. It's like having a strongly-typed conversation between client and server.
 
@@ -39,15 +39,15 @@ The view-state routing system I built is custom, not using traditional React Rou
 
 ## AI Models & Processing
 
-**GLM 4.5 Air** is the Large Language Model powering text generation. Accessed through Hugging Face, it provides the intelligence behind Ursa's conversational abilities while being cost-effective and performant.
+**Llama-3.1-8B-Instruct** is the Large Language Model powering text generation. Accessed through Hugging Face, it provides the intelligence behind Ursa's conversational abilities while being cost-effective and performant.
 
-**Qwen3 Embedding 8B** creates vector embeddings of my content. These embeddings capture semantic meaning, allowing the system to find relevant information even when someone asks a question using different words than my original content.
+**all-MiniLM-L6-v2** creates vector embeddings of my content. These embeddings capture semantic meaning, allowing the system to find relevant information even when someone asks a question using different words than my original content.
 
 **RAG (Retrieval-Augmented Generation)** is the architecture pattern tying everything together. Instead of relying solely on the LLM's training data (which can hallucinate), RAG retrieves actual documented information first, then generates responses grounded in that retrieved context. This ensures Ursa's answers are accurate and specific to my real experience.
 
 ## Development & Deployment
 
-The entire codebase is version controlled with **Git**, and I use modern development practices: feature branches, meaningful commits, and code that's written with maintainability in mind.
+The entire codebase is version controlled with **GitHub**, and I use modern development practices: feature branches, meaningful commits, and code that's written with maintainability in mind.
 
 **Vercel** will handle deployment, providing seamless CI/CD. Push to main, and the site updates automatically. Vercel's CDN ensures fast load times globally, and their serverless functions will host the backend API.
 

@@ -1,11 +1,13 @@
 ---
 projectId: portfolio-website
+---
 
 **Status**: In Development  
 **Type**: Personal Portfolio + AI Integration  
 **Role**: Designer, Developer, AI Engineer  
 **Timeline**: 2024 - Present  
 **Live**: vansh.fyi
+tech_stack: ["React", "TypeScript", "Vite", "TailwindCSS"]
 
 ## Project Overview
 
@@ -43,69 +45,7 @@ Traditional portfolios are static and require visitors to search for information
 - **Personalized Greetings**: "Ask anything about Aether" vs "Ask anything about Vansh"
 - **Isolated Knowledge**: Each project has its own knowledge base
 
-## Technical Architecture
 
-### Frontend
-**Stack**: React + TypeScript + Vite  
-**Styling**: TailwindCSS with custom design tokens  
-**State Management**: Zustand for global state  
-**API Client**: tRPC for type-safe API calls  
-**Performance**: Virtual scrolling for long chat histories, lazy loading, code splitting
-
-**Key Components**:
-- `ChatOverlay`: Main conversational interface with Ursa
-- `LeadGenChat`: Lead generation conversation flow
-- `ProjectOverlay`: Project detail views with embedded chat
-- `OverlayStore`: Global state management for views and context switching
-
-### Backend
-**Stack**: Node.js + tRPC + TypeScript  
-**Deployment**: Vercel Serverless Functions  
-**Database**: Supabase (PostgreSQL + pgvector extension)  
-**AI/ML**: HuggingFace Inference API (Llama-3.1-8B-Instruct)  
-**Email**: Resend API for transactional emails
-
-**Key Services**:
-- **RAG Pipeline**: Embedding generation → Vector search → LLM response generation
-- **Ingestion Service**: Processes markdown content into chunked embeddings
-- **Email Service**: Handles lead generation submissions
-
-### AI/ML Pipeline
-1. **Content Ingestion**:
-   - Markdown files in `_content/` directory
-   - Text chunking (500 tokens with 50-token overlap)
-   - Embedding generation (Xenova/all-MiniLM-L6-v2, 384 dimensions)
-   - Storage in Supabase with metadata (source_type, projectId, etc.)
-
-2. **Query Processing**:
-   - User query → embedding generation
-   - Cosine similarity search in pgvector (threshold: 0.10)
-   - Filter by context (personal vs project-specific)
-   - Return top 5 most relevant chunks
-
-3. **Response Generation**:
-   - Retrieved context + user query → Llama-3.1-8B-Instruct
-   - Structured prompt for consistent, factual responses
-   - 20-second timeout for reliability
-
-### Data Flow
-```
-User Question
-    ↓
-Frontend (React)
-    ↓
-tRPC Client
-    ↓
-Backend API (Vercel Serverless)
-    ↓
-Generate Embedding (HuggingFace)
-    ↓
-Vector Search (Supabase pgvector)
-    ↓
-LLM Generation (Llama-3.1-8B)
-    ↓
-Response → Frontend → User
-```
 
 ## Design Decisions
 
@@ -170,6 +110,44 @@ Response → Frontend → User
 **Email**: Resend API  
 **Deployment**: Vercel (Frontend + Backend), Supabase (Database)
 
+## Technical Architecture
+
+### Frontend
+**Stack**: React 19 + TypeScript + Vite 7  
+**Styling**: TailwindCSS 4  
+**State Management**: Zustand  
+**API Client**: tRPC Client + React Query  
+**Performance**: `@tanstack/react-virtual` for chat history
+
+### Backend
+**Runtime**: Node.js (Vercel Serverless Functions)  
+**Framework**: Hono (tRPC Server Adapter)  
+**Database**: Supabase (PostgreSQL + pgvector)  
+**AI/ML**: Vercel AI SDK + HuggingFace Inference  
+**Email**: Resend API
+
+### AI/ML Pipeline
+1. **Ingestion**: `ts-node` script processes `_content/` markdown files
+2. **Embeddings**: Generated via `sentence-transformers/all-MiniLM-L6-v2` (384d)
+3. **Retrieval**: Supabase `pgvector` with cosine similarity search
+4. **Generation**: `meta-llama/Llama-3.1-8B-Instruct` generates responses based on retrieved context
+
+### Data Flow
+```
+User Query
+    ↓
+Frontend (tRPC Client)
+    ↓
+Backend (Hono/tRPC on Vercel)
+    ↓
+Embedding Generation (HuggingFace API)
+    ↓
+Vector Search (Supabase RPC)
+    ↓
+LLM Generation (Llama-3.1-8B via AI SDK)
+    ↓
+Response → Frontend
+```
 ## Open Source
 
 This portfolio demonstrates my commitment to transparency and knowledge sharing. Key architectural decisions and implementation patterns are documented for others building similar AI-powered experiences.

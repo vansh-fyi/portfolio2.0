@@ -7,6 +7,11 @@ timeline: April 2025 - July 2025
 deliverables: ["Logo Design", "Brand Guidelines", "Visual Identity System", "UI Kit"]
 brand_archetype: The Reliable Partner / The Industrial Innovator
 related_documents: [project_sparto_app.md, project_sparto_admin.md]
+tech_stack: ["Adobe Illustrator", "Photoshop", "Figma"]
+key_achievements:
+  - "Discovered 'Mechanics and spare part bands use Red, Black and Yellow in their shops' insight"
+  - "Explored familiarity and habits of mechanics, auto parts dealers and enthisiasts"
+process: "Immersive Research & Ideation to leverage Jakob's Law"
 ---
 
 # Case Study: Sparto Brand Identity

@@ -24,13 +24,19 @@ I build the "brains" behind the beauty. My experience includes:
 
 ## Background & Education
 
-I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. This scientific background complements my creative side, allowing me to approach design challenges with rigorous logic.
+I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. I completed my **BSc. Honors** in **Physics** from **Sri Venkateswara College(University of Delhi)** at 2020. This scientific background complements my creative side which was followed by a **Master's in Design** in **User Experience Design** which I completed at 2022, allowing me to approach design challenges with rigorous logic.
 
-In November 2022, a life-changing accident (a gas leak resulting in 70% burns) forced me to pause my career. During my recovery, I briefly worked as an **Assistant Professor**, where I discovered a passion for mentorship. This experience taught me resilience and the value of clear communication—skills I bring to every project.
+In November 2022, a life-changing accident (a gas leak resulting in 70% burns) forced me to pause my career. During my recovery, I learnt front-end development and enhanced my learning of psychology. This experience taught me resilience.
+
+Post that I worked as an **Assistant Professor** at **DIT University** for a year (ending in September 2024) where I discovered a passion for mentorship and enhanced my communication skills to deliver design ideas and concepts to students and stakeholders.
+
+Post that, I was appointed as **Director of Product Design** at **DriQ Health** alongside which I also completed my 9 month certification in **Post Graduate Program in AI and Machine Learning** from **Caltech University** at October 2025.
+
+Up until recently, I have been leading the product strategy for DriQ Health, a startup that uses AI to solve incontinence problems for seniors and nursing staff. I worked there as **Director of Product Design**. He completed his contract at October 2025 and now he is actively looking for new opportunities to use his diverse skillset to scale businesses and solve and real-world problems. 
 
 ## Vision
 
-I am driven by the goal of **bridging the physical and digital worlds through AI**. I believe the future of software lies in "Spatial Computing" and "Ambient Intelligence"—where technology anticipates our needs and enhances our capabilities without getting in the way.
+I am driven by the goal of **bridging the physical and digital worlds through AI**. I believe the future of software lies in "Spatial Computing" and "Ambient Intelligence" where technology anticipates our needs and enhances our capabilities without getting in the way. I am a strong believer of **Function and Form** rather than their existing notion and debate of them following each other.
 
 ## Let's Connect
 

@@ -5,12 +5,26 @@ client: "Synoriq (Deployed at CSL Finance, Noida)"
 role: "Sole Product Designer (On-Site)"
 timeline: "Aug 2021 - Sep 2021 (1 Month Sprint)"
 platform: "B2B Web Application"
-key_features: ["Role-Based Dynamic Navigation", "Structured Decision Hub", "Top-Nav Architecture"]
+key_features: ["Role-Based Dynamic Navigation", "Structured Decision Hub", "Universal Top-Nav Architecture"]
 challenges: ["Solo Design Role", "Strict 9-to-5 Constraints", "Split Workload", "Complex Financial Domain"]
+tech_stack: ["Figma"]
+key_achievements:
+  - "Sole designer for end-to-end B2B app"
+  - "Designed Role-Based Dynamic Navigation"
+process: "Strategic alignment & Stakeholder usability testing"
 related_documents: ["personal_bio.md", "project_synofin_lms.md"]
 ---
 
 # Case Study: Synovein – The Loan Authentication Engine
+
+## Key Achievements & Contributions
+- **Rapid Domain Mastery**: Mastered complex B2B financial concepts (RCU, Sanctioning) overnight to deliver accurate designs in a high-pressure environment.
+- **Solo Delivery**: Designed the entire end-to-end web application from scratch within a strict **1-month sprint** while working on-site.
+- **Usability Pivot**: Successfully transformed a "Chat-Style" interface into a "Structured Decision Hub" after validating with high-level stakeholders.
+- **Dynamic Navigation**: Invented a "Role-Based" tab system that decluttered the UI for different user personas (Legal, Credit, Admin).
+
+## Process
+*See Section 3 & 4 below*
 
 ## 1. Context: The On-Site Pressure Cooker
 Vansh Grover was deployed as the **sole designer** on-site at the client’s office (**CSL Finance** in Noida).

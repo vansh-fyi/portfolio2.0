@@ -4,6 +4,12 @@ project_name: Aether
 role: Product Designer & Full-Stack Developer
 timeline: 2024 - Present
 platform: Web Application (AI Tool)
+tech_stack: ["React", "TypeScript", "TailwindCSS", "Gemini API"]
+key_achievements:
+  - "Reduces design system creation time from weeks to hours"
+  - "Ensures 100% design-code consistency"
+  - "Supports WCAG 2.1 AA accessibility standards"
+process: "AI-driven generation & Full-stack development"
 ---
 
 # Aether: AI-Powered Design System Generator
@@ -55,21 +61,7 @@ Aether uses AI to:
 - Interactive component playground for testing
 - Guidelines for designers and developers
 
-## Technical Architecture
 
-**Frontend**:
-- React + TypeScript for the editor interface
-- TailwindCSS for styling  
-- Figma API integration for importing existing designs
-
-**Backend**:
-- Node.js with Express for API endpoints
-- AI/ML: OpenAI GPT-4 for intelligent token generation and component suggestions
-- Database: PostgreSQL for storing design systems
-
-**Design Tools**:
-- Figma Plugin for seamless workflow integration
-- Adobe XD export support
 
 ## Target Users
 
@@ -78,12 +70,15 @@ Aether uses AI to:
 - **Open Source Projects**: Building consistent UI libraries
 - **Individual Designers/Developers**: Rapid prototyping and personal projects
 
-## Impact & Metrics
+## Key Achievements & Contributions
 
-- Reduces design system creation time from weeks to hours
-- Ensures 100% design-code consistency
-- Supports WCAG 2.1 AA accessibility standards out of the box
-- Enables non-designers to create professional-looking interfaces
+- **Efficiency**: Reduces design system creation time from weeks to hours.
+- **Consistency**: Ensures 100% design-code consistency, eliminating drift.
+- **Accessibility**: Supports WCAG 2.1 AA accessibility standards out of the box.
+- **Democratization**: Enables non-designers to create professional-looking interfaces.
+
+## Process
+*See Section 3: Key Features*
 
 ## Future Roadmap
 
@@ -103,10 +98,9 @@ Aether uses AI to:
 
 ## Technologies Used
 
-- React, TypeScript, TailwindCSS
-- Node.js, Express, PostgreSQL
-- OpenAI GPT-4, Stable Diffusion (for visual assets)
-- Figma API, Adobe XD API
-- Storybook (for component documentation)
+- React, TypeScript, TailwindCSS, Vite.js
+- Gemini gemini-flash-2.0
+- Figma Make, Warp.dev, Perplexity
+- BMAD Workflow
 
 Aether represents my vision of democratizing design system creation through AI, making professional-grade design accessible to teams of all sizes.

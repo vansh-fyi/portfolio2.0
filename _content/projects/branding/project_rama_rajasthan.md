@@ -8,6 +8,11 @@ deliverables: ["Logo Design", "Visual Identity System", "Brand Strategy", "Merch
 brand_archetype: The Cultural Futurist
 key_metaphor: "Kathputli Strings meet VR Controllers"
 related_documents: [personal_bio.md]
+tech_stack: ["Adobe Illustrator", "Photoshop", "Figma"]
+key_achievements:
+  - "Discovered 'Kathputli = Animation' insight"
+  - "Connected past heritage to present-day digital trends"
+process: "Immersive Research & Ideation to connect past with future"
 ---
 
 # Case Study: RAMA – Reimagining Rajasthan for the Digital Age

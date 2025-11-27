@@ -8,6 +8,10 @@ deliverables: ["Brand Identity", "Social Media Kit", "Merchandise Mockups", "Bra
 brand_archetype: The Collaborative Ecosystem
 key_concept: "Synergy of Minds (U + C Interlock)"
 related_documents: [personal_bio.md, project_vibio.md]
+tech_stack: ["Adobe Illustrator", "Photoshop", "Figma"]
+key_achievements:
+  - "Created the branding within 6 hours for their challenge"
+process: "AI Driven Research and branding principles"
 ---
 
 # Case Study: Unite Creatives – A Global Playground for Makers

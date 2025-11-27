@@ -1,19 +1,39 @@
 ---
 projectId: driq-health
 project_name: DriQ Health
-role: Lead Product Designer & Full-Stack Developer
-timeline: 2023
+role: Director of Product Design and Web Development
+timeline: 2024-2025
 platform: Healthcare IoT + Mobile Application
 confidential: true
+tech_stack: ["Figma", "Framer", "Microsoft Clarity", "OpenSCAD", "Hubspot", "Google Trends", "Google Analytics", "Claude", "ChatGPT", "Gemini"]
+key_achievements:
+  - "70x increase in daily unique visitors"
+  - "Created the design system for the entire ecosystem"
+  - "Created physical CAD models for next phase of ptoducts"
+  - "Created a B2B lead generation strategy"
+  - "Increased average session time by 14 times"
+  - "Generated 1 B2B lead per month"
+process: "Can not disclose due to NDA"
 ---
 
 # DriQ Health: Incontinence Monitoring for Seniors 🔒
 
 **Status**: Confidential Healthcare Project
 **Type**: Healthcare IoT + Mobile Application
-**Role**: Lead Product Designer & Full-Stack Developer
-**Timeline**: 2023
+**Role**: Director of Product Design and Web Development
+**Timeline**: 2024-2025
 **Note**: This is a confidential healthcare project. Details are limited due to NDA.
+
+## Key Achievements & Contributions
+- **70x Growth**: Led design strategies that increased daily unique visitors from ~10 to 700+.
+- **Brand Awareness**: Contributed to the campaign that educated the users and businesses of problems like incontinence and how DriQ Health can reduce it's complications.
+- **B2B Leads**: Created the companies first B2B lead generation strategy and generated 12+ B2B leads during his contract.
+- **Cost Efficiency**: Helped drive a **25% reduction** in hospital readmissions campaign related to incontinence.
+- **Holistic Design**: Architected the entire ecosystem including brand language, marketing visuals, and physical device ergonomics.
+- **Engagement**: Increased average session time by 1400% from 5s to 1m 10s to achieve company's goal of better brand outreach.
+
+## Process
+*Can not disclose due to NDA*
 
 ## Project Overview
 
@@ -62,28 +82,7 @@ DriQ Health provides a comprehensive monitoring system that:
 - **Predictive Alerts**: AI-powered predictions for proactive interventions
 - **Compliance Reporting**: Automated reporting for healthcare regulations
 
-## Technical Architecture
 
-**Hardware**:
-- Custom IoT sensors with moisture detection
-- Bluetooth Low Energy (BLE) for battery efficiency
-- Gateway devices for long-range connectivity
-
-**Mobile Applications**:
-- iOS + Android apps for caregivers (React Native)
-- Offline-first architecture for reliability
-- Push notifications for real-time alerts
-
-**Backend**:
-- Node.js API with real-time WebSocket support
-- PostgreSQL for patient data storage
-- Time-series database (InfluxDB) for sensor data
-- HIPAA-compliant cloud infrastructure (AWS)
-
-**AI/ML**:
-- Pattern recognition for incident prediction
-- Anomaly detection for health concerns
-- Personalized care recommendations
 
 ## Design Considerations
 
@@ -96,6 +95,7 @@ DriQ Health provides a comprehensive monitoring system that:
 - Large text and high-contrast UI for aging eyes
 - Voice commands for hands-free operation
 - Multi-language support for diverse populations
+- Proper alt texts for visually handicapped users
 
 ### Usability
 - Simple, intuitive interface for non-tech-savvy users
@@ -105,18 +105,14 @@ DriQ Health provides a comprehensive monitoring system that:
 ## Impact
 
 - **Reduced response time**: From 30+ minutes to under 2 minutes
-- **Improved health outcomes**: 40% reduction in skin-related complications
-- **Caregiver satisfaction**: 85% reported reduced stress and workload
-- **Cost savings**: 25% reduction in hospital readmissions related to incontinence complications
+- **B2B Leads**: Generated 12+ B2B leads during his contract
+- **Engagement**: Increased average session time by 1400% to achieve company's goal of better brand outreach.
+- **70x Growth**: Increased daily unique visitors from ~10 to 700+.
+- **Brand Awareness**: Increased brand awareness to achieve company's goal of better brand outreach.
 
 ## Technologies Used
 
-- React Native (Mobile)
-- Node.js, Express, WebSockets (Backend)
-- PostgreSQL, InfluxDB (Databases)
-- AWS IoT Core, AWS Lambda (Infrastructure)
-- TensorFlow (Machine Learning for predictions)
-- HIPAA-compliant security protocols
+- Can not disclose due to NDA
 
 ## Lessons Learned
 
@@ -125,6 +121,7 @@ DriQ Health provides a comprehensive monitoring system that:
 3. **Battery Life**: IoT devices must last weeks without charging in real-world settings
 4. **Caregiver Burnout**: Technology must reduce, not add to, caregiver workload
 5. **Trust**: In healthcare, trust is earned through reliability and transparency
+6. **Business Model**: B2B business models perform better than B2C models in healthcare.
 
 DriQ Health demonstrates how thoughtful design and technology can address sensitive healthcare challenges while preserving dignity and improving outcomes.
 
