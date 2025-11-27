@@ -24,7 +24,7 @@ I build the "brains" behind the beauty. My experience includes:
 
 ## Background & Education
 
-I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. I completed my **BSc. Honors** in **Physics** from **Sri Venkateswara College (University of Delhi)** in 2020 (started 2017). This scientific background complements my creative side. I then pursued a **Master of Design (M.Des)** in **User Experience Design** at **IT University**, which I completed in 2022. During my studies, I also worked as a **Product Design Trainee** at **Synoriq** in 2021.
+I started my academic journey in **Physics**, which gave me a strong foundation in analytical thinking and first-principles problem-solving. I completed my **BSc. Honors** in **Physics** from **Sri Venkateswara College (University of Delhi)** in 2020 (started 2017). This scientific background complements my creative side. I then pursued a **Master of Design (M.Des)** in **User Experience Design** at **DIT University**, which I completed in 2022. During my studies, I also worked as a **Product Design Trainee** at **Synoriq** in 2021.
 
 After graduating, I worked as a **UI Designer** at **App Mechanic** in 2022, working on game design and the Lalaverse platform. In November 2022, a life-changing accident (a gas leak resulting in 70% burns) forced me to pause my career. During my recovery until July 2023, I learnt front-end development and enhanced my understanding of psychology. This experience taught me resilience.
 

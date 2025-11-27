@@ -44,7 +44,7 @@ Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, e
 
 ## Certifications
 
-*   **Post Graduate Program in AI and Machine Learning** - Caltech University (2025)
+*   **Post Graduate Program in AI and Machine Learning** - Caltech University
 *   **Python for Data Science** - IBM
 *   **CS50's Introduction to Computer Science** - HarvardX
 *   **Brand Management: Aligning Business, Brand and Behavior** - London Business School
@@ -53,7 +53,7 @@ Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, e
 ## Education
 
 *   **Post Graduate Program in AI and Machine Learning** | Caltech University (2025)
-*   **Master of Design (M.Des) in User Experience Design** | IT University (2020 - 2022)
+*   **Master of Design (M.Des) in User Experience Design** | DIT University (2020 - 2022)
 *   **B.Sc. Honors in Physics** | Sri Venkateswara College, University of Delhi (2017 - 2020)
 
 ---
