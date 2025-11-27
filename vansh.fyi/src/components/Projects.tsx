@@ -16,13 +16,13 @@ const Projects = () => {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-geist font-light text-white tracking-tighter">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 font-geist font-light text-white tracking-tighter pointer-events-none">
             Where creativity meets
-            <span className="block bg-gradient-to-r bg-clip-text text-transparent font-geist font-light tracking-tighter bg-gradient-to-l from-purple-500 to-orange-300">
+            <span className="block bg-gradient-to-r bg-clip-text text-transparent font-geist font-light tracking-tighter bg-gradient-to-l from-purple-500 to-orange-300 pointer-events-none">
               Precision
             </span>
           </h2>
-          <p className="leading-relaxed text-lg text-white/80 max-w-2xl mr-auto ml-auto">
+          <p className="leading-relaxed text-lg text-white/80 max-w-2xl mr-auto ml-auto pointer-events-none">
             Discover my explorations and creations from my personal and professional blend of mixing data, insights and curiosity.
           </p>
         </div>
@@ -40,8 +40,8 @@ const Projects = () => {
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute lg:left-6 lg:right-6 lg:bottom-6 bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-2">Aether: AI Powered Design Systems</h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-2 pointer-events-none">Aether: AI Powered Design Systems</h4>
+                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                   Customise your design system and generate code components.
                 </p>
               </div>
@@ -60,8 +60,8 @@ const Projects = () => {
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">DriQ Health 🔒</h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">DriQ Health 🔒</h4>
+                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                   Incontinence Monitoring for Seniors
                 </p>
               </div>
@@ -80,10 +80,10 @@ const Projects = () => {
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
                   Sparto
                 </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                   Request based Ecommerce application to sell spare parts.
                 </p>
               </div>
@@ -102,10 +102,10 @@ const Projects = () => {
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
                   Sparto Admin
                 </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                   Enterprise application for managing Sparto
                 </p>
               </div>
@@ -124,10 +124,10 @@ const Projects = () => {
             <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
             <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
               <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1">
+                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
                   Vibio
                 </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80">
+                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                   Event Platform for Creatives
                 </p>
               </div>

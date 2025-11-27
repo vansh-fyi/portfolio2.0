@@ -9,7 +9,7 @@ const Contact = () => {
             Let's Create Something
             <span className="block bg-clip-text font-light text-transparent tracking-tighter font-geist bg-gradient-to-l from-purple-500 to-orange-300">Awesome!</span>
           </h2>
-          <p className="leading-relaxed text-lg text-white/80 max-w-2xl mr-auto ml-auto">
+          <p className="leading-relaxed text-lg text-white/80 max-w-2xl mr-auto ml-auto pointer-events-none">
             Tell me about your project, and I'll get back within 24 hours.
           </p>
         </div>
@@ -34,8 +34,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div className="">
-                    <p className="font-medium text-white">Project inquiries</p>
-                    <p className="text-sm text-white/50">Response time within 24 hours</p>
+                    <p className="font-medium text-white pointer-events-none">Project inquiries</p>
+                    <p className="text-sm text-white/50 pointer-events-none">Response time within 24 hours</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -46,8 +46,8 @@ const Contact = () => {
                     </svg>
                   </div>
                   <div className="">
-                    <p className="font-medium text-white">Based in</p>
-                    <p className="text-sm text-white/50">Remote · Global collaborations</p>
+                    <p className="font-medium text-white pointer-events-none">Based in</p>
+                    <p className="text-sm text-white/50 pointer-events-none">Remote · Global collaborations</p>
                   </div>
                 </div>
                 <div className="grow pt-24">
@@ -58,7 +58,7 @@ const Contact = () => {
                     </svg>
                     <span className="">Send Me a Mail</span>
                   </a>
-                  <p className="mt-3 text-xs text-white/50">Your info is private and only used to respond to your query.</p>
+                  <p className="mt-3 text-xs text-white/50 pointer-events-none">Your info is private and only used to respond to your query.</p>
                 </div>
               </div>
             </div>

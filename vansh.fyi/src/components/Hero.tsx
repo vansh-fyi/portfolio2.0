@@ -53,12 +53,12 @@ const Hero = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 md:gap-6 lg:gap-10 gap-x-8 gap-y-8 items-end">
             {/* Column 1: Tag + Headline */}
             <div className="md:col-span-5 lg:col-span-5 relative">
-              <div className="inline-flex [animation:fadeSlideIn_1s_ease-out_0.1s_both] text-xs font-medium font-geist ring-1 rounded-full mb-5 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center text-white/80 bg-white/10 ring-white/10">
+              <div className="inline-flex [animation:fadeSlideIn_1s_ease-out_0.1s_both] text-xs font-medium font-geist ring-1 rounded-full mb-5 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center text-white/80 bg-white/10 ring-white/10 pointer-events-none">
                 Product Designer
               </div>
-              <h1 className="leading-tight sm:text-5xl md:text-5xl lg:text-6xl [animation:fadeSlideIn_1s_ease-out_0.2s_both] text-4xl text-white tracking-tighter font-geist font-light">
+              <h1 className="leading-tight sm:text-5xl md:text-5xl lg:text-6xl [animation:fadeSlideIn_1s_ease-out_0.2s_both] text-4xl text-white tracking-tighter font-geist font-light pointer-events-none">
                 Creating
-                Beyond<span className="block bg-clip-text text-transparent tracking-tighter font-regular bg-gradient-to-r from-purple-500 to-orange-300 pb-1">Imagination</span>
+                Beyond<span className="block bg-clip-text text-transparent tracking-tighter font-regular bg-gradient-to-r from-purple-500 to-orange-300 pb-1 pointer-events-none">Imagination</span>
               </h1>
               <div className="pt-4">
                 <div className="group transition-all duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
@@ -101,7 +101,7 @@ const Hero = () => {
             </div>
             {/* Column 2: Description */}
             <div className="md:col-span-4 lg:col-span-3 [animation:fadeSlideIn_1s_ease-out_0.3s_both] relative">
-              <p className="leading-relaxed md:text-lg text-base font-geist text-white/80">
+              <p className="leading-relaxed md:text-lg text-base font-geist text-white/80 pointer-events-none">
                 Collaborating and partnering with forward-thinking organisations to design unique user interfaces and AI systems that drive measurable growth and competitive advantage.
               </p>
             </div>
