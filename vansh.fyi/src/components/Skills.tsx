@@ -177,7 +177,12 @@ const Skills = () => {
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Microsoft Clarity</span>
               <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Photoshop</span>
               <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Illustrator</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Eleven Labs</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Suno AI</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Cursor</span>
+              <span className="text-sm ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Antigravity</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Google Colab</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Jupyter Notebook</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Python</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">HTML</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">CSS</span>
@@ -186,6 +191,8 @@ const Skills = () => {
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">React</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Mastra</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Vercel AI SDK</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">OpenCV</span>
+              <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Data Science</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Langchain</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Pytorch</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">TensorFlow</span>
