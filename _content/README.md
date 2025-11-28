@@ -58,7 +58,7 @@ source: /rag/personal/personal.md  # Reference to source file in /rag directory
 
 ## Writing Guidelines
 
-**CRITICAL**: All content must be written in first-person ("I", "my", "me") AS Vansh, not ABOUT Vansh.
+**CRITICAL**: All content must be written in first-person ("I", "my", "me") AS Ursa, ABOUT Vansh.
 
 Follow the Ursa Personality Guide (`docs/ursa-personality-guide.md`):
 - Tone: Conversational, authentic, passionate
