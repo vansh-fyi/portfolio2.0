@@ -1,3 +1,18 @@
 # Confidential Projects (NDA)
 _content/projects/product_design/industry/driq-health.md
 _content/projects/product_design/industry/project_lalaverse.md
+
+# BMAD Files
+.bmad
+.claude
+.cursor
+.gemini
+.github
+.vscode
+docs
+
+#Brownfield HTML
+brownfield
+
+#Server Logs
+server.log
