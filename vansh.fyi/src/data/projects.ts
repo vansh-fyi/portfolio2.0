@@ -26,7 +26,7 @@ export const projects: ProjectMetadata[] = [
     name: 'AI-Powered Portfolio',
     shortDescription: 'A modern portfolio website with conversational AI integration',
     category: 'Web Application',
-    technologies: ['React', 'TypeScript', 'Mastra.AI', 'RAG', 'tRPC'],
+    technologies: ['React', 'TypeScript', 'Vercel AI SDK', 'RAG', 'tRPC'],
     featured: true,
   },
   {
@@ -34,7 +34,7 @@ export const projects: ProjectMetadata[] = [
     name: 'Aether',
     shortDescription: 'AI-powered design system generator that creates customized, production-ready design systems',
     category: 'AI Tool',
-    technologies: ['React', 'TypeScript', 'OpenAI GPT-4', 'Node.js', 'Figma API'],
+    technologies: ['React', 'TypeScript', 'OpenAI GPT-4', 'Node.js', 'Figma Make'],
     featured: true,
   },
   {
@@ -42,7 +42,7 @@ export const projects: ProjectMetadata[] = [
     name: 'Vibio',
     shortDescription: 'Event Platform for Creatives',
     category: 'Product Design',
-    technologies: ['React', 'Node.js', 'Design Systems'],
+    technologies: ['Framer', 'Figma', 'Design Systems'],
     featured: true,
   },
   {
@@ -58,7 +58,7 @@ export const projects: ProjectMetadata[] = [
     name: 'Sparto',
     shortDescription: 'Request-based e-commerce platform for automotive and industrial spare parts',
     category: 'B2B E-Commerce',
-    technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Stripe', 'Socket.io'],
+    technologies: ['Next.js', 'Node.js', 'PostgreSQL', 'Razorpay', 'Socket.io'],
     featured: true,
   },
   {
