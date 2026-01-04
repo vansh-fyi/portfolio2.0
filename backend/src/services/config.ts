@@ -56,6 +56,8 @@ export const config = {
             'SUPABASE_ANON_KEY',
             'Supabase anonymous/public API key'
         ),
+        /** Optional service role key for admin operations (bypasses RLS) */
+        serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
     },
 
     /** Resend API key for email sending */

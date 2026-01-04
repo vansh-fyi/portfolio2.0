@@ -1,5 +1,5 @@
 import path from 'path';
-import { supabase } from '../services/supabase';
+import { supabaseAdmin } from '../services/supabase';
 import { generateEmbedding, chunkText } from '../services/embeddings';
 import { MarkdownSource } from '../services/ingestion/markdown-source';
 import { IngestionSource } from '../services/ingestion/types';
@@ -17,7 +17,7 @@ async function ingestData() {
 
     // Clear existing data
     console.log('🧹 Clearing existing documents...');
-    const { error: deleteError } = await supabase.from('documents').delete().neq('id', '00000000-0000-0000-0000-000000000000'); // Hack to delete all
+    const { error: deleteError } = await supabaseAdmin.from('documents').delete().neq('id', '00000000-0000-0000-0000-000000000000'); // Hack to delete all
     if (deleteError) console.error('Error clearing documents:', deleteError);
 
     for (const source of sources) {
@@ -34,14 +34,14 @@ async function ingestData() {
             for (const [index, chunk] of chunks.entries()) {
                 try {
                     const embedding = await generateEmbedding(chunk);
-                    
+
                     // Log sample for debugging
                     if (index === 0 && doc.metadata.source_file.includes('bio.md')) {
                         console.log('🔍 Bio Embedding Sample:', embedding.slice(0, 5));
                     }
 
                     // Insert into Supabase
-                    const { error } = await supabase.from('documents').insert({
+                    const { error } = await supabaseAdmin.from('documents').insert({
                         content: chunk,
                         embedding,
                         metadata: {
