@@ -20,12 +20,14 @@ const ProjectView: React.FC = () => {
   };
 
   // Progressive loading: Delay iframe mount to allow GC to run
+  // Reset when project changes to ensure iframe properly switches
   React.useEffect(() => {
+    setIsIframeLoaded(false);
     const timer = setTimeout(() => {
       setIsIframeLoaded(true);
     }, 300);
     return () => clearTimeout(timer);
-  }, []);
+  }, [currentProjectId]);
 
   return (
     <div className="fixed inset-0 z-40 bg-black">
@@ -140,6 +142,7 @@ const ProjectView: React.FC = () => {
                   <div className="flex-1 sm:space-y-6">
                     {isIframeLoaded && (
                       <iframe
+                        key={selectedProject.id}
                         src={selectedProject.url}
                         className="w-full h-full border-0"
                         title={`${selectedProject.title} - ${selectedProject.subtitle}`}
