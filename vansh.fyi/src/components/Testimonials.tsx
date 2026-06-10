@@ -69,13 +69,13 @@ const Testimonials = () => {
           {/* Testimonial 5 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
             <div className="flex items-center gap-4 mb-5">
-              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Subrat.webp" alt="Photo of Subrat Rao" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
+              <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/Sulagna.webp" alt="Photo of Sulagna Pattnaik" className="h-12 w-12 rounded-full ring-2 ring-white/20" />
               <div className="">
-                <p className="font-medium text-white/80 pointer-events-none">Subrat Rao</p>
+                <p className="font-medium text-white/80 pointer-events-none">Sulagna Pattnaik</p>
                 <p className="text-sm text-white/50 pointer-events-none">Design Student, DIT University</p>
               </div>
             </div>
-            <div className="leading-relaxed text-white/80 pointer-events-none">"Best teacher I ever had."</div>
+            <div className="leading-relaxed text-white/80 pointer-events-none">"We used to learn without actually studying. The lectures were so interactive and creative, it didn't even feel like we were studying."</div>
           </div>
           {/* Testimonial 6 */}
           <div className="fade-in-up hover:-translate-y-2 transition-all duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/10 hover:ring-white/20 from-white/8 to-white/4 ring-white/10" style={{ transform: 'none', opacity: 1 }}>
