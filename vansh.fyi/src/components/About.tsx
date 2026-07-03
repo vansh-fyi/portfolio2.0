@@ -5,7 +5,7 @@ const About = () => {
         <div className="grid lg:grid-cols-12 gap-x-8 gap-y-8 h-full items-stretch">
           <div className="fade-in-up hover:-translate-y-1 transition-all duration-500 group lg:col-span-5 hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg" style={{ transform: 'none', opacity: 1 }}>
             <div className="mb-6">
-              <div className="w-full h-64 bg-gradient-to-br from-blue-500 rounded-xl overflow-hidden ring-1 mb-4 via-purple-600 to-pink-600 ring-white/10">
+              <div className="w-full h-64 md:h-80 lg:h-64 bg-gradient-to-br from-blue-500 rounded-xl overflow-hidden ring-1 mb-4 via-purple-600 to-pink-600 ring-white/10">
                 <img src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/about_main.webp" alt="Vansh Portrait" className="w-full h-full object-cover" loading="lazy" decoding="async" />
               </div>
               {/* New content added below the image */}
