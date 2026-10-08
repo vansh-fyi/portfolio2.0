@@ -1,3 +1,5 @@
+const LINKEDIN_URL = 'https://www.linkedin.com/in/vansh-fyi/';
+
 const About = () => {
   return (
     <section className="pt-24 pb-24 relative" style={{ opacity: 1, transform: 'translateY(0px)' }} id="about">
@@ -45,7 +47,8 @@ const About = () => {
             <div className="grid md:grid-cols-2 gap-6 gap-x-6 gap-y-6">
               {/* Education */}
               <div className="transition-all duration-500 hover:-translate-y-2 bg-black/30 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
-                <h3 className="flex items-center gap-2 text-base font-medium text-white font-geist mb-3 pointer-events-none">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                <h3 className="flex items-center gap-2 text-base font-medium text-white font-geist pointer-events-none">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-graduation-cap w-4 h-4 text-white/80">
                     <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" className=""></path>
                     <path d="M22 10v6"></path>
@@ -53,6 +56,20 @@ const About = () => {
                   </svg>
                   Education
                 </h3>
+                <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="See all education on LinkedIn"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-white/50 hover:text-white transition-colors font-geist flex-shrink-0"
+                  >
+                    See all
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3" aria-hidden="true">
+                      <path d="M7 7h10v10"></path>
+                      <path d="M7 17 17 7"></path>
+                    </svg>
+                  </a>
+                </div>
                 <div className="space-y-2">
                   <div className="">
                     <p className="text-xs font-medium text-white/80 pointer-events-none">Batchelor of Science (Honors), Physics</p>
@@ -70,13 +87,28 @@ const About = () => {
               </div>
               {/* Interests */}
               <div className="transition-all hover:-translate-y-2 duration-500 bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
-                <h3 className="flex items-center gap-2 text-base font-medium font-geist text-white mb-3 pointer-events-none">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                <h3 className="flex items-center gap-2 text-base font-medium font-geist text-white pointer-events-none">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-award w-4 h-4 text-white/80">
                     <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path>
                     <circle cx="12" cy="8" r="6" className=""></circle>
                   </svg>
                   Certifications
                 </h3>
+                <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="See all certifications on LinkedIn"
+                    className="inline-flex items-center gap-1 text-xs font-medium text-white/50 hover:text-white transition-colors font-geist flex-shrink-0"
+                  >
+                    See all
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3" aria-hidden="true">
+                      <path d="M7 7h10v10"></path>
+                      <path d="M7 17 17 7"></path>
+                    </svg>
+                  </a>
+                </div>
                 <div className="space-y-2">
                   <div className="">
                     <p className="text-xs font-medium text-white/80 pointer-events-none">Python for Data Science</p>
