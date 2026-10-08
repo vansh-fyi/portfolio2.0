@@ -15,7 +15,7 @@ I have **about 3 years of cumulative professional experience** in product design
 ### Tapforce LLC - Full Stack Designer (Design Engineer) (December 2025 – Present)
 *Remote, working from home in Dehradun, India*
 
-I work remotely for **Tapforce LLC**, whose CEO is **Alex Tsoukias**. As a **Full Stack Designer (Design Engineer)**, I design and build complete MVPs for clients entirely on my own, with the help of AI.
+I work remotely for **Tapforce LLC**, a digital product agency that provides design and development services (UI/UX, web and mobile apps, and AI development) to startups and established businesses. Its CEO is **Alex Tsoukias**. Website: [tapforce.com](https://www.tapforce.com/). LinkedIn: [Tapforce on LinkedIn](https://www.linkedin.com/company/tapforce). As a **Full Stack Designer (Design Engineer)**, I design and build complete MVPs for clients entirely on my own, with the help of AI.
 
 **Projects:**
 - **alignmentzones.com**

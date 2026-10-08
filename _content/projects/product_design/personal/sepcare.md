@@ -11,13 +11,15 @@ key_achievements:
   - "Specified and documented a complete low-cost hardware prototype, with a build guide and parts list"
   - "Built a secure ingest API and risk-score pipeline that turns device readings into a status for caregivers"
   - "Created a documented design system with clinical dashboard components"
-process: "Research on SDG 3 (Good Health and Well-being), then a hardware and software prototype, built with a small team"
+process: "Research on SDG 3 (Good Health and Well-being), then a hardware and software prototype"
 ---
 
 # SepCare: A Newborn Sepsis Early-Warning Armband
 
 ## Overview
-SepCare is a prototype system for catching early warning signs of neonatal sepsis. It pairs a low-cost wearable armband with a web app that shows caregivers and parents how a baby is doing. It was built as a prototype for a competition and grew out of research on the UN Sustainable Development Goal for Good Health and Well-being (SDG 3).
+SepCare is a prototype system for catching early warning signs of neonatal sepsis. It pairs a low-cost wearable armband with a web app that shows caregivers and parents how a baby is doing. It grew out of research on the UN Sustainable Development Goal for Good Health and Well-being (SDG 3).
+
+SepCare began as part of a competition effort. The team did not end up competing, and SepCare branched off to become Vansh's own long-term project, for which he has big plans.
 
 > **Safety boundary:** SepCare is an engineering prototype, not a clinical device. It is not validated for use on newborns or for clinical decisions.
 
@@ -40,5 +42,13 @@ Vansh specified and documented the full build: a single source-of-truth wiring d
 ## The Design System
 SepCare has its own documented design system built on shadcn/ui, with shared tokens, components and clinical patterns such as vital-sign cards and dashboards. The rule it follows is that a design correction improves the shared system first and the screens second.
 
+## Plans
+Vansh plans to:
+- Build the physical SepCare device
+- Submit it to the **Red Dot Design Award** and to other design and engineering awards
+- Write a **research paper** on SepCare for its field
+
+These are plans, not results. The awards and the paper have not happened yet.
+
 ## Status
-In progress, as a small-team prototype built since August 2026.
+In progress since August 2026, as a prototype. Not a clinical device.

@@ -17,7 +17,8 @@ const prettify = (s: string) => s.replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) =>
 export function summarize(markdown: string): string {
     const paragraphs = markdown
         .split(/\n{2,}/)
-        .map((p) => p.trim())
+        // a heading directly above its text (no blank line) must not disqualify the text
+        .map((p) => p.split('\n').filter((line) => !/^#{1,6}\s/.test(line)).join('\n').trim())
         .filter(
             (p) =>
                 p &&

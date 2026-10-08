@@ -292,16 +292,6 @@
     ]
   },
   {
-    "q": "Did his robot research ever hit a problem or limitation?",
-    "any": [
-      "0%",
-      "trivial",
-      "flaw",
-      "did not work",
-      "transfer"
-    ]
-  },
-  {
     "q": "What is Astr?",
     "any": [
       "stargaz"
@@ -329,5 +319,64 @@
       "prototype",
       "not validated"
     ]
+  },
+  {
+    "q": "What methodology and results does his robot research have so far?",
+    "forbid": [
+      "0%",
+      "LoRA",
+      "benchmark",
+      "pen transfer",
+      "LIBERO",
+      "MuJoCo",
+      "120",
+      "demonstrations",
+      "fine-tun"
+    ]
+  },
+  {
+    "q": "Which robot does he use in his research?",
+    "any": [
+      "so-arm",
+      "soarm"
+    ]
+  },
+  {
+    "q": "Has Astr been released?",
+    "any": [
+      "not yet",
+      "not been released",
+      "in development",
+      "hasn't",
+      "has not"
+    ]
+  },
+  {
+    "q": "What are his plans for SepCare?",
+    "any": [
+      "red dot",
+      "award",
+      "research paper"
+    ]
+  },
+  {
+    "q": "Did SepCare win a competition?",
+    "any": [
+      "did not",
+      "didn't",
+      "not",
+      "branched"
+    ],
+    "forbid": [
+      "won the"
+    ]
+  },
+  {
+    "q": "What is Tapforce and where can I find out more about it?",
+    "any": [
+      "tapforce.com",
+      "agency"
+    ],
+    "all": []
   }
 ]

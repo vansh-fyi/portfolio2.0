@@ -2,8 +2,8 @@
 projectId: astr
 project_name: Astr
 role: Product Designer & Flutter Developer
-timeline: November 2025 - Present
-platform: Mobile App (Android, iOS) and Progressive Web App
+timeline: November 2025 - Present (major redesign underway)
+platform: Mobile App (Android, iOS) and Progressive Web App (in development, not yet released)
 tagline: "Your Personal Stargazing Planner"
 key_features: ["Tonight's Sky Dashboard", "Light Pollution Zones (1-9)", "Prime Viewing Windows", "Celestial Object Catalog", "7-Day Forecast", "Red Mode for Night Vision", "Offline Zone Data"]
 challenge: "Telling a stargazer when and where to look, using real light pollution, weather and astronomical data"
@@ -18,9 +18,13 @@ process: "Solo design and build, AI-assisted"
 # Astr: Your Personal Stargazing Planner
 
 ## Overview
-Astr helps people plan a stargazing session by telling them **when and where** to look up. It combines real light pollution data, accurate astronomical calculations and weather forecasts into one clear picture for the user's location. It is designed for touchscreen devices and runs on Android, iOS and the web.
+Astr helps people plan a stargazing session by telling them **when and where** to look up. It combines real light pollution data, accurate astronomical calculations and weather forecasts into one clear picture for the user's location. It is designed for touchscreen devices and is being built for Android, iOS and the web.
+
+**Astr has not been released yet.** It is undergoing a major design change, and Vansh is documenting everything along the way ahead of a later release. It is his biggest project of the year, and it involves a great deal of physics, from planetary positions to the way light scatters through the atmosphere.
 
 ## Key Features
+These describe the current version, which is changing with the redesign.
+
 - **Dashboard**: A "Tonight's Sky" overview of stargazing conditions, the light pollution zone for the user's location, hourly cloud cover, transparency and seeing conditions, and prime viewing windows.
 - **Prime viewing windows**: An algorithm that finds the best time slots by weighing moon phase, cloud cover and darkness.
 - **Celestial catalog**: Stars, planets, constellations, galaxies, nebulae and star clusters, with visibility, rise and set times for the user's location and time.
@@ -38,4 +42,4 @@ Astr uses a custom 9-zone scale based on VIIRS satellite nighttime-lights data. 
 - **Background sync**: Weather data updates in the background through WorkManager and BGTaskScheduler.
 
 ## Status
-Built for Android, iOS and the web, with development ongoing since November 2025.
+In active development since November 2025 and not yet released. A major redesign is underway, and Vansh plans to release the app once it is finished.
