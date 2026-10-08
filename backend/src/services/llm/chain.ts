@@ -33,9 +33,12 @@ export interface LlmResult {
 }
 
 export class AllProvidersFailedError extends Error {
-    constructor(public readonly failures: LlmFailure[]) {
+    readonly failures: LlmFailure[];
+
+    constructor(failures: LlmFailure[]) {
         super(`All LLM providers failed: ${failures.map((f) => `${f.provider} (${f.reason})`).join('; ')}`);
         this.name = 'AllProvidersFailedError';
+        this.failures = failures;
     }
 }
 
