@@ -25,6 +25,8 @@ export default {
       roots: ['<rootDir>/server'],
       testMatch: ['**/__tests__/**/*.test.ts'],
       transform,
+      // ESM-only packages that server code imports (github-slugger matches rehype-slug's heading ids)
+      transformIgnorePatterns: ['node_modules/(?!(github-slugger)/)'],
     },
   ],
 };

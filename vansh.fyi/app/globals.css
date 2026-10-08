@@ -682,3 +682,14 @@ canvas {
     background-color: rgba(255, 255, 255, 0.9) !important;
   }
 }
+/* Blog code blocks (Shiki, dual theme): colours come from CSS variables so they follow the site theme */
+.shiki,
+.shiki span {
+  color: var(--shiki-dark);
+  background-color: transparent !important;
+}
+
+.light-mode .shiki,
+.light-mode .shiki span {
+  color: var(--shiki-light);
+}

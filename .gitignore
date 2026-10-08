@@ -31,3 +31,5 @@ vansh.fyi/vite.config.js
 vansh.fyi/vite.config.d.ts
 
 .env
+# Supabase CLI local state
+supabase/.temp/

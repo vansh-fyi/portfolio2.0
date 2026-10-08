@@ -75,7 +75,7 @@ export const useViewStore = () => {
   const clearInitialChatQuery = useUiStore((s) => s.clearInitialChatQuery);
 
   const route = pathToState(pathname);
-  const { currentView, projectId } = route;
+  const { projectId } = route;
 
   const actions = useMemo(() => {
     const goToMain = () => {
@@ -100,7 +100,8 @@ export const useViewStore = () => {
       selectProject: goToProject,
       /** Scroll to a section of the main page, navigating back to it first if another view is open. */
       scrollToSection: (id: SectionId) => {
-        if (currentView === 'main') {
+        // Only the home page has the sections; /blog and friends navigate there first
+        if (pathname === '/') {
           scrollToElement(id);
           return;
         }
@@ -108,7 +109,7 @@ export const useViewStore = () => {
         router.push('/');
       },
     };
-  }, [router, currentView, projectId]);
+  }, [router, pathname, projectId]);
 
   return { ...route, initialChatQuery, pendingSection, clearInitialChatQuery, clearPendingSection, ...actions };
 };
