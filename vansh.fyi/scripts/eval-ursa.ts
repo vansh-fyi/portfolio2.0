@@ -2,7 +2,7 @@
  * End-to-end quality check: runs evals/golden.json through the real pipeline
  * (search → prompt → LLM chain) and checks each answer for expected facts.
  *
- *   npx ts-node src/scripts/eval-ursa.ts
+ *   npx tsx --env-file-if-exists=.env.local scripts/eval-ursa.ts
  *
  * Checks per question (all optional):
  *   any[]           at least one phrase must appear (case-insensitive)

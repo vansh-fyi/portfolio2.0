@@ -1,5 +1,5 @@
 // Calls each candidate model once with a tiny grounded question; prints status + latency.
-// Run: npx ts-node src/scripts/probe-models.ts
+// Run: npx tsx --env-file-if-exists=.env.local scripts/probe-models.ts
 
 const SYSTEM = 'Answer using ONLY the context. Context: Vansh Grover is a product designer and AI engineer based in India.';
 const QUESTION = 'What does Vansh do? Answer in one sentence.';
@@ -46,3 +46,5 @@ const candidates: Candidate[] = [
         }
     }
 })();
+
+export {}; // keep this file a module so its top-level names stay local

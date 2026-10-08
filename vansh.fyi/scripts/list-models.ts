@@ -1,5 +1,5 @@
 // Lists models each configured LLM provider currently exposes, to pick/verify allowlist IDs.
-// Run: npx ts-node src/scripts/list-models.ts
+// Run: npx tsx --env-file-if-exists=.env.local scripts/list-models.ts
 
 async function get(url: string, headers: Record<string, string> = {}) {
     const res = await fetch(url, { headers });
@@ -28,3 +28,5 @@ async function get(url: string, headers: Record<string, string> = {}) {
         console.log('OPENROUTER free:', free.join(', '));
     } catch (e) { console.log('OPENROUTER error:', (e as Error).message); }
 })();
+
+export {}; // keep this file a module so its top-level names stay local

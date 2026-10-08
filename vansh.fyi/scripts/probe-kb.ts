@@ -1,5 +1,5 @@
 // Ad-hoc retrieval check: prints the top chunks kb_hybrid_search returns for sample questions.
-// Run: npx ts-node src/scripts/probe-kb.ts
+// Run: npx tsx --env-file-if-exists=.env.local scripts/probe-kb.ts
 
 import { supabase } from '../server/services/supabase';
 import { embedQuery } from '../server/services/kb/embed';
