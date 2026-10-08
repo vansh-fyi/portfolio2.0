@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { scrollToElement, useViewStore } from './state/overlayStore';
 import { useThemeStore } from './state/themeStore';
 import { useUnicornStudio } from './hooks/useUnicornStudio';
@@ -12,8 +13,13 @@ import About from './components/About';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import ProjectView from './components/overlays/ProjectOverlay';
-import ChatView from './components/overlays/ChatOverlay';
+
+// The overlay views (and the Markdown stack behind the chat) are not needed to paint the home page,
+// so they are separate chunks; they are fetched when idle so opening one still feels instant.
+const loadProjectView = () => import('./components/overlays/ProjectOverlay');
+const loadChatView = () => import('./components/overlays/ChatOverlay');
+const ProjectView = dynamic(loadProjectView);
+const ChatView = dynamic(loadChatView);
 
 function App() {
   const { currentView, pendingSection, clearPendingSection } = useViewStore();
@@ -33,6 +39,23 @@ function App() {
     scrollToElement(pendingSection, 'instant');
     clearPendingSection();
   }, [currentView, pendingSection, clearPendingSection]);
+
+  // Warm the overlay chunks once the home page has settled
+  useEffect(() => {
+    if (currentView !== 'main') return;
+    const warm = () => {
+      loadProjectView();
+      loadChatView();
+    };
+    // requestIdleCallback is missing in Safari, hence the optional typing and the timeout fallback
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+    if (w.requestIdleCallback && w.cancelIdleCallback) {
+      const id = w.requestIdleCallback(warm, { timeout: 4000 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const timer = window.setTimeout(warm, 2000);
+    return () => window.clearTimeout(timer);
+  }, [currentView]);
 
   // Handle theme changes
   useEffect(() => {

@@ -101,7 +101,7 @@ const Projects = () => {
               <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
               <div className={`absolute bottom-4 left-4 right-4 ${project.large ? 'lg:left-6 lg:right-6 lg:bottom-6 ' : ''}lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none`}>
                 <div className={`backdrop-blur-xl rounded-xl ring-1 bg-black/30 ring-white/10 ${project.large ? 'p-6' : 'p-4'}`}>
-                  <h4 className={`text-sm md:text-lg font-semibold text-white pointer-events-none ${project.large ? 'mb-2' : 'mb-1'}`}>{project.title}</h4>
+                  <h3 className={`text-sm md:text-lg font-semibold text-white pointer-events-none ${project.large ? 'mb-2' : 'mb-1'}`}>{project.title}</h3>
                   <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
                     {project.description}
                   </p>

@@ -169,7 +169,7 @@ const Skills = () => {
           </div>
           {/* Tools & Technologies */}
           <div className="lg:p-8 ring-1 rounded-2xl bg-black/30 mt-8 pt-6 pr-6 pb-6 pl-6 backdrop-blur-lg ring-white/10">
-            <h4 className="text-lg font-semibold font-geist mb-4 text-white">Tools &amp; Technologies</h4>
+            <h3 className="text-lg font-semibold font-geist mb-4 text-white">Tools &amp; Technologies</h3>
             <div className="flex flex-wrap gap-x-3 gap-y-3 xl:gap-x-3">
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Figma</span>
               <span className="text-sm rounded-lg ring-1 pt-2 pr-3 pb-2 pl-3 hover:ring-white/20 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Framer</span>
