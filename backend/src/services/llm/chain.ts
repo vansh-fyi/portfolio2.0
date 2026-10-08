@@ -102,6 +102,31 @@ export function resetProviderCooldowns(): void {
     blockedUntil.clear();
 }
 
+/**
+ * Boils a provider error body down to something readable in logs and alert emails, e.g.
+ * `HTTP 429 google/gemma-4-31b-it:free is temporarily rate-limited upstream`.
+ * Handles OpenAI-style `{error:{message}}`, Gemini's `[{error:{message}}]` and OpenRouter's `error.metadata.raw`.
+ */
+export function describeHttpError(status: number, bodyText: string, maxLength = 110): string {
+    let message = '';
+    try {
+        const parsed = JSON.parse(bodyText);
+        const error = (Array.isArray(parsed) ? parsed[0] : parsed)?.error;
+        const raw = error?.metadata?.raw;
+        message = String(typeof raw === 'string' && raw ? raw : error?.message ?? '');
+    } catch {
+        message = bodyText;
+    }
+
+    message = message.replace(/\s+/g, ' ').replace(/\s*Please (try|retry).*$/i, '').trim();
+    if (/^provider returned error$/i.test(message)) message = '';
+    if (message.length > maxLength) {
+        const cut = message.slice(0, maxLength);
+        message = `${cut.slice(0, Math.max(cut.lastIndexOf(' '), maxLength - 20))}…`;
+    }
+    return `HTTP ${status}${message ? ` ${message}` : ''}`;
+}
+
 function stripReasoning(text: string): string {
     return text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
 }
@@ -114,25 +139,33 @@ export async function callProvider(
     maxTokens: number,
     timeoutMs: number
 ): Promise<string> {
-    const res = await fetch(`${provider.baseUrl}/chat/completions`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${provider.apiKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            model: provider.model,
-            max_tokens: maxTokens,
-            temperature: 0.3,
-            messages: [
-                { role: 'system', content: system },
-                { role: 'user', content: prompt },
-            ],
-            ...provider.extraBody,
-        }),
-        signal: AbortSignal.timeout(timeoutMs),
-    });
+    let res: Response;
+    try {
+        res = await fetch(`${provider.baseUrl}/chat/completions`, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${provider.apiKey}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: provider.model,
+                max_tokens: maxTokens,
+                temperature: 0.3,
+                messages: [
+                    { role: 'system', content: system },
+                    { role: 'user', content: prompt },
+                ],
+                ...provider.extraBody,
+            }),
+            signal: AbortSignal.timeout(timeoutMs),
+        });
+    } catch (error) {
+        if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
+            throw new Error(`timed out after ${Math.round(timeoutMs / 1000)}s`);
+        }
+        throw error;
+    }
 
     if (!res.ok) {
-        const detail = (await res.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 160);
-        throw Object.assign(new Error(`HTTP ${res.status} ${detail}`.trim()), { status: res.status });
+        const detail = await res.text().catch(() => '');
+        throw Object.assign(new Error(describeHttpError(res.status, detail)), { status: res.status });
     }
 
     const body = (await res.json()) as { choices?: { message?: { content?: string | null } }[] };
@@ -189,7 +222,7 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
             }
             return { text, provider: provider.id, failures };
         } catch (error) {
-            const reason = error instanceof Error ? (error.name === 'TimeoutError' ? 'timeout' : error.message) : String(error);
+            const reason = error instanceof Error ? error.message : String(error);
             failures.push({ provider: provider.id, reason });
             blockedUntil.set(provider.id, Date.now() + cooldownFor(error));
             console.warn(`⚠️ LLM provider failed: ${provider.id}: ${reason}`);
