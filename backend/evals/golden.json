@@ -32,11 +32,46 @@
   },
   {
     "q": "Where is he working now?",
-    "pending": "content has no current-employer info (latest role ends Oct 2025); add it to personal/experience.md"
+    "all": [
+      "tapforce"
+    ]
   },
   {
     "q": "Where is he based out of?",
-    "pending": "content has no location; add it to personal/bio.md"
+    "any": [
+      "dehradun"
+    ]
+  },
+  {
+    "q": "What is his current role and what does he do there?",
+    "any": [
+      "design engineer",
+      "full stack designer"
+    ],
+    "all": [
+      "tapforce"
+    ]
+  },
+  {
+    "q": "Which projects has he worked on at Tapforce?",
+    "any": [
+      "alignmentzones",
+      "perfectlyseated",
+      "properyellow",
+      "cookie odyssey"
+    ]
+  },
+  {
+    "q": "Who is the CEO of Tapforce?",
+    "all": [
+      "tsoukias"
+    ]
+  },
+  {
+    "q": "Is he available for hire or looking for a new job?",
+    "forbid": [
+      "actively looking"
+    ]
   },
   {
     "q": "Who is Vansh?",

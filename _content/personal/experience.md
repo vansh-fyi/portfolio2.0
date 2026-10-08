@@ -1,8 +1,8 @@
 ---
 type: personal
 category: experience
-lastUpdated: 2025-11-26
-tags: [work-history, driq-health, product-design, teaching, fintech, healthcare]
+lastUpdated: 2026-10-08
+tags: [work-history, tapforce, full-stack-design, mvp, driq-health, product-design, teaching, fintech, healthcare]
 source: /rag/personal/personal.md
 ---
 
@@ -10,7 +10,23 @@ source: /rag/personal/personal.md
 
 I have **about 3 years of cumulative professional experience** in product design and development. My career path has been unique—punctuated by a necessary career break for recovery—but defined by rapid growth and high-impact roles. From starting as a trainee to becoming a **Director of Product Design**, I've consistently taken on challenges that required me to evolve.
 
-## The Peak: Leading Design at Scale
+## Current Role
+
+### Tapforce LLC - Full Stack Designer (Design Engineer) (December 2025 – Present)
+*Remote, working from home in Dehradun, India*
+
+I work remotely for **Tapforce LLC**, whose CEO is **Alex Tsoukias**. As a **Full Stack Designer (Design Engineer)**, I design and build complete MVPs for clients entirely on my own, with the help of AI.
+
+**Projects:**
+- **alignmentzones.com**
+- **perfectlyseated.com**
+- **properyellow.com**
+- **Cookie Odyssey mobile app** (currently in progress)
+- **WorldQuant Learning** (I contribute to it at times)
+
+I'm the sole designer and developer on each MVP.
+
+## Previously: Leading Design at Scale
 
 ### DriQ Health - Director of Product Design (February 2025 – October 2025)
 *Previously Freelance Web Designer (October 2024 – February 2025)*
