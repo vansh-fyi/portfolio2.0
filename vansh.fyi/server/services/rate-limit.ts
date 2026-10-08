@@ -27,6 +27,19 @@ export const EMAIL_LIMITS = {
     globalPerDay: 30,
 };
 
+/** Admin sign-in: slow down password guessing (Supabase Auth has its own limits on top). */
+export const ADMIN_LOGIN_LIMITS = {
+    perIpPer15Min: 5,
+    globalPerDay: 50,
+};
+
+export function adminLoginRules(ip: string): RateRule[] {
+    return [
+        { key: `admin-login:ip:${ip}:15m`, windowSeconds: 900, max: ADMIN_LOGIN_LIMITS.perIpPer15Min },
+        { key: 'admin-login:global:day', windowSeconds: 86_400, max: ADMIN_LOGIN_LIMITS.globalPerDay },
+    ];
+}
+
 export function ragRules(ip: string): RateRule[] {
     return [
         { key: `rag:ip:${ip}:min`, windowSeconds: 60, max: RAG_LIMITS.perIpPerMinute },

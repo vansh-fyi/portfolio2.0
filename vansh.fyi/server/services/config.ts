@@ -61,6 +61,11 @@ export const config = {
         };
     },
 
+    /** The single email address allowed into /admin (compared case-insensitively) */
+    get adminEmail() {
+        return requireEnv('ADMIN_EMAIL', 'The one email address allowed to sign in to /admin');
+    },
+
     /** Resend API key for email sending */
     get resendApiKey() {
         return requireEnv('RESEND_API_KEY', 'Resend API key for email service');
