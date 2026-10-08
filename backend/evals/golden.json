@@ -232,5 +232,47 @@
       "next",
       "chain"
     ]
+  },
+  {
+    "q": "What is Perfectly Seated?",
+    "any": [
+      "seating"
+    ],
+    "all": []
+  },
+  {
+    "q": "What did Vansh build for Alignment Zones?",
+    "any": [
+      "quiz"
+    ]
+  },
+  {
+    "q": "Tell me about the Cookie Odyssey app",
+    "any": [
+      "flutter",
+      "bakery"
+    ]
+  },
+  {
+    "q": "What is Proper Yellow and what did he do for it?",
+    "any": [
+      "video"
+    ]
+  },
+  {
+    "q": "What was his role on the WorldQuant Learning website?",
+    "any": [
+      "hero",
+      "first version",
+      "contribut"
+    ]
+  },
+  {
+    "q": "Which of his projects take payments with Stripe?",
+    "any": [
+      "alignment zones",
+      "perfectly seated",
+      "cookie odyssey"
+    ]
   }
 ]
