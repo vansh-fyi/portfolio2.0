@@ -260,10 +260,10 @@ export function formatAlert(report: HealthReport): { subject: string; text: stri
         ...report.checks.map((c) => `${c.status === 'ok' ? '✅' : c.status === 'degraded' ? '⚠️' : '🚨'} ${c.name}: ${c.detail}`),
         '',
         'What to do:',
-        '- providers: run `npx ts-node src/scripts/probe-models.ts` and `list-models.ts`, then update PROVIDER_CHAIN in src/services/llm/chain.ts.',
+        '- providers: from vansh.fyi/ run `npx tsx --env-file-if-exists=.env.local scripts/probe-models.ts` and `scripts/list-models.ts`, then update PROVIDER_CHAIN in server/services/llm/chain.ts.',
         '- billing: remove the named OpenRouter model from PROVIDER_CHAIN immediately.',
         '- embeddings/database: check the Supabase dashboard (project paused? edge function deployed?).',
-        '- answers: run `npx ts-node src/scripts/eval-ursa.ts` to see which questions regressed.',
+        '- answers: from vansh.fyi/ run `npm run eval-ursa` to see which questions regressed.',
         '',
         'Next check runs tomorrow; this email repeats daily until the problem is fixed.',
     ];

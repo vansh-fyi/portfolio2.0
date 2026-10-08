@@ -45,7 +45,7 @@ export class AllProvidersFailedError extends Error {
 type ProviderSpec = Omit<LlmProvider, 'apiKey'> & { keyOf: () => string };
 
 /**
- * Order = preference. Verified working on free keys on 2026-10-08 (run `npx ts-node src/scripts/probe-models.ts`).
+ * Order = preference. Verified working on free keys on 2026-10-08 (run `npx tsx --env-file-if-exists=.env.local scripts/probe-models.ts`).
  * 3.5-flash-lite leads: on 2026-10-08 it answered in ~1s while 3.1-flash-lite was timing out / returning 503 "high demand".
  * Gemini runs with reasoning_effort "minimal": hidden thinking tokens count against max_tokens and at "low" cut ~1 in 4 answers
  * off mid-sentence at 700 tokens (and were ~2x slower). Groq's gpt-oss does not support "minimal", so it stays on "low".
