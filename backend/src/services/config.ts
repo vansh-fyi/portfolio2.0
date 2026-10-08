@@ -40,12 +40,6 @@ export const config = {
     /** Server port (defaults to 8000 if not specified) */
     port: parseInt(process.env.PORT || '8000', 10),
 
-    /** HuggingFace API key for AI model inference and embeddings */
-    huggingFaceApiKey: requireEnv(
-        'HUGGINGFACE_API_KEY',
-        'HuggingFace API key for AI model inference and embeddings'
-    ),
-
     /** Supabase configuration for vector database */
     supabase: {
         url: requireEnv(
@@ -58,6 +52,19 @@ export const config = {
         ),
         /** Optional service role key for admin operations (bypasses RLS) */
         serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    },
+
+    /**
+     * Shared secret for the `embed` Supabase Edge Function (gte-small embeddings).
+     * Optional until the knowledge base is cut over from the legacy HF pipeline.
+     */
+    embedSecret: process.env.EMBED_SECRET || '',
+
+    /** Free-tier LLM provider keys for Ursa's fallback chain (any subset may be set) */
+    llm: {
+        geminiApiKey: process.env.GEMINI_API_KEY || '',
+        groqApiKey: process.env.GROQ_API_KEY || '',
+        openRouterApiKey: process.env.OPENROUTER_API_KEY || '',
     },
 
     /** Resend API key for email sending */
@@ -74,8 +81,17 @@ export const config = {
 } as const;
 
 // Validate configuration at module load time
-// This ensures the server fails fast if required keys are missing
+// This ensures the server fails fast if required keys are missing.
+// Log only which optional services are configured, never any part of a secret.
+const llmConfigured = Object.entries({
+    gemini: config.llm.geminiApiKey,
+    groq: config.llm.groqApiKey,
+    openrouter: config.llm.openRouterApiKey,
+})
+    .filter(([, key]) => key)
+    .map(([name]) => name);
+
 console.log('✅ Configuration validated successfully');
-console.log(`   - HuggingFace API Key: ${config.huggingFaceApiKey.substring(0, 10)}...`);
 console.log(`   - Supabase URL: ${config.supabase.url}`);
-console.log(`   - Resend API Key: ${config.resendApiKey.substring(0, 6)}...`);
+console.log(`   - LLM providers: ${llmConfigured.join(', ') || 'none configured'}`);
+console.log(`   - Embeddings: ${config.embedSecret ? 'edge function secret set' : 'EMBED_SECRET missing'}`);

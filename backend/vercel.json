@@ -6,6 +6,15 @@
         },
         "api/trpc/[...path].ts": {
             "maxDuration": 30
+        },
+        "api/cron/health.ts": {
+            "maxDuration": 60
         }
-    }
+    },
+    "crons": [
+        {
+            "path": "/api/cron/health",
+            "schedule": "0 6 * * *"
+        }
+    ]
 }

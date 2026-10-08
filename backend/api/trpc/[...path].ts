@@ -25,6 +25,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // Import dynamically
         const { fetchRequestHandler } = await import('@trpc/server/adapters/fetch');
         const { appRouter } = await import('../../src/api');
+        const { createContext } = await import('../../src/api/trpc');
 
         // Convert Vercel req/res to fetch Request/Response
         const url = `https://${req.headers.host}${req.url}`;
@@ -38,7 +39,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             endpoint: '/api/trpc',
             req: fetchReq,
             router: appRouter,
-            createContext: () => ({}),
+            createContext,
         });
 
         // Convert Response to Vercel res

@@ -85,3 +85,30 @@ Sent via Portfolio Lead Generation Form
         };
     }
 }
+
+/**
+ * Sends a plain-text operational alert (e.g. Ursa health check) to the site owner.
+ */
+export async function sendAlertEmail(subject: string, text: string): Promise<EmailResponse> {
+    try {
+        const response = await Promise.race([
+            resend.emails.send({
+                from: 'Ursa Monitor <design@vansh.fyi>',
+                to: [RECIPIENT_EMAIL],
+                subject,
+                text,
+            }),
+            new Promise<never>((_, reject) => setTimeout(() => reject(new Error('Alert email timed out after 10s')), 10000)),
+        ]);
+
+        if (response.error) {
+            console.error('Resend API error (alert):', response.error);
+            return { success: false, error: `Email delivery failed: ${response.error.message}` };
+        }
+        return { success: true };
+    } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        console.error('Error sending alert email:', errorMessage);
+        return { success: false, error: `Failed to send email: ${errorMessage}` };
+    }
+}

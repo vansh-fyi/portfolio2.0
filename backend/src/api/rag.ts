@@ -1,15 +1,14 @@
-import { initTRPC } from '@trpc/server';
+import { TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import { generateRagResponse } from '../services/rag';
+import { checkRateLimit, ragRules } from '../services/rate-limit';
+import { t } from './trpc';
 
 
 /**
  * tRPC RAG Router
  * Handles RAG query endpoints for conversational AI
  */
-
-// Initialize tRPC
-const t = initTRPC.create();
 
 // Input validation schema for RAG query
 const ragQuerySchema = z.object({
@@ -29,21 +28,30 @@ export const ragRouter = t.router({
      */
     query: t.procedure
         .input(ragQuerySchema)
-        .query(async ({ input }) => {
+        .query(async ({ input, ctx }) => {
+            const { query, context, projectId } = input;
+
+            // Return empty response for empty queries (initial chat load / polling)
+            // Frontend should handle displaying a greeting if needed
+            if (!query || query.trim() === '') {
+                return {
+                    success: true,
+                    response: null,
+                    sources: []
+                };
+            }
+
+            // Protect the free-tier LLM quota (per-IP and global daily caps)
+            const limit = await checkRateLimit(ragRules(ctx.ip ?? 'unknown'));
+            if (!limit.allowed) {
+                console.warn(`🚦 Rate limited: ${limit.blockedBy}`);
+                throw new TRPCError({
+                    code: 'TOO_MANY_REQUESTS',
+                    message: 'Ursa is getting a lot of questions right now. Please try again in a little while.',
+                });
+            }
+
             try {
-                const { query, context, projectId } = input;
-
-                // Return empty response for empty queries (initial chat load / polling)
-                // Frontend should handle displaying a greeting if needed
-                if (!query || query.trim() === '') {
-                    return {
-                        success: true,
-                        response: null,
-                        sources: []
-                    };
-                }
-
-                // Generate response using Vercel AI SDK
                 const { text, sources } = await generateRagResponse(query, context, projectId);
 
                 return {
@@ -51,11 +59,13 @@ export const ragRouter = t.router({
                     response: text || 'No response generated',
                     sources: sources || []
                 };
-
             } catch (error) {
+                // Details (provider names, HTTP errors) stay in the logs, not in the visitor's browser
                 console.error('❌ Error in RAG query:', error);
-                const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-                throw new Error(`RAG query failed: ${errorMessage}`);
+                throw new TRPCError({
+                    code: 'INTERNAL_SERVER_ERROR',
+                    message: 'Ursa is unavailable at the moment. Please try again shortly.',
+                });
             }
         }),
 });

@@ -1,9 +1,10 @@
 // backend/src/local-server.ts
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
 import { appRouter } from './api/index';
+import { createContext } from './api/trpc';
 import http from 'http';
 
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 const server = http.createServer(async (req, res) => {
   // CORS headers
@@ -52,7 +53,7 @@ const server = http.createServer(async (req, res) => {
         endpoint: '/api/trpc',
         req: fetchReq,
         router: appRouter,
-        createContext: () => ({}),
+        createContext,
       });
 
       // Convert Fetch API Response to Node.js response
