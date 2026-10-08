@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Image processing (sharp) runs inside server actions on these pages; give it room on a cold start.
+export const maxDuration = 60;
+
 export default function AdminRoot({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen text-white">

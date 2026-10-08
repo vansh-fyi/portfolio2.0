@@ -2,10 +2,13 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useCallback, useDeferredValue, useEffect, useRef, useState, useTransition } from 'react';
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { deletePostAction, savePostAction, setPublishedAction } from '../../actions';
 import { normalizeTags } from '@/server/blog/post-input';
 import { slugify } from '@/server/blog/markdown';
+import type { MediaItem } from '@/server/media/admin';
+import MediaPicker from './media-picker';
+import { markdownFor } from './media-panel';
 import Preview from './preview';
 
 export interface EditablePost {
@@ -18,14 +21,15 @@ export interface EditablePost {
   tags: string;
   seo_title: string;
   seo_description: string;
+  cover_media_id: string | null;
   status: 'draft' | 'published';
   published_at: string | null;
   updated_at: string;
 }
 
-type Fields = Pick<EditablePost, 'title' | 'slug' | 'excerpt' | 'body_md' | 'tags' | 'seo_title' | 'seo_description'>;
+type Fields = Pick<EditablePost, 'title' | 'slug' | 'excerpt' | 'body_md' | 'tags' | 'seo_title' | 'seo_description' | 'cover_media_id'>;
 
-const EMPTY: Fields = { title: '', slug: '', excerpt: '', body_md: '', tags: '', seo_title: '', seo_description: '' };
+const EMPTY: Fields = { title: '', slug: '', excerpt: '', body_md: '', tags: '', seo_title: '', seo_description: '', cover_media_id: null };
 
 const input = 'w-full rounded-xl bg-white/5 px-4 py-2.5 text-white ring-1 ring-white/10 outline-none transition placeholder:text-white/30 focus:ring-white/30';
 const button = 'rounded-full px-4 py-2 text-sm font-medium transition active:scale-95 disabled:opacity-50';
@@ -33,9 +37,9 @@ const secondary = `${button} bg-white/10 text-white ring-1 ring-white/10 hover:b
 const primary = `${button} bg-white text-black/80 hover:bg-white/80`;
 
 const pick = (post: EditablePost | null): Fields =>
-  post ? { title: post.title, slug: post.slug, excerpt: post.excerpt, body_md: post.body_md, tags: post.tags, seo_title: post.seo_title, seo_description: post.seo_description } : EMPTY;
+  post ? { title: post.title, slug: post.slug, excerpt: post.excerpt, body_md: post.body_md, tags: post.tags, seo_title: post.seo_title, seo_description: post.seo_description, cover_media_id: post.cover_media_id } : EMPTY;
 
-export default function PostEditor({ initial }: { initial: EditablePost | null }) {
+export default function PostEditor({ initial, media: initialMedia }: { initial: EditablePost | null; media: MediaItem[] }) {
   const router = useRouter();
   const [fields, setFields] = useState<Fields>(pick(initial));
   const [saved, setSaved] = useState<Fields>(pick(initial));
@@ -47,6 +51,11 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [pending, startTransition] = useTransition();
   const previewText = useDeferredValue(fields.body_md);
+  const [media, setMedia] = useState(initialMedia);
+  const mediaById = useMemo(() => new Map(media.map((m) => [m.id, m])), [media]);
+  const [picker, setPicker] = useState<'insert' | 'cover' | null>(null);
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const cover = fields.cover_media_id ? mediaById.get(fields.cover_media_id) : undefined;
 
   const dirty = JSON.stringify(fields) !== JSON.stringify(saved);
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => {
@@ -128,6 +137,27 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, [dirty]);
 
+  const onPick = (item: MediaItem) => {
+    if (picker === 'cover') {
+      set('cover_media_id', item.id);
+    } else {
+      const el = bodyRef.current;
+      const body = fields.body_md;
+      const start = el?.selectionStart ?? body.length;
+      const end = el?.selectionEnd ?? body.length;
+      const before = body.slice(0, start);
+      const after = body.slice(end);
+      const insert = `${before && !before.endsWith('\n\n') ? (before.endsWith('\n') ? '\n' : '\n\n') : ''}${markdownFor(item)}${after.startsWith('\n') ? '' : '\n\n'}`;
+      set('body_md', before + insert + after);
+      window.requestAnimationFrame(() => {
+        el?.focus();
+        const caret = (before + insert).length;
+        el?.setSelectionRange(caret, caret);
+      });
+    }
+    setPicker(null);
+  };
+
   const tagChips = normalizeTags(fields.tags);
   const fieldError = (name: string) => (message?.kind === 'error' && message.field === name ? 'ring-red-400/60' : '');
 
@@ -185,7 +215,14 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
       <div className="grid gap-6 lg:grid-cols-2">
         <section className={view === 'preview' ? 'hidden lg:block' : ''} aria-label="Write">
           <input value={fields.title} onChange={(e) => onTitle(e.target.value)} placeholder="Title" aria-label="Title" className={`${input} mb-4 text-2xl font-light tracking-tighter font-geist ${fieldError('title')}`} />
+          <div className="mb-2 flex items-center justify-between">
+            <span className="text-xs text-white/50">Markdown</span>
+            <button type="button" onClick={() => setPicker('insert')} className={secondary}>
+              Insert image
+            </button>
+          </div>
           <textarea
+            ref={bodyRef}
             value={fields.body_md}
             onChange={(e) => set('body_md', e.target.value)}
             placeholder="Write in Markdown…"
@@ -198,7 +235,7 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
         <section className={view === 'write' ? 'hidden lg:block' : ''} aria-label="Preview">
           <div className="min-h-[60vh] rounded-2xl bg-black/30 p-6 ring-1 ring-white/10 backdrop-blur-lg">
             <h2 className="mb-6 text-3xl font-light tracking-tighter font-geist text-white">{fields.title || 'Untitled'}</h2>
-            <Preview markdown={previewText} />
+            <Preview markdown={previewText} media={mediaById} />
           </div>
         </section>
       </div>
@@ -245,6 +282,25 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
             </span>
           )}
         </label>
+        <div className="md:col-span-2">
+          <span className="mb-2 block text-sm text-white/50">Cover image <span className="text-white/30">(shown in lists and link previews)</span></span>
+          <div className="flex flex-wrap items-center gap-4">
+            {cover ? (
+              // eslint-disable-next-line @next/next/no-img-element -- Supabase Storage variant
+              <img src={cover.thumbUrl} alt={cover.alt} className="h-20 w-32 rounded-xl object-cover ring-1 ring-white/10" />
+            ) : (
+              <span className="flex h-20 w-32 items-center justify-center rounded-xl bg-white/5 text-xs text-white/30 ring-1 ring-white/10">No cover</span>
+            )}
+            <button type="button" onClick={() => setPicker('cover')} className={secondary}>
+              {cover ? 'Change' : 'Choose cover'}
+            </button>
+            {cover && (
+              <button type="button" onClick={() => set('cover_media_id', null)} className={secondary}>
+                Remove
+              </button>
+            )}
+          </div>
+        </div>
         <label className="block">
           <span className="mb-2 block text-sm text-white/50">SEO title <span className="text-white/30">(optional, defaults to the title)</span></span>
           <input value={fields.seo_title} onChange={(e) => set('seo_title', e.target.value)} maxLength={120} className={input} />
@@ -254,6 +310,7 @@ export default function PostEditor({ initial }: { initial: EditablePost | null }
           <input value={fields.seo_description} onChange={(e) => set('seo_description', e.target.value)} maxLength={200} className={input} />
         </label>
       </section>
+      {picker && <MediaPicker title={picker === 'cover' ? 'Choose a cover image' : 'Insert an image'} items={media} setItems={setMedia} onPick={onPick} onClose={() => setPicker(null)} />}
     </div>
   );
 }

@@ -15,6 +15,9 @@ Ursa's knowledge base:
 ### 007_blog.sql
 Blog and image CMS: `posts`, `media` and `post_media` tables, row level security (public reads published posts and image metadata only; all writes go through the service role), the `blog` source type for `kb_chunks`, and the public `media` storage bucket.
 
+### 008_media_originals.sql
+Private `media-originals` bucket for the untouched uploads (they can contain EXIF/GPS). The public `media` bucket only holds processed, metadata-free WebP variants. Adds `media.original_name`.
+
 ## Legacy (superseded)
 
 These belong to the first Ursa pipeline (HuggingFace MiniLM embeddings). They are kept for history only.

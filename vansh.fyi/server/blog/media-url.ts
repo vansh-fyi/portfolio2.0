@@ -14,11 +14,15 @@ export function sortedVariants(media: Pick<Media, 'variants'>): MediaVariant[] {
     return [...media.variants].sort((a, b) => a.w - b.w);
 }
 
-/** The best single URL for a target display width: the smallest variant that is wide enough. */
-export function bestUrl(media: Pick<Media, 'variants' | 'storage_path'>, targetWidth: number): string {
+/**
+ * The best single URL for a target display width: the smallest variant that is wide enough.
+ * Only processed variants are public (originals live in a private bucket), so an image with no
+ * variants has no URL.
+ */
+export function bestUrl(media: Pick<Media, 'variants'>, targetWidth: number): string {
     const variants = sortedVariants(media);
     const pick = variants.find((v) => v.w >= targetWidth) ?? variants.at(-1);
-    return mediaPublicUrl(pick ? pick.path : media.storage_path);
+    return pick ? mediaPublicUrl(pick.path) : '';
 }
 
 /** `srcset` for responsive images, or undefined when there are no pre-generated variants. */
