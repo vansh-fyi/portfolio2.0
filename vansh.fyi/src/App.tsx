@@ -1,16 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { Element } from 'react-scroll';
-
-declare global {
-  interface Window {
-    UnicornStudio?: {
-      init: () => void;
-      isInitialized?: boolean;
-    };
-  }
-}
-import { useViewStore } from './state/overlayStore';
+import { useEffect } from 'react';
+import { scrollToElement, useViewStore } from './state/overlayStore';
+import { useUrlSync } from './state/useUrlSync';
 import { useThemeStore } from './state/themeStore';
+import { useUnicornStudio } from './hooks/useUnicornStudio';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Skills from './components/Skills';
@@ -23,98 +15,29 @@ import ProjectView from './components/overlays/ProjectOverlay';
 import ChatView from './components/overlays/ChatOverlay';
 
 function App() {
-  const { currentView } = useViewStore();
+  const { currentView, pendingSection, clearPendingSection } = useViewStore();
   const { isLightMode } = useThemeStore();
-  const previousViewRef = useRef(currentView);
 
+  useUrlSync();
+  const showBackground = useUnicornStudio(currentView === 'main', isLightMode);
 
   // Handle body lock for non-main views
   useEffect(() => {
-    if (currentView !== 'main') {
-      document.body.classList.add('body-lock');
-    } else {
-      document.body.classList.remove('body-lock');
-    }
+    document.body.classList.toggle('body-lock', currentView !== 'main');
   }, [currentView]);
 
-  // Handle scroll restoration when closing project overlay
+  // Scroll to the requested section once the main view has mounted (e.g. after leaving an overlay).
+  // Instant, because the page was just swapped in and a long animated scroll would feel broken.
   useEffect(() => {
-    if (previousViewRef.current === 'projects' && currentView === 'main') {
-      // Small timeout to ensure DOM is ready
-      setTimeout(() => {
-        const projectsSection = document.getElementById('projects');
-        if (projectsSection) {
-          const headerOffset = 85;
-          const elementPosition = projectsSection.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 100);
-    }
-    previousViewRef.current = currentView;
-  }, [currentView]);
+    if (currentView !== 'main' || !pendingSection) return;
+    scrollToElement(pendingSection, 'instant');
+    clearPendingSection();
+  }, [currentView, pendingSection, clearPendingSection]);
 
   // Handle theme changes
   useEffect(() => {
-    if (isLightMode) {
-      document.body.classList.add('light-mode');
-    } else {
-      document.body.classList.remove('light-mode');
-    }
+    document.body.classList.toggle('light-mode', isLightMode);
   }, [isLightMode]);
-
-  // Initialize Unicorn Studio when on main view or theme changes
-  useEffect(() => {
-    // Only initialize when on main view AND on desktop (width >= 768px)
-    if (currentView !== 'main' || window.innerWidth < 768) return;
-
-    const initUnicornStudio = () => {
-      if (!window.UnicornStudio) {
-        window.UnicornStudio = { init: () => { }, isInitialized: false };
-        const script = document.createElement("script");
-        script.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js";
-        script.onload = () => {
-          if (window.UnicornStudio) {
-            window.UnicornStudio.init();
-            window.UnicornStudio.isInitialized = true;
-          }
-        };
-        script.onerror = () => {
-          console.error('Failed to load Unicorn Studio script');
-        };
-        (document.head || document.body).appendChild(script);
-      } else {
-        // Re-initialize when theme changes or returning to main view
-        if (window.UnicornStudio) {
-          window.UnicornStudio.init();
-        }
-      }
-    };
-
-    initUnicornStudio();
-
-    // Cleanup: Remove Unicorn Studio script and canvas when component unmounts
-    return () => {
-      const scripts = document.querySelectorAll('script[src*="unicornstudio"]');
-      scripts.forEach(script => script.remove());
-
-      // Strict cleanup: Remove the canvas element created by Unicorn Studio
-      const canvas = document.querySelector('canvas[data-us-canvas]');
-      if (canvas) {
-        canvas.remove();
-      }
-
-      // Nullify the global object to allow GC
-      if (window.UnicornStudio) {
-        // @ts-ignore
-        window.UnicornStudio = undefined;
-      }
-    };
-  }, [currentView, isLightMode]);
 
   // Render different views based on currentView
   if (currentView === 'projects') {
@@ -131,32 +54,20 @@ function App() {
       <div className="aura-background-component bg-black md:bg-transparent fixed -z-10 w-full h-screen top-0">
         {/* Only render the active background - improves performance by stopping animations for hidden background */}
         {!isLightMode && (
-          <div id="darkBackground" data-us-project="krvLrHX3sj3cg8BHywDj" data-us-lazyload="true" data-us-production="true" data-us-scale="0.75" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full invisible md:visible"></div>
+          <div id="darkBackground" data-us-project="krvLrHX3sj3cg8BHywDj" data-us-lazyload="true" data-us-production="true" data-us-scale="0.75" data-us-dpi="1.0" data-us-fps="30" className={`absolute top-0 left-0 -z-10 w-full h-full invisible md:visible transition-opacity ${showBackground ? 'opacity-100 duration-300' : 'opacity-0 duration-[900ms]'}`}></div>
         )}
         {isLightMode && (
-          <div id="lightBackground" data-us-project="yACzULFKkgXAmEcep6hu" data-us-lazyload="true" data-us-production="true" data-us-scale="0.75" data-us-dpi="1.0" data-us-fps="30" className="absolute top-0 left-0 -z-10 w-full h-full invisible md:visible"></div>
+          <div id="lightBackground" data-us-project="yACzULFKkgXAmEcep6hu" data-us-lazyload="true" data-us-production="true" data-us-scale="0.75" data-us-dpi="1.0" data-us-fps="30" className={`absolute top-0 left-0 -z-10 w-full h-full invisible md:visible transition-opacity ${showBackground ? 'opacity-100 duration-300' : 'opacity-0 duration-[900ms]'}`}></div>
         )}
       </div>
       <Header />
 
-      <div id="hero">
-        <Hero />
-      </div>
-      <Element name="features">
-        <Skills />
-      </Element>
-      <Element name="projects" id="projects">
-        <Projects />
-      </Element>
-      <Element name="about">
-        <About />
-      </Element>
-      <Element name="testimonials">
-        <Testimonials />
-      </Element>
-      <Element name="contact">
-        <Contact />
-      </Element>
+      <Hero />
+      <Skills />
+      <Projects />
+      <About />
+      <Testimonials />
+      <Contact />
       <Footer />
     </div>
   )

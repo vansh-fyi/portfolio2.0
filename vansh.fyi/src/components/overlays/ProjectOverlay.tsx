@@ -5,7 +5,7 @@ import OverlaySidebar from './OverlaySidebar';
 import { getAllProjects } from '../../config/projects';
 
 const ProjectView: React.FC = () => {
-  const { goToMain, goToProjectChat, projectId, selectProject } = useViewStore();
+  const { scrollToSection, goToProjectChat, projectId, selectProject } = useViewStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
@@ -14,6 +14,9 @@ const ProjectView: React.FC = () => {
   const currentProjectId = projectId || 'aether';
   const projects = getAllProjects();
   const selectedProject = projects.find(p => p.id === currentProjectId) || projects[0];
+
+  // Closing returns to the Projects section the user came from
+  const handleClose = () => scrollToSection('projects');
 
   const handleProjectSelect = (id: string) => {
     selectProject(id);
@@ -37,8 +40,10 @@ const ProjectView: React.FC = () => {
           <div className="overflow-hidden h-[calc(100vh-120px-24px)] lg:h-[calc(100vh-84px-24px)] flex flex-col bg-neutral-900/80 ring-white/20 ring-1 bg-black/30 rounded-2xl shadow-[0_20px_120px_-20px_rgba(0,0,0,0.7)] backdrop-blur-md">
             <div className="flex sm:px-6 border-white/5 border-b pt-3 pr-4 pb-3 pl-4 items-center justify-between">
               <div className="flex items-center gap-3">
-                <div onClick={goToMain} className="group flex items-center gap-2">
+                <div className="group flex items-center gap-2">
                   <button
+                    type="button"
+                    onClick={handleClose}
                     className="flex md:h-3.5 md:w-3.5 h-4 w-4 rounded-full text-red-900 md:text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
                   >
@@ -59,6 +64,8 @@ const ProjectView: React.FC = () => {
                     </svg>
                   </button>
                   <button
+                    type="button"
+                    onClick={handleClose}
                     className="hidden md:inline flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Minimise"
                   >
@@ -79,12 +86,12 @@ const ProjectView: React.FC = () => {
                   </button>
                   <span className="hidden md:inline h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
-                <a href="#" className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
+                <div className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="flex">
                     <span className="text-sm text-white/80 font-geist">{selectedProject.title}</span>
                     <span className="hidden lg:inline text-sm text-white/50 font-geist">:{selectedProject.subtitle}</span>
                   </div>
-                </a>
+                </div>
               </div>
               <div className="flex gap-2 sm:gap-3 gap-x-2 gap-y-2 items-center">
                 <button

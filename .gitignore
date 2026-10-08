@@ -2,13 +2,17 @@
 _content/projects/product_design/industry/driq-health.md
 _content/projects/product_design/industry/project_lalaverse.md
 
-# BMAD Files
+# AI code Files
 .bmad/
 .claude/
 .cursor/
 .gemini/
 .github/
 .vscode/
+.agents/
+.codex/
+.opencode/
+AGENTS.md
 docs/
 
 #Brownfield HTML
@@ -16,3 +20,12 @@ brownfield/
 
 #Server Logs
 server.log
+# OS / build artifacts
+.DS_Store
+*.bak
+*.tsbuildinfo
+dist/
+backend/src/**/*.d.ts
+ingestion-scripts/src/**/*.d.ts
+vansh.fyi/vite.config.js
+vansh.fyi/vite.config.d.ts

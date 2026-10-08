@@ -11,17 +11,17 @@ const About = () => {
               {/* New content added below the image */}
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl leading-[1.05] font-medium tracking-tight mb-4 font-geist text-white">
-              About Me
+              Hello! I'm Vansh.
             </h2>
             <div className="space-y-3 text-sm leading-relaxed text-white/80">
               <p className="pointer-events-none">
-                Hello! I'm Vansh. I'm a Product Designer, but I didn't start here. My journey began in Physics, into the mind boggling stories of the universe and the art of playing with math. I absolutely love the subject to this day but it only did a partial job of defining me. I needed to have a multidisciplinary discipline which defines me. And then, I found design...
+                I'm a Design Engineer, but I didn't start here. My journey began in Physics, into the mind boggling rabbit holes about the universe and the art of playing with math. I absolutely love what I learnt and often find myself returning back to it but back then, I felt it only did a partial job of defining me. I wanted something that allows me to express myself better. And then, I started exploring and learning different skills.
               </p>
               <p className="pointer-events-none">
-                Today, I specialize in simplifying user-flows, building modern web applications with AI, designing intuitive interfaces, helping out in cross functional settings, communicating design needs and creating interactive experiences that captivate and engage. I believe great design should be accessible, performant, and meaningful.
+                Today, I design and build web and mobile applications with the help of AI. While AI creates the raw output, I focus primarily on refining the design and system architecture to build intuitive interfaces that works on scale. My diverse interests and skills in design, AI engineering, robotics research and development allows me to contribute effectively in cross functional settings, communicating design needs and create unique solutions to solve problems. I believe a great product should be accessible, performant, meaningful and scalable.
               </p>
               <p className="pointer-events-none">
-                When I'm not working, you'll find me exploring my personal passions. I'm always reading research papers, getting lost in Music, planning my next big travel adventure or just daydreaming. I'm just endlessly curious about how things work... and how to make them work better.
+                When I'm not working, you'll find me exploring my personal passions. I'm always playing with electronics, reading research papers, getting lost in Music, planning my next big travel adventure or just plain old daydreaming. I'm just endlessly curious about how things work... and how to make them work better.
               </p>
             </div>
 
@@ -38,6 +38,7 @@ const About = () => {
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2 pointer-events-none">Nyctophile</span>
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2 pointer-events-none">Aphant</span>
               <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2 pointer-events-none">Polymath</span>
+              <span className="text-xs text-white/80 bg-white/10 ring-white/10 ring-1 rounded pt-1 pr-2 pb-1 pl-2 pointer-events-none">Systems Thinker</span>
             </div>
           </div>
           <div className="lg:col-span-7 h-full flex flex-col">
@@ -122,14 +123,15 @@ const About = () => {
                   Interests
                 </h3>
                 <div className="flex flex-wrap gap-x-2 gap-y-2">
+                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Artificial Intelligence</span>
+                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Robotics</span>
+                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Human Robot Interaction</span>
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">HCI</span>
-                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">HRI</span>
-                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Psychology</span>
-                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Mixed Media Art</span>
-                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Music</span>
-                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Poetry</span>
+                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Research</span>
+                  <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Art</span>
                   <span className="text-xs ring-1 rounded pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Reading</span>
                   <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Travel</span>
+                  <span className="text-xs rounded ring-1 pt-1 pr-2 pb-1 pl-2 text-white/80 bg-white/10 ring-white/10 pointer-events-none">Stargazing</span>
                 </div>
               </div>
             </div>

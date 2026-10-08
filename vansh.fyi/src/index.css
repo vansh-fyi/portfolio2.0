@@ -143,9 +143,20 @@ canvas {
   transform: translateY(0);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Smooth scrolling: native only, so JS scroll libraries can't fight it */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Clear the fixed header when scrolling to a section */
+#features,
+#projects,
+#about,
+#testimonials,
+#contact {
+  scroll-margin-top: 85px;
 }
 
 /* Custom scrollbar */

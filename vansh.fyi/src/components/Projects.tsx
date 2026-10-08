@@ -1,5 +1,63 @@
 import { useViewStore } from '../state/overlayStore';
 
+const IMG_BASE = 'https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images';
+
+interface FeaturedProject {
+  id: string;
+  image: string;
+  alt: string;
+  title: string;
+  description: string;
+  /** Grid placement + aspect ratio of the card */
+  cardClass: string;
+  /** Large cards get a roomier caption */
+  large?: boolean;
+}
+
+const featuredProjects: FeaturedProject[] = [
+  {
+    id: 'aether',
+    image: 'aether.webp',
+    alt: 'Aether: AI Powered Design System Generator',
+    title: 'Aether: AI Powered Design Systems',
+    description: 'Customise your design system and generate code components.',
+    cardClass: 'md:col-span-2 lg:row-span-2',
+    large: true,
+  },
+  {
+    id: 'driq-health',
+    image: 'driq.webp',
+    alt: 'DriQ Health: Incontinence Monitoring for Seniors',
+    title: 'DriQ Health 🔒',
+    description: 'Incontinence Monitoring for Seniors',
+    cardClass: 'aspect-[4/3]',
+  },
+  {
+    id: 'sparto',
+    image: 'sparto.webp',
+    alt: 'Sparto: Request based Ecommerce Application to sell Spare parts',
+    title: 'Sparto',
+    description: 'Request based Ecommerce application to sell spare parts.',
+    cardClass: 'aspect-auto lg:row-span-2 md:row-span-3 xs:row-span-1',
+  },
+  {
+    id: 'sparto-admin',
+    image: 'sparto_admin.webp',
+    alt: 'Sparto Admin: Enterprise App for Sparto',
+    title: 'Sparto Admin',
+    description: 'Enterprise application for managing Sparto',
+    cardClass: 'aspect-[4/3]',
+  },
+  {
+    id: 'vibio',
+    image: 'vibio.webp',
+    alt: 'Vibio: Event Platform for Creatives',
+    title: 'Vibio',
+    description: 'Event Platform for Creatives',
+    cardClass: 'aspect-[4/3]',
+  },
+];
+
 const Projects = () => {
   const { goToProjects, selectProject } = useViewStore();
 
@@ -28,111 +86,28 @@ const Projects = () => {
         </div>
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12 gap-x-6 gap-y-6">
-          {/* Project 1 */}
-          <div
-            onClick={handleProjectClick('aether')}
-            className="group relative overflow-hidden rounded-2xl border ring-1 md:col-span-2 lg:row-span-2 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
-            <img
-              src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/aether.webp"
-              alt="Aether: AI Powered Design System Generator"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute lg:left-6 lg:right-6 lg:bottom-6 bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="bg-black/30 ring-white/10 ring-1 rounded-xl pt-6 pr-6 pb-6 pl-6 backdrop-blur-xl">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-2 pointer-events-none">Aether: AI Powered Design Systems</h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
-                  Customise your design system and generate code components.
-                </p>
+          {featuredProjects.map((project) => (
+            <a
+              key={project.id}
+              href={`?view=projects&project=${project.id}`}
+              onClick={handleProjectClick(project.id)}
+              className={`group block relative overflow-hidden rounded-2xl border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer ${project.cardClass}`}>
+              <img
+                src={`${IMG_BASE}/${project.image}`}
+                alt={project.alt}
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
+              <div className={`absolute bottom-4 left-4 right-4 ${project.large ? 'lg:left-6 lg:right-6 lg:bottom-6 ' : ''}lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none`}>
+                <div className={`backdrop-blur-xl rounded-xl ring-1 bg-black/30 ring-white/10 ${project.large ? 'p-6' : 'p-4'}`}>
+                  <h4 className={`text-sm md:text-lg font-semibold text-white pointer-events-none ${project.large ? 'mb-2' : 'mb-1'}`}>{project.title}</h4>
+                  <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
+                    {project.description}
+                  </p>
+                </div>
               </div>
-            </div>
-          </div>
-
-          {/* Project 2 */}
-          <div
-            onClick={handleProjectClick('driq-health')}
-            className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
-            <img
-              src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/driq.webp"
-              alt="DriQ Health: Incontinence Monitoring for Seniors"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">DriQ Health 🔒</h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
-                  Incontinence Monitoring for Seniors
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Project 3 */}
-          <div
-            onClick={handleProjectClick('sparto')}
-            className="group overflow-hidden aspect-auto border ring-1 rounded-2xl relative lg:row-span-2 md:row-span-3 xs:row-span-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
-            <img
-              src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/sparto.webp"
-              alt="Sparto: Request based Ecommerce Application to sell Spare parts"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
-                  Sparto
-                </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
-                  Request based Ecommerce application to sell spare parts.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Project 4 */}
-          <div
-            onClick={handleProjectClick('sparto-admin')}
-            className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
-            <img
-              src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/sparto_admin.webp"
-              alt="Sparto Admin: Enterprise App for Sparto"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
-                  Sparto Admin
-                </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
-                  Enterprise application for managing Sparto
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Project 5 */}
-          <div
-            onClick={handleProjectClick('vibio')}
-            className="group relative overflow-hidden rounded-2xl aspect-[4/3] border ring-1 card-shine hover-glow active:scale-95 border-white/10 ring-white/5 cursor-pointer">
-            <img
-              src="https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/vibio.webp"
-              alt="Vibio: Event Platform for Creatives"
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300 bg-gradient-to-t via-transparent to-transparent lg:opacity-0 opacity-0 absolute top-0 right-0 bottom-0 left-0 from-black/60 pointer-events-none"></div>
-            <div className="absolute bottom-4 left-4 right-4 lg:transform lg:translate-y-4 lg:group-hover:translate-y-0 lg:opacity-0 lg:group-hover:opacity-100 opacity-100 transition-all duration-300 pointer-events-none">
-              <div className="backdrop-blur-xl rounded-xl p-4 ring-1 bg-black/30 ring-white/10">
-                <h4 className="text-sm md:text-lg font-semibold text-white mb-1 pointer-events-none">
-                  Vibio
-                </h4>
-                <p className="text-xs md:text-sm max-w-md text-white/80 pointer-events-none">
-                  Event Platform for Creatives
-                </p>
-              </div>
-            </div>
-          </div>
+            </a>
+          ))}
         </div>
         <div className="text-center">
           <button onClick={handleProjectClick('aether')} className="group inline-flex transition-all duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 text-base font-medium text-white/80 bg-black/30 border-white/30 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl gap-x-3 gap-y-3 items-center">

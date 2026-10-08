@@ -104,3 +104,24 @@ describe('useViewStore', () => {
     });
   });
 });
+
+describe('URL mapping', () => {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const { searchToState, stateToSearch } = require('../overlayStore');
+
+  it('round-trips a project overlay', () => {
+    const search = stateToSearch({ currentView: 'projects', chatContext: 'personal', projectId: 'aether' });
+    expect(search).toBe('?view=projects&project=aether');
+    expect(searchToState(search)).toEqual({ currentView: 'projects', chatContext: 'personal', projectId: 'aether' });
+  });
+
+  it('maps project and personal chat', () => {
+    expect(searchToState('?view=chat&project=sparto')).toEqual({ currentView: 'chat', chatContext: 'project', projectId: 'sparto' });
+    expect(searchToState('?view=chat')).toEqual({ currentView: 'chat', chatContext: 'personal', projectId: undefined });
+  });
+
+  it('falls back to main for empty or unknown params', () => {
+    expect(stateToSearch({ currentView: 'main', chatContext: 'personal', projectId: undefined })).toBe('');
+    expect(searchToState('?view=nonsense').currentView).toBe('main');
+  });
+});

@@ -99,19 +99,18 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                   <ul className="absolute left-0 mt-2 min-w-[14rem] backdrop-blur-md rounded-xl bg-black/80 ring-1 ring-white/10 p-1 shadow-xl z-50">
                     {projectCategories.map((category) => (
                       <li key={category.id}>
-                        <a
-                          href="#"
+                        <button
+                          type="button"
                           onClick={(e) => {
-                            e.preventDefault();
                             setSelectedCategory(category);
                             // Close details element
                             const details = e.currentTarget.closest('details');
                             if (details) details.removeAttribute('open');
                           }}
-                          className="group flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-sm text-white/80 hover:text-white active:scale-95">
+                          className="group flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-sm text-white/80 hover:text-white active:scale-95">
                           {category.icon}
                           {category.name}
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -131,13 +130,10 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                     </p>
                     {filteredProjects.map(({ project }) => (
                       <li key={project.id}>
-                        <a
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleProjectClick(project.id);
-                          }}
-                          className={`group flex items-top gap-2 active:scale-95 text-sm text-white/80 ring-transparent ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 relative ${selectedProjectId === project.id
+                        <button
+                          type="button"
+                          onClick={() => handleProjectClick(project.id)}
+                          className={`group flex w-full text-left items-top gap-2 active:scale-95 text-sm text-white/80 ring-transparent ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 relative ${selectedProjectId === project.id
                             ? 'bg-white/10 ring-white/10'
                             : 'hover:bg-white/5 hover:ring-white/5'
                             }`}
@@ -152,7 +148,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             </div>
                             <span className="lg:text-sm text-xs text-white/50">{project.subtitle}</span>
                           </div>
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -169,13 +165,10 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                     </p>
                     {section.projects.map((project) => (
                       <li key={project.id}>
-                        <a
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleProjectClick(project.id);
-                          }}
-                          className={`group flex items-top gap-2 active:scale-95 text-sm text-white/80 ring-transparent ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 relative ${selectedProjectId === project.id
+                        <button
+                          type="button"
+                          onClick={() => handleProjectClick(project.id)}
+                          className={`group flex w-full text-left items-top gap-2 active:scale-95 text-sm text-white/80 ring-transparent ring-1 rounded-lg pt-2 pr-3 pb-2 pl-3 relative ${selectedProjectId === project.id
                             ? 'bg-white/10 ring-white/10'
                             : 'hover:bg-white/5 hover:ring-white/5'
                             }`}
@@ -190,7 +183,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             </div>
                             <span className="lg:text-sm text-xs text-white/50">{project.subtitle}</span>
                           </div>
-                        </a>
+                        </button>
                       </li>
                     ))}
                   </ul>

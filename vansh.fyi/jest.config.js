@@ -11,7 +11,4 @@ export default {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   setupFilesAfterEnv: ['./jest-setup.ts'],
-  transformIgnorePatterns: [
-    '/node_modules/(?!react-scroll/)'
-  ],
 };

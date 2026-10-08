@@ -1,37 +1,44 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Header from '../Header';
-
-jest.mock('react-scroll', () => ({
-  Link: (props: any) => <a href={`#${props.to}`} {...props} smooth={props.smooth.toString()}>{props.children}</a>,
-}));
+import { useViewStore } from '../../state/overlayStore';
 
 describe('Header', () => {
-  it('renders navigation links with correct react-scroll props', () => {
+  beforeEach(() => {
+    useViewStore.setState({ currentView: 'main', pendingSection: undefined });
+    document.body.innerHTML = '';
+  });
+
+  it('renders section links pointing at their anchors', () => {
     render(<Header />);
 
-    const skillsLink = screen.getByText('Skills');
-    expect(skillsLink).toHaveAttribute('to', 'features');
-    expect(skillsLink).toHaveAttribute('smooth', 'true');
-    expect(skillsLink).toHaveAttribute('duration', '500');
+    expect(screen.getByText('Skills')).toHaveAttribute('href', '#features');
+    expect(screen.getByText('Projects')).toHaveAttribute('href', '#projects');
+    expect(screen.getByText('About Me')).toHaveAttribute('href', '#about');
+    expect(screen.getByText('Testimonials')).toHaveAttribute('href', '#testimonials');
+    expect(screen.getByText('Contact Me')).toHaveAttribute('href', '#contact');
+  });
 
-    const projectsLink = screen.getByText('Projects');
-    expect(projectsLink).toHaveAttribute('to', 'projects');
-    expect(projectsLink).toHaveAttribute('smooth', 'true');
-    expect(projectsLink).toHaveAttribute('duration', '500');
+  it('smooth-scrolls to the section when on the main view', () => {
+    const scrollIntoView = jest.fn();
+    const target = document.createElement('div');
+    target.id = 'about';
+    target.scrollIntoView = scrollIntoView;
+    document.body.appendChild(target);
 
-    const aboutLink = screen.getByText('About Me');
-    expect(aboutLink).toHaveAttribute('to', 'about');
-    expect(aboutLink).toHaveAttribute('smooth', 'true');
-    expect(aboutLink).toHaveAttribute('duration', '500');
+    render(<Header />);
+    fireEvent.click(screen.getByText('About Me'));
 
-    const testimonialsLink = screen.getByText('Testimonials');
-    expect(testimonialsLink).toHaveAttribute('to', 'testimonials');
-    expect(testimonialsLink).toHaveAttribute('smooth', 'true');
-    expect(testimonialsLink).toHaveAttribute('duration', '500');
+    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+  });
 
-    const contactLink = screen.getByText('Contact Me');
-    expect(contactLink).toHaveAttribute('to', 'contact');
-    expect(contactLink).toHaveAttribute('smooth', 'true');
-    expect(contactLink).toHaveAttribute('duration', '500');
+  it('returns to the main view with a pending section when clicked from an overlay', () => {
+    useViewStore.setState({ currentView: 'projects', projectId: 'aether' });
+
+    render(<Header />);
+    fireEvent.click(screen.getByText('Contact Me'));
+
+    const state = useViewStore.getState();
+    expect(state.currentView).toBe('main');
+    expect(state.pendingSection).toBe('contact');
   });
 });
