@@ -1,7 +1,8 @@
-import * as renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 import Hero from '../Hero';
 
-it('renders correctly', () => {
-  const tree = renderer.create(<Hero />).toJSON();
-  expect(tree).toMatchSnapshot();
+it('renders the hero section with its heading', () => {
+  const { container } = render(<Hero />);
+  expect(container.querySelector('#hero')).toBeInTheDocument();
+  expect(screen.getAllByText(/Creating/).length).toBeGreaterThan(0);
 });

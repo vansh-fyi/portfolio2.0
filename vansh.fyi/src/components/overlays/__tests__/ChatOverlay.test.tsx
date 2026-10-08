@@ -2,6 +2,17 @@ import { render, screen } from '@testing-library/react';
 import ChatView from '../ChatOverlay';
 import { useViewStore } from '../../../state/overlayStore';
 
+// jsdom has no layout, so the real virtualizer renders no rows; render every row instead.
+jest.mock('@tanstack/react-virtual', () => ({
+  useVirtualizer: ({ count }: { count: number }) => ({
+    getTotalSize: () => count * 80,
+    getVirtualItems: () =>
+      Array.from({ length: count }, (_, index) => ({ index, start: index * 80, size: 80, key: index })),
+    measureElement: () => undefined,
+    scrollToIndex: () => undefined,
+  }),
+}));
+
 // Mock the dependencies
 jest.mock('../../../state/overlayStore');
 jest.mock('../../../hooks/useRAGQuery', () => ({

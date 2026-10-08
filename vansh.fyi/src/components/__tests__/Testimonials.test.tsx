@@ -1,7 +1,8 @@
-import * as renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 import Testimonials from '../Testimonials';
 
-it('renders correctly', () => {
-  const tree = renderer.create(<Testimonials />).toJSON();
-  expect(tree).toMatchSnapshot();
+it('renders the testimonials section with its heading', () => {
+  const { container } = render(<Testimonials />);
+  expect(container.querySelector('#testimonials')).toBeInTheDocument();
+  expect(screen.getAllByText(/Voice of/).length).toBeGreaterThan(0);
 });

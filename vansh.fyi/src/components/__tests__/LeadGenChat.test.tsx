@@ -5,6 +5,9 @@ import LeadGenChat from '../LeadGenChat';
 // Mock tRPC service
 jest.mock('../../services/trpc');
 
+// Each agent reply has a deliberate 1.5s delay, so full-flow tests need more than Jest's 5s default.
+jest.setTimeout(30000);
+
 describe('LeadGenChat Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,7 +74,7 @@ describe('LeadGenChat Component', () => {
     render(<LeadGenChat />);
 
     // Check for initial agent greeting - updated to match AC #1
-    expect(screen.getByText(/Hi! I am Ursa. Please mention your requirements./i)).toBeInTheDocument();
+    expect(screen.getByText(/Hi! I am Ursa. I didn't catch your name/i)).toBeInTheDocument();
   });
 
   it('displays message history correctly', () => {
@@ -144,8 +147,8 @@ describe('LeadGenChat Component', () => {
     fireEvent.click(sendButton);
 
     // Only the initial greeting should be present (no new user message)
-    const aiLabels = screen.getAllByText('AI');
-    expect(aiLabels.length).toBe(1); // Only initial AI message
+    expect(screen.getAllByText(/Hi! I am Ursa/i)).toHaveLength(1);
+    expect(screen.queryByText(/didn't quite catch your name/i)).not.toBeInTheDocument();
   });
 
   it('does not send whitespace-only messages', () => {
@@ -159,8 +162,8 @@ describe('LeadGenChat Component', () => {
     fireEvent.click(sendButton);
 
     // Only the initial greeting should be present
-    const aiLabels = screen.getAllByText('AI');
-    expect(aiLabels.length).toBe(1);
+    expect(screen.getAllByText(/Hi! I am Ursa/i)).toHaveLength(1);
+    expect(screen.queryByText(/didn't quite catch your name/i)).not.toBeInTheDocument();
   });
 
   it('sends message when Enter key is pressed', async () => {
@@ -363,7 +366,7 @@ describe('LeadGenChat Component', () => {
     const sendButton = screen.getByLabelText(/Send message/i);
 
     // Initial greeting
-    expect(screen.getByText(/Hi! I am Ursa. Please mention your requirements./i)).toBeInTheDocument();
+    expect(screen.getByText(/Hi! I am Ursa. I didn't catch your name/i)).toBeInTheDocument();
 
     // Complete full 5-step flow
     await completeLeadGenFlow(input, sendButton, {

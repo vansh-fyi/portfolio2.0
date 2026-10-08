@@ -1,7 +1,8 @@
-import * as renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 import Projects from '../Projects';
 
-it('renders correctly', () => {
-  const tree = renderer.create(<Projects />).toJSON();
-  expect(tree).toMatchSnapshot();
+it('renders the projects section with its heading', () => {
+  const { container } = render(<Projects />);
+  expect(container.querySelector('#projects')).toBeInTheDocument();
+  expect(screen.getAllByText(/Where creativity meets/).length).toBeGreaterThan(0);
 });

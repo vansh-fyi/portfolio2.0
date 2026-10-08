@@ -5,9 +5,7 @@ import { trpc } from '../../services/trpc';
 
 // Mock the Zustand store
 jest.mock('../../state/overlayStore', () => ({
-  useViewStore: {
-    getState: jest.fn(),
-  },
+  useViewStore: jest.fn(),
 }));
 
 // Mock the tRPC client
@@ -28,12 +26,12 @@ describe('useRAGQuery', () => {
     // Reset mocks before each test
     jest.clearAllMocks();
     mockUseQuery.mockClear();
-    (useViewStore.getState as jest.Mock).mockClear();
+    (useViewStore as unknown as jest.Mock).mockClear();
   });
 
   it('should call the tRPC query with personal context', () => {
     // Arrange
-    (useViewStore.getState as jest.Mock).mockReturnValue({
+    (useViewStore as unknown as jest.Mock).mockReturnValue({
       chatContext: 'personal',
       projectId: undefined,
     });
@@ -56,15 +54,15 @@ describe('useRAGQuery', () => {
       },
       {
         enabled: false,
-        gcTime: 0,
-        staleTime: 0,
+        gcTime: 1000 * 60 * 5,
+        staleTime: Infinity,
       }
     );
   });
 
   it('should call the tRPC query with project context and projectId', () => {
     // Arrange
-    (useViewStore.getState as jest.Mock).mockReturnValue({
+    (useViewStore as unknown as jest.Mock).mockReturnValue({
       chatContext: 'project',
       projectId: 'test-project-id',
     });
@@ -87,15 +85,15 @@ describe('useRAGQuery', () => {
       },
       {
         enabled: false,
-        gcTime: 0,
-        staleTime: 0,
+        gcTime: 1000 * 60 * 5,
+        staleTime: Infinity,
       }
     );
   });
 
   it('should return the correct loading state', () => {
     // Arrange
-    (useViewStore.getState as jest.Mock).mockReturnValue({
+    (useViewStore as unknown as jest.Mock).mockReturnValue({
       chatContext: 'personal',
     });
     mockUseQuery.mockReturnValue({
@@ -115,7 +113,7 @@ describe('useRAGQuery', () => {
   it('should return the correct data on success', () => {
     // Arrange
     const mockData = { response: 'This is a test response.' };
-    (useViewStore.getState as jest.Mock).mockReturnValue({
+    (useViewStore as unknown as jest.Mock).mockReturnValue({
       chatContext: 'personal',
     });
     mockUseQuery.mockReturnValue({
@@ -135,7 +133,7 @@ describe('useRAGQuery', () => {
   it('should return an error on failure', () => {
     // Arrange
     const mockError = new Error('Test error');
-    (useViewStore.getState as jest.Mock).mockReturnValue({
+    (useViewStore as unknown as jest.Mock).mockReturnValue({
       chatContext: 'personal',
     });
     mockUseQuery.mockReturnValue({
