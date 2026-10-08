@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { listPublishedPosts, listTags } from '@/server/blog/queries';
 import BlogShell from '../../_components/blog-shell';
 import PostCard from '../../_components/post-card';
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 export default async function TagPage({ params }: { params: Promise<Params> }) {
   const tag = decodeURIComponent((await params).tag);
   const [posts, tags] = await Promise.all([listPublishedPosts({ tag }), listTags()]);
+  if (posts.length === 0) notFound(); // unknown or emptied tags are real 404s, not thin pages
 
   return (
     <BlogShell>
@@ -39,15 +41,11 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
 
       <TagFilter tags={tags} active={tag} />
 
-      {posts.length === 0 ? (
-        <p className="rounded-2xl bg-black/30 p-8 text-center text-white/50 ring-1 ring-white/10">No posts with this tag.</p>
-      ) : (
-        <div className="grid gap-6">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+      <div className="grid gap-6">
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
     </BlogShell>
   );
 }
