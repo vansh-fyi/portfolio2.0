@@ -71,4 +71,4 @@ Following my recovery, I spent a year as an Assistant Professor. While not a tra
 
 Looking back, my career is defined by my ability to adapt and lead. I've designed fintech apps, built VR interfaces, mentored students, and directed product strategy for a healthcare tech company.
 
-I am now focused on the next frontier: working at the intersection of **Design and AI**. I am actively pursuing opportunities in innovation labs (like Google DeepMind, Toyota Research Institute) where I can apply my hybrid skillset to solve undefined problems.
+I am now focused on the next frontier: working at the intersection of **Design and AI**. I'm staying in my profession, building MVPs at Tapforce, and on the side I work as an **independent robotics researcher**, studying how **Vision-Language-Action (VLA) models**, **LLMs** and **robots** relate to one another and how to optimise them, with the aim of setting roots in **physics-aware general intelligence**. I hope to pursue a **PhD** soon.

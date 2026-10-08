@@ -26,6 +26,8 @@ I'm not content with just doing good work at good companies. I want to work at t
 
 These aren't just dream employers—they're the places where the kind of questions I want to answer are actually being explored.
 
+For now I'm staying in my profession at Tapforce, and I'm pursuing these questions through my own independent robotics research, with a PhD as the next step I hope to take soon.
+
 ## Exploring the World
 
 I believe in "exploring as much as I can" because every new experience adds to my creative database. I'm an avid traveler and trekker—there's something profound about physically moving through different landscapes, seeing how geography shapes culture and perspective.
@@ -51,6 +53,11 @@ I also **write poetry**. It's a completely different mode of expression, working
 My interest in robotics goes back to my school days. It was my first exposure to building systems that exist in both hardware and software—to creating something physical that's animated by code. I'm rekindling that passion now, building hardware-software systems, because I believe robotics is where my skills in Physics, Design, and AI can come together most powerfully.
 
 Robots are the ultimate design challenge: they're physical objects with mechanical constraints, software systems with logical requirements, and interaction paradigms that need to be intuitive for humans. They exist at the intersection of everything I care about.
+
+
+## Independent Robotics Research
+
+Alongside my work, I'm an independent robotics researcher. I study the relationships between **Vision-Language-Action (VLA) models**, **large language models (LLMs)** and **robots**, and how to optimise them, with the goal of setting roots in **physics-aware general intelligence**. I hope to pursue a **PhD** soon.
 
 ## The Through Line
 

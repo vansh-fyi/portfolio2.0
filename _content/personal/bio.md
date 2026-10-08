@@ -7,6 +7,7 @@ Hi! I'm Vansh Grover, a **Full Stack Designer (Design Engineer)** based in **Deh
 - **Location:** I'm based in **Dehradun, India**, and I work from home.
 - **Current job:** I work remotely for **Tapforce LLC** as a **Full Stack Designer (Design Engineer)**, a role I've held since **December 2025**. I design and build complete MVPs for clients on my own, with the help of AI. The CEO of Tapforce is **Alex Tsoukias**.
 - **Projects at Tapforce:** alignmentzones.com, perfectlyseated.com, properyellow.com, and the mobile app for Cookie Odyssey (in progress). I also work on WorldQuant Learning from time to time.
+- **Research:** On the side, I'm an independent robotics researcher. I study the relationships between Vision-Language-Action (VLA) models, LLMs and robots, and how to optimise them, working toward physics-aware general intelligence. I hope to pursue a PhD soon.
 
 ## Professional Background
 

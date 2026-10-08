@@ -185,5 +185,52 @@
       "RETRIEVED PASSAGES",
       "RULES"
     ]
+  },
+  {
+    "q": "What research does he do outside of his job?",
+    "any": [
+      "vla",
+      "vision-language-action"
+    ],
+    "all": [
+      "robot"
+    ]
+  },
+  {
+    "q": "Does he plan to do a PhD?",
+    "any": [
+      "phd"
+    ]
+  },
+  {
+    "q": "Is he planning to leave the industry or his job?",
+    "forbid": [
+      "actively pursuing opportunities in innovation labs"
+    ]
+  },
+  {
+    "q": "Which language model does Ursa use?",
+    "any": [
+      "gemini",
+      "groq"
+    ],
+    "forbid": [
+      "Llama-3.1-8B"
+    ]
+  },
+  {
+    "q": "How does Ursa search its knowledge base?",
+    "any": [
+      "hybrid",
+      "keyword"
+    ]
+  },
+  {
+    "q": "How does Ursa stay reliable if a free AI model goes down?",
+    "any": [
+      "fallback",
+      "next",
+      "chain"
+    ]
   }
 ]
