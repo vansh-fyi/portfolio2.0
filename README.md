@@ -26,7 +26,7 @@ Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, e
 *   **Languages**: Python
 *   **Technologies**: RAG Systems, LangChain, Vector Databases (pgvector), LLM Integration
 *   **Focus**: Generative Engine Optimization (GEO), Agentic Workflows
-*   **Ursa**: this portfolio's RAG assistant. Hybrid vector + keyword search over Supabase pgvector, a multi-provider free-tier LLM fallback chain, and a daily health check. See [`backend/`](backend/README.md).
+*   **Ursa**: this portfolio's RAG assistant. Hybrid vector + keyword search over Supabase pgvector, a multi-provider free-tier LLM fallback chain, and a daily health check. See [`vansh.fyi/server/`](vansh.fyi/server/README.md).
 
 ### ⚙️ Backend & Infrastructure
 *   **Stack**: Node.js, tRPC, Supabase, PostgreSQL

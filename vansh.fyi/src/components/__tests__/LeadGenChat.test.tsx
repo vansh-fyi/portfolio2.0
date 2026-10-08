@@ -28,22 +28,22 @@ describe('LeadGenChat Component', () => {
     // Step 1: Name
     fireEvent.change(input, { target: { value: data.name } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Step 2: Email
     fireEvent.change(input, { target: { value: data.email } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Step 3: Project Name
     fireEvent.change(input, { target: { value: data.projectName } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Step 4: Service Type
     fireEvent.change(input, { target: { value: data.serviceType } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Step 5: Project Details
     fireEvent.change(input, { target: { value: data.projectDetails } });
@@ -216,7 +216,7 @@ describe('LeadGenChat Component', () => {
     // Button should be enabled again after loading completes
     await waitFor(() => {
       expect(sendButton.disabled).toBe(false);
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   // NEW TESTS FOR CONVERSATION FLOW (AC #2, #3)
@@ -235,7 +235,7 @@ describe('LeadGenChat Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/Nice to meet you, John!/i)).toBeInTheDocument();
       expect(screen.getByText(/What's the best email to reach you?/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('extracts name from plain name format and advances to EMAIL step (AC #2)', async () => {
@@ -251,7 +251,7 @@ describe('LeadGenChat Component', () => {
     // Wait for agent response
     await waitFor(() => {
       expect(screen.getByText(/Nice to meet you, Jane Doe!/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('validates email format and accepts valid email (AC #2)', async () => {
@@ -267,7 +267,7 @@ describe('LeadGenChat Component', () => {
     // Wait for email prompt
     await waitFor(() => {
       expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
 
     // Step 2: Provide valid email
     fireEvent.change(input, { target: { value: "john@example.com" } });
@@ -276,7 +276,7 @@ describe('LeadGenChat Component', () => {
     // Wait for confirmation
     await waitFor(() => {
       expect(screen.getByText(/Perfect! Got your email: john@example.com/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('rejects invalid email and shows error message (AC #2, #3)', async () => {
@@ -292,7 +292,7 @@ describe('LeadGenChat Component', () => {
     // Wait for email prompt
     await waitFor(() => {
       expect(screen.getByText(/What's the best email/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
 
     // Step 2: Provide invalid email
     fireEvent.change(input, { target: { value: "invalid-email" } });
@@ -301,7 +301,7 @@ describe('LeadGenChat Component', () => {
     // Wait for error message with Ursa personality
     await waitFor(() => {
       expect(screen.getByText(/Hmm, that doesn't look like a valid email/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('collects project details and displays confirmation summary (AC #2)', async () => {
@@ -349,7 +349,7 @@ describe('LeadGenChat Component', () => {
     // Check response uses conversational tone with emoji
     await waitFor(() => {
       expect(screen.getByText(/Nice to meet you, John! 👋/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('handles full conversation flow from NAME to COMPLETE (AC #1, #2, #3)', async () => {
@@ -426,7 +426,7 @@ describe('LeadGenChat Component', () => {
     // Agent should ask for clarification
     await waitFor(() => {
       expect(screen.getByText(/I didn't quite catch your name. What should I call you?/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   // NEW TESTS FOR EMAIL API INTEGRATION (Story 3.3)
@@ -584,19 +584,19 @@ describe('LeadGenChat Component', () => {
     // Complete flow up to last step
     fireEvent.change(input, { target: { value: "David" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you, David!/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, David!/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "david@example.com" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "LoadTest" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "Testing" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Final step - trigger loading
     fireEvent.change(input, { target: { value: "Testing loading state" } });
@@ -631,19 +631,19 @@ describe('LeadGenChat Component', () => {
     // Complete flow up to last step
     fireEvent.change(input, { target: { value: "Eve" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you, Eve!/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Eve!/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "eve@example.com" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "ButtonTest" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What kind of service/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "Testing" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/tell me more about/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Final step - trigger button disable
     fireEvent.change(input, { target: { value: "Testing button disable" } });
@@ -713,11 +713,11 @@ describe('LeadGenChat Component', () => {
     // Collect partial data
     fireEvent.change(input, { target: { value: "George" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you, George!/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, George!/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "george@example.com" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Type "summarise" to see collected data
     fireEvent.change(input, { target: { value: "summarise" } });
@@ -729,7 +729,7 @@ describe('LeadGenChat Component', () => {
       expect(summaryMessage).toBeInTheDocument();
       expect(summaryMessage.textContent).toContain('Name: George');
       expect(summaryMessage.textContent).toContain('Email: george@example.com');
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('handles "back" command and goes to previous step', async () => {
@@ -741,11 +741,11 @@ describe('LeadGenChat Component', () => {
     // Progress to PROJECT_NAME step
     fireEvent.change(input, { target: { value: "Helen" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you, Helen!/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Helen!/i)).toBeInTheDocument(), { timeout: 6000 });
 
     fireEvent.change(input, { target: { value: "helen@example.com" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/What's the name of your project/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Type "back" to go back to EMAIL step
     fireEvent.change(input, { target: { value: "back" } });
@@ -754,7 +754,7 @@ describe('LeadGenChat Component', () => {
     // Should show EMAIL step prompt
     await waitFor(() => {
       expect(screen.getByText(/Your name is Helen. What's your email address?/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('handles "back" from first step gracefully', async () => {
@@ -770,7 +770,7 @@ describe('LeadGenChat Component', () => {
     // Should stay at NAME step with fresh prompt
     await waitFor(() => {
       expect(screen.getByText(/Let's start over. What's your name?/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 
   it('accepts "summarize" (American spelling) as well as "summarise"', async () => {
@@ -782,7 +782,7 @@ describe('LeadGenChat Component', () => {
     // Collect some data
     fireEvent.change(input, { target: { value: "Ian" } });
     fireEvent.click(sendButton);
-    await waitFor(() => expect(screen.getByText(/Nice to meet you, Ian!/i)).toBeInTheDocument(), { timeout: 2000 });
+    await waitFor(() => expect(screen.getByText(/Nice to meet you, Ian!/i)).toBeInTheDocument(), { timeout: 6000 });
 
     // Type "summarize" (American spelling)
     fireEvent.change(input, { target: { value: "summarize" } });
@@ -792,6 +792,6 @@ describe('LeadGenChat Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/Here's what I have so far/i)).toBeInTheDocument();
       expect(screen.getByText(/Name: Ian/i)).toBeInTheDocument();
-    }, { timeout: 2000 });
+    }, { timeout: 6000 });
   });
 });

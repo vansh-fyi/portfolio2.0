@@ -20,12 +20,14 @@ brownfield/
 
 #Server Logs
 server.log
+
 # OS / build artifacts
 .DS_Store
 *.bak
 *.tsbuildinfo
 dist/
-backend/src/**/*.d.ts
 ingestion-scripts/src/**/*.d.ts
 vansh.fyi/vite.config.js
 vansh.fyi/vite.config.d.ts
+
+.env

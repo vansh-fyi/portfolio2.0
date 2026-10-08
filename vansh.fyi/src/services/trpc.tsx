@@ -5,13 +5,13 @@ import { createTRPCReact, type CreateTRPCReact } from '@trpc/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-// Import AppRouter type from backend
-import type { AppRouter } from '../../../backend/src/api/index';
+// The router lives in this same app, so its types are an ordinary import
+import type { AppRouter } from '../../server/api';
 
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
-// Get API URL from environment
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/trpc';
+// Same origin as the site; NEXT_PUBLIC_API_URL only exists to point a local frontend at another server
+const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api/trpc';
 
 const trpcClient = trpc.createClient({
   links: [
