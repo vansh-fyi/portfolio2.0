@@ -2,6 +2,12 @@
 
 html {
   height: 100%;
+  /* The page still scrolls (wheel, touch, keys, anchors); only the scrollbar itself is hidden. */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 body {
