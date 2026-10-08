@@ -47,6 +47,8 @@ type ProviderSpec = Omit<LlmProvider, 'apiKey'> & { keyOf: () => string };
 /**
  * Order = preference. Verified working on free keys on 2026-10-08 (run `npx ts-node src/scripts/probe-models.ts`).
  * 3.5-flash-lite leads: on 2026-10-08 it answered in ~1s while 3.1-flash-lite was timing out / returning 503 "high demand".
+ * Gemini runs with reasoning_effort "minimal": hidden thinking tokens count against max_tokens and at "low" cut ~1 in 4 answers
+ * off mid-sentence at 700 tokens (and were ~2x slower). Groq's gpt-oss does not support "minimal", so it stays on "low".
  */
 const PROVIDER_CHAIN: ProviderSpec[] = [
     {
@@ -54,14 +56,14 @@ const PROVIDER_CHAIN: ProviderSpec[] = [
         baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
         model: 'gemini-3.5-flash-lite',
         keyOf: () => config.llm.geminiApiKey,
-        extraBody: { reasoning_effort: 'low' },
+        extraBody: { reasoning_effort: 'minimal' },
     },
     {
         id: 'gemini/gemini-3.1-flash-lite',
         baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
         model: 'gemini-3.1-flash-lite',
         keyOf: () => config.llm.geminiApiKey,
-        extraBody: { reasoning_effort: 'low' },
+        extraBody: { reasoning_effort: 'minimal' },
     },
     {
         id: 'groq/gpt-oss-120b',
@@ -134,14 +136,13 @@ function stripReasoning(text: string): string {
     return text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
 }
 
-/** Single call to one provider. Returns text or throws an Error whose message is the failure reason. */
-export async function callProvider(
+async function callProviderRaw(
     provider: LlmProvider,
     system: string,
     prompt: string,
     maxTokens: number,
     timeoutMs: number
-): Promise<string> {
+): Promise<{ text: string; finishReason: string | null }> {
     let res: Response;
     try {
         res = await fetch(`${provider.baseUrl}/chat/completions`, {
@@ -171,10 +172,35 @@ export async function callProvider(
         throw Object.assign(new Error(describeHttpError(res.status, detail)), { status: res.status });
     }
 
-    const body = (await res.json()) as { choices?: { message?: { content?: string | null } }[] };
+    const body = (await res.json()) as {
+        choices?: { message?: { content?: string | null }; finish_reason?: string | null }[];
+    };
     const text = stripReasoning(body.choices?.[0]?.message?.content ?? '');
     if (!text) throw new Error('empty response');
-    return text;
+    return { text, finishReason: body.choices?.[0]?.finish_reason ?? null };
+}
+
+/** Single call to one provider. Returns the text or throws an Error whose message is the failure reason. */
+export async function callProvider(
+    provider: LlmProvider,
+    system: string,
+    prompt: string,
+    maxTokens: number,
+    timeoutMs: number
+): Promise<string> {
+    return (await callProviderRaw(provider, system, prompt, maxTokens, timeoutMs)).text;
+}
+
+/**
+ * Providers occasionally stop mid-sentence while still reporting success (seen with Gemini: "His work includes").
+ * An answer is suspect if it hit the token limit, or its last line is prose that ends on a word, comma or colon.
+ * List items and sentences ending in punctuation are fine.
+ */
+export function looksTruncated(text: string, finishReason?: string | null): boolean {
+    if (finishReason === 'length') return true;
+    const lastLine = text.trimEnd().split('\n').pop() ?? '';
+    if (/^\s*([-*\u2022]|\d+[.)])\s/.test(lastLine)) return false;
+    return /[A-Za-z0-9,;:]$/.test(lastLine.trimEnd());
 }
 
 function cooldownFor(error: unknown): number {
@@ -197,10 +223,12 @@ export interface GenerateOptions {
 }
 
 export async function generateWithFallback(options: GenerateOptions): Promise<LlmResult> {
-    const { system, prompt, maxTokens = 700, deadlineMs = 20_000, attemptTimeoutMs = 8_000 } = options;
+    const { system, prompt, maxTokens = 1500, deadlineMs = 20_000, attemptTimeoutMs = 8_000 } = options;
     const providers = options.providers ?? getProviderChain();
     const startedAt = Date.now();
     const failures: LlmFailure[] = [];
+    /** First answer that looked cut off; returned only if no provider gives a complete one. */
+    let truncated: { text: string; provider: string } | null = null;
 
     if (providers.length === 0) {
         throw new AllProvidersFailedError([{ provider: 'none', reason: 'no LLM API keys configured' }]);
@@ -218,8 +246,16 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
             break;
         }
         try {
-            const text = await callProvider(provider, system, prompt, maxTokens, Math.min(attemptTimeoutMs, remaining));
+            const { text, finishReason } = await callProviderRaw(provider, system, prompt, maxTokens, Math.min(attemptTimeoutMs, remaining));
             blockedUntil.delete(provider.id);
+
+            if (looksTruncated(text, finishReason)) {
+                // A one-off glitch, not an outage: no cooldown, just try the next provider
+                truncated ??= { text, provider: provider.id };
+                failures.push({ provider: provider.id, reason: 'truncated response' });
+                console.warn(`⚠️ LLM answer looked truncated: ${provider.id} (finish=${finishReason}, ${text.length} chars, ends: ${JSON.stringify(text.slice(-50))})`);
+                continue;
+            }
             if (failures.length > 0) {
                 console.warn(`⚠️ LLM fallback used: ${provider.id} (after: ${failures.map((f) => `${f.provider}: ${f.reason}`).join('; ')})`);
             }
@@ -232,5 +268,6 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
         }
     }
 
+    if (truncated) return { ...truncated, failures };
     throw new AllProvidersFailedError(failures);
 }

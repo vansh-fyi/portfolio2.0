@@ -31,7 +31,7 @@ The view-state routing system I built is custom, not using traditional React Rou
 
 ## Backend & AI Infrastructure
 
-**Vercel AI SDK** orchestrates the entire AI workflow. It's a TypeScript-based AI framework that makes building intelligent agents straightforward. I use it to manage the RAG pipeline, handle context switching, and generate responses.
+**A custom provider chain** orchestrates the AI workflow. A small TypeScript client talks to Gemini, Groq and OpenRouter through the same OpenAI-compatible interface, tries them in order, and handles retries and fallbacks. It lets me swap a model with a one-line change when a free tier shifts.
 
 **tRPC** provides end-to-end type safety between frontend and backend. When I define an API endpoint on the backend with input and output types, the frontend automatically knows the exact shape of that API. No more API documentation going out of sync or runtime errors from mismatched types. It's like having a strongly-typed conversation between client and server.
 
@@ -39,9 +39,9 @@ The view-state routing system I built is custom, not using traditional React Rou
 
 ## AI Models & Processing
 
-**Llama-3.1-8B-Instruct** is the Large Language Model powering text generation. Accessed through Hugging Face, it provides the intelligence behind Ursa's conversational abilities while being cost-effective and performant.
+**Gemini, Groq and OpenRouter free-tier models** power text generation. Gemini Flash-Lite models lead, with Groq's gpt-oss-120b and free OpenRouter models as fallbacks. They provide the intelligence behind Ursa's conversational abilities at no cost.
 
-**all-MiniLM-L6-v2** creates vector embeddings of my content. These embeddings capture semantic meaning, allowing the system to find relevant information even when someone asks a question using different words than my original content.
+**gte-small** creates vector embeddings of my content, running inside a Supabase Edge Function. These embeddings capture semantic meaning, allowing the system to find relevant information even when someone asks a question using different words than my original content.
 
 **RAG (Retrieval-Augmented Generation)** is the architecture pattern tying everything together. Instead of relying solely on the LLM's training data (which can hallucinate), RAG retrieves actual documented information first, then generates responses grounded in that retrieved context. This ensures Ursa's answers are accurate and specific to my real experience.
 
