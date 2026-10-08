@@ -202,8 +202,8 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
             </svg>
           </div>
           <div className="min-w-0">
-            <p className="text-xs lg:text-sm font-medium text-white">Vansh Grover, 2025</p>
-            <p className="hidden lg:inline text-xs text-white/50">Created by Vansh Grover (and team)</p>
+            <p className="text-xs lg:text-sm font-medium text-white">Vansh Grover, {new Date().getFullYear()}</p>
+            <p className="hidden lg:inline text-xs text-white/50">Created by Vansh Grover</p>
           </div>
         </div>
       </div>
