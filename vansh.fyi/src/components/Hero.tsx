@@ -107,7 +107,7 @@ const Hero = () => {
             {/* Column 2: Description */}
             <div className="md:col-span-4 lg:col-span-3 [animation:fadeSlideIn_1s_ease-out_0.3s_both] relative">
               <p className="leading-relaxed md:text-lg text-base font-geist text-white/80 pointer-events-none">
-                Collaborating and partnering with forward-thinking organisations to design unique user interfaces and AI systems that drive measurable growth and competitive advantage.
+                Collaborating and partnering with organisations to design and build solutions that drive measurable growth and competitive advantage.
               </p>
             </div>
             {/* Vertical divider */}
