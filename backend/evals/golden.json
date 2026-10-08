@@ -274,5 +274,60 @@
       "perfectly seated",
       "cookie odyssey"
     ]
+  },
+  {
+    "q": "What is SoARM Research?",
+    "any": [
+      "so-arm",
+      "robot arm",
+      "vla"
+    ]
+  },
+  {
+    "q": "Which vision-language-action models has he tested on a robot?",
+    "any": [
+      "openvla",
+      "pi0",
+      "smolvla"
+    ]
+  },
+  {
+    "q": "Did his robot research ever hit a problem or limitation?",
+    "any": [
+      "0%",
+      "trivial",
+      "flaw",
+      "did not work",
+      "transfer"
+    ]
+  },
+  {
+    "q": "What is Astr?",
+    "any": [
+      "stargaz"
+    ]
+  },
+  {
+    "q": "How does Astr rate light pollution?",
+    "any": [
+      "viirs",
+      "satellite",
+      "zone"
+    ]
+  },
+  {
+    "q": "What is SepCare?",
+    "any": [
+      "sepsis",
+      "armband"
+    ]
+  },
+  {
+    "q": "Is SepCare approved for use on babies?",
+    "any": [
+      "not a clinical",
+      "prototype",
+      "not validated"
+    ]
   }
 ]
