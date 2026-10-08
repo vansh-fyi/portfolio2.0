@@ -1,5 +1,7 @@
 # Ingestion Scripts
 
+> **⚠️ Deprecated.** This standalone package targets the legacy `documents` table and local HuggingFace models. Ursa now ingests with `npm run ingest-kb` from `backend/` (heading-aware chunks, `gte-small` embeddings via a Supabase Edge Function, incremental sync). See `backend/README.md`. This folder can be deleted once the legacy tables are dropped.
+
 Standalone scripts for generating embeddings and populating the Supabase vector database using local HuggingFace Transformers models.
 
 ## Purpose

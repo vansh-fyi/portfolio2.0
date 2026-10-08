@@ -1,46 +1,43 @@
 # Backend Migrations
 
-This directory contains SQL migrations for the Supabase vector database.
+SQL for the Supabase database. Run them in the Supabase SQL Editor, in numeric order.
 
-## Migrations
+## Current
 
-### 001_create_embeddings_table.sql (DEPRECATED)
-**Status:** Superseded by 002_update_to_openai_embeddings.sql
+### 004_kb_chunks_hybrid_search.sql
+Ursa's knowledge base:
+- `kb_chunks` table: heading-aware chunks with a 384-dimension `gte-small` embedding (HNSW index), a generated full-text column, and a `content_hash` used for incremental ingest. Public read via RLS; writes need the service role key.
+- `kb_hybrid_search(query_text, query_embedding, match_count, filter_source_type, filter_project_id)`: vector and full-text ranking merged with Reciprocal Rank Fusion. Filters are applied inside SQL.
 
-Original migration using 384-dimension vectors for `bge-small-en-v1.5` model.
+### 005_rate_limits.sql
+- `rate_limits` table and `rate_limit_hit(key, window_seconds, max)`: fixed-window counters shared by all serverless instances. Executable only by the service role.
 
-### 002_update_to_openai_embeddings.sql
-**Status:** Current
+## Legacy (superseded)
 
-Creates/updates the embeddings table for OpenAI's `text-embedding-3-small` model (1536 dimensions).
+These belong to the first Ursa pipeline (HuggingFace MiniLM embeddings). They are kept for history only.
 
-## Running Migrations
+| File | What it did |
+|---|---|
+| `001_create_embeddings_table.sql` | First `embeddings` table (384-dim) |
+| `002_update_to_openai_embeddings.sql` | Reworked `embeddings` table and `match_documents` |
+| `003_fix_supabase_security_issues.sql` | RLS and search_path fixes for the legacy `documents` table |
 
-### Option 1: Supabase Dashboard
-1. Go to your Supabase project dashboard
-2. Navigate to SQL Editor
-3. Copy and paste the migration SQL
-4. Run the query
+### 006_drop_legacy_rag.sql
+Drops the legacy tables and functions (`documents`, `embeddings`, `match_documents`, debug helpers).
 
-### Option 2: Supabase CLI
-```bash
-# If you have Supabase CLI installed
-supabase migration new update_to_openai_embeddings
-# Then run:
-supabase db push
+**Irreversible. Run it last**, only after the current backend is deployed to production and verified, because older deployed code reads `documents`.
+
+## Running migrations
+
+Open the Supabase Dashboard → SQL Editor, paste the file, and run it. Do them one at a time, in numeric order.
+
+(`supabase db push` is not set up for this folder: the CLI reads `supabase/migrations/`, which this project does not use.)
+
+## Current schema
+
 ```
-
-## Current Schema
-
-```sql
-Table: public.embeddings
-- id: BIGSERIAL (Primary Key)
-- content: TEXT (chunk of text)
-- embedding: vector(1536) (OpenAI embedding)
-- metadata: JSONB (source_type, source_file, etc.)
-- created_at: TIMESTAMP
-
-Function: match_documents(query_embedding, match_threshold, match_count, filter)
-- Performs semantic similarity search
-- Returns: id, content, metadata, similarity score
+kb_chunks      id uuid, source_file, source_type ('personal'|'project'), project_id, heading_path,
+               content, content_hash, chunk_index, metadata jsonb, embedding vector(384), fts tsvector
+               unique (source_file, content_hash)
+rate_limits    key, window_start, hits   (primary key: key, window_start)
 ```

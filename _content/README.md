@@ -84,12 +84,21 @@ Follow the Ursa Personality Guide (`docs/ursa-personality-guide.md`):
 
 ## RAG Integration
 
-These files will be:
-1. Processed by the data ingestion script (Epic 4 Story 4.2)
-2. Converted to vector embeddings
-3. Stored in Supabase vector database
-4. Retrieved contextually during user queries
+Ursa's backend ingests these files with `npm run ingest-kb` (run from `backend/`; see `backend/README.md`):
 
-The `type` and `projectId` metadata enable context-aware filtering:
-- `type: personal` → Used for hero section queries
-- `type: project` + `projectId` → Used for project-specific queries
+1. Each file is split **by markdown heading**. Every chunk is prefixed with its project and section path (for example `Portfolio Website > Challenges`), so retrieved passages always say where they came from.
+2. Chunks are embedded and stored in Supabase. Only changed chunks are re-embedded on later runs.
+3. An overview of every project is generated from the frontmatter and included with every question.
+
+Whether a file is `personal` or `project` content is decided by its folder (`personal/` vs `projects/`), not by a `type` field. `projectId` links project files together and enables project-specific search.
+
+## Writing for retrieval
+
+Retrieval quality depends more on the content than on the model:
+
+- **Use clear `##` / `###` headings** that name the topic. They become part of every chunk's title.
+- **Keep one idea per section**, ideally 150-1200 characters. Very small sections get merged; very large ones get split.
+- **Name things in full** ("Ursa AI", "DriQ Health"), not "it" or "the project", because chunks are read on their own.
+- **Fill in project frontmatter** — `project_name`, `role`, `timeline`, `platform`, `client`, `challenge`, `key_achievements`, `key_features`, `tech_stack` feed the project overview. Files without them still work but have a weaker overview entry.
+- **State current facts explicitly** (current employer, location, dates) and update them when they change; Ursa only knows what is written here.
+- After editing content, run `npm run ingest-kb` and then `npx ts-node src/scripts/eval-ursa.ts` from `backend/`.

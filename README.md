@@ -1,6 +1,6 @@
 # Vansh Grover
 
-**Director of Product Design | AI Engineer | Frontend Developer**
+**Full Stack Designer (Design Engineer) | AI Engineer | Frontend Developer**
 
 > *Bridging the physical and digital worlds through design.*
 
@@ -10,7 +10,7 @@
 
 Hi! I'm Vansh Grover, a multidisciplinary designer and engineer with a unique background in **Physics** and **User Experience Design**. I operate at the intersection of analytical rigor and creative empathy, building intelligent products that are both beautiful and functional.
 
-Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, exploring how technology can anticipate our needs and enhance our capabilities without getting in the way.
+Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, exploring how technology can anticipate our needs and enhance our capabilities without getting in the way. Based in Dehradun, India, I work remotely as a Full Stack Designer (Design Engineer) at Tapforce LLC. On the side, I'm an independent robotics researcher studying how Vision-Language-Action (VLA) models, LLMs and robots relate and how to optimise them, working toward physics-aware general intelligence. I hope to pursue a PhD soon.
 
 ## Tech Stack & Skills
 
@@ -26,11 +26,15 @@ Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, e
 *   **Languages**: Python
 *   **Technologies**: RAG Systems, LangChain, Vector Databases (pgvector), LLM Integration
 *   **Focus**: Generative Engine Optimization (GEO), Agentic Workflows
+*   **Ursa**: this portfolio's RAG assistant. Hybrid vector + keyword search over Supabase pgvector, a multi-provider free-tier LLM fallback chain, and a daily health check. See [`backend/`](backend/README.md).
 
 ### ⚙️ Backend & Infrastructure
 *   **Stack**: Node.js, tRPC, Supabase, PostgreSQL
 
 ## Experience Highlights
+
+*   **Full Stack Designer (Design Engineer) @ Tapforce LLC** *(Dec 2025 - Present)*
+    *   Design and build complete client MVPs on my own, with the help of AI (alignmentzones.com, perfectlyseated.com, properyellow.com, and the Cookie Odyssey mobile app, in progress).
 
 *   **Director of Product Design @ DriQ Health** *(Feb 2025 - Oct 2025)*
     *   Led product strategy and digital transformation, increasing daily unique visitors by 70x.
