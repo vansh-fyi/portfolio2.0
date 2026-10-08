@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Inter } from 'next/font/google';
 import { themeInitScript } from '@/lib/theme';
 import Analytics from './analytics';
+import Providers from './providers';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-inter', display: 'swap' });
@@ -40,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${geist.variable}`}>
       <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        {children}
+        <Providers>{children}</Providers>
         <Analytics />
       </body>
     </html>

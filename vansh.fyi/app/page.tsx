@@ -1,12 +1,7 @@
-import ThemeToggle from './theme-toggle';
+import App from '@/src/App';
 
-// A1 placeholder shell. The real sections are ported in A2.
+// Slice 1 of the port: the existing single-page app, unchanged, rendered by Next.
+// Slice 2 replaces its view switch with real routes.
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 text-white">
-      <h1 className="font-geist text-4xl font-light tracking-tighter">Vansh Grover</h1>
-      <p className="text-white/80">Next.js shell: fonts, theme and analytics are wired up.</p>
-      <ThemeToggle />
-    </main>
-  );
+  return <App />;
 }

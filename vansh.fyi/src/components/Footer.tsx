@@ -1,3 +1,5 @@
+'use client';
+
 import { useThemeStore } from '../state/themeStore';
 
 const Footer = () => {

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useThemeStore } from '../state/themeStore';
 import { trpc } from '../services/trpc';

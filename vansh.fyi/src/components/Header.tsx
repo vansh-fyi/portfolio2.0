@@ -1,3 +1,5 @@
+'use client';
+
 import { useThemeStore } from '../state/themeStore';
 import { useViewStore, type SectionId } from '../state/overlayStore';
 

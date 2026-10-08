@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';

@@ -1,3 +1,5 @@
+'use client';
+
 import { create } from 'zustand';
 
 export type ViewState = 'main' | 'projects' | 'chat';
@@ -59,10 +61,9 @@ export const searchToState = (search: string): UrlState => {
   return { currentView: 'main', chatContext: 'personal', projectId: undefined };
 };
 
-const initialUrlState: UrlState =
-  typeof window !== 'undefined'
-    ? searchToState(window.location.search)
-    : { currentView: 'main', chatContext: 'personal', projectId: undefined };
+// Always start on the main view so server and client render the same markup;
+// `useUrlSync` applies the real URL right after hydration.
+const initialUrlState: UrlState = { currentView: 'main', chatContext: 'personal', projectId: undefined };
 
 export const useViewStore = create<ViewStore>((set, get) => ({
   ...initialUrlState,

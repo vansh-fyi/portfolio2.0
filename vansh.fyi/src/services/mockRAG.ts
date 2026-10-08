@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Mock RAG API for development and testing
  *
@@ -106,5 +108,5 @@ export const mockRAGQuery = async (
  * Check if mock API should be used
  */
 export const shouldUseMockAPI = (): boolean => {
-  return import.meta.env.VITE_USE_MOCK_API === 'true';
+  return process.env.NEXT_PUBLIC_USE_MOCK_API === 'true';
 };

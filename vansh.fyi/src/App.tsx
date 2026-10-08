@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { scrollToElement, useViewStore } from './state/overlayStore';
 import { useUrlSync } from './state/useUrlSync';

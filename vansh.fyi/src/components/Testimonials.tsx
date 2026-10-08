@@ -1,3 +1,5 @@
+'use client';
+
 const Testimonials = () => {
   return (
     <section className="scroll-animate lg:py-24 pt-20 pb-20 relative in-view" id="testimonials">

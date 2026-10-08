@@ -1,3 +1,5 @@
+'use client';
+
 import LeadGenChat from './LeadGenChat';
 
 const Contact = () => {

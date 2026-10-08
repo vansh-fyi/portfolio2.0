@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { searchToState, stateToSearch, useViewStore } from './overlayStore';
 
 /**
@@ -10,8 +12,16 @@ export const useUrlSync = () => {
   const chatContext = useViewStore((s) => s.chatContext);
   const projectId = useViewStore((s) => s.projectId);
 
+  // The store starts on "main" (SSR-safe); on first mount the URL wins and is applied to the store.
+  const hasReadUrl = useRef(false);
+
   // State -> URL
   useEffect(() => {
+    if (!hasReadUrl.current) {
+      hasReadUrl.current = true;
+      useViewStore.setState({ ...searchToState(window.location.search), initialChatQuery: '' });
+      return;
+    }
     const search = stateToSearch({ currentView, chatContext, projectId });
     if (search !== window.location.search) {
       window.history.pushState(null, '', `${window.location.pathname}${search}`);

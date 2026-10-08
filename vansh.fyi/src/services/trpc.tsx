@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { createTRPCReact, type CreateTRPCReact } from '@trpc/react-query';
 import { httpBatchLink } from '@trpc/client';
@@ -9,7 +11,7 @@ import type { AppRouter } from '../../../backend/src/api/index';
 export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
 // Get API URL from environment
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/trpc';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/trpc';
 
 const trpcClient = trpc.createClient({
   links: [

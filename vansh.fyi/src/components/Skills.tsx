@@ -1,3 +1,5 @@
+'use client';
+
 const Skills = () => {
   return (
     <section className="scroll-animate lg:py-24 in-view pt-24 pb-24 relative" id="features">

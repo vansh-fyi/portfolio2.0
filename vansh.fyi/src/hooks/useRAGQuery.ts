@@ -1,3 +1,5 @@
+'use client';
+
 import { trpc } from '../services/trpc';
 import { useViewStore } from '../state/overlayStore';
 import { useState, useCallback } from 'react';
