@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Inter } from 'next/font/google';
+import { SITE_URL } from '@/lib/site';
 import { themeInitScript } from '@/lib/theme';
 import Analytics from './analytics';
 import Providers from './providers';
@@ -8,7 +9,6 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-inter', display: 'swap' });
 const geist = Geist({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-geist', display: 'swap' });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://portfolio.vansh.fyi';
 const TITLE = 'Vansh Grover | Product Designer';
 const SHORT_DESCRIPTION =
   'Product design, AI systems and modern web applications. Explore projects and ask Ursa, the AI assistant.';
