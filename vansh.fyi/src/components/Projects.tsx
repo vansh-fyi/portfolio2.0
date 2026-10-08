@@ -61,12 +61,11 @@ const featuredProjects: FeaturedProject[] = [
 ];
 
 const Projects = () => {
-  const { goToProjects, selectProject } = useViewStore();
+  const { selectProject } = useViewStore();
 
   const handleProjectClick = (id: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     selectProject(id);
-    goToProjects();
   };
 
   return (

@@ -50,7 +50,7 @@ export const useRAGQuery = (query: string) => {
  * @see https://trpc.io/docs/subscriptions
  */
 export const useRAGQueryStreaming = (query: string) => {
-  const { chatContext, projectId } = useViewStore.getState();
+  const { chatContext, projectId } = useViewStore();
   const [tokens] = useState<string[]>([]);
   const [isStreaming] = useState(false);
   const [isComplete] = useState(false);

@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react';
 import { scrollToElement, useViewStore } from './state/overlayStore';
-import { useUrlSync } from './state/useUrlSync';
 import { useThemeStore } from './state/themeStore';
 import { useUnicornStudio } from './hooks/useUnicornStudio';
 import Header from './components/Header';
@@ -20,7 +19,6 @@ function App() {
   const { currentView, pendingSection, clearPendingSection } = useViewStore();
   const { isLightMode } = useThemeStore();
 
-  useUrlSync();
   const showBackground = useUnicornStudio(currentView === 'main', isLightMode);
 
   // Handle body lock for non-main views

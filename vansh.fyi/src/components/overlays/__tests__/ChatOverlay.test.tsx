@@ -148,6 +148,7 @@ describe('ChatView', () => {
         goToProjectChat: jest.fn(),
         chatContext: 'project',
         initialChatQuery: 'Tell me about this',
+        clearInitialChatQuery: jest.fn(),
         projectId: 'aether',
       });
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { create } from 'zustand';
 
 export type ViewState = 'main' | 'projects' | 'chat';
@@ -9,101 +11,107 @@ type ChatContext = 'personal' | 'project';
 export const SECTION_IDS = ['hero', 'features', 'projects', 'about', 'testimonials', 'contact'] as const;
 export type SectionId = (typeof SECTION_IDS)[number];
 
-interface ViewStore {
-  currentView: ViewState;
-  initialChatQuery: string;
-  chatContext: ChatContext;
-  projectId?: string;
-  /** Section to scroll to once the main view has mounted (set when navigating from an overlay). */
-  pendingSection?: SectionId;
-  setView: (view: ViewState) => void;
-  goToMain: () => void;
-  goToProjects: () => void;
-  goToChat: (query?: string) => void;
-  goToProjectChat: (projectId: string, query?: string) => void;
-  selectProject: (projectId: string) => void;
-  /** Scroll to a section of the main page, switching back to it first if an overlay is open. */
-  scrollToSection: (id: SectionId) => void;
-  clearPendingSection: () => void;
-}
-
 /** Smoothly scroll to a section on the main page. Offset is handled by CSS `scroll-margin-top`. */
 export const scrollToElement = (id: SectionId, behavior: ScrollBehavior = 'smooth') => {
   document.getElementById(id)?.scrollIntoView({ behavior, block: 'start' });
 };
 
-// --- URL <-> state mapping -------------------------------------------------
-// Query params (not paths) so deep links work on any static host without rewrites.
-//   /                                  -> main
-//   /?view=projects&project=aether     -> project overlay
-//   /?view=chat                        -> personal chat
-//   /?view=chat&project=aether         -> project chat
+// --- URL <-> view mapping ----------------------------------------------------
+// The URL is the source of truth for which view is showing:
+//   /                      -> main
+//   /projects/<id>         -> project view
+//   /chat                  -> personal chat
+//   /projects/<id>/chat    -> project chat
 
-type UrlState = Pick<ViewStore, 'currentView' | 'chatContext' | 'projectId'>;
+export interface RouteState {
+  currentView: ViewState;
+  chatContext: ChatContext;
+  projectId?: string;
+}
 
-export const stateToSearch = ({ currentView, chatContext, projectId }: UrlState): string => {
-  if (currentView === 'main') return '';
-  const params = new URLSearchParams({ view: currentView });
-  if (projectId && (currentView === 'projects' || chatContext === 'project')) {
-    params.set('project', projectId);
+export const pathToState = (pathname: string | null): RouteState => {
+  const segments = (pathname ?? '/').split('/').filter(Boolean).map(decodeURIComponent);
+  if (segments[0] === 'chat') return { currentView: 'chat', chatContext: 'personal' };
+  if (segments[0] === 'projects' && segments[1]) {
+    const projectId = segments[1];
+    return segments[2] === 'chat'
+      ? { currentView: 'chat', chatContext: 'project', projectId }
+      : { currentView: 'projects', chatContext: 'personal', projectId };
   }
-  return `?${params.toString()}`;
+  return { currentView: 'main', chatContext: 'personal' };
 };
 
-export const searchToState = (search: string): UrlState => {
-  const params = new URLSearchParams(search);
-  const view = params.get('view');
-  const projectId = params.get('project') || undefined;
-  if (view === 'projects') return { currentView: 'projects', chatContext: 'personal', projectId };
-  if (view === 'chat') {
-    return { currentView: 'chat', chatContext: projectId ? 'project' : 'personal', projectId };
-  }
-  return { currentView: 'main', chatContext: 'personal', projectId: undefined };
-};
+export const projectPath = (projectId: string) => `/projects/${encodeURIComponent(projectId)}`;
+export const projectChatPath = (projectId: string) => `${projectPath(projectId)}/chat`;
 
-// Always start on the main view so server and client render the same markup;
-// `useUrlSync` applies the real URL right after hydration.
-const initialUrlState: UrlState = { currentView: 'main', chatContext: 'personal', projectId: undefined };
+// --- UI state that is not part of the URL --------------------------------------
 
-export const useViewStore = create<ViewStore>((set, get) => ({
-  ...initialUrlState,
+interface UiState {
+  /** A question typed on the main page (hero input) that the chat view should send on mount. */
+  initialChatQuery: string;
+  /** Section to scroll to once the main view has mounted (set when navigating from another view). */
+  pendingSection?: SectionId;
+  clearInitialChatQuery: () => void;
+  clearPendingSection: () => void;
+}
+
+export const useUiStore = create<UiState>((set) => ({
   initialChatQuery: '',
   pendingSection: undefined,
-  setView: (view) => {
-    set({ currentView: view });
-  },
-  goToMain: () => {
-    set({ currentView: 'main', initialChatQuery: '', chatContext: 'personal', projectId: undefined });
-  },
-  goToProjects: () => {
-    set({ currentView: 'projects' });
-  },
-  goToChat: (query = '') => {
-    set({ currentView: 'chat', initialChatQuery: query, chatContext: 'personal', projectId: undefined });
-  },
-  goToProjectChat: (projectId: string, query = '') => {
-    set({ currentView: 'chat', initialChatQuery: query, chatContext: 'project', projectId });
-  },
-  selectProject: (projectId: string) => {
-    set({ projectId });
-  },
-  scrollToSection: (id) => {
-    if (get().currentView === 'main') {
-      scrollToElement(id);
-      return;
-    }
-    set({
-      currentView: 'main',
-      initialChatQuery: '',
-      chatContext: 'personal',
-      projectId: undefined,
-      pendingSection: id,
-    });
-  },
-  clearPendingSection: () => {
-    set({ pendingSection: undefined });
-  },
+  clearInitialChatQuery: () => set({ initialChatQuery: '' }),
+  clearPendingSection: () => set({ pendingSection: undefined }),
 }));
+
+/**
+ * View state and navigation. Which view is showing comes from the URL; the actions navigate with the
+ * Next router, so every view has a real, linkable, indexable URL and Back/Forward just work.
+ */
+export const useViewStore = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const initialChatQuery = useUiStore((s) => s.initialChatQuery);
+  const pendingSection = useUiStore((s) => s.pendingSection);
+  const clearPendingSection = useUiStore((s) => s.clearPendingSection);
+  const clearInitialChatQuery = useUiStore((s) => s.clearInitialChatQuery);
+
+  const route = pathToState(pathname);
+  const { currentView, projectId } = route;
+
+  const actions = useMemo(() => {
+    const goToMain = () => {
+      useUiStore.setState({ initialChatQuery: '' });
+      router.push('/');
+    };
+    const goToProject = (id: string) => router.push(projectPath(id));
+    return {
+      goToMain,
+      goToProject,
+      /** Back to the current project's page (or home when there is no project). */
+      goToProjects: () => (projectId ? goToProject(projectId) : goToMain()),
+      goToChat: (query = '') => {
+        useUiStore.setState({ initialChatQuery: query });
+        router.push('/chat');
+      },
+      goToProjectChat: (id: string, query = '') => {
+        useUiStore.setState({ initialChatQuery: query });
+        router.push(projectChatPath(id));
+      },
+      /** Switch the project shown in the project view. */
+      selectProject: goToProject,
+      /** Scroll to a section of the main page, navigating back to it first if another view is open. */
+      scrollToSection: (id: SectionId) => {
+        if (currentView === 'main') {
+          scrollToElement(id);
+          return;
+        }
+        useUiStore.setState({ initialChatQuery: '', pendingSection: id });
+        router.push('/');
+      },
+    };
+  }, [router, currentView, projectId]);
+
+  return { ...route, initialChatQuery, pendingSection, clearInitialChatQuery, clearPendingSection, ...actions };
+};
 
 // Keep old export for backward compatibility during migration
 export const useOverlayStore = useViewStore;

@@ -1,10 +1,16 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import Header from '../Header';
-import { useViewStore } from '../../state/overlayStore';
+import { usePathname, useRouter } from 'next/navigation';
+import { useUiStore } from '../../state/overlayStore';
+
+const push = jest.fn();
 
 describe('Header', () => {
   beforeEach(() => {
-    useViewStore.setState({ currentView: 'main', pendingSection: undefined });
+    push.mockClear();
+    (usePathname as jest.Mock).mockReturnValue('/');
+    (useRouter as jest.Mock).mockReturnValue({ push });
+    useUiStore.setState({ pendingSection: undefined });
     document.body.innerHTML = '';
   });
 
@@ -32,13 +38,12 @@ describe('Header', () => {
   });
 
   it('returns to the main view with a pending section when clicked from an overlay', () => {
-    useViewStore.setState({ currentView: 'projects', projectId: 'aether' });
+    (usePathname as jest.Mock).mockReturnValue('/projects/aether');
 
     render(<Header />);
     fireEvent.click(screen.getByText('Contact Me'));
 
-    const state = useViewStore.getState();
-    expect(state.currentView).toBe('main');
-    expect(state.pendingSection).toBe('contact');
+    expect(push).toHaveBeenCalledWith('/');
+    expect(useUiStore.getState().pendingSection).toBe('contact');
   });
 });

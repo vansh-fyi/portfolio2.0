@@ -1,127 +1,99 @@
-import { useViewStore } from '../overlayStore';
 import { act, renderHook } from '@testing-library/react';
+import { usePathname, useRouter } from 'next/navigation';
+import { pathToState, projectChatPath, projectPath, useUiStore, useViewStore } from '../overlayStore';
 
-describe('useViewStore', () => {
-  beforeEach(() => {
-    // Reset to 'main' view before each test
-    useViewStore.setState({ currentView: 'main' });
+const push = jest.fn();
+const mockPathname = usePathname as jest.Mock;
+const mockRouter = useRouter as jest.Mock;
+
+beforeEach(() => {
+  push.mockClear();
+  mockPathname.mockReturnValue('/');
+  mockRouter.mockReturnValue({ push });
+  useUiStore.setState({ initialChatQuery: '', pendingSection: undefined });
+});
+
+describe('pathToState', () => {
+  it('maps every route to a view', () => {
+    expect(pathToState('/')).toEqual({ currentView: 'main', chatContext: 'personal' });
+    expect(pathToState('/chat')).toEqual({ currentView: 'chat', chatContext: 'personal' });
+    expect(pathToState('/projects/aether')).toEqual({ currentView: 'projects', chatContext: 'personal', projectId: 'aether' });
+    expect(pathToState('/projects/aether/chat')).toEqual({ currentView: 'chat', chatContext: 'project', projectId: 'aether' });
   });
 
-  it('should have the correct initial state', () => {
-    const { result } = renderHook(() => useViewStore());
-    expect(result.current.currentView).toBe('main');
+  it('falls back to main for unknown paths and a missing pathname', () => {
+    expect(pathToState('/nonsense').currentView).toBe('main');
+    expect(pathToState('/projects').currentView).toBe('main');
+    expect(pathToState(null).currentView).toBe('main');
   });
 
-  it('should navigate to projects view', () => {
-    const { result } = renderHook(() => useViewStore());
-    act(() => {
-      result.current.goToProjects();
-    });
-    expect(result.current.currentView).toBe('projects');
-  });
-
-  it('should navigate to chat view', () => {
-    const { result } = renderHook(() => useViewStore());
-    act(() => {
-      result.current.goToChat();
-    });
-    expect(result.current.currentView).toBe('chat');
-  });
-
-  it('should navigate back to main view', () => {
-    const { result } = renderHook(() => useViewStore());
-    act(() => {
-      result.current.goToProjects();
-    });
-    act(() => {
-      result.current.goToMain();
-    });
-    expect(result.current.currentView).toBe('main');
-  });
-
-  it('should set view directly', () => {
-    const { result } = renderHook(() => useViewStore());
-    act(() => {
-      result.current.setView('chat');
-    });
-    expect(result.current.currentView).toBe('chat');
-  });
-
-  describe('Project Context Management (Story 1.2)', () => {
-    it('should navigate to project chat with correct state', () => {
-      const { result } = renderHook(() => useViewStore());
-      act(() => {
-        result.current.goToProjectChat('driq-health', 'Tell me about this project');
-      });
-      expect(result.current.currentView).toBe('chat');
-      expect(result.current.chatContext).toBe('project');
-      expect(result.current.projectId).toBe('driq-health');
-      expect(result.current.initialChatQuery).toBe('Tell me about this project');
-    });
-
-    it('should preserve projectId when navigating to projects view', () => {
-      const { result } = renderHook(() => useViewStore());
-      // Start with project chat
-      act(() => {
-        result.current.goToProjectChat('aether');
-      });
-      expect(result.current.projectId).toBe('aether');
-
-      // Navigate to projects view (e.g., closing chat)
-      act(() => {
-        result.current.goToProjects();
-      });
-      expect(result.current.currentView).toBe('projects');
-      expect(result.current.projectId).toBe('aether'); // Project ID preserved
-    });
-
-    it('should clear projectId when navigating to main view', () => {
-      const { result } = renderHook(() => useViewStore());
-      // Start with project selected
-      act(() => {
-        result.current.goToProjectChat('portfolio-website');
-      });
-      expect(result.current.projectId).toBe('portfolio-website');
-
-      // Navigate to main (reset everything)
-      act(() => {
-        result.current.goToMain();
-      });
-      expect(result.current.currentView).toBe('main');
-      expect(result.current.chatContext).toBe('personal');
-      expect(result.current.projectId).toBeUndefined();
-    });
-
-    it('should navigate to personal chat without projectId', () => {
-      const { result } = renderHook(() => useViewStore());
-      act(() => {
-        result.current.goToChat('What is Vansh\'s experience?');
-      });
-      expect(result.current.currentView).toBe('chat');
-      expect(result.current.chatContext).toBe('personal');
-      expect(result.current.projectId).toBeUndefined();
-      expect(result.current.initialChatQuery).toBe('What is Vansh\'s experience?');
-    });
+  it('builds the matching paths', () => {
+    expect(projectPath('aether')).toBe('/projects/aether');
+    expect(projectChatPath('aether')).toBe('/projects/aether/chat');
   });
 });
 
-describe('URL mapping', () => {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { searchToState, stateToSearch } = require('../overlayStore');
-
-  it('round-trips a project overlay', () => {
-    const search = stateToSearch({ currentView: 'projects', chatContext: 'personal', projectId: 'aether' });
-    expect(search).toBe('?view=projects&project=aether');
-    expect(searchToState(search)).toEqual({ currentView: 'projects', chatContext: 'personal', projectId: 'aether' });
+describe('useViewStore', () => {
+  it('derives the view from the URL', () => {
+    mockPathname.mockReturnValue('/projects/driq-health/chat');
+    const { result } = renderHook(() => useViewStore());
+    expect(result.current).toMatchObject({ currentView: 'chat', chatContext: 'project', projectId: 'driq-health' });
   });
 
-  it('maps project and personal chat', () => {
-    expect(searchToState('?view=chat&project=sparto')).toEqual({ currentView: 'chat', chatContext: 'project', projectId: 'sparto' });
-    expect(searchToState('?view=chat')).toEqual({ currentView: 'chat', chatContext: 'personal', projectId: undefined });
+  it('navigates to a project and to project chat', () => {
+    const { result } = renderHook(() => useViewStore());
+    act(() => result.current.selectProject('sparto'));
+    expect(push).toHaveBeenLastCalledWith('/projects/sparto');
+    act(() => result.current.goToProjectChat('sparto', 'Tell me about this project'));
+    expect(push).toHaveBeenLastCalledWith('/projects/sparto/chat');
+    expect(useUiStore.getState().initialChatQuery).toBe('Tell me about this project');
   });
 
-  it('falls back to main for empty or unknown params', () => {
-    expect(stateToSearch({ currentView: 'main', chatContext: 'personal', projectId: undefined })).toBe('');
-    expect(searchToState('?view=nonsense').currentView).toBe('main');
+  it('navigates to personal chat with an initial query', () => {
+    const { result } = renderHook(() => useViewStore());
+    act(() => result.current.goToChat("What is Vansh's experience?"));
+    expect(push).toHaveBeenLastCalledWith('/chat');
+    expect(useUiStore.getState().initialChatQuery).toBe("What is Vansh's experience?");
+  });
+
+  it('goToProjects returns to the current project, or home without one', () => {
+    mockPathname.mockReturnValue('/projects/aether/chat');
+    const inProject = renderHook(() => useViewStore());
+    act(() => inProject.result.current.goToProjects());
+    expect(push).toHaveBeenLastCalledWith('/projects/aether');
+
+    mockPathname.mockReturnValue('/chat');
+    const noProject = renderHook(() => useViewStore());
+    act(() => noProject.result.current.goToProjects());
+    expect(push).toHaveBeenLastCalledWith('/');
+  });
+
+  it('goToMain clears a pending chat query', () => {
+    useUiStore.setState({ initialChatQuery: 'leftover' });
+    mockPathname.mockReturnValue('/chat');
+    const { result } = renderHook(() => useViewStore());
+    act(() => result.current.goToMain());
+    expect(push).toHaveBeenLastCalledWith('/');
+    expect(useUiStore.getState().initialChatQuery).toBe('');
+  });
+
+  describe('scrollToSection', () => {
+    it('scrolls in place on the main page', () => {
+      const scrollIntoView = jest.fn();
+      document.body.innerHTML = '<section id="about"></section>';
+      document.getElementById('about')!.scrollIntoView = scrollIntoView;
+      const { result } = renderHook(() => useViewStore());
+      act(() => result.current.scrollToSection('about'));
+      expect(scrollIntoView).toHaveBeenCalled();
+      expect(push).not.toHaveBeenCalled();
+    });
+
+    it('navigates home and remembers the section from another view', () => {
+      mockPathname.mockReturnValue('/projects/aether');
+      const { result } = renderHook(() => useViewStore());
+      act(() => result.current.scrollToSection('projects'));
+      expect(push).toHaveBeenLastCalledWith('/');
+      expect(useUiStore.getState().pendingSection).toBe('projects');
+    });
   });
 });

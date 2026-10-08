@@ -17,7 +17,7 @@ interface Message {
 }
 
 const ChatView: React.FC = () => {
-  const { goToMain, goToProjects, goToProjectChat, chatContext, initialChatQuery, projectId } = useViewStore();
+  const { goToMain, goToProjects, goToProjectChat, chatContext, initialChatQuery, clearInitialChatQuery, projectId } = useViewStore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
@@ -61,7 +61,7 @@ const ChatView: React.FC = () => {
     if (initialChatQuery) {
       setMessages((prev) => [...prev, { sender: 'user', text: initialChatQuery }]);
       setPendingQuery(initialChatQuery); // Use pendingQuery instead
-      useViewStore.setState({ initialChatQuery: '' }); // Clear it after use
+      clearInitialChatQuery(); // Clear it after use
     }
   }, [initialChatQuery]);
 
