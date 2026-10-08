@@ -2,7 +2,7 @@ import type { AdminUser } from '../auth/admin';
 import { supabaseAdmin } from '../services/supabase';
 import { extractMediaIds, readingMinutes } from './markdown';
 import type { PostInput } from './post-input';
-import { POST_COLUMNS, type Post } from './types';
+import { ADMIN_POST_COLUMNS, POST_COLUMNS, type AdminPost, type Post } from './types';
 
 /**
  * Writes go through the service-role client, which bypasses row level security, so every function
@@ -10,7 +10,7 @@ import { POST_COLUMNS, type Post } from './types';
  * makes it a type error to call these from code that has not passed the auth check.
  */
 
-export type PostSummary = Pick<Post, 'id' | 'slug' | 'title' | 'status' | 'published_at' | 'updated_at' | 'tags'>;
+export type PostSummary = Pick<AdminPost, 'id' | 'slug' | 'title' | 'status' | 'published_at' | 'updated_at' | 'tags' | 'ursa_indexed_at' | 'ursa_error'>;
 
 export class AdminError extends Error {
     constructor(message: string, readonly field?: string) {
@@ -21,7 +21,7 @@ export class AdminError extends Error {
 export async function listAllPosts(_admin: AdminUser, status?: 'draft' | 'published'): Promise<PostSummary[]> {
     let query = supabaseAdmin
         .from('posts')
-        .select('id, slug, title, status, published_at, updated_at, tags')
+        .select('id, slug, title, status, published_at, updated_at, tags, ursa_indexed_at, ursa_error')
         .order('updated_at', { ascending: false })
         .limit(200);
     if (status) query = query.eq('status', status);
@@ -30,10 +30,10 @@ export async function listAllPosts(_admin: AdminUser, status?: 'draft' | 'publis
     return data as PostSummary[];
 }
 
-export async function getPostById(_admin: AdminUser, id: string): Promise<Post | null> {
-    const { data, error } = await supabaseAdmin.from('posts').select(POST_COLUMNS).eq('id', id).maybeSingle();
+export async function getPostById(_admin: AdminUser, id: string): Promise<AdminPost | null> {
+    const { data, error } = await supabaseAdmin.from('posts').select(ADMIN_POST_COLUMNS).eq('id', id).maybeSingle();
     if (error) throw new Error(`post query failed: ${error.message}`);
-    return data as Post | null;
+    return data as AdminPost | null;
 }
 
 /** Make `post_media` match the images the post actually uses (it blocks deleting an image still in use). */

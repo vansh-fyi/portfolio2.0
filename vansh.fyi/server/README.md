@@ -135,3 +135,31 @@ The site and the API are one Vercel project (root directory `vansh.fyi`). Set ev
 - **Rate limiting seems off** — confirm `SUPABASE_SERVICE_ROLE_KEY` is set and migration 005 was applied (the limiter fails open and logs `Rate limiter unavailable`).
 - **Health check says "Supabase unreachable or paused"** — open the Supabase dashboard; free projects pause after inactivity.
 - **Port 3000 already in use** — start with `npm run dev -- -p 3001`.
+
+## Blog posts and Ursa
+
+Published blog posts are part of Ursa's knowledge. The admin keeps the index in step with the blog:
+
+| Event in `/admin` | What happens to Ursa's index |
+|---|---|
+| Publish | The post is chunked and stored in `kb_chunks` as `source_file = blog/<slug>`, `source_type = blog` (in the background, usually within a few seconds) |
+| Save & update live | The chunks are replaced; unchanged paragraphs are not re-embedded |
+| Rename the slug | Chunks under the old slug are removed |
+| Unpublish / Delete | The chunks are removed |
+| Save a draft | Nothing: drafts are never indexed |
+
+- Each post shows "Ursa knows this", "indexing…" or "failed" in the admin, with a **Re-index** button.
+- The prompt also gets a short list of the newest posts (cached for 15 s) so broad questions like "has he written anything about X?" work, and blog passages carry the post URL so Ursa can link to them.
+- `npm run reindex-blog` makes the index match the blog exactly (add `-- --dry-run` to preview). Use it after restoring a backup, changing the chunking, or when the health check's **blog-index** line complains.
+- The daily health check's **blog-index** line is critical if the index holds text from a post that is not published, and degraded if a published post is missing from the index.
+- `npm run ingest-kb` (for `_content/`) never touches `blog/*` chunks.
+
+### Adding an eval question for a post
+
+Add an entry to `evals/golden.json` after publishing, for example:
+
+```json
+{ "q": "What does Vansh say about <topic of the post>?", "all": ["<a fact from the post>"] }
+```
+
+Evals run against the live knowledge base, so a question about a post only passes while that post is published.

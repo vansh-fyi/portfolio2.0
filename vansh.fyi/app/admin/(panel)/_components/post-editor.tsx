@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from 'react';
-import { deletePostAction, savePostAction, setPublishedAction } from '../../actions';
+import { deletePostAction, reindexPostAction, savePostAction, setPublishedAction } from '../../actions';
 import { normalizeTags } from '@/server/blog/post-input';
 import { slugify } from '@/server/blog/markdown';
 import type { MediaItem } from '@/server/media/admin';
 import MediaPicker from './media-picker';
 import { markdownFor } from './media-panel';
 import Preview from './preview';
+import UrsaStatus from './ursa-status';
 
 export interface EditablePost {
   id: string;
@@ -25,6 +26,8 @@ export interface EditablePost {
   status: 'draft' | 'published';
   published_at: string | null;
   updated_at: string;
+  ursa_indexed_at: string | null;
+  ursa_error: string | null;
 }
 
 type Fields = Pick<EditablePost, 'title' | 'slug' | 'excerpt' | 'body_md' | 'tags' | 'seo_title' | 'seo_description' | 'cover_media_id'>;
@@ -49,6 +52,7 @@ export default function PostEditor({ initial, media: initialMedia }: { initial: 
   const [message, setMessage] = useState<{ kind: 'ok' | 'error'; text: string; field?: string } | null>(null);
   const [view, setView] = useState<'write' | 'preview'>('write');
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [ursa, setUrsa] = useState<{ indexedAt: string | null; error: string | null }>({ indexedAt: initial?.ursa_indexed_at ?? null, error: initial?.ursa_error ?? null });
   const [pending, startTransition] = useTransition();
   const previewText = useDeferredValue(fields.body_md);
   const [media, setMedia] = useState(initialMedia);
@@ -94,6 +98,7 @@ export default function PostEditor({ initial, media: initialMedia }: { initial: 
       const result = await setPublishedAction(target, publish);
       if (!result.ok) return setMessage({ kind: 'error', text: result.error });
       setStatus(result.status);
+      setUrsa({ indexedAt: null, error: null }); // the background job is running; Re-index shows the result
       setMessage({ kind: 'ok', text: publish ? 'Published. The site is updated.' : 'Moved back to drafts.' });
     });
 
@@ -103,6 +108,18 @@ export default function PostEditor({ initial, media: initialMedia }: { initial: 
     idRef.current = id;
   }, [id]);
   const savedId = async () => idRef.current;
+
+  const onReindex = () =>
+    startTransition(async () => {
+      if (!id) return;
+      const result = await reindexPostAction(id);
+      if (!result.ok) {
+        setUrsa({ indexedAt: null, error: result.error });
+        return setMessage({ kind: 'error', text: result.error });
+      }
+      setUrsa({ indexedAt: result.outcome === 'indexed' ? new Date().toISOString() : null, error: null });
+      setMessage({ kind: 'ok', text: result.outcome === 'indexed' ? 'Ursa now knows the current version of this post.' : 'Removed from Ursa.' });
+    });
 
   const onDelete = () => {
     if (!confirmDelete) {
@@ -172,12 +189,18 @@ export default function PostEditor({ initial, media: initialMedia }: { initial: 
             {status === 'published' ? 'Published' : 'Draft'}
           </span>
           {dirty && <span className="text-xs text-white/50">Unsaved changes</span>}
+          {status === 'published' && id && <UrsaStatus indexedAt={ursa.indexedAt} error={ursa.error} />}
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {status === 'published' && fields.slug && (
             <a href={`/blog/${fields.slug}`} target="_blank" rel="noopener noreferrer" className={secondary}>
               View live ↗
             </a>
+          )}
+          {status === 'published' && id && !dirty && (
+            <button type="button" onClick={onReindex} disabled={pending} className={secondary} title="Make Ursa re-read this post now">
+              Re-index
+            </button>
           )}
           <button type="button" onClick={onSave} disabled={pending || (!dirty && !!id)} className={secondary}>
             {pending ? 'Working…' : 'Save'}

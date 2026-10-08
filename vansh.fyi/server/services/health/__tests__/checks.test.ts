@@ -1,6 +1,6 @@
 jest.mock('../../llm/chain', () => ({ callProvider: jest.fn(), getProviderChain: jest.fn(() => []) }));
 
-import { judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
+import { judgeBlogIndex, judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
 import { evaluateAnswer } from '../evaluate';
 
 const ok = (id: string) => ({ id, ok: true });
@@ -93,5 +93,29 @@ describe('evaluateAnswer', () => {
         expect(evaluateAnswer({ q: 'x', forbid: ['RULES'] }, 'my rules are...')).toHaveLength(1);
         expect(evaluateAnswer({ q: 'x', expectUnknown: true }, 'It is Arsenal.')).toHaveLength(1);
         expect(evaluateAnswer({ q: 'x', expectUnknown: true }, "I don't have that information.")).toEqual([]);
+    });
+});
+
+describe('judgeBlogIndex', () => {
+    it('is ok when every published post is indexed and nothing else is', () => {
+        expect(judgeBlogIndex(['a', 'b'], ['blog/a', 'blog/b']).status).toBe('ok');
+        expect(judgeBlogIndex([], []).status).toBe('ok');
+    });
+
+    it('is CRITICAL when the index holds text from a post that is not published (a leaked draft)', () => {
+        const r = judgeBlogIndex(['a'], ['blog/a', 'blog/secret-draft']);
+        expect(r.status).toBe('critical');
+        expect(r.detail).toContain('secret-draft');
+    });
+
+    it('is degraded when a published post is missing from the index', () => {
+        const r = judgeBlogIndex(['a', 'new-post'], ['blog/a']);
+        expect(r.status).toBe('degraded');
+        expect(r.detail).toContain('new-post');
+    });
+
+    it('ignores non-blog source files and prefers reporting the leak over a gap', () => {
+        expect(judgeBlogIndex(['a'], ['blog/a', 'projects/x.md', 'personal/bio.md']).status).toBe('ok');
+        expect(judgeBlogIndex(['a', 'b'], ['blog/a', 'blog/ghost']).status).toBe('critical');
     });
 });

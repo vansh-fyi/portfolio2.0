@@ -1,11 +1,14 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { after } from 'next/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { createAuthClient, isAdminEmail, requireAdmin } from '@/server/auth/admin';
 import { AdminError, deletePost, getPostById, savePost, setPublished } from '@/server/blog/admin-queries';
+import { reindexPost, removePostFromIndex } from '@/server/blog/index-post';
+import { resetBlogOverviewCache } from '@/server/blog/overview';
 import { postInputSchema, publishProblems } from '@/server/blog/post-input';
 import { config } from '@/server/services/config';
 import { adminLoginRules, checkRateLimit } from '@/server/services/rate-limit';
@@ -62,11 +65,37 @@ function fail(error: unknown): { ok: false; error: string; field?: string } {
 
 /** Public pages that depend on the blog's content. Called after every change so the site updates at once. */
 function revalidateBlog() {
+  resetBlogOverviewCache(); // Ursa's list of posts must not keep a retired post for even a few seconds
   revalidatePath('/blog');
   revalidatePath('/blog/[slug]', 'page');
   revalidatePath('/blog/tag/[tag]', 'page');
   revalidatePath('/blog/rss.xml');
   revalidatePath('/sitemap.xml');
+}
+
+/**
+ * Ursa's index follows the blog, but in the background (after the response is sent), so publishing
+ * stays instant. The job re-reads the post when it runs, so it indexes what is stored NOW, whatever
+ * order several quick edits finish in. A failure is recorded on the post (shown in the admin).
+ */
+function scheduleIndex(id: string) {
+  after(async () => {
+    try {
+      await reindexPost(id);
+    } catch {
+      /* reindexPost already logged it and stored the status on the post */
+    }
+  });
+}
+
+function scheduleRemoval(slug: string) {
+  after(async () => {
+    try {
+      await removePostFromIndex(slug);
+    } catch (error) {
+      console.error('[admin] could not remove', slug, 'from the index:', error);
+    }
+  });
 }
 
 export async function savePostAction(raw: unknown): Promise<ActionResult<{ id: string; slug: string; updatedAt: string }>> {
@@ -77,8 +106,13 @@ export async function savePostAction(raw: unknown): Promise<ActionResult<{ id: s
     return { ok: false, error: issue.message, field: String(issue.path[0] ?? '') };
   }
   try {
-    const { post } = await savePost(admin, parsed.data);
-    if (post.status === 'published') revalidateBlog();
+    const { post, previous } = await savePost(admin, parsed.data);
+    if (post.status === 'published') {
+      revalidateBlog();
+      scheduleIndex(post.id);
+    }
+    // A renamed slug leaves chunks under the old name; drop them
+    if (previous && previous.slug !== post.slug) scheduleRemoval(previous.slug);
     return { ok: true, id: post.id, slug: post.slug, updatedAt: post.updated_at };
   } catch (error) {
     return fail(error);
@@ -97,6 +131,7 @@ export async function setPublishedAction(id: string, published: boolean): Promis
     }
     const post = await setPublished(admin, id, published);
     revalidateBlog();
+    scheduleIndex(post.id); // published -> indexed, unpublished -> removed
     return { ok: true, status: post.status, publishedAt: post.published_at };
   } catch (error) {
     return fail(error);
@@ -107,10 +142,22 @@ export async function deletePostAction(id: string): Promise<ActionResult> {
   const admin = await requireAdmin();
   if (!z.string().uuid().safeParse(id).success) return { ok: false, error: 'Invalid post.' };
   try {
-    await deletePost(admin, id);
+    const deleted = await deletePost(admin, id);
     revalidateBlog();
+    if (deleted) scheduleRemoval(deleted.slug);
   } catch (error) {
     return fail(error);
   }
   redirect('/admin');
+}
+
+/** Runs the indexing right now and reports the result (the "Re-index" button). */
+export async function reindexPostAction(id: string): Promise<ActionResult<{ outcome: 'indexed' | 'removed' | 'missing' }>> {
+  await requireAdmin();
+  if (!z.string().uuid().safeParse(id).success) return { ok: false, error: 'Invalid post.' };
+  try {
+    return { ok: true, outcome: await reindexPost(id) };
+  } catch {
+    return { ok: false, error: 'Indexing failed. The post page shows the reason; the server logs have details.' };
+  }
 }

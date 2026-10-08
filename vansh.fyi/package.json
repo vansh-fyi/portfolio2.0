@@ -16,7 +16,8 @@
     "eval-ursa": "tsx --env-file-if-exists=.env.local scripts/eval-ursa.ts",
     "run-health": "tsx --env-file-if-exists=.env.local scripts/run-health.ts",
     "test-rag-api": "tsx --env-file-if-exists=.env.local scripts/test-rag-api.ts",
-    "verify-deploy": "tsx scripts/verify-deploy.ts"
+    "verify-deploy": "tsx scripts/verify-deploy.ts",
+    "reindex-blog": "tsx --env-file-if-exists=.env.local scripts/reindex-blog.ts"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.0",

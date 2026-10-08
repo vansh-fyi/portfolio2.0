@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { requireAdmin } from '@/server/auth/admin';
 import { listAllPosts } from '@/server/blog/admin-queries';
 import { formatDate } from '@/lib/format';
+import UrsaStatus from './_components/ursa-status';
 
 type Filter = 'all' | 'draft' | 'published';
 
@@ -53,6 +54,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Promis
                 </div>
                 <div className="flex items-center gap-3 text-xs text-white/50">
                   <span>{post.status === 'published' ? `Published ${formatDate(post.published_at)}` : `Edited ${formatDate(post.updated_at)}`}</span>
+                  {post.status === 'published' && <UrsaStatus indexedAt={post.ursa_indexed_at} error={post.ursa_error} compact />}
                   <span className={`rounded-full px-2.5 py-1 font-medium ring-1 ${post.status === 'published' ? 'bg-emerald-500/15 text-emerald-300 ring-emerald-500/30' : 'bg-white/10 text-white/80 ring-white/10'}`}>
                     {post.status === 'published' ? 'Published' : 'Draft'}
                   </span>

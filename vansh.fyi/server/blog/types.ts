@@ -42,3 +42,11 @@ export interface PostWithCover extends Post {
 
 export const POST_COLUMNS =
     'id, slug, title, excerpt, body_md, cover_media_id, tags, status, published_at, created_at, updated_at, seo_title, seo_description, reading_minutes';
+
+/** What the admin sees: the public columns plus how Ursa's indexing of the post went. */
+export interface AdminPost extends Post {
+    ursa_indexed_at: string | null;
+    ursa_error: string | null;
+}
+
+export const ADMIN_POST_COLUMNS = `${POST_COLUMNS}, ursa_indexed_at, ursa_error`;

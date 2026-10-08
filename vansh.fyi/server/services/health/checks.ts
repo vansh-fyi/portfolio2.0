@@ -10,6 +10,7 @@ import { evaluateAnswer, GoldenCase } from './evaluate';
  *   billing    – OpenRouter models in the chain must still be priced $0
  *   embeddings – the embed edge function returns a 384-dim vector
  *   database   – kb_chunks is populated; extra tables (e.g. blogs) get a keep-alive query
+ *   blog-index – Ursa knows every published post and NOTHING from drafts or deleted posts
  *   answers    – the "smoke" golden questions still produce correct answers end to end
  */
 
@@ -192,6 +193,49 @@ async function checkDatabase(): Promise<CheckResult> {
     }
 }
 
+// --------------------------------------------------------------- blog index
+
+/**
+ * Pure: compares the published posts with the blog files present in kb_chunks.
+ * Chunks of a post that is not published would mean Ursa could repeat unpublished writing, so that is critical.
+ */
+export function judgeBlogIndex(publishedSlugs: string[], indexedFiles: string[]): CheckResult {
+    const published = new Set(publishedSlugs);
+    const indexed = new Set(indexedFiles.filter((f) => f.startsWith('blog/')).map((f) => f.slice('blog/'.length)));
+
+    const leaked = [...indexed].filter((slug) => !published.has(slug));
+    if (leaked.length > 0) {
+        return { name: 'blog-index', status: 'critical', detail: `Ursa has indexed text from ${leaked.length} post(s) that are not published (${leaked.slice(0, 3).join(', ')}); run \`npm run reindex-blog\`` };
+    }
+    const missing = [...published].filter((slug) => !indexed.has(slug));
+    if (missing.length > 0) {
+        return { name: 'blog-index', status: 'degraded', detail: `${missing.length} published post(s) are not indexed, so Ursa cannot answer from them (${missing.slice(0, 3).join(', ')}); open the post in /admin and press Re-index, or run \`npm run reindex-blog\`` };
+    }
+    return { name: 'blog-index', status: 'ok', detail: `${published.size} published post(s), all indexed; no unpublished text in the index` };
+}
+
+async function checkBlogIndex(): Promise<CheckResult> {
+    try {
+        const { supabase } = await import('../supabase');
+        const [posts, chunks] = await withTimeout(
+            Promise.all([
+                Promise.resolve(supabase.from('posts').select('slug').eq('status', 'published')),
+                Promise.resolve(supabase.from('kb_chunks').select('source_file').like('source_file', 'blog/%').limit(5000)),
+            ]),
+            PROBE_TIMEOUT_MS,
+            'blog index query',
+        );
+        if (posts.error) throw new Error(posts.error.message);
+        if (chunks.error) throw new Error(chunks.error.message);
+        return judgeBlogIndex(
+            (posts.data ?? []).map((p: { slug: string }) => p.slug),
+            (chunks.data ?? []).map((c: { source_file: string }) => c.source_file),
+        );
+    } catch (error) {
+        return { name: 'blog-index', status: 'degraded', detail: `Could not compare the blog with the index: ${errMsg(error)}` };
+    }
+}
+
 // ------------------------------------------------------------------ answers
 
 async function checkAnswers(): Promise<CheckResult> {
@@ -236,14 +280,15 @@ export async function runHealthChecks(): Promise<HealthReport> {
     const providers = getProviderChain();
 
     // Cheap independent probes first, then the end-to-end answers, so the probes don't compete with them for provider quota
-    const [providerCheck, billing, embeddings, database] = await Promise.all([
+    const [providerCheck, billing, embeddings, database, blogIndex] = await Promise.all([
         checkProviders(providers),
         checkOpenRouterPricing(providers),
         checkEmbeddings(),
         checkDatabase(),
+        checkBlogIndex(),
     ]);
     const answers = await checkAnswers();
-    const checks = [providerCheck, billing, embeddings, database, answers];
+    const checks = [providerCheck, billing, embeddings, database, blogIndex, answers];
 
     return { status: worst(checks.map((c) => c.status)), checkedAt: new Date().toISOString(), checks };
 }
@@ -263,6 +308,7 @@ export function formatAlert(report: HealthReport): { subject: string; text: stri
         '- providers: from vansh.fyi/ run `npx tsx --env-file-if-exists=.env.local scripts/probe-models.ts` and `scripts/list-models.ts`, then update PROVIDER_CHAIN in server/services/llm/chain.ts.',
         '- billing: remove the named OpenRouter model from PROVIDER_CHAIN immediately.',
         '- embeddings/database: check the Supabase dashboard (project paused? edge function deployed?).',
+        '- blog-index: from vansh.fyi/ run `npm run reindex-blog` (or press Re-index on the post in /admin).',
         '- answers: from vansh.fyi/ run `npm run eval-ursa` to see which questions regressed.',
         '',
         'Next check runs tomorrow; this email repeats daily until the problem is fixed.',

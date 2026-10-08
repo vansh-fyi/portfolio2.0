@@ -11,11 +11,11 @@
 import path from 'path';
 import fs from 'fs/promises';
 import { MarkdownSource } from '../server/services/ingestion/markdown-source';
-import { chunkMarkdown, embeddingInput, KbChunk } from '../server/services/kb/chunker';
+import { chunkMarkdown } from '../server/services/kb/chunker';
 import { buildPortfolioMap } from '../server/services/kb/portfolio-map';
+import { BLOG_SOURCE_PREFIX, syncSourceFile } from '../server/services/kb/sync';
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const INSERT_BATCH = 50;
 
 const prettify = (s: string) => s.replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -85,67 +85,42 @@ async function main() {
         throw new Error('SUPABASE_SERVICE_ROLE_KEY is required: kb_chunks is write-protected by RLS.');
     }
 
+    // Blog posts are indexed by the admin (server/blog/index-post.ts) and live in the same table under
+    // "blog/<slug>". They are not in _content/, so they must be invisible to the orphan cleanup below.
     const { data: existingRows, error: readError } = await supabaseAdmin
         .from('kb_chunks')
-        .select('id, source_file, content_hash');
+        .select('id, source_file')
+        .not('source_file', 'like', `${BLOG_SOURCE_PREFIX}%`);
     if (readError) throw new Error(`Could not read kb_chunks: ${readError.message}`);
 
-    const existingByFile = new Map<string, Map<string, string>>();
-    for (const row of existingRows ?? []) {
-        if (!existingByFile.has(row.source_file)) existingByFile.set(row.source_file, new Map());
-        existingByFile.get(row.source_file)!.set(row.content_hash, row.id);
-    }
+    const countByFile = new Map<string, number>();
+    for (const row of existingRows ?? []) countByFile.set(row.source_file, (countByFile.get(row.source_file) ?? 0) + 1);
 
     let inserted = 0;
     let deleted = 0;
     let kept = 0;
 
     for (const { doc, sourceFile, chunks } of plan) {
-        const existing = existingByFile.get(sourceFile) ?? new Map<string, string>();
-        const wanted = new Set(chunks.map((c) => c.contentHash));
-
-        const toInsert: KbChunk[] = chunks.filter((c) => !existing.has(c.contentHash));
-        kept += chunks.length - toInsert.length;
-
-        // Embed + insert first, delete stale second: a mid-run failure never loses data
-        for (let i = 0; i < toInsert.length; i += INSERT_BATCH) {
-            const batch = toInsert.slice(i, i + INSERT_BATCH);
-            const embeddings = await embedMany(batch.map(embeddingInput));
-
-            const { error } = await supabaseAdmin.from('kb_chunks').upsert(
-                batch.map((chunk, j) => ({
-                    source_file: sourceFile,
-                    source_type: doc.metadata.source_type,
-                    project_id: doc.metadata.projectId ?? null,
-                    heading_path: chunk.headingPath,
-                    content: chunk.content,
-                    content_hash: chunk.contentHash,
-                    chunk_index: chunk.chunkIndex,
-                    metadata: doc.metadata,
-                    embedding: embeddings[j],
-                })),
-                { onConflict: 'source_file,content_hash' }
-            );
-            if (error) throw new Error(`Insert failed for ${sourceFile}: ${error.message}`);
-            inserted += batch.length;
-        }
-
-        const staleIds = [...existing.entries()].filter(([hash]) => !wanted.has(hash)).map(([, id]) => id);
-        if (staleIds.length > 0) {
-            const { error } = await supabaseAdmin.from('kb_chunks').delete().in('id', staleIds);
-            if (error) throw new Error(`Delete failed for ${sourceFile}: ${error.message}`);
-            deleted += staleIds.length;
-        }
-        console.log(`  ${sourceFile}: +${toInsert.length} -${staleIds.length}`);
+        const result = await syncSourceFile(supabaseAdmin, embedMany, {
+            sourceFile,
+            sourceType: doc.metadata.source_type,
+            projectId: doc.metadata.projectId ?? null,
+            metadata: doc.metadata,
+            chunks,
+        });
+        inserted += result.inserted;
+        kept += result.kept;
+        deleted += result.deleted;
+        console.log(`  ${sourceFile}: +${result.inserted} -${result.deleted}`);
     }
 
     // Files that no longer exist in _content
     const currentFiles = new Set(plan.map((p) => p.sourceFile));
-    const orphanFiles = [...existingByFile.keys()].filter((f) => !currentFiles.has(f));
+    const orphanFiles = [...countByFile.keys()].filter((f) => !currentFiles.has(f));
     if (orphanFiles.length > 0) {
         const { error } = await supabaseAdmin.from('kb_chunks').delete().in('source_file', orphanFiles);
         if (error) throw new Error(`Orphan cleanup failed: ${error.message}`);
-        deleted += orphanFiles.reduce((n, f) => n + existingByFile.get(f)!.size, 0);
+        deleted += orphanFiles.reduce((n, f) => n + (countByFile.get(f) ?? 0), 0);
         console.log(`🧹 Removed chunks of ${orphanFiles.length} deleted file(s)`);
     }
 

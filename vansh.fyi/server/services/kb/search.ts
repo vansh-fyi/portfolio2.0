@@ -15,7 +15,7 @@ export interface KbSearchOptions {
     /** Restrict to one project's chunks */
     projectId?: string;
     /** Restrict to personal or project content */
-    sourceType?: 'personal' | 'project';
+    sourceType?: 'personal' | 'project' | 'blog';
     limit?: number;
 }
 

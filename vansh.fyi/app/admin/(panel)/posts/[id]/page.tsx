@@ -25,6 +25,8 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
     status: post.status,
     published_at: post.published_at,
     updated_at: post.updated_at,
+    ursa_indexed_at: post.ursa_indexed_at,
+    ursa_error: post.ursa_error,
   };
   return <PostEditor initial={initial} media={await listMedia(admin)} />;
 }
