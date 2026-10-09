@@ -23,12 +23,7 @@ jest.mock('../../../hooks/useRAGQuery', () => ({
     refetch: jest.fn(),
   })),
 }));
-jest.mock('../../../data/projects', () => ({
-  getProjectName: jest.fn((id: string) => {
-    if (id === 'portfolio-website') return 'AI-Powered Portfolio';
-    return undefined;
-  }),
-}));
+jest.mock('../../../state/portfolio', () => ({ usePortfolio: () => require('../../../../lib/portfolio-fixture').PORTFOLIO_FIXTURE }));
 
 describe('ChatView', () => {
   beforeEach(() => {

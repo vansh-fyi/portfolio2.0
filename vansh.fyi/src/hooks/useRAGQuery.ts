@@ -2,6 +2,8 @@
 
 import { trpc } from '../services/trpc';
 import { useViewStore } from '../state/overlayStore';
+import { usePortfolio } from '../state/portfolio';
+import { projectIdFor } from '../../lib/portfolio';
 import { useState, useCallback } from 'react';
 
 /**
@@ -15,7 +17,9 @@ import { useState, useCallback } from 'react';
  * @returns Query result with data, loading state, error, and refetch function
  */
 export const useRAGQuery = (query: string) => {
-  const { chatContext, projectId } = useViewStore();
+  const { chatContext, projectId: routeId } = useViewStore();
+  // A listing's route id can differ from its project's id (one project listed twice); Ursa is scoped by project
+  const projectId = projectIdFor(usePortfolio(), routeId);
 
   // Type assertion needed due to placeholder AppRouter type
   // This will be properly typed when backend AppRouter is imported

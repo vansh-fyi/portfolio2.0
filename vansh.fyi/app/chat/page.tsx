@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import App from '@/src/App';
+import PortfolioApp from '@/app/_components/portfolio-app';
 
 export const metadata: Metadata = {
   title: 'Chat with Ursa | Vansh Grover',
@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
+export const revalidate = 3600;
+
 export default function ChatPage() {
-  return <App />;
+  return <PortfolioApp />;
 }

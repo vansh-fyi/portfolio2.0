@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { projectCategories, ProjectCategory } from '../../config/projects';
+import { usePortfolio } from '../../state/portfolio';
+import { CategoryIcon, ProjectLogo } from '../ProjectLogo';
+import type { PortfolioPlacement } from '../../../lib/portfolio';
 
 interface OverlaySidebarProps {
   onProjectSelect?: (projectId: string) => void;
@@ -20,21 +22,24 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
   searchQuery = '',
   onClearSearch
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>(projectCategories[0]);
+  const { categories: projectCategories } = usePortfolio();
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>();
+  const selectedCategory = projectCategories.find((c) => c.id === selectedCategoryId) ?? projectCategories[0];
+  const setSelectedCategory = (category: { id: string }) => setSelectedCategoryId(category.id);
 
   // Auto-select the category that contains the selected project
   useEffect(() => {
     if (selectedProjectId && !searchQuery) {
       for (const cat of projectCategories) {
         for (const section of cat.sections) {
-          if (section.projects.some(p => p.id === selectedProjectId)) {
+          if (section.placements.some(p => p.id === selectedProjectId)) {
             setSelectedCategory(cat);
             return;
           }
         }
       }
     }
-  }, [selectedProjectId, searchQuery]);
+  }, [selectedProjectId, searchQuery, projectCategories]);
 
   const handleProjectClick = (projectId: string) => {
     if (onProjectSelect) {
@@ -49,11 +54,11 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
   const filteredProjects = React.useMemo(() => {
     if (!searchQuery) return [];
     const query = searchQuery.toLowerCase();
-    const results: { project: any; categoryName: string }[] = [];
+    const results: { project: PortfolioPlacement; categoryName: string }[] = [];
 
     for (const cat of projectCategories) {
       for (const section of cat.sections) {
-        for (const project of section.projects) {
+        for (const project of section.placements) {
           if (
             project.title.toLowerCase().includes(query) ||
             project.subtitle.toLowerCase().includes(query) ||
@@ -67,7 +72,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
       }
     }
     return results;
-  }, [searchQuery]);
+  }, [searchQuery, projectCategories]);
 
   return (
     <aside className={`${isOpen ? 'absolute inset-0 z-50 bg-black' : 'hidden'} md:block md:static md:col-span-3 lg:col-span-3 min-h-0 h-full border-white/5 border-r`}>
@@ -92,8 +97,8 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                     className="inline-flex hover:bg-white/10 hover:ring-white/20 cursor-pointer select-none active:scale-95 bg-white/5 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center"
                     style={{ listStyle: 'none' }}
                   >
-                    {selectedCategory.icon}
-                    <span className="text-xs lg:text-sm text-white">{selectedCategory.name}</span>
+                    <CategoryIcon svg={selectedCategory?.iconSvg ?? null} />
+                    <span className="text-xs lg:text-sm text-white">{selectedCategory?.name}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down w-[16px] h-[16px]">
                       <path d="m6 9 6 6 6-6"></path>
                     </svg>
@@ -110,7 +115,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             if (details) details.removeAttribute('open');
                           }}
                           className="group flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-sm text-white/80 hover:text-white active:scale-95">
-                          {category.icon}
+                          <CategoryIcon svg={category.iconSvg} />
                           {category.name}
                         </button>
                       </li>
@@ -140,11 +145,11 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             : 'hover:bg-white/5 hover:ring-white/5'
                             }`}
                         >
-                          {project.logo}
+                          <ProjectLogo svg={project.logoSvg} />
                           <div className="flex flex-col">
                             <div className="flex items-center gap-1">
                               <span className="lg:text-base text-sm text-white">{project.title}</span>
-                              {project.isNDA && (
+                              {project.isNda && (
                                 <span title="NDA Protected">🔒</span>
                               )}
                             </div>
@@ -160,12 +165,12 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                   </div>
                 )
               ) : (
-                selectedCategory.sections.map((section) => (
-                  <ul key={section.title} className="space-y-1">
+                (selectedCategory?.sections ?? []).map((section) => (
+                  <ul key={section.id} className="space-y-1">
                     <p className="uppercase text-xs text-white/50 tracking-wider mb-2">
                       {section.title}
                     </p>
-                    {section.projects.map((project) => (
+                    {section.placements.map((project) => (
                       <li key={project.id}>
                         <button
                           type="button"
@@ -175,11 +180,11 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             : 'hover:bg-white/5 hover:ring-white/5'
                             }`}
                         >
-                          {project.logo}
+                          <ProjectLogo svg={project.logoSvg} />
                           <div className="flex flex-col">
                             <div className="flex items-center gap-1">
                               <span className="lg:text-base text-sm text-white">{project.title}</span>
-                              {project.isNDA && (
+                              {project.isNda && (
                                 <span title="NDA Protected">🔒</span>
                               )}
                             </div>

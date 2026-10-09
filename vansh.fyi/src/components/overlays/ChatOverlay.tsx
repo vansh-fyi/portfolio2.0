@@ -6,7 +6,8 @@ import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
 import { useRAGQuery } from '../../hooks/useRAGQuery';
-import { getProjectName } from '../../data/projects';
+import { usePortfolio } from '../../state/portfolio';
+import { projectNameFor } from '../../../lib/portfolio';
 import StreamingMarkdown from '../StreamingMarkdown';
 import ThinkingLoader from '../ThinkingLoader';
 
@@ -18,6 +19,7 @@ interface Message {
 
 const ChatView: React.FC = () => {
   const { goToMain, goToProjects, goToProjectChat, chatContext, initialChatQuery, clearInitialChatQuery, projectId } = useViewStore();
+  const portfolio = usePortfolio();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
@@ -51,11 +53,11 @@ const ChatView: React.FC = () => {
       setMessages([{ sender: 'ai', text: "Hi! I'm Ursa. Ask me anything about Vansh.", isNew: false }]);
     } else {
       // Get the actual project name from metadata
-      const projectName = projectId ? getProjectName(projectId) : undefined;
+      const projectName = projectId ? projectNameFor(portfolio, projectId) : undefined;
       const displayName = projectName || 'this project';
       setMessages([{ sender: 'ai', text: `Hello! Ask anything about ${displayName} here.`, isNew: false }]);
     }
-  }, [chatContext, projectId]);
+  }, [chatContext, projectId, portfolio]);
 
   useEffect(() => {
     if (initialChatQuery) {

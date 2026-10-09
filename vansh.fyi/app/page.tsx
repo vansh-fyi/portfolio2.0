@@ -1,7 +1,8 @@
-import App from '@/src/App';
+import PortfolioApp from '@/app/_components/portfolio-app';
 
-// Slice 1 of the port: the existing single-page app, unchanged, rendered by Next.
-// Slice 2 replaces its view switch with real routes.
+// Regenerated hourly, and immediately when projects change in the admin
+export const revalidate = 3600;
+
 export default function Home() {
-  return <App />;
+  return <PortfolioApp />;
 }

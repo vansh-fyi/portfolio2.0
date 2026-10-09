@@ -101,6 +101,7 @@ async function build(): Promise<Plan> {
                     technologies: meta?.technologies ?? [],
                     logo_svg: toPlainSvg(p.logo),
                     featured: !!card,
+                    featured_position: card ? Object.keys(FEATURED).indexOf(projectId) : 0,
                     featured_layout: card?.layout ?? null,
                     featured_image: card?.image ?? null,
                     featured_alt: card?.alt ?? null,

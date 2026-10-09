@@ -4,7 +4,8 @@ import React, { useState } from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
-import { getAllProjects } from '../../config/projects';
+import { usePortfolio } from '../../state/portfolio';
+import { allPlacements, firstPlacementId } from '../../../lib/portfolio';
 
 const ProjectView: React.FC = () => {
   const { scrollToSection, goToProjectChat, projectId, selectProject } = useViewStore();
@@ -12,9 +13,10 @@ const ProjectView: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
-  // Use projectId from store, default to first project (aether) if undefined
-  const currentProjectId = projectId || 'aether';
-  const projects = getAllProjects();
+  // The route id from the store; falls back to the first listing if it is missing
+  const portfolio = usePortfolio();
+  const currentProjectId = projectId || firstPlacementId(portfolio) || '';
+  const projects = allPlacements(portfolio);
   const selectedProject = projects.find(p => p.id === currentProjectId) || projects[0];
 
   // Closing returns to the Projects section the user came from
@@ -90,8 +92,8 @@ const ProjectView: React.FC = () => {
                 </div>
                 <div className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="flex">
-                    <span className="text-sm text-white/80 font-geist">{selectedProject.title}</span>
-                    <span className="hidden lg:inline text-sm text-white/50 font-geist">:{selectedProject.subtitle}</span>
+                    <span className="text-sm text-white/80 font-geist">{selectedProject?.title}</span>
+                    <span className="hidden lg:inline text-sm text-white/50 font-geist">:{selectedProject?.subtitle}</span>
                   </div>
                 </div>
               </div>
@@ -149,12 +151,15 @@ const ProjectView: React.FC = () => {
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div className="flex-1 sm:space-y-6">
-                    {isIframeLoaded && (
+                    {isIframeLoaded && selectedProject && (
                       <iframe
                         key={selectedProject.id}
                         src={selectedProject.url}
                         className="w-full h-full border-0"
                         title={`${selectedProject.title} - ${selectedProject.subtitle}`}
+                        // Embedded pages run scripts but cannot navigate this page or open forms/popups unasked
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
+                        referrerPolicy="no-referrer"
                       ></iframe>
                     )}
                   </div>

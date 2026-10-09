@@ -1,18 +1,19 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import App from '@/src/App';
+import PortfolioApp from '@/app/_components/portfolio-app';
 import { findProject, projectIds } from '@/lib/projects';
 
 type Params = { id: string };
 
-export const dynamicParams = false;
+// New projects work without a deploy: unknown ids are rendered on demand, then cached
+export const revalidate = 3600;
 
-export function generateStaticParams(): Params[] {
-  return projectIds().map((id) => ({ id }));
+export async function generateStaticParams(): Promise<Params[]> {
+  return (await projectIds()).map((id) => ({ id }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const project = findProject((await params).id);
+  const project = await findProject((await params).id);
   if (!project) return {};
   return {
     title: `Ask about ${project.name} | Vansh Grover`,
@@ -23,6 +24,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function ProjectChatPage({ params }: { params: Promise<Params> }) {
-  if (!findProject((await params).id)) notFound();
-  return <App />;
+  if (!(await findProject((await params).id))) notFound();
+  return <PortfolioApp />;
 }
