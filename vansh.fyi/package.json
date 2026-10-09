@@ -18,7 +18,8 @@
     "test-rag-api": "tsx --env-file-if-exists=.env.local scripts/test-rag-api.ts",
     "verify-deploy": "tsx scripts/verify-deploy.ts",
     "reindex-blog": "tsx --env-file-if-exists=.env.local scripts/reindex-blog.ts",
-    "backup": "tsx --env-file-if-exists=.env.local scripts/backup.ts"
+    "backup": "tsx --env-file-if-exists=.env.local scripts/backup.ts",
+    "seed-projects": "tsx --env-file-if-exists=.env.local scripts/seed-projects.ts"
   },
   "dependencies": {
     "@microsoft/clarity": "^1.0.0",
