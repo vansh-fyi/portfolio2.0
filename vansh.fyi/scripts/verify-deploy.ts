@@ -75,12 +75,29 @@ async function main() {
         });
     }
 
+    await check('home page cards come from the database', async () => {
+        const html = await (await get('/')).text();
+        const links = new Set(html.match(/href="\/projects\/[a-z0-9-]+"/g) ?? []);
+        expect(links.size >= 3, `only ${links.size} project card link(s); is the projects migration applied and seeded?`);
+        return `${links.size} cards`;
+    });
+
     await check('sitemap.xml lists the pages', async () => {
         const res = await get('/sitemap.xml');
         const xml = await res.text();
         const count = (xml.match(/<loc>/g) ?? []).length;
         expect(res.status === 200 && count >= 21, `status ${res.status}, ${count} urls`);
         return `${count} urls, first: ${xml.match(/<loc>([^<]*)/)?.[1]}`;
+    });
+
+    await check('every project page in the sitemap renders', async () => {
+        const xml = await (await get('/sitemap.xml')).text();
+        const paths = [...xml.matchAll(/<loc>[^<]*?(\/projects\/[^<]+)<\/loc>/g)].map((m) => m[1]);
+        expect(paths.length > 0, 'no project URLs in the sitemap');
+        const bad: string[] = [];
+        for (const path of paths) if ((await get(path)).status !== 200) bad.push(path);
+        expect(bad.length === 0, `not 200: ${bad.join(', ')}`);
+        return `${paths.length} pages`;
     });
 
     await check('robots.txt points at the sitemap', async () => {

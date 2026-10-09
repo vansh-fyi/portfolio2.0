@@ -13,6 +13,7 @@ import { evaluateAnswer, GoldenCase } from './evaluate';
  *   blog-index – Ursa knows every published post and NOTHING from drafts or deleted posts
  *   usage      – database and Storage size against the free-tier limits (warns at 70%)
  *   newest-post – the newest published post is readable
+ *   project-content – every published project has Ursa content (kb_chunks), so project chat can answer
  *   answers    – the "smoke" golden questions still produce correct answers end to end
  */
 
@@ -304,6 +305,44 @@ async function checkNewestPost(): Promise<CheckResult> {
     }
 }
 
+// ---------------------------------------------------------- project content
+
+/** Pure: published projects that Ursa has no content for (project chat would have nothing to say). */
+export function judgeProjectContent(publishedProjectIds: string[], indexedProjectIds: string[]): CheckResult {
+    const indexed = new Set(indexedProjectIds);
+    const missing = publishedProjectIds.filter((id) => !indexed.has(id)).sort();
+    if (missing.length > 0) {
+        return {
+            name: 'project-content',
+            status: 'degraded',
+            detail: `${missing.length} published project(s) have no Ursa content, so project chat cannot answer about them: ${missing.join(', ')}. Add _content/projects/**/<file>.md with projectId in its frontmatter and run \`npm run ingest-kb\`, or hide/merge the project.`,
+        };
+    }
+    return { name: 'project-content', status: 'ok', detail: `all ${publishedProjectIds.length} published project(s) have Ursa content` };
+}
+
+async function checkProjectContent(): Promise<CheckResult> {
+    try {
+        const { supabase } = await import('../supabase');
+        const [projects, chunks] = await withTimeout(
+            Promise.all([
+                Promise.resolve(supabase.from('projects').select('id').eq('status', 'published')),
+                Promise.resolve(supabase.from('kb_chunks').select('project_id').eq('source_type', 'project').limit(5000)),
+            ]),
+            PROBE_TIMEOUT_MS,
+            'project content query',
+        );
+        if (projects.error) throw new Error(projects.error.message);
+        if (chunks.error) throw new Error(chunks.error.message);
+        return judgeProjectContent(
+            (projects.data ?? []).map((p: { id: string }) => p.id),
+            (chunks.data ?? []).map((c: { project_id: string | null }) => c.project_id ?? ''),
+        );
+    } catch (error) {
+        return { name: 'project-content', status: 'degraded', detail: `Could not compare projects with Ursa's content: ${errMsg(error)}` };
+    }
+}
+
 // ------------------------------------------------------------------ answers
 
 async function checkAnswers(): Promise<CheckResult> {
@@ -348,7 +387,7 @@ export async function runHealthChecks(): Promise<HealthReport> {
     const providers = getProviderChain();
 
     // Cheap independent probes first, then the end-to-end answers, so the probes don't compete with them for provider quota
-    const [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost] = await Promise.all([
+    const [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost, projectContent] = await Promise.all([
         checkProviders(providers),
         checkOpenRouterPricing(providers),
         checkEmbeddings(),
@@ -356,9 +395,10 @@ export async function runHealthChecks(): Promise<HealthReport> {
         checkBlogIndex(),
         checkUsage(),
         checkNewestPost(),
+        checkProjectContent(),
     ]);
     const answers = await checkAnswers();
-    const checks = [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost, answers];
+    const checks = [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost, projectContent, answers];
 
     return { status: worst(checks.map((c) => c.status)), checkedAt: new Date().toISOString(), checks };
 }
@@ -381,6 +421,7 @@ export function formatAlert(report: HealthReport): { subject: string; text: stri
         '- blog-index: from vansh.fyi/ run `npm run reindex-blog` (or press Re-index on the post in /admin).',
         '- usage: delete unused media in /admin, or upgrade the plan; limits are set by SUPABASE_DB_LIMIT_MB / SUPABASE_STORAGE_LIMIT_MB.',
         '- newest-post: open the post in /admin and check its title and body.',
+        '- project-content: add a _content/projects markdown file for the named project (frontmatter projectId = its id) and run `npm run ingest-kb`, or hide the project in /admin/projects.',
         '- answers: from vansh.fyi/ run `npm run eval-ursa` to see which questions regressed.',
         '',
         'Next check runs tomorrow; this email repeats daily until the problem is fixed.',

@@ -1,6 +1,6 @@
 jest.mock('../../llm/chain', () => ({ callProvider: jest.fn(), getProviderChain: jest.fn(() => []) }));
 
-import { judgeBlogIndex, judgeUsage, judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
+import { judgeBlogIndex, judgeProjectContent, judgeUsage, judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
 import { evaluateAnswer } from '../evaluate';
 
 const ok = (id: string) => ({ id, ok: true });
@@ -139,5 +139,18 @@ describe('judgeUsage', () => {
         const r = judgeUsage(0, 950 * MB);
         expect(r.status).toBe('critical');
         expect(r.detail).toMatch(/9\d%/);
+    });
+});
+
+describe('judgeProjectContent', () => {
+    it('is ok when every published project has content (extra content for unlisted projects is fine)', () => {
+        expect(judgeProjectContent(['a', 'b'], ['a', 'b', 'astr']).status).toBe('ok');
+        expect(judgeProjectContent([], []).status).toBe('ok');
+    });
+
+    it('is degraded and names the projects Ursa knows nothing about', () => {
+        const r = judgeProjectContent(['b', 'a', 'c'], ['a']);
+        expect(r.status).toBe('degraded');
+        expect(r.detail).toContain('b, c');
     });
 });

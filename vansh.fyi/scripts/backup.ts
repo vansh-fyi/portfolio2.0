@@ -1,10 +1,10 @@
 /**
- * Exports the blog to plain JSON so the free plan is not your only copy.
+ * Exports the blog and the projects to plain JSON so the free plan is not your only copy.
  *
- *   npm run backup                 # posts.json + media.json -> backups/<timestamp>/
+ *   npm run backup                 # posts, media and the project tables as JSON -> backups/<timestamp>/
  *   npm run backup -- --originals  # also download the private original images (can be large)
  *
- * Restore: re-insert the rows (posts first, then media), then run `npm run reindex-blog` to rebuild
+ * Restore: re-insert the rows (media and posts; categories, sections, projects, then placements), then run `npm run reindex-blog` to rebuild
  * Ursa's index. Variants are rebuilt from originals, so keep the originals if you want a full restore.
  * The output folder is gitignored: it contains drafts.
  */
@@ -19,7 +19,7 @@ async function main() {
     const dir = path.join('backups', stamp);
     await mkdir(dir, { recursive: true });
 
-    for (const table of ['posts', 'media'] as const) {
+    for (const table of ['posts', 'media', 'projects', 'project_placements', 'project_sections', 'project_categories', 'embed_hosts'] as const) {
         const { data, error } = await supabaseAdmin.from(table).select('*');
         if (error) throw new Error(`Could not read ${table}: ${error.message}`);
         await writeFile(path.join(dir, `${table}.json`), JSON.stringify(data, null, 2));
