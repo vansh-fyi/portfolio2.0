@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { supabase } from '../services/supabase';
 import { getMediaByIds } from '../blog/queries';
 import { bestUrl } from '../blog/media-url';
@@ -100,7 +101,11 @@ export function buildPortfolio(
     return { categories: result, featured };
 }
 
-export async function getPortfolio(): Promise<PortfolioData> {
+/**
+ * Wrapped in React's per-request `cache`: a page render asks for this from generateMetadata, the page
+ * and findProject, and they now share one set of queries instead of running three.
+ */
+export const getPortfolio = cache(async function getPortfolio(): Promise<PortfolioData> {
     try {
         const [categories, sections, placements] = await Promise.all([
             supabase.from('project_categories').select('id, name, icon_svg, position'),
@@ -124,4 +129,4 @@ export async function getPortfolio(): Promise<PortfolioData> {
         }
         throw error;
     }
-}
+});
