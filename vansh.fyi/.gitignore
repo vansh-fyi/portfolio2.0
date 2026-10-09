@@ -33,3 +33,6 @@ src/**/*.js
 # Next.js
 .next/
 next-env.d.ts
+
+# Blog backups (contain drafts)
+backups/

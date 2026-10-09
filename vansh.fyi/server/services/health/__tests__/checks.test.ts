@@ -1,6 +1,6 @@
 jest.mock('../../llm/chain', () => ({ callProvider: jest.fn(), getProviderChain: jest.fn(() => []) }));
 
-import { judgeBlogIndex, judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
+import { judgeBlogIndex, judgeUsage, judgeProviders, probeProvider, worst, formatAlert, HealthReport } from '../checks';
 import { evaluateAnswer } from '../evaluate';
 
 const ok = (id: string) => ({ id, ok: true });
@@ -117,5 +117,27 @@ describe('judgeBlogIndex', () => {
     it('ignores non-blog source files and prefers reporting the leak over a gap', () => {
         expect(judgeBlogIndex(['a'], ['blog/a', 'projects/x.md', 'personal/bio.md']).status).toBe('ok');
         expect(judgeBlogIndex(['a', 'b'], ['blog/a', 'blog/ghost']).status).toBe('critical');
+    });
+});
+
+describe('judgeUsage', () => {
+    const MB = 1024 * 1024;
+
+    it('is ok well under the limits and reports both numbers', () => {
+        const r = judgeUsage(50 * MB, 100 * MB);
+        expect(r.status).toBe('ok');
+        expect(r.detail).toContain('database');
+        expect(r.detail).toContain('storage');
+    });
+
+    it('warns at 70% of either limit', () => {
+        expect(judgeUsage(360 * MB, 0).status).toBe('degraded');
+        expect(judgeUsage(0, 800 * MB).status).toBe('degraded');
+    });
+
+    it('is critical at 90% (the simulated "almost full" case)', () => {
+        const r = judgeUsage(0, 950 * MB);
+        expect(r.status).toBe('critical');
+        expect(r.detail).toMatch(/9\d%/);
     });
 });

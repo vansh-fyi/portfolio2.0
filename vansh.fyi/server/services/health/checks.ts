@@ -11,6 +11,8 @@ import { evaluateAnswer, GoldenCase } from './evaluate';
  *   embeddings – the embed edge function returns a 384-dim vector
  *   database   – kb_chunks is populated; extra tables (e.g. blogs) get a keep-alive query
  *   blog-index – Ursa knows every published post and NOTHING from drafts or deleted posts
+ *   usage      – database and Storage size against the free-tier limits (warns at 70%)
+ *   newest-post – the newest published post is readable
  *   answers    – the "smoke" golden questions still produce correct answers end to end
  */
 
@@ -174,7 +176,7 @@ async function checkDatabase(): Promise<CheckResult> {
         }
 
         // Real queries against other tables (e.g. blogs) double as Supabase keep-alive
-        const extra = (process.env.KEEPALIVE_TABLES ?? '').split(',').map((t) => t.trim()).filter(Boolean);
+        const extra = (process.env.KEEPALIVE_TABLES ?? 'posts').split(',').map((t) => t.trim()).filter(Boolean);
         const failures: string[] = [];
         for (const table of extra) {
             const { error: tableError } = await withTimeout(
@@ -236,6 +238,72 @@ async function checkBlogIndex(): Promise<CheckResult> {
     }
 }
 
+// -------------------------------------------------------------------- usage
+
+// Supabase Free limits (verify against the pricing page; they change). Override with env vars.
+const MB = 1024 * 1024;
+const DB_LIMIT_BYTES = Number(process.env.SUPABASE_DB_LIMIT_MB ?? 500) * MB;
+const STORAGE_LIMIT_BYTES = Number(process.env.SUPABASE_STORAGE_LIMIT_MB ?? 1024) * MB;
+const USAGE_WARN = 0.7;
+const USAGE_CRITICAL = 0.9;
+
+const fmtMb = (bytes: number) => `${(bytes / MB).toFixed(bytes < 10 * MB ? 1 : 0)} MB`;
+
+/** Pure: usage against the free limits. Warns at 70%, critical at 90%. */
+export function judgeUsage(dbBytes: number, storageBytes: number): CheckResult {
+    const rows = [
+        { label: 'database', used: dbBytes, limit: DB_LIMIT_BYTES },
+        { label: 'storage', used: storageBytes, limit: STORAGE_LIMIT_BYTES },
+    ].map((r) => ({ ...r, share: r.used / r.limit }));
+
+    const summary = rows.map((r) => `${r.label} ${fmtMb(r.used)} of ${fmtMb(r.limit)} (${Math.round(r.share * 100)}%)`).join('; ');
+    const top = Math.max(...rows.map((r) => r.share));
+    if (top >= USAGE_CRITICAL) return { name: 'usage', status: 'critical', detail: `Nearly out of free space — ${summary}` };
+    if (top >= USAGE_WARN) return { name: 'usage', status: 'degraded', detail: `Approaching the free limit — ${summary}` };
+    return { name: 'usage', status: 'ok', detail: summary };
+}
+
+async function checkUsage(): Promise<CheckResult> {
+    try {
+        const { supabaseAdmin } = await import('../supabase');
+        const { data, error } = await withTimeout(Promise.resolve(supabaseAdmin.rpc('usage_stats')), PROBE_TIMEOUT_MS, 'usage query');
+        if (error) throw new Error(error.message);
+        const stats = data as { db_bytes: number; storage_bytes: number };
+        return judgeUsage(Number(stats.db_bytes), Number(stats.storage_bytes));
+    } catch (error) {
+        return { name: 'usage', status: 'degraded', detail: `Could not read usage (is migration 010 applied?): ${errMsg(error)}` };
+    }
+}
+
+// ------------------------------------------------------------- newest post
+
+async function checkNewestPost(): Promise<CheckResult> {
+    try {
+        const { supabase } = await import('../supabase');
+        const { data, error } = await withTimeout(
+            Promise.resolve(
+                supabase
+                    .from('posts')
+                    .select('slug, title, body_md')
+                    .eq('status', 'published')
+                    .order('published_at', { ascending: false })
+                    .limit(1),
+            ),
+            PROBE_TIMEOUT_MS,
+            'newest post query',
+        );
+        if (error) throw new Error(error.message);
+        const post = data?.[0] as { slug: string; title: string; body_md: string } | undefined;
+        if (!post) return { name: 'newest-post', status: 'ok', detail: 'No published posts yet' };
+        if (!post.title?.trim() || !post.body_md?.trim()) {
+            return { name: 'newest-post', status: 'degraded', detail: `Newest post "${post.slug}" has an empty title or body` };
+        }
+        return { name: 'newest-post', status: 'ok', detail: `"${post.slug}" is readable` };
+    } catch (error) {
+        return { name: 'newest-post', status: 'degraded', detail: `Could not read the newest post: ${errMsg(error)}` };
+    }
+}
+
 // ------------------------------------------------------------------ answers
 
 async function checkAnswers(): Promise<CheckResult> {
@@ -280,15 +348,17 @@ export async function runHealthChecks(): Promise<HealthReport> {
     const providers = getProviderChain();
 
     // Cheap independent probes first, then the end-to-end answers, so the probes don't compete with them for provider quota
-    const [providerCheck, billing, embeddings, database, blogIndex] = await Promise.all([
+    const [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost] = await Promise.all([
         checkProviders(providers),
         checkOpenRouterPricing(providers),
         checkEmbeddings(),
         checkDatabase(),
         checkBlogIndex(),
+        checkUsage(),
+        checkNewestPost(),
     ]);
     const answers = await checkAnswers();
-    const checks = [providerCheck, billing, embeddings, database, blogIndex, answers];
+    const checks = [providerCheck, billing, embeddings, database, blogIndex, usage, newestPost, answers];
 
     return { status: worst(checks.map((c) => c.status)), checkedAt: new Date().toISOString(), checks };
 }
@@ -309,6 +379,8 @@ export function formatAlert(report: HealthReport): { subject: string; text: stri
         '- billing: remove the named OpenRouter model from PROVIDER_CHAIN immediately.',
         '- embeddings/database: check the Supabase dashboard (project paused? edge function deployed?).',
         '- blog-index: from vansh.fyi/ run `npm run reindex-blog` (or press Re-index on the post in /admin).',
+        '- usage: delete unused media in /admin, or upgrade the plan; limits are set by SUPABASE_DB_LIMIT_MB / SUPABASE_STORAGE_LIMIT_MB.',
+        '- newest-post: open the post in /admin and check its title and body.',
         '- answers: from vansh.fyi/ run `npm run eval-ursa` to see which questions regressed.',
         '',
         'Next check runs tomorrow; this email repeats daily until the problem is fixed.',
