@@ -299,6 +299,10 @@ canvas {
   background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
+.light-mode .bg-white\/15 {
+  background-color: rgba(24, 24, 27, 0.15) !important;
+}
+
 .light-mode .bg-white\/10 {
   background-color: rgba(24, 24, 27, 0.1) !important;
 }
@@ -325,6 +329,20 @@ canvas {
 
 .light-mode .bg-black\/50 {
   background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Blog code blocks sit on a faint tint instead of a dark panel */
+.light-mode .bg-black\/40 {
+  background-color: rgba(24, 24, 27, 0.06) !important;
+}
+
+/* Blog link underlines */
+.light-mode .decoration-white\/30 {
+  text-decoration-color: rgba(24, 24, 27, 0.3) !important;
+}
+
+.light-mode .hover\:decoration-white:hover {
+  text-decoration-color: #18181b !important;
 }
 
 .light-mode .bg-black\/30 {
@@ -370,6 +388,10 @@ canvas {
 
 .light-mode .border-white\/10 {
   border-color: rgba(24, 24, 27, 0.1) !important;
+}
+
+.light-mode .border-white\/20 {
+  border-color: rgba(24, 24, 27, 0.2) !important;
 }
 
 .light-mode .border-white\/30 {

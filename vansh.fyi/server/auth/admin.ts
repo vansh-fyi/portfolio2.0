@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
+import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { config } from '../services/config';
@@ -31,15 +32,16 @@ export async function createAuthClient() {
 
 /**
  * The signed-in admin, or null. `getUser()` validates the session with Supabase Auth on every call;
- * it never trusts the cookie alone.
+ * it never trusts the cookie alone. Wrapped in React's per-request `cache`, so the layout and the page
+ * of one request share a single round trip to Supabase Auth instead of making one each.
  */
-export async function getAdminUser(): Promise<AdminUser | null> {
+export const getAdminUser = cache(async function getAdminUser(): Promise<AdminUser | null> {
     const supabase = await createAuthClient();
     const { data, error } = await supabase.auth.getUser();
     if (error || !data.user) return null;
     if (!isAdminEmail(data.user.email, config.adminEmail)) return null;
     return { id: data.user.id, email: data.user.email! };
-}
+});
 
 /** Use at the top of every admin page and server action: redirects to the login page when not the admin. */
 export async function requireAdmin(): Promise<AdminUser> {

@@ -3,5 +3,13 @@
   "framework": "nextjs",
   "installCommand": "npm install",
   "buildCommand": "npm run build",
-  "crons": [{ "path": "/api/cron/health", "schedule": "0 6 * * *" }]
+  "crons": [
+    {
+      "path": "/api/cron/health",
+      "schedule": "0 6 * * *"
+    }
+  ],
+  "regions": [
+    "sin1"
+  ]
 }
