@@ -2,7 +2,7 @@
 
 import { useViewStore } from '../state/overlayStore';
 
-const IMG_BASE = 'https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images';
+const IMG_BASE = '/images';
 
 interface FeaturedProject {
   id: string;

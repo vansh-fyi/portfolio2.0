@@ -25,11 +25,11 @@ const Header = () => {
           <a href="#hero" onClick={goTo('hero')} className="flex gap-x-2 gap-y-2 items-center cursor-pointer transition opacity-90">
             {/* White logo for dark mode */}
             {!isLightMode && (
-              <span className={`inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-full ${isLightMode ? 'hidden' : ''}`} id="logo-dark"></span>
+              <span className={`inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(/images/logo_dark.png)] bg-cover rounded-full ${isLightMode ? 'hidden' : ''}`} id="logo-dark"></span>
             )}
             {/* Black logo for light mode */}
             {isLightMode && (
-              <span className={`inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_light.png)] bg-cover rounded-full ${isLightMode ? '' : 'hidden'}`} id="logo-light"></span>
+              <span className={`inline-flex items-center justify-center bg-center w-[36px] h-[36px] bg-[url(/images/logo_light.png)] bg-cover rounded-full ${isLightMode ? '' : 'hidden'}`} id="logo-light"></span>
             )}
             <p className="md:text-xl md:text-white font-medium text-base font-geist text-white/80">
               Vansh

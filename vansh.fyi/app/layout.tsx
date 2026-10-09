@@ -12,8 +12,7 @@ const geist = Geist({ subsets: ['latin'], weight: ['300', '400', '500', '600', '
 const TITLE = 'Vansh Grover | Product Designer';
 const SHORT_DESCRIPTION =
   'Product design, AI systems and modern web applications. Explore projects and ask Ursa, the AI assistant.';
-// TODO(A2/B7): replace the jsDelivr-hosted images with files served from this app.
-const OG_IMAGE = 'https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/aether.jpg';
+const OG_IMAGE = '/images/aether.jpg';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
     'Vansh Grover is a Product Designer who simplifies user flows, designs intuitive interfaces and builds modern web applications with AI. Explore projects and ask Ursa, the AI assistant.',
   authors: [{ name: 'Vansh Grover' }],
   alternates: { canonical: '/' },
-  icons: { icon: 'https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png' },
+  icons: { icon: '/images/logo_dark.png' },
   openGraph: {
     type: 'website',
     siteName: 'Vansh Grover',

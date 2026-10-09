@@ -12,11 +12,11 @@ const Footer = () => {
           <div className="flex gap-3 gap-x-3 gap-y-3 items-center">
             {/* White logo for dark mode */}
             {!isLightMode && (
-              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_dark.png)] bg-cover rounded-full" id="logo-dark-footer"></span>
+              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(/images/logo_dark.png)] bg-cover rounded-full" id="logo-dark-footer"></span>
             )}
             {/* Black logo for light mode */}
             {isLightMode && (
-              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(https://cdn.jsdelivr.net/gh/vansh-fyi/portfolio2.0@main/Images/logo_light.png)] bg-cover rounded-full" id="logo-light-footer"></span>
+              <span className="inline-flex items-center justify-center bg-center w-8 h-8 bg-[url(/images/logo_light.png)] bg-cover rounded-full" id="logo-light-footer"></span>
             )}
             <span className="font-medium text-white/80">Vansh.fyi</span>
           </div>
