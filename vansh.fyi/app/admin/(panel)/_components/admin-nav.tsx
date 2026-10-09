@@ -17,6 +17,9 @@ export default function AdminNav({ email }: { email: string }) {
           <Link href="/admin/posts/new" className={link}>
             New post
           </Link>
+          <Link href="/admin/projects" className={link}>
+            Projects
+          </Link>
           <Link href="/admin/media" className={link}>
             Media
           </Link>
