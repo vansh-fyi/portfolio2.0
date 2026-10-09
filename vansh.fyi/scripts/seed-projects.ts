@@ -15,6 +15,9 @@
  */
 import { renderToStaticMarkup } from 'react-dom/server';
 import type { ReactNode } from 'react';
+import { sanitizeSvg } from '../server/projects/svg';
+
+const SANITISED: string[] = [];
 
 const APPLY = process.argv.includes('--apply');
 
@@ -42,10 +45,13 @@ function toPlainSvg(node: ReactNode): string | null {
     if (!node) return null;
     const markup = renderToStaticMarkup(node as never);
     // Only the root <svg> loses its size; width/height on inner shapes (e.g. <rect>) are geometry
-    return markup
+    const stripped = markup
         .replace(/^<svg[^>]*>/, (root) => root.replace(/\s(class|width|height)="[^"]*"/g, ''))
         .replace(/\sdata-[a-z-]+="[^"]*"/g, '')
         .replace(/\sclass="[^"]*"/g, '');
+    const { svg, removed } = sanitizeSvg(stripped);
+    if (removed.length) SANITISED.push(`${removed.length} item(s) dropped: ${[...new Set(removed)].join(', ')}`);
+    return svg;
 }
 
 interface Plan {
@@ -155,6 +161,7 @@ async function main() {
     if (noLogo.length) console.log(`🖼  no logo: ${noLogo.join(', ')}`);
     const big = plan.projects.filter((p) => String(p.logo_svg ?? '').length > 65536).map((p) => p.id);
     if (big.length) console.log(`⚠️  logo over 64 KB (the database would reject it): ${big.join(', ')}`);
+    for (const line of SANITISED) console.log(`🧼 ${line}`);
     for (const note of plan.notes) console.log(`ℹ️  ${note}`);
 
     if (!APPLY) {
