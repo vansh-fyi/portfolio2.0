@@ -9,7 +9,7 @@ const hit = (sourceFile: string, headingPath = 'Heading'): KbHit => ({ id: '1', 
 
 describe('passageLabel', () => {
     it('adds the post URL to blog passages only', () => {
-        expect(passageLabel(hit('blog/my-post', 'Blog post: My post'), 0)).toBe('[1] Blog post: My post (blog post: https://portfolio.vansh.fyi/blog/my-post)');
+        expect(passageLabel(hit('blog/my-post', 'Blog post: My post'), 0)).toBe('[1] Blog post: My post (blog post: https://www.vansh.fyi/blog/my-post)');
         expect(passageLabel(hit('projects/ai/ursa.md', 'Ursa'), 2)).toBe('[3] Ursa');
     });
 });

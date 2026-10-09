@@ -62,7 +62,7 @@ Only allow-listed model IDs are ever called, and OpenRouter models must end in `
    | `RESEND_API_KEY`, `CONTACT_EMAIL` | yes | Lead emails and health alerts |
    | `CRON_SECRET` | production | Authorises Vercel Cron to call `/api/cron/health` |
    | `KEEPALIVE_TABLES` | optional | Comma-separated tables (e.g. `blogs`) the health check queries to keep Supabase active |
-   | `NEXT_PUBLIC_SITE_URL` | optional | Canonical origin for metadata and the sitemap (default `https://portfolio.vansh.fyi`) |
+   | `NEXT_PUBLIC_SITE_URL` | optional | Canonical origin for metadata and the sitemap (default `https://www.vansh.fyi`) |
 
 3. **Database** — in the Supabase SQL editor, run in order:
    - `supabase/migrations/004_kb_chunks_hybrid_search.sql` (knowledge-base table and search function)
