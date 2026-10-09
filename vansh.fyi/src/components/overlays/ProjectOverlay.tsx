@@ -11,7 +11,6 @@ const ProjectView: React.FC = () => {
   const { scrollToSection, goToProjectChat, projectId, selectProject } = useViewStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
 
   // The route id from the store; falls back to the first listing if it is missing
   const portfolio = usePortfolio();
@@ -25,16 +24,6 @@ const ProjectView: React.FC = () => {
   const handleProjectSelect = (id: string) => {
     selectProject(id);
   };
-
-  // Progressive loading: Delay iframe mount to allow GC to run
-  // Reset when project changes to ensure iframe properly switches
-  React.useEffect(() => {
-    setIsIframeLoaded(false);
-    const timer = setTimeout(() => {
-      setIsIframeLoaded(true);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [currentProjectId]);
 
   return (
     <div className="fixed inset-0 z-40 bg-black">
@@ -151,8 +140,9 @@ const ProjectView: React.FC = () => {
               <section className="col-span-12 md:col-span-9 lg:col-span-9 min-h-0 flex flex-col relative">
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div className="flex-1 sm:space-y-6">
-                    {isIframeLoaded && selectedProject && (
+                    {selectedProject && (
                       <iframe
+                        // key remounts the frame when another project is chosen, so it never shows the previous page
                         key={selectedProject.id}
                         src={selectedProject.url}
                         className="w-full h-full border-0"
