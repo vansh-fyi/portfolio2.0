@@ -8,7 +8,7 @@ import { config } from '../config';
 const BATCH_SIZE = 8;
 const EMBEDDING_DIMENSIONS = 384;
 
-async function callEmbed(inputs: string[]): Promise<number[][]> {
+async function callEmbed(inputs: string[], signal?: AbortSignal): Promise<number[][]> {
     if (!config.embedSecret) {
         throw new Error('EMBED_SECRET is not set (needed to call the embed edge function)');
     }
@@ -21,6 +21,7 @@ async function callEmbed(inputs: string[]): Promise<number[][]> {
             'x-embed-secret': config.embedSecret,
         },
         body: JSON.stringify({ inputs }),
+        signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(6000)]) : AbortSignal.timeout(6000),
     });
 
     if (!res.ok) {
@@ -38,8 +39,8 @@ async function callEmbed(inputs: string[]): Promise<number[][]> {
     return embeddings;
 }
 
-export async function embedQuery(text: string): Promise<number[]> {
-    const [embedding] = await callEmbed([text]);
+export async function embedQuery(text: string, signal?: AbortSignal): Promise<number[]> {
+    const [embedding] = await callEmbed([text], signal);
     return embedding;
 }
 

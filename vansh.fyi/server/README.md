@@ -16,14 +16,18 @@ REQUEST  (frontend → POST tRPC `rag.send`)
   rate limit (Postgres)  →  embed query  →  kb_hybrid_search()
         vector + full-text, merged with Reciprocal Rank Fusion, filters applied in SQL
   → prompt = rules + scoped overview + up to 6 passages + bounded recent exchanges
-  → free-only OpenRouter chain, first healthy :free variant answers
-        no Gemini/Groq or paid-model fallback
+  → three-tier fallback chain, first healthy model answers:
+        Gemini 3.5 Flash-Lite → Gemini 3.1 Flash-Lite → Groq GPT-OSS-120B → OpenRouter :free
 
 DAILY  (Vercel Cron → /api/cron/health)
   probes providers, billing guard, embeddings, database, smoke questions → emails on problems
 ```
 
-Production model calls are restricted to explicit OpenRouter `:free` variants. When free capacity is exhausted, chat reports unavailability; it does not fall back to a billable model. Hosting, database and embedding-service quotas remain separate from model pricing.
+Production model calls are restricted to exact model/endpoint pairs in `PROVIDER_CHAIN`, in the order above. Tiers without an API key are skipped. OpenRouter models must be explicit `:free` variants; arbitrary models, paid OpenRouter variants, and alternate endpoints are rejected before making a request. Gemini/Groq free-tier availability depends on the configured accounts and their quotas: use accounts without paid billing enabled when zero model spend is required. There is no automatic model upgrade when quotas run out. Hosting, database and embedding-service quotas are separate.
+
+Gemini uses minimal reasoning and Groq uses low reasoning to avoid spending the short output allowance on hidden reasoning. Requests retain bounded memory, cancellation, per-model cooldowns, a 500-token output cap, and the request-wide deadline. Slow attempts share the remaining generation budget so the later tiers still get a chance to answer.
+
+The OpenRouter tier uses `nvidia/nemotron-3.5-lightning:free`, then `dots-studio/dots-3-note-preview:free`, with reasoning disabled. Both returned grounded answers with reported cost zero in live checks on 2026-10-22. They replace the old Nemotron endpoint returning 404 and the Gemma endpoint returning upstream 429s. Rate-limit and unavailable responses honor `Retry-After` without blocking the visitor on a long retry; the next eligible fallback is tried instead. Free endpoints can still become unavailable or exhaust quota, so the daily health check probes the configured chain and verifies OpenRouter pricing.
 
 
 ## Chat scope and memory
@@ -87,7 +91,7 @@ call a model if the quota limiter is unavailable.
    | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | yes | Database access |
    | `SUPABASE_SERVICE_ROLE_KEY` | yes for ingest + rate limiting | Writes to `kb_chunks`; without it chat fails closed to protect its quota |
    | `EMBED_SECRET` | yes | Shared secret for the `embed` Edge Function |
-   | `OPENROUTER_API_KEY` | yes for chat | Explicit `:free` model variants only. Gemini/Groq keys are not used for production answers. |
+   | `GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY` | at least one for chat | Gemini → Groq → OpenRouter fallback order. Configure all three for the full chain; missing keys skip that tier. OpenRouter uses explicit `:free` variants only. |
    | `RESEND_API_KEY`, `CONTACT_EMAIL` | yes | Lead emails and health alerts |
    | `CRON_SECRET` | production | Authorises Vercel Cron to call `/api/cron/health` |
    | `KEEPALIVE_TABLES` | optional | Comma-separated tables (e.g. `blogs`) the health check queries to keep Supabase active |

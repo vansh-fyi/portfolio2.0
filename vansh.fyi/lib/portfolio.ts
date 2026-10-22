@@ -41,6 +41,9 @@ export interface FeaturedCard {
     blurb: string;
     alt: string;
     image: string;
+    imageSrcSet?: string;
+    imageWidth?: number;
+    imageHeight?: number;
     layout: FeaturedLayout;
 }
 

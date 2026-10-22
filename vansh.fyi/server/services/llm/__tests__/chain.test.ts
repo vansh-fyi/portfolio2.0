@@ -2,7 +2,8 @@ jest.mock('../../config', () => ({
     config: { llm: { geminiApiKey: 'g', groqApiKey: 'q', openRouterApiKey: 'o' } },
 }));
 
-import { describeHttpError, generateWithFallback, getProviderChain, looksTruncated, resetProviderCooldowns } from '../chain';
+import { callProvider, describeHttpError, generateWithFallback, getProviderChain, looksTruncated, resetProviderCooldowns } from '../chain';
+import { config } from '../../config';
 
 describe('describeHttpError', () => {
     it('extracts OpenRouter upstream text and drops the retry hint', () => {
@@ -149,10 +150,15 @@ describe('generateWithFallback', () => {
 });
 
 
-it('uses only explicit free variants even when paid-capable keys are configured', () => {
-    const chain = getProviderChain();
-    expect(chain).toHaveLength(2);
-    expect(chain.every((p) => p.baseUrl === 'https://openrouter.ai/api/v1' && p.model.endsWith(':free'))).toBe(true);
+it('keeps all three provider tiers in the cost-saving preference order', () => {
+    expect(getProviderChain().map((p) => p.id)).toEqual([
+        'gemini/gemini-3.5-flash-lite',
+        'gemini/gemini-3.1-flash-lite',
+        'groq/gpt-oss-120b',
+        'openrouter/nemotron-3.5-lightning:free',
+        'openrouter/dots-3-note-preview:free',
+    ]);
+    expect(getProviderChain().filter((p) => p.baseUrl.includes('openrouter.ai')).every((p) => p.model.endsWith(':free'))).toBe(true);
 });
 
 it('rejects a billable override before making any network call', async () => {
@@ -160,6 +166,55 @@ it('rejects a billable override before making any network call', async () => {
     await expect(generateWithFallback({ system: 's', prompt: 'p', providers: [{ ...getProviderChain()[0], model: 'paid-model' }] })).rejects.toThrow('billable');
     expect(fetchMock).not.toHaveBeenCalled();
     fetchMock.mockRestore();
+});
+
+it.each([
+    { baseUrl: 'https://api.groq.com/openai/v1', model: 'unapproved-model' },
+    { baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai', model: 'unapproved-model' },
+    { baseUrl: 'https://openrouter.ai/api/v1', model: 'google/gemma-4-31b-it' },
+    { baseUrl: 'https://untrusted.example/openai/v1', model: 'gemini-3.5-flash-lite' },
+])('rejects unapproved endpoint/model pairs before sending credentials: %j', async (override) => {
+    const fetchMock = jest.spyOn(global, 'fetch');
+    try {
+        await expect(callProvider({ ...getProviderChain()[0], ...override }, 's', 'p', 100, 1000)).rejects.toThrow('unapproved');
+        expect(fetchMock).not.toHaveBeenCalled();
+    } finally { fetchMock.mockRestore(); }
+});
+
+it('skips tiers with missing keys without changing the order of the remaining tiers', () => {
+    const gemini = jest.replaceProperty(config.llm, 'geminiApiKey', '');
+    const groq = jest.replaceProperty(config.llm, 'groqApiKey', '');
+    try {
+        expect(getProviderChain().map((p) => p.id)).toEqual([
+            'openrouter/nemotron-3.5-lightning:free', 'openrouter/dots-3-note-preview:free',
+        ]);
+    } finally { gemini.restore(); groq.restore(); }
+});
+
+it('falls through all three tiers and preserves each provider reasoning configuration', async () => {
+    resetProviderCooldowns();
+    const warning = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const fetchMock = jest.spyOn(global, 'fetch')
+        .mockResolvedValueOnce({ ok: false, status: 429, text: async () => 'quota' } as Response)
+        .mockResolvedValueOnce({ ok: false, status: 503, text: async () => 'busy' } as Response)
+        .mockResolvedValueOnce({ ok: false, status: 429, text: async () => 'quota' } as Response)
+        .mockResolvedValueOnce({ ok: false, status: 404, text: async () => 'unavailable' } as Response)
+        .mockResolvedValueOnce({ ok: true, json: async () => ({ choices: [{ message: { content: 'A complete answer.' }, finish_reason: 'stop' }] }) } as Response);
+    const timeouts = jest.spyOn(AbortSignal, 'timeout');
+    try {
+        const history = [{ role: 'user' as const, content: 'Earlier question' }, { role: 'assistant' as const, content: 'Earlier answer.' }];
+        const result = await generateWithFallback({ system: 'rules', prompt: 'Follow-up', history });
+        const chain = getProviderChain();
+        expect(result.provider).toBe(chain[4].id);
+        expect(result.failures).toHaveLength(4);
+        expect(fetchMock.mock.calls.map(([url]) => url)).toEqual(chain.map((p) => `${p.baseUrl}/chat/completions`));
+        const bodies = fetchMock.mock.calls.map(([, options]) => JSON.parse(String(options?.body)));
+        expect(bodies.map((b) => b.reasoning_effort)).toEqual(['minimal', 'minimal', 'low', undefined, undefined]);
+        expect(bodies.map((b) => b.reasoning)).toEqual([undefined, undefined, undefined, { enabled: false }, { enabled: false }]);
+        expect(bodies.every((b) => b.max_tokens === 500 && b.messages[1].content === 'Earlier question')).toBe(true);
+        expect(timeouts.mock.calls[0][0]).toBeLessThanOrEqual(4000);
+        expect(timeouts.mock.calls[0][0]).toBeGreaterThan(3000);
+    } finally { fetchMock.mockRestore(); warning.mockRestore(); timeouts.mockRestore(); }
 });
 
 it('sends ordered conversational roles with a capped output allowance', async () => {
@@ -192,6 +247,27 @@ it('does not retry exhausted free providers during their cooldown', async () => 
     expect(fetchMock).toHaveBeenCalledTimes(calls);
     fetchMock.mockRestore();
     warn.mockRestore();
+});
+
+it.each(['120', 'Thu, 22 Oct 2026 10:02:00 GMT'])('honors Retry-After %s before retrying a rate-limited endpoint', async (retryAfter) => {
+    resetProviderCooldowns();
+    const start = Date.parse('2026-10-22T10:00:00Z');
+    let now = start;
+    const clock = jest.spyOn(Date, 'now').mockImplementation(() => now);
+    const warning = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const providers = getProviderChain().filter((p) => p.baseUrl.includes('openrouter.ai'));
+    const fetchMock = jest.spyOn(global, 'fetch')
+        .mockResolvedValueOnce({ ok: false, status: 429, headers: new Headers({ 'Retry-After': retryAfter }), text: async () => 'Busy' } as Response)
+        .mockResolvedValue({ ok: true, json: async () => ({ choices: [{ message: { content: 'A complete answer.' } }] }) } as Response);
+    try {
+        expect((await generateWithFallback({ system: 's', prompt: 'p', providers })).provider).toBe(providers[1].id);
+        now = start + 61_000;
+        fetchMock.mockClear();
+        expect((await generateWithFallback({ system: 's', prompt: 'p', providers })).provider).toBe(providers[1].id);
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+        now = start + 121_000;
+        expect((await generateWithFallback({ system: 's', prompt: 'p', providers })).provider).toBe(providers[0].id);
+    } finally { fetchMock.mockRestore(); warning.mockRestore(); clock.mockRestore(); }
 });
 
 it('detects truncation even with an action marker', () => {

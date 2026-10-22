@@ -8,7 +8,7 @@ export default function Toc({ headings }: { headings: Heading[] }) {
       <ol className="space-y-1.5 text-sm">
         {headings.map((h) => (
           <li key={h.id} className={h.depth === 3 ? 'pl-4' : undefined}>
-            <a href={`#${h.id}`} className="text-white/80 transition hover:text-white">
+            <a href={`#${h.id}`} className="text-white/80 transition-[transform,translate,scale,opacity,background-color,border-color,color] hover:text-white">
               {h.text}
             </a>
           </li>

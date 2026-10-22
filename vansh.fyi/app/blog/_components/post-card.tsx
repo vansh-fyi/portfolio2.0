@@ -6,7 +6,7 @@ import type { PostWithCover } from '@/server/blog/types';
 export default function PostCard({ post }: { post: PostWithCover }) {
   const { cover } = post;
   return (
-    <article className="group relative overflow-hidden rounded-2xl bg-black/30 ring-1 ring-white/10 backdrop-blur-lg transition-all duration-500 hover:-translate-y-1 hover:ring-white/20">
+    <article className="group relative overflow-hidden rounded-2xl bg-black/30 ring-1 ring-white/10 backdrop-blur-lg transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 hover:-translate-y-1 hover:ring-white/20">
       {cover && (
         <div className="aspect-[16/9] overflow-hidden bg-white/5" style={cover.blur_data_url ? { backgroundImage: `url(${cover.blur_data_url})`, backgroundSize: 'cover' } : undefined}>
           {/* eslint-disable-next-line @next/next/no-img-element -- pre-generated variants from Supabase Storage */}

@@ -1,7 +1,8 @@
 import { cache } from 'react';
 import { supabase } from '../services/supabase';
 import { getMediaByIds } from '../blog/queries';
-import { bestUrl } from '../blog/media-url';
+import { bestUrl, srcSet } from '../blog/media-url';
+import { publicImage } from '../../lib/public-images';
 import type { FeaturedCard, FeaturedLayout, PortfolioCategory, PortfolioData, PortfolioPlacement } from '../../lib/portfolio';
 import { EMPTY_PORTFOLIO } from '../../lib/portfolio';
 
@@ -118,10 +119,20 @@ export const getPortfolio = cache(async function getPortfolio(): Promise<Portfol
         const mediaIds = [...new Set(rows.map((p) => p.projects?.featured_media_id).filter((id): id is string => !!id))];
         const media = await getMediaByIds(mediaIds);
 
-        return buildPortfolio(categories.data!, sections.data!, rows, (project) => {
+        const data = buildPortfolio(categories.data!, sections.data!, rows, (project) => {
             const m = project.featured_media_id ? media.get(project.featured_media_id) : undefined;
             return (m && bestUrl(m, 1280)) || project.featured_image;
         });
+        for (const card of data.featured) {
+            const project = rows.find((p) => p.project_id === card.projectId)?.projects;
+            const m = project?.featured_media_id ? media.get(project.featured_media_id) : undefined;
+            const image = publicImage(card.image);
+            card.image = image.src;
+            card.imageSrcSet = m ? srcSet(m) : image.srcSet;
+            card.imageWidth = m?.width ?? image.width;
+            card.imageHeight = m?.height ?? image.height;
+        }
+        return data;
     } catch (error) {
         if (isBuildPhase()) {
             console.warn('[projects] skipped at build time:', error instanceof Error ? error.message : error);

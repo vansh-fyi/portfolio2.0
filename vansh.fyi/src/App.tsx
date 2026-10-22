@@ -1,25 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import { scrollToElement, useViewStore } from './state/overlayStore';
 import { useThemeStore } from './state/themeStore';
 import { useUnicornStudio } from './hooks/useUnicornStudio';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import About from './components/About';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
 import ProjectView from './components/overlays/ProjectOverlay';
+import { scheduleWarmup } from './utils/warmup';
+import { loadChatView, warmChatView } from './utils/chat-view';
 
 // Keep the lightweight project window ready for the first click. Only chat needs the Markdown stack.
-const loadChatView = () => import('./components/overlays/ChatOverlay');
 const ChatView = dynamic(loadChatView);
 
-function App() {
+function App({ children }: { children: ReactNode }) {
   const { currentView, projectId, pendingSection, clearPendingSection } = useViewStore();
   const { isLightMode } = useThemeStore();
   const [openedProjectId, setOpenedProjectId] = useState<string | null>(null);
@@ -46,17 +40,7 @@ function App() {
   // Warm the overlay chunks once the home page has settled
   useEffect(() => {
     if (currentView !== 'main') return;
-    const warm = () => {
-      loadChatView();
-    };
-    // requestIdleCallback is missing in Safari, hence the optional typing and the timeout fallback
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
-    if (w.requestIdleCallback && w.cancelIdleCallback) {
-      const id = w.requestIdleCallback(warm, { timeout: 4000 });
-      return () => w.cancelIdleCallback?.(id);
-    }
-    const timer = window.setTimeout(warm, 2000);
-    return () => window.clearTimeout(timer);
+    return scheduleWarmup(warmChatView);
   }, [currentView]);
 
   // Handle theme changes
@@ -79,17 +63,11 @@ function App() {
         </div>
         <Header />
 
-        <Hero />
-        <Skills />
-        <Projects />
-        <About />
-        <Testimonials />
-        <Contact />
-        <Footer />
+        {children}
       </div>
       {openedProjectId !== null && (
         <div hidden={currentView !== 'projects'} inert={currentView !== 'projects'}>
-          <ProjectView projectId={openedProjectId} />
+          <ProjectView projectId={openedProjectId} active={currentView === 'projects'} />
         </div>
       )}
       {currentView === 'chat' && <ChatView />}

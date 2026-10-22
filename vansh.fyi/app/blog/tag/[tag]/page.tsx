@@ -31,7 +31,7 @@ export default async function TagPage({ params }: { params: Promise<Params> }) {
   return (
     <BlogShell>
       <header className="mb-10">
-        <Link href="/blog" className="mb-6 inline-block text-sm text-white/50 transition hover:text-white">
+        <Link href="/blog" className="mb-6 inline-block text-sm text-white/50 transition-[transform,translate,scale,opacity,background-color,border-color,color] hover:text-white">
           ← All posts
         </Link>
         <h1 className="text-3xl font-light tracking-tighter font-geist text-white sm:text-4xl lg:text-5xl">

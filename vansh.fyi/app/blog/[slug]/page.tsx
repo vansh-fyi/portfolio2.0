@@ -70,7 +70,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
     <BlogShell>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(structuredData) }} />
       <article>
-        <Link href="/blog" className="mb-8 inline-block text-sm text-white/50 transition hover:text-white">
+        <Link href="/blog" className="mb-8 inline-block text-sm text-white/50 transition-[transform,translate,scale,opacity,background-color,border-color,color] hover:text-white">
           ← All posts
         </Link>
 
@@ -85,7 +85,7 @@ export default async function PostPage({ params }: { params: Promise<Params> }) 
             <ul className="mt-5 flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <li key={tag}>
-                  <Link href={`/blog/tag/${encodeURIComponent(tag)}`} className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/80 ring-1 ring-white/10 transition hover:bg-white/15">
+                  <Link href={`/blog/tag/${encodeURIComponent(tag)}`} className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/80 ring-1 ring-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,color] hover:bg-white/15">
                     {tag}
                   </Link>
                 </li>

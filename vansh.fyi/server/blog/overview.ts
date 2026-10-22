@@ -37,19 +37,21 @@ export function formatBlogOverview(posts: OverviewPost[], siteUrl: string = SITE
 let cache: { at: number; text: string } | null = null;
 
 /** Never throws: a blog hiccup must not stop Ursa from answering about everything else. */
-export async function getBlogOverview(now: number = Date.now()): Promise<string> {
+export async function getBlogOverview(now: number = Date.now(), signal?: AbortSignal): Promise<string> {
     if (cache && now - cache.at < CACHE_MS) return cache.text;
     try {
-        const { data, error } = await supabase
+        const query = supabase
             .from('posts')
             .select('slug, title, excerpt, tags, published_at')
             .eq('status', 'published')
             .order('published_at', { ascending: false })
             .limit(MAX_POSTS);
+        const { data, error } = await (signal ? query.abortSignal(signal) : query);
         if (error) throw new Error(error.message);
         cache = { at: now, text: formatBlogOverview((data ?? []) as OverviewPost[]) };
         return cache.text;
     } catch (error) {
+        if (signal?.aborted) throw error;
         console.warn('[rag] blog overview unavailable:', error instanceof Error ? error.message : error);
         return cache?.text ?? '';
     }

@@ -1,0 +1,272 @@
+{
+  "/images/Greg.webp": {
+    "width": 314,
+    "height": 311,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Greg.b55e22215d87.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Greg.f76459cf4c8f.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Greg.39081a5699eb.144.webp"
+      }
+    ]
+  },
+  "/images/Varun.webp": {
+    "width": 314,
+    "height": 311,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Varun.646809c27449.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Varun.504c36fe2d7c.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Varun.627efb02885e.144.webp"
+      }
+    ]
+  },
+  "/images/Narendra.webp": {
+    "width": 314,
+    "height": 311,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Narendra.4ef7be66e580.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Narendra.eeb40d558959.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Narendra.1b865b73cb97.144.webp"
+      }
+    ]
+  },
+  "/images/Shreyas.webp": {
+    "width": 314,
+    "height": 311,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Shreyas.8acbee61a1a0.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Shreyas.f677ff80709b.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Shreyas.b77a4332b6ef.144.webp"
+      }
+    ]
+  },
+  "/images/Sulagna.webp": {
+    "width": 345,
+    "height": 345,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Sulagna.bd4f3817278e.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Sulagna.8eefbac47fa8.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Sulagna.60e57c62d406.144.webp"
+      }
+    ]
+  },
+  "/images/Ankit.webp": {
+    "width": 314,
+    "height": 311,
+    "variants": [
+      {
+        "w": 48,
+        "src": "/images/optimized/Ankit.c2a545217e11.48.webp"
+      },
+      {
+        "w": 96,
+        "src": "/images/optimized/Ankit.3767cd9ed842.96.webp"
+      },
+      {
+        "w": 144,
+        "src": "/images/optimized/Ankit.56da9ac0787d.144.webp"
+      }
+    ]
+  },
+  "/images/aether.webp": {
+    "width": 1080,
+    "height": 821,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/aether.c9d302dd7b51.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/aether.32a275aa4799.768.webp"
+      },
+      {
+        "w": 1080,
+        "src": "/images/optimized/aether.488cc1dc545d.1080.webp"
+      }
+    ]
+  },
+  "/images/driq.webp": {
+    "width": 1280,
+    "height": 956,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/driq.c22755b5b567.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/driq.682b65ca4004.768.webp"
+      },
+      {
+        "w": 1280,
+        "src": "/images/optimized/driq.46aeaf1392fb.1280.webp"
+      }
+    ]
+  },
+  "/images/sparto.webp": {
+    "width": 738,
+    "height": 1280,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/sparto.79d4c95158cb.480.webp"
+      },
+      {
+        "w": 738,
+        "src": "/images/optimized/sparto.8e24e939e7a3.738.webp"
+      }
+    ]
+  },
+  "/images/sparto_admin.webp": {
+    "width": 1080,
+    "height": 821,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/sparto_admin.2c2471d39389.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/sparto_admin.75b00ff85673.768.webp"
+      },
+      {
+        "w": 1080,
+        "src": "/images/optimized/sparto_admin.1a098d90ed0c.1080.webp"
+      }
+    ]
+  },
+  "/images/vibio.webp": {
+    "width": 1080,
+    "height": 821,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/vibio.3ae556cc0768.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/vibio.6b6dc43a6dae.768.webp"
+      },
+      {
+        "w": 1080,
+        "src": "/images/optimized/vibio.3f25b13a5fa8.1080.webp"
+      }
+    ]
+  },
+  "/images/about_main.webp": {
+    "width": 1442,
+    "height": 1103,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/about_main.c0eb1a6d3ab0.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/about_main.2d6b39922c63.768.webp"
+      },
+      {
+        "w": 1024,
+        "src": "/images/optimized/about_main.1a431e7b1f19.1024.webp"
+      },
+      {
+        "w": 1440,
+        "src": "/images/optimized/about_main.100faa6f3ca6.1440.webp"
+      }
+    ]
+  },
+  "/images/about_theme.webp": {
+    "width": 4230,
+    "height": 3274,
+    "variants": [
+      {
+        "w": 480,
+        "src": "/images/optimized/about_theme.dc53bddd80bb.480.webp"
+      },
+      {
+        "w": 768,
+        "src": "/images/optimized/about_theme.fd58b6239e7f.768.webp"
+      },
+      {
+        "w": 1024,
+        "src": "/images/optimized/about_theme.8cd13130634e.1024.webp"
+      },
+      {
+        "w": 1440,
+        "src": "/images/optimized/about_theme.dbf7f4c1c646.1440.webp"
+      },
+      {
+        "w": 1920,
+        "src": "/images/optimized/about_theme.96e240a9bf72.1920.webp"
+      }
+    ]
+  },
+  "/images/hero_dark_focus.webp": {
+    "width": 1020,
+    "height": 644,
+    "variants": [
+      {
+        "w": 640,
+        "src": "/images/optimized/hero_dark_focus.04794c370d5b.640.webp"
+      },
+      {
+        "w": 1020,
+        "src": "/images/optimized/hero_dark_focus.744525e79b25.1020.webp"
+      }
+    ]
+  },
+  "/images/hero_light_focus.webp": {
+    "width": 1020,
+    "height": 644,
+    "variants": [
+      {
+        "w": 640,
+        "src": "/images/optimized/hero_light_focus.b8287d3bf8e7.640.webp"
+      },
+      {
+        "w": 1020,
+        "src": "/images/optimized/hero_light_focus.9d00c203787a.1020.webp"
+      }
+    ]
+  }
+}

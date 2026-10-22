@@ -11,7 +11,7 @@ export const proseComponents: Components = {
   p: ({ node: _node, ...props }) => <p className="my-5 leading-relaxed text-white/80" {...props} />,
   a: ({ node: _node, href, ...props }) => {
     const external = !!href && /^https?:\/\//.test(href);
-    return <a href={href} className="text-white underline decoration-white/30 underline-offset-4 transition hover:decoration-white" {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...props} />;
+    return <a href={href} className="text-white underline decoration-white/30 underline-offset-4 transition-[transform,translate,scale,opacity,background-color,border-color,color] hover:decoration-white" {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...props} />;
   },
   ul: ({ node: _node, ...props }) => <ul className="my-5 list-disc space-y-2 pl-6 text-white/80 marker:text-white/30" {...props} />,
   ol: ({ node: _node, ...props }) => <ol className="my-5 list-decimal space-y-2 pl-6 text-white/80 marker:text-white/50" {...props} />,

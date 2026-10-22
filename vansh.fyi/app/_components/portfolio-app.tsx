@@ -1,6 +1,7 @@
 import App from '@/src/App';
 import { PortfolioProvider } from '@/src/state/portfolio';
 import { getPortfolio } from '@/server/projects/queries';
+import HomeContent from '@/src/components/HomeContent';
 
 /**
  * The single-page portfolio with its project data. A server component, so the data is fetched on the
@@ -10,7 +11,7 @@ export default async function PortfolioApp() {
   const data = await getPortfolio();
   return (
     <PortfolioProvider data={data}>
-      <App />
+      <App><HomeContent /></App>
     </PortfolioProvider>
   );
 }

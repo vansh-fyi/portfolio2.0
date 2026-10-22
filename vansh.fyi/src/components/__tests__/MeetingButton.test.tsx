@@ -1,6 +1,6 @@
 import { afterEach, beforeAll, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import '@testing-library/jest-dom/jest-globals';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import Hero from '../Hero';
 import Contact from '../Contact';
 import { useThemeStore } from '../../state/themeStore';
@@ -29,7 +29,7 @@ describe('meeting popup', () => {
     document.body.style.overflow = 'clip';
     fireEvent.click(trigger);
     expect(screen.getByRole('dialog', { name: 'Schedule a meeting' })).toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent('Loading available times');
+    expect(within(screen.getByRole('dialog')).getByRole('status')).toHaveTextContent('Loading available times');
     expect(document.body.style.overflow).toBe('hidden');
     const close = screen.getByRole('button', { name: 'Close scheduling popup' });
     expect(close).toHaveFocus();
@@ -56,7 +56,7 @@ describe('meeting popup', () => {
     expect(url.searchParams.get('embed_type')).toBe('Inline');
     expect(url.searchParams.get('embed_domain')).toBe(window.location.hostname);
     fireEvent.load(frame);
-    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(within(screen.getByRole('dialog')).queryByRole('status')).not.toBeInTheDocument();
     expect(frame.parentElement).toHaveAttribute('aria-busy', 'false');
     const fallback = screen.getByRole('link', { name: 'Open Calendly in a new tab' });
     expect(fallback).toHaveAttribute('href', 'https://calendly.com/design-vansh/30min');
@@ -83,6 +83,6 @@ describe('meeting popup', () => {
     act(() => useThemeStore.setState({ isLightMode: true }));
     const url = new URL(screen.getByTitle('Book a 30-minute meeting with Vansh').getAttribute('src')!);
     expect(url.searchParams.get('background_color')).toBe('ffffff');
-    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(within(screen.getByRole('dialog')).getByRole('status')).toBeInTheDocument();
   });
 });

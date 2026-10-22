@@ -4,6 +4,8 @@ import { useState, type KeyboardEvent } from 'react';
 import { useViewStore } from '../state/overlayStore';
 import ViewProjectsLink from './ViewProjectsLink';
 import MeetingButton from './MeetingButton';
+import HeroBackground from './HeroBackground';
+import { warmChatView } from '../utils/chat-view';
 
 const Hero = () => {
   const { goToChat } = useViewStore();
@@ -39,8 +41,7 @@ const Hero = () => {
         <div className="absolute inset-x-0 top-[80%] h-px bg-gradient-to-r from-transparent to-transparent via-white/10"></div>
       </div>
       {/* Background image */}
-      <img id="dark-bg-image" src="/images/hero_dark_focus.webp" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-40 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
-      <img id="light-bg-image" src="/images/hero_light_focus.webp" alt="" className="pointer-events-none transition-opacity duration-500 ease-in-out opacity-0 w-full h-full object-cover absolute top-0 right-0 bottom-0 left-0" />
+      <HeroBackground />
       <div className="pointer-events-none" id="wrapper">
         <div className="bg-transparent md:gradient-blur">
           <div className=""></div>
@@ -65,7 +66,7 @@ const Hero = () => {
                 Beyond<span className="block bg-clip-text text-transparent tracking-tighter font-regular bg-gradient-to-r from-purple-500 to-orange-300 pb-1 pointer-events-none">Imagination</span>
               </h1>
               <div className="pt-4">
-                <div className="group transition-all duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
+                <div className="group transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
                   <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
                     <div className="hidden sm:flex text-white/80 bg-white/10 w-9 h-9 border-white/10 border rounded-lg items-center justify-center">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
@@ -77,6 +78,7 @@ const Hero = () => {
                       </svg>
                     </div>
                     <input
+                      onFocus={warmChatView}
                       type="text"
                       aria-label="Chat with AI agent"
                       className="focus:outline-none text-sm text-white bg-transparent w-full h-10 pr-3 pl-3"

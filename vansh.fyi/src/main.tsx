@@ -2,8 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
+import HomeContent from './components/HomeContent'
 import { reportWebVitals } from './vitals'
-import { TRPCProvider } from './services/trpc'
 
 import clarity from '@microsoft/clarity';
 
@@ -14,9 +14,7 @@ if (import.meta.env.PROD) {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TRPCProvider>
-      <App />
-    </TRPCProvider>
+    <App><HomeContent /></App>
   </StrictMode>,
 )
 

@@ -12,10 +12,11 @@ import { CHAT_LIMITS, type ChatScope } from '../../../lib/chat';
 import StreamingMarkdown from '../StreamingMarkdown';
 import ThinkingLoader from '../ThinkingLoader';
 import ViewProjectsLink from '../ViewProjectsLink';
+import { TRPCProvider } from '../../services/trpc';
 
 const ChatView: React.FC = () => {
   const { chatContext, projectId } = useViewStore();
-  return <ChatSession key={`${chatContext}:${projectId ?? ''}`} />;
+  return <TRPCProvider><ChatSession key={`${chatContext}:${projectId ?? ''}`} /></TRPCProvider>;
 };
 
 const ChatSession: React.FC = () => {
@@ -27,10 +28,12 @@ const ChatSession: React.FC = () => {
   const greeting = chatContext === 'personal'
     ? "Hi! I'm Ursa. Ask me anything about Vansh."
     : `Hello! Ask anything about ${projectNameFor(portfolio, projectId) || 'this project'} here.`;
-  const { messages, input, setInput, isSending, send } = useChatSession(scope, greeting);
+  const { messages, input, setInput, isSending, send, finishReveal } = useChatSession(scope, greeting);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const following = useRef(true);
+  const scrollFrame = useRef<number | null>(null);
 
   // Virtualization setup for performance with long message lists
   const virtualizer = useVirtualizer({
@@ -42,13 +45,15 @@ const ChatSession: React.FC = () => {
 
   // Smooth scroll to bottom - used during streaming
   const scrollToBottom = useCallback(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
+    if (!following.current || scrollFrame.current !== null) return;
+    scrollFrame.current = requestAnimationFrame(() => {
+      scrollFrame.current = null;
+      const container = chatContainerRef.current;
+      if (container && following.current) container.scrollTop = container.scrollHeight;
+    });
   }, []);
+
+  useEffect(() => () => { if (scrollFrame.current !== null) cancelAnimationFrame(scrollFrame.current); }, []);
 
   useEffect(() => {
     if (!initialChatQuery) return;
@@ -64,7 +69,7 @@ const ChatSession: React.FC = () => {
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages.length > 0 && following.current) {
       virtualizer.scrollToIndex(messages.length - 1, { align: 'end' });
     }
   }, [messages.length, isSending, virtualizer]);
@@ -77,7 +82,7 @@ const ChatSession: React.FC = () => {
     }
   };
 
-  const handleSend = () => { void send(input); };
+  const handleSend = () => { following.current = true; void send(input); };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -198,7 +203,10 @@ const ChatSession: React.FC = () => {
               )}
               <section className={`${chatContext === 'project' ? 'col-span-12 md:col-span-9 lg:col-span-9' : 'col-span-12'} min-h-0 flex flex-col relative`}>
                 <div className="flex flex-col min-h-0 h-full relative">
-                  <div ref={chatContainerRef} className="flex-1 overflow-y-auto sm:px-8 pt-8 pr-4 pb-8 pl-4">
+                  <div ref={chatContainerRef} onScroll={(event) => {
+                    const container = event.currentTarget;
+                    following.current = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
+                  }} className="flex-1 overflow-y-auto sm:px-8 pt-8 pr-4 pb-8 pl-4">
                     <div
                       style={{
                         height: `${virtualizer.getTotalSize()}px`,
@@ -243,8 +251,7 @@ const ChatSession: React.FC = () => {
                                     <StreamingMarkdown
                                       content={msg.text}
                                       isComplete={!msg.isNew}
-                                      speed={1}
-                                      tickInterval={30}
+                                      onComplete={finishReveal}
                                       onProgress={scrollToBottom}
                                     />
                                   ) : (
@@ -256,7 +263,7 @@ const ChatSession: React.FC = () => {
                                 </div>
                               </div>
                               {msg.sender === 'user' && (
-                                <div className="inline-flex transition text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
+                                <div className="inline-flex transition-[transform,translate,scale,opacity,background-color,border-color,color] text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-user lucide-user w-[18px] h-[18px]">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <circle cx="12" cy="10" r="3"></circle>

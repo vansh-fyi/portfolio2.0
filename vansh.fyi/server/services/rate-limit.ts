@@ -62,18 +62,20 @@ export interface RateResult {
 }
 
 /** Checks rules in order and stops at the first one that blocks (later counters aren't incremented). */
-export async function checkRateLimit(rules: RateRule[], options: { failClosed?: boolean } = {}): Promise<RateResult> {
+export async function checkRateLimit(rules: RateRule[], options: { failClosed?: boolean; signal?: AbortSignal } = {}): Promise<RateResult> {
     for (const rule of rules) {
         try {
-            const { data, error } = await supabaseAdmin.rpc('rate_limit_hit', {
+            const query = supabaseAdmin.rpc('rate_limit_hit', {
                 p_key: rule.key,
                 p_window_seconds: rule.windowSeconds,
                 p_max: rule.max,
             });
+            const { data, error } = await (options.signal ? query.abortSignal(options.signal) : query);
             if (error) throw new Error(error.message);
             if (typeof data !== 'boolean') throw new Error('Invalid rate limit result');
             if (data === false) return { allowed: false, blockedBy: rule.key };
         } catch (error) {
+            if (options.signal?.aborted) throw error;
             console.warn(`Rate limiter unavailable: ${error instanceof Error ? error.message : error}`);
             return options.failClosed ? { allowed: false, blockedBy: 'limiter-unavailable' } : { allowed: true };
         }

@@ -2,7 +2,7 @@ import { config } from '../config';
 import { boundedHistory, parseChatActions, type ChatTurn } from '../../../lib/chat';
 
 /**
- * Free-only LLM fallback chain for Ursa.
+ * Free-tier LLM fallback chain for Ursa: Gemini, then Groq, then OpenRouter.
  *
  * The providers speak the OpenAI chat-completions protocol, so one small HTTP
  * client covers them (no SDK versions to drift as models churn). Providers are tried
@@ -19,6 +19,7 @@ export interface LlmProvider {
     baseUrl: string;
     apiKey: string;
     model: string;
+    reasoningEffort?: 'minimal' | 'low';
 }
 
 export interface LlmFailure {
@@ -44,18 +45,39 @@ export class AllProvidersFailedError extends Error {
 
 type ProviderSpec = Omit<LlmProvider, 'apiKey'> & { keyOf: () => string };
 
-/** Only explicit :free variants: exhausted free capacity must never become a paid fallback. */
+/** Exact model/endpoint allowlist. OpenRouter fallbacks must always be explicit :free variants. */
 const PROVIDER_CHAIN: ProviderSpec[] = [
     {
-        id: 'openrouter/nemotron-3-super:free',
+        id: 'gemini/gemini-3.5-flash-lite',
+        baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
+        model: 'gemini-3.5-flash-lite',
+        keyOf: () => config.llm.geminiApiKey,
+        reasoningEffort: 'minimal',
+    },
+    {
+        id: 'gemini/gemini-3.1-flash-lite',
+        baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
+        model: 'gemini-3.1-flash-lite',
+        keyOf: () => config.llm.geminiApiKey,
+        reasoningEffort: 'minimal',
+    },
+    {
+        id: 'groq/gpt-oss-120b',
+        baseUrl: 'https://api.groq.com/openai/v1',
+        model: 'openai/gpt-oss-120b',
+        keyOf: () => config.llm.groqApiKey,
+        reasoningEffort: 'low',
+    },
+    {
+        id: 'openrouter/nemotron-3.5-lightning:free',
         baseUrl: 'https://openrouter.ai/api/v1',
-        model: 'nvidia/nemotron-3-super-120b-a12b:free',
+        model: 'nvidia/nemotron-3.5-lightning:free',
         keyOf: () => config.llm.openRouterApiKey,
     },
     {
-        id: 'openrouter/gemma-4-31b:free',
+        id: 'openrouter/dots-3-note-preview:free',
         baseUrl: 'https://openrouter.ai/api/v1',
-        model: 'google/gemma-4-31b-it:free',
+        model: 'dots-studio/dots-3-note-preview:free',
         keyOf: () => config.llm.openRouterApiKey,
     },
 ];
@@ -67,16 +89,19 @@ const blockedUntil = new Map<string, number>();
 /** Providers that have a key configured. Throws if a spec would break the billing guard. */
 export function getProviderChain(): LlmProvider[] {
     return PROVIDER_CHAIN.flatMap((spec) => {
-        assertFreeProvider(spec);
+        assertAllowedProvider(spec);
         const apiKey = spec.keyOf();
         if (!apiKey) return [];
-        return [{ id: spec.id, baseUrl: spec.baseUrl, model: spec.model, apiKey }];
+        const { keyOf: _keyOf, ...provider } = spec;
+        return [{ ...provider, apiKey }];
     });
 }
 
-function assertFreeProvider(provider: Pick<LlmProvider, 'baseUrl' | 'model'>): void {
-    if (provider.baseUrl !== 'https://openrouter.ai/api/v1' || !provider.model.endsWith(':free')) {
-        throw new Error('Refusing a potentially billable LLM provider');
+function assertAllowedProvider(provider: Pick<LlmProvider, 'baseUrl' | 'model'>): void {
+    const approved = PROVIDER_CHAIN.some((spec) => spec.baseUrl === provider.baseUrl && spec.model === provider.model);
+    const nonFreeOpenRouter = provider.baseUrl === 'https://openrouter.ai/api/v1' && !provider.model.endsWith(':free');
+    if (!approved || nonFreeOpenRouter) {
+        throw new Error('Refusing a potentially billable or unapproved LLM provider');
     }
 }
 
@@ -122,7 +147,7 @@ async function callProviderRaw(
     history: ChatTurn[] = [],
     signal?: AbortSignal
 ): Promise<{ text: string; finishReason: string | null }> {
-    assertFreeProvider(provider);
+    assertAllowedProvider(provider);
     let res: Response;
     try {
         res = await fetch(`${provider.baseUrl}/chat/completions`, {
@@ -132,6 +157,8 @@ async function callProviderRaw(
                 model: provider.model,
                 max_tokens: maxTokens,
                 temperature: 0.3,
+                ...(provider.reasoningEffort ? { reasoning_effort: provider.reasoningEffort } : {}),
+                ...(provider.baseUrl === 'https://openrouter.ai/api/v1' ? { reasoning: { enabled: false } } : {}),
                 messages: [
                     { role: 'system', content: system },
                     ...boundedHistory(history),
@@ -150,7 +177,14 @@ async function callProviderRaw(
 
     if (!res.ok) {
         const detail = await res.text().catch(() => '');
-        throw Object.assign(new Error(describeHttpError(res.status, detail)), { status: res.status });
+        const retryAfter = res.headers?.get('Retry-After');
+        const retryAfterMs = retryAfter
+            ? /^\d+(?:\.\d+)?$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now()
+            : 0;
+        throw Object.assign(new Error(describeHttpError(res.status, detail)), {
+            status: res.status,
+            retryAfterMs: Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs) : 0,
+        });
     }
 
     const body = (await res.json()) as {
@@ -185,8 +219,9 @@ export function looksTruncated(text: string, finishReason?: string | null): bool
 }
 
 function cooldownFor(error: unknown): number {
-    const status = (error as { status?: number }).status;
-    if (status === 429) return COOLDOWN_MS.rateLimited;
+    const { status, retryAfterMs = 0 } = error as { status?: number; retryAfterMs?: number };
+    if (status === 429) return Math.max(COOLDOWN_MS.rateLimited, retryAfterMs);
+    if (status === 503) return Math.max(COOLDOWN_MS.transient, retryAfterMs);
     if (status === 401 || status === 403 || status === 404 || status === 410) return COOLDOWN_MS.unavailable;
     return COOLDOWN_MS.transient;
 }
@@ -209,7 +244,7 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
     const { system, prompt, history = [], signal, deadlineMs = 20_000, attemptTimeoutMs = 8_000 } = options;
     const maxTokens = Math.min(500, Math.max(1, options.maxTokens ?? 500));
     const providers = options.providers ?? getProviderChain();
-    providers.forEach(assertFreeProvider);
+    providers.forEach(assertAllowedProvider);
     const startedAt = Date.now();
     const failures: LlmFailure[] = [];
     /** First answer that looked cut off; returned only if no provider gives a complete one. */
@@ -224,7 +259,7 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
     const ready = providers.filter((p) => (blockedUntil.get(p.id) ?? 0) <= now);
     if (!ready.length) throw new AllProvidersFailedError(providers.map((provider) => ({ provider: provider.id, reason: 'cooling down' })));
 
-    for (const provider of ready) {
+    for (const [index, provider] of ready.entries()) {
         signal?.throwIfAborted();
         const remaining = deadlineMs - (Date.now() - startedAt);
         if (remaining < 1_000) {
@@ -232,7 +267,9 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
             break;
         }
         try {
-            const { text, finishReason } = await callProviderRaw(provider, system, prompt, maxTokens, Math.min(attemptTimeoutMs, remaining), history, signal);
+            // Leave each remaining fallback a share of the request budget when an earlier tier stalls.
+            const timeoutMs = Math.min(attemptTimeoutMs, Math.floor(remaining / (ready.length - index)));
+            const { text, finishReason } = await callProviderRaw(provider, system, prompt, maxTokens, timeoutMs, history, signal);
             blockedUntil.delete(provider.id);
 
             if (looksTruncated(text, finishReason)) {

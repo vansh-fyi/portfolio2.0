@@ -137,7 +137,7 @@ canvas {
 .scroll-animate {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   pointer-events: auto !important;
 }
 
@@ -191,17 +191,18 @@ canvas {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
+  transform: translateX(-100%);
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s ease;
+  transition: transform 0.5s ease;
   z-index: 1;
   pointer-events: none !important;
 }
 
 .card-shine:hover::before {
-  left: 100%;
+  transform: translateX(100%);
 }
 
 /* Hover glow effect */
@@ -210,7 +211,8 @@ canvas {
 }
 
 .hover-glow:hover {
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: 1px solid rgba(255, 255, 255, 0.1);
+  outline-offset: -1px;
   box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
   transform: translateY(-2px);
 }
@@ -221,7 +223,7 @@ canvas {
 }
 
 .light-mode .hover-glow:hover {
-  border: 1px solid rgba(10, 10, 10, 0.2);
+  outline-color: rgba(10, 10, 10, 0.2);
   box-shadow: 0 20px 40px rgba(99, 102, 241, 0.6);
 }
 
@@ -511,6 +513,18 @@ canvas {
 }
 
 /* Image switching */
+body:not(.light-mode) .hero-images #dark-bg-image,
+.hero-images[data-warmed="true"] #dark-bg-image {
+  background-image: var(--hero-dark);
+}
+.light-mode .hero-images #light-bg-image,
+.hero-images[data-warmed="true"] #light-bg-image {
+  background-image: var(--hero-light);
+}
+@media (max-width: 767px) {
+  .hero-images { --hero-dark: var(--hero-dark-small) !important; --hero-light: var(--hero-light-small) !important; }
+}
+
 .light-mode #dark-bg-image {
   opacity: 0 !important;
   /* Fade out dark image in light mode */

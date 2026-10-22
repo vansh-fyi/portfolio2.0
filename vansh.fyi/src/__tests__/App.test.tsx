@@ -23,12 +23,12 @@ afterEach(() => document.body.classList.remove('body-lock'));
 
 it('retains the iframe and homepage images across project, chat, and home switches', () => {
   pathname.mockReturnValue('/');
-  const { rerender } = render(<App />);
+  const { rerender } = render(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   const image = screen.getByAltText('Home background');
   expect(document.querySelector('iframe')).toBeNull();
 
   pathname.mockReturnValue('/projects/driq-health-ai');
-  rerender(<App />);
+  rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   const frame = screen.getByTitle(/DriQ Health/);
   expect(frame).toHaveAttribute('src', 'https://info.vansh.fyi/d-ai');
   expect(frame).toBeVisible();
@@ -37,7 +37,7 @@ it('retains the iframe and homepage images across project, chat, and home switch
 
   for (const chatPath of ['/projects/driq-health-ai/chat', '/chat', '/projects/aether/chat']) {
     pathname.mockReturnValue(chatPath);
-    rerender(<App />);
+    rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
     expect(screen.getByText('Chat window')).toBeVisible();
     expect(screen.getByTitle(/DriQ Health/)).toBe(frame);
     expect(frame).toHaveAttribute('src', 'https://info.vansh.fyi/d-ai');
@@ -46,20 +46,20 @@ it('retains the iframe and homepage images across project, chat, and home switch
   }
 
   pathname.mockReturnValue('/projects/driq-health-ai');
-  rerender(<App />);
+  rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   expect(screen.getByTitle(/DriQ Health/)).toBe(frame);
   expect(frame).toBeVisible();
   expect(screen.queryByText('Chat window')).toBeNull();
 
   pathname.mockReturnValue('/');
-  rerender(<App />);
+  rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   expect(screen.getByAltText('Home background')).toBe(image);
   expect(image).toBeVisible();
   expect(frame).not.toBeVisible();
   expect(document.body).not.toHaveClass('body-lock');
 
   pathname.mockReturnValue('/projects/aether');
-  rerender(<App />);
+  rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   expect(frame).not.toBeInTheDocument();
   expect(screen.getByTitle(/Aether/)).toHaveAttribute('src', 'https://info.vansh.fyi/a');
   expect(document.querySelectorAll('iframe')).toHaveLength(1);
@@ -67,19 +67,19 @@ it('retains the iframe and homepage images across project, chat, and home switch
 
 it('opens a project directly and keeps its iframe when entering chat', () => {
   pathname.mockReturnValue('/projects/aether');
-  const { rerender } = render(<App />);
+  const { rerender } = render(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   const frame = screen.getByTitle(/Aether/);
   expect(frame).toBeVisible();
 
   pathname.mockReturnValue('/projects/aether/chat');
-  rerender(<App />);
+  rerender(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   expect(screen.getByTitle(/Aether/)).toBe(frame);
   expect(frame).not.toBeVisible();
 });
 
 it('does not load an iframe on a direct chat visit', () => {
   pathname.mockReturnValue('/projects/aether/chat');
-  render(<App />);
+  render(<App><img src="/images/hero_dark_focus.webp" alt="Home background" /></App>);
   expect(screen.getByText('Chat window')).toBeVisible();
   expect(document.querySelector('iframe')).toBeNull();
 });

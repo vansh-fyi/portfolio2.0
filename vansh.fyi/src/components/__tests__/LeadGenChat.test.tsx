@@ -5,7 +5,7 @@ import LeadGenChat from '../LeadGenChat';
 // Mock tRPC service
 jest.mock('../../services/trpc');
 
-// Each agent reply has a deliberate 1.5s delay, so full-flow tests need more than Jest's 5s default.
+// Full flows include a delayed email response as well as several conversation steps.
 jest.setTimeout(30000);
 
 describe('LeadGenChat Component', () => {

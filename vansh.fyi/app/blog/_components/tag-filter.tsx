@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const chip = 'inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium font-geist ring-1 backdrop-blur-sm transition active:scale-95';
+const chip = 'inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-sm font-medium font-geist ring-1 backdrop-blur-sm transition-[transform,translate,scale,opacity,background-color,border-color,color] active:scale-95';
 
 export default function TagFilter({ tags, active }: { tags: { tag: string; count: number }[]; active?: string }) {
   if (!tags.length) return null;

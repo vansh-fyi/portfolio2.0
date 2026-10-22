@@ -69,6 +69,10 @@ export function useChatSession(scope: ChatScope, greeting: string) {
     setMessages((prev) => boundedTranscript([...prev.map((item) => ({ ...item, isNew: false })), message]));
   }, []);
 
+  const finishReveal = useCallback((text: string) => {
+    setMessages((prev) => prev.map((message) => message.isNew && message.text === text ? { ...message, isNew: false } : message));
+  }, []);
+
   const send = useCallback(async (question: string) => {
     const query = question.trim().slice(0, CHAT_LIMITS.queryChars);
     if (!query) return;
@@ -105,5 +109,5 @@ export function useChatSession(scope: ChatScope, greeting: string) {
     touch();
   }, [purge, touch]);
 
-  return { messages, input, setInput, isSending, send, purge };
+  return { messages, input, setInput, isSending, send, purge, finishReveal };
 }

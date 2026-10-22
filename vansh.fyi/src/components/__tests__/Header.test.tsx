@@ -39,11 +39,15 @@ describe('Header', () => {
 
   it('returns to the main view with a pending section when clicked from an overlay', () => {
     (usePathname as jest.Mock).mockReturnValue('/projects/aether');
+    window.history.replaceState(null, '', '/projects/aether');
+    const pushState = jest.spyOn(window.history, 'pushState');
 
     render(<Header />);
     fireEvent.click(screen.getByText('Contact Me'));
 
-    expect(push).toHaveBeenCalledWith('/');
+    expect(pushState).toHaveBeenCalledWith(null, '', '/');
+    pushState.mockRestore();
+    window.history.replaceState(null, '', '/');
     expect(useUiStore.getState().pendingSection).toBe('contact');
   });
 });

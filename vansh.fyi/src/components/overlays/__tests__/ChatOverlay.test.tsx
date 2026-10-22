@@ -4,6 +4,8 @@ import ChatView from '../ChatOverlay';
 import { useViewStore } from '../../../state/overlayStore';
 import { useRAGQuery } from '../../../hooks/useRAGQuery';
 
+jest.mock('../../../services/trpc');
+
 jest.mock('@tanstack/react-virtual', () => ({
   useVirtualizer: ({ count }: { count: number }) => ({
     getTotalSize: () => count * 80,

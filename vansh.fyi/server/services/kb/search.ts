@@ -1,5 +1,6 @@
 import { supabase } from '../supabase';
 import { embedQuery } from './embed';
+import { measureStage, requestSignal } from '../request-budget';
 
 export interface KbHit {
     id: string;
@@ -17,6 +18,7 @@ export interface KbSearchOptions {
     /** Restrict to personal or project content */
     sourceType?: 'personal' | 'project' | 'blog';
     limit?: number;
+    signal?: AbortSignal;
 }
 
 /**
@@ -25,15 +27,16 @@ export interface KbSearchOptions {
  */
 export async function searchKb(query: string, options: KbSearchOptions = {}): Promise<KbHit[]> {
     const { projectId, sourceType, limit = 8 } = options;
-    const embedding = await embedQuery(query);
+    const signal = options.signal ?? requestSignal();
+    const embedding = await measureStage('embedding', signal, () => embedQuery(query, signal));
 
-    const { data, error } = await supabase.rpc('kb_hybrid_search', {
+    const { data, error } = await measureStage('search', signal, () => supabase.rpc('kb_hybrid_search', {
         query_text: query,
         query_embedding: embedding,
         match_count: limit,
         filter_source_type: sourceType ?? null,
         filter_project_id: projectId ?? null,
-    });
+    }).abortSignal(signal));
 
     if (error) throw new Error(`kb_hybrid_search failed: ${error.message}`);
 

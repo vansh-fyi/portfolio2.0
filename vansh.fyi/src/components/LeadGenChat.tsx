@@ -310,6 +310,7 @@ Details: ${data.projectDetails || 'No details provided'}
   const handleSend = async () => {
     // Validate input (non-empty messages only)
     if (inputValue.trim() === '') return;
+    if (isLoading) return;
 
     // Add user message to history
     const userMessage: Message = {
@@ -324,11 +325,13 @@ Details: ${data.projectDetails || 'No details provided'}
 
     // Process conversation step (async now to handle email sending)
     setIsLoading(true);
+    const started = Date.now();
     try {
       const agentResponse = await processConversationStep(userMessage.text);
 
-      // Wait for 1.5s for UX
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Keep a brief typing beat for local replies; network responses are shown immediately.
+      const remaining = 120 - (Date.now() - started);
+      if (remaining > 0) await new Promise(resolve => setTimeout(resolve, remaining));
 
       if (isMounted.current) {
         setMessages(prev => [...prev, agentResponse]);
@@ -430,7 +433,7 @@ Details: ${data.projectDetails || 'No details provided'}
             {/* User Avatar (Right Side) */}
             {msg.sender === 'user' && (
               // FIX 3: Fixed typo 'flexx-shrink-0' to 'flex-shrink-0'
-              <div className="flex flex-shrink-0 transition text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
+              <div className="flex flex-shrink-0 transition-[transform,translate,scale,opacity,background-color,border-color,color] text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <circle cx="12" cy="10" r="3"></circle>
@@ -496,7 +499,7 @@ Details: ${data.projectDetails || 'No details provided'}
       </div>
 
       {/* Input Area */}
-      <div className="group transition-all duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
+      <div className="group transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
         <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
           <div className="hidden sm:flex w-9 h-9 border rounded-lg items-center justify-center text-white/80 bg-white/10 border-white/10">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-white/80">

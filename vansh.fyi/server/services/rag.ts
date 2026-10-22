@@ -5,6 +5,7 @@ import { SITE_URL } from '../../lib/site';
 import { getBlogOverview } from '../blog/overview';
 import { BLOG_SOURCE_PREFIX } from './kb/sync';
 import { boundedHistory, CHAT_LIMITS, parseChatActions, type ChatAction, type ChatTurn } from '../../lib/chat';
+import { measureStage, requestSignal } from './request-budget';
 
 /**
  * Ursa's RAG pipeline:
@@ -82,26 +83,32 @@ export async function generateRagResponse(
 ): Promise<{ text: string; sources: RagSource[]; actions?: ChatAction[] }> {
     if (context === 'project' && !projectId) throw new Error('Project chat requires a project ID');
     if (context === 'personal' && projectId) throw new Error('Personal chat cannot select a project scope');
+    const started = Date.now();
+    signal = requestSignal(signal);
     const memory = boundedHistory(history);
     signal?.throwIfAborted();
     const previous = memory.slice(-2).map((turn) => turn.content.slice(0, 200)).join('\n');
     const searchQuery = previous ? `${query}\nPrevious exchange (context only):\n${previous}` : query;
 
     // A project-scoped chat is about that project only, so the blog overview is skipped there
-    const [retrieved, blogOverview] = await Promise.all([searchKb(searchQuery, { projectId, limit: RETRIEVAL_LIMIT }), projectId ? Promise.resolve('') : getBlogOverview()]);
+    const [retrieved, blogOverview] = await measureStage('retrieval', signal, () => Promise.all([
+        searchKb(searchQuery, { projectId, limit: RETRIEVAL_LIMIT, signal }),
+        projectId ? Promise.resolve('') : getBlogOverview(Date.now(), signal),
+    ]));
     const hits = (projectId ? retrieved.filter((hit) => hit.projectId === projectId) : retrieved).slice(0, RETRIEVAL_LIMIT);
     signal?.throwIfAborted();
     if (projectId && !hits.length) {
         return { text: "I don't have enough published information about this project to answer that. Please reach out to Vansh directly.", sources: [] };
     }
 
-    const result = await generateWithFallback({
+    const result = await measureStage('generation', signal, () => generateWithFallback({
         system: buildSystemPrompt(hits, projectId, blogOverview),
         prompt: query,
         history: memory,
         maxTokens: CHAT_LIMITS.responseTokens,
         signal,
-    });
+        deadlineMs: Math.max(1, Math.min(20_000, 25_000 - (Date.now() - started))),
+    }));
     console.log(`✅ Answered by ${result.provider}`);
 
     return {

@@ -1,7 +1,7 @@
 const maybeSingle = jest.fn();
 jest.mock('../../services/supabase', () => ({
     supabase: { from: () => {
-        const builder = { select: () => builder, eq: () => builder, maybeSingle: () => maybeSingle() };
+        const builder = { select: () => builder, eq: () => builder, abortSignal: () => builder, maybeSingle: () => maybeSingle() };
         return builder;
     } },
 }));
@@ -51,7 +51,7 @@ describe('RAG API Router', () => {
                 'personal',
                 undefined,
                 [],
-                undefined
+                expect.any(AbortSignal)
             );
         });
 
@@ -75,7 +75,7 @@ describe('RAG API Router', () => {
                 'project',
                 'portfolio-website',
                 [],
-                undefined
+                expect.any(AbortSignal)
             );
         });
 
@@ -180,7 +180,7 @@ describe('scope and memory boundaries', () => {
         const request = { query: 'Why?', context: 'project' as const, projectId: 'aether', history };
         const signal = new AbortController().signal;
         await ragRouter.createCaller({ signal }).send(request);
-        expect(generateRagResponse).toHaveBeenCalledWith('Why?', 'project', 'aether', history, signal);
+        expect(generateRagResponse).toHaveBeenCalledWith('Why?', 'project', 'aether', history, expect.any(AbortSignal));
         await expect(ragRouter.createCaller({}).query(request)).rejects.toMatchObject({ code: 'BAD_REQUEST' });
     });
 

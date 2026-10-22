@@ -5,6 +5,7 @@ import { checkRateLimit, ragRules } from '../services/rate-limit';
 import { t, type Context } from './trpc';
 import { CHAT_LIMITS, type ChatAction } from '../../lib/chat';
 import { supabase } from '../services/supabase';
+import { measureStage, requestSignal } from '../services/request-budget';
 
 
 /**
@@ -38,6 +39,7 @@ const ragQuerySchema = z.object({
 
 async function answer({ input, ctx }: { input: z.output<typeof ragQuerySchema>; ctx: Context }) {
     const { query, context, projectId, history } = input;
+    const signal = requestSignal(ctx.signal);
 
     // Return empty response for empty queries (initial chat load / polling)
     // Frontend should handle displaying a greeting if needed
@@ -51,7 +53,7 @@ async function answer({ input, ctx }: { input: z.output<typeof ragQuerySchema>; 
     }
 
     // Protect the free-tier LLM quota (per-IP and global daily caps)
-    const limit = await checkRateLimit(ragRules(ctx.ip ?? 'unknown'), { failClosed: true });
+    const limit = await measureStage('rate-limit', signal, () => checkRateLimit(ragRules(ctx.ip ?? 'unknown'), { failClosed: true, signal }));
     if (!limit.allowed) {
         console.warn(`🚦 Rate limited: ${limit.blockedBy}`);
         throw new TRPCError({
@@ -62,13 +64,13 @@ async function answer({ input, ctx }: { input: z.output<typeof ragQuerySchema>; 
 
     // Check the canonical ID on the server; a client route is not proof of publication.
     if (context === 'project') {
-        const { data, error } = await supabase.from('projects').select('id').eq('id', projectId!).eq('status', 'published').maybeSingle();
+        const { data, error } = await measureStage('publication', signal, () => supabase.from('projects').select('id').eq('id', projectId!).eq('status', 'published').abortSignal(signal).maybeSingle());
         if (error) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Unable to check this project. Please try again.' });
         if (!data) throw new TRPCError({ code: 'NOT_FOUND', message: 'This project is not available for chat.' });
     }
 
     try {
-        const { text, sources, actions } = await generateRagResponse(query, context, projectId, history, ctx.signal);
+        const { text, sources, actions } = await generateRagResponse(query, context, projectId, history, signal);
 
         return {
             success: true,

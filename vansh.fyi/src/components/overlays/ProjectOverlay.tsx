@@ -6,8 +6,10 @@ import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
 import { usePortfolio } from '../../state/portfolio';
 import { allPlacements, firstPlacementId } from '../../../lib/portfolio';
+import RetainedProjectFrame from '../RetainedProjectFrame';
+import { warmChatView } from '../../utils/chat-view';
 
-const ProjectView: React.FC<{ projectId?: string }> = ({ projectId: retainedProjectId }) => {
+const ProjectView: React.FC<{ projectId?: string; active?: boolean }> = ({ projectId: retainedProjectId, active = true }) => {
   const { scrollToSection, goToProjectChat, projectId, selectProject } = useViewStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -89,6 +91,8 @@ const ProjectView: React.FC<{ projectId?: string }> = ({ projectId: retainedProj
               <div className="flex gap-2 sm:gap-3 gap-x-2 gap-y-2 items-center">
                 <button
                   onClick={() => goToProjectChat(currentProjectId)}
+                  onFocus={warmChatView}
+                  onPointerEnter={warmChatView}
                   className="inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-[16px] h-[16px] flex-shrink-0" strokeWidth="2" data-icon-replaced="true">
@@ -141,16 +145,12 @@ const ProjectView: React.FC<{ projectId?: string }> = ({ projectId: retainedProj
                 <div className="flex flex-col min-h-0 h-full relative">
                   <div className="flex-1 sm:space-y-6">
                     {selectedProject && (
-                      <iframe
-                        // key remounts the frame when another project is chosen, so it never shows the previous page
+                      <RetainedProjectFrame
                         key={selectedProject.id}
                         src={selectedProject.url}
-                        className="w-full h-full border-0"
                         title={`${selectedProject.title} - ${selectedProject.subtitle}`}
-                        // Embedded pages run scripts but cannot navigate this page or open forms/popups unasked
-                        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms"
-                        referrerPolicy="no-referrer"
-                      ></iframe>
+                        active={active}
+                      />
                     )}
                   </div>
                 </div>

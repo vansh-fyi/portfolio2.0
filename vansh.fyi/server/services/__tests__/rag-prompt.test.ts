@@ -67,7 +67,7 @@ describe('project isolation and follow-ups', () => {
         (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'Answer.', provider: 'free' });
         const history = [{ role: 'user' as const, content: 'What framework?' }, { role: 'assistant' as const, content: 'React.' }];
         await generateRagResponse('Why that one?', 'project', 'aether', history);
-        expect(searchKb).toHaveBeenCalledWith(expect.stringContaining('React.'), { projectId: 'aether', limit: 6 });
+        expect(searchKb).toHaveBeenCalledWith(expect.stringContaining('React.'), expect.objectContaining({ projectId: 'aether', limit: 6, signal: expect.any(AbortSignal) }));
         expect(generateWithFallback).toHaveBeenCalledWith(expect.objectContaining({ history, prompt: 'Why that one?', maxTokens: 500 }));
     });
 

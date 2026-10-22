@@ -27,8 +27,8 @@ const candidates: Candidate[] = [
     ...['openai/gpt-oss-120b', 'openai/gpt-oss-20b', 'qwen/qwen3.8-27b'].map((m) => ({
         label: `groq/${m}`, call: openai('https://api.groq.com/openai/v1/chat/completions', process.env.GROQ_API_KEY, m),
     })),
-    ...['google/gemma-4-31b-it:free', 'nvidia/nemotron-3-super-120b-a12b:free'].map((m) => ({
-        label: `openrouter/${m}`, call: openai('https://openrouter.ai/api/v1/chat/completions', process.env.OPENROUTER_API_KEY, m),
+    ...['nvidia/nemotron-3.5-lightning:free', 'dots-studio/dots-3-note-preview:free'].map((m) => ({
+        label: `openrouter/${m}`, call: openai('https://openrouter.ai/api/v1/chat/completions', process.env.OPENROUTER_API_KEY, m, { reasoning: { enabled: false } }),
     })),
 ];
 
