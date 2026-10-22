@@ -41,8 +41,8 @@ beforeEach(() => {
 
 it.each([
   ['personal', undefined, ' Know more about Vansh'],
-  ['project', 'aether', ' Know more about "Aether"'],
-  ['project', 'driq-health-ai', ' Know more about "DriQ Health"'],
+  ['project', 'aether', ' Know more about Aether'],
+  ['project', 'driq-health-ai', ' Know more about DriQ Health'],
 ] as const)('shows the spaced contextual title for %s/%s', (context, project, title) => {
   setScope(context, project);
   render(<ChatView />);
