@@ -29,7 +29,10 @@ dist/
 ingestion-scripts/src/**/*.d.ts
 vansh.fyi/vite.config.js
 vansh.fyi/vite.config.d.ts
+node_modules/
 
 .env
 # Supabase CLI local state
 supabase/.temp/
+# Leftover Supabase CLI state from the former Hono backend
+/backend/supabase/
