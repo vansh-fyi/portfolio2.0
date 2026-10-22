@@ -7,14 +7,14 @@ import OverlaySidebar from './OverlaySidebar';
 import { usePortfolio } from '../../state/portfolio';
 import { allPlacements, firstPlacementId } from '../../../lib/portfolio';
 
-const ProjectView: React.FC = () => {
+const ProjectView: React.FC<{ projectId?: string }> = ({ projectId: retainedProjectId }) => {
   const { scrollToSection, goToProjectChat, projectId, selectProject } = useViewStore();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   // The route id from the store; falls back to the first listing if it is missing
   const portfolio = usePortfolio();
-  const currentProjectId = projectId || firstPlacementId(portfolio) || '';
+  const currentProjectId = (retainedProjectId ?? projectId) || firstPlacementId(portfolio) || '';
   const projects = allPlacements(portfolio);
   const selectedProject = projects.find(p => p.id === currentProjectId) || projects[0];
 
