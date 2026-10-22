@@ -40,6 +40,18 @@ beforeEach(() => {
 });
 
 it.each([
+  ['personal', undefined, ' Know more about Vansh'],
+  ['project', 'aether', ' Know more about "Aether"'],
+  ['project', 'driq-health-ai', ' Know more about "DriQ Health"'],
+] as const)('shows the spaced contextual title for %s/%s', (context, project, title) => {
+  setScope(context, project);
+  render(<ChatView />);
+  const subtitle = screen.getByText((_, element) => element?.tagName === 'SPAN' && element.textContent === title);
+  expect(subtitle.previousSibling?.textContent).toBe('Ask Ursa:');
+  expect(subtitle.parentElement?.textContent).toBe(`Ask Ursa:${title}`);
+});
+
+it.each([
   ['personal', undefined, "Hi! I'm Ursa. Ask me anything about Vansh."],
   ['project', 'portfolio-website', 'Hello! Ask anything about AI-Powered Portfolio here.'],
   ['project', 'unknown', 'Hello! Ask anything about this project here.'],

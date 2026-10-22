@@ -45,16 +45,7 @@ const markdownComponents: Components = {
     <h3 className="text-sm font-semibold mb-1">{children}</h3>
   ),
   // Links
-  a: ({ href, children }) => (
-    <a
-      href={href}
-      className="text-blue-400 hover:text-blue-300 underline"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {children}
-    </a>
-  ),
+  a: ({ children }) => <span>{children}</span>,
   // Blockquote
   blockquote: ({ children }) => (
     <blockquote className="border-l-2 border-white/30 pl-3 italic text-white/70 mb-2">

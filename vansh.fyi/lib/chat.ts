@@ -56,6 +56,29 @@ export function boundedHistory(turns: readonly ChatTurn[]): ChatTurn[] {
 
 export type ChatAction = 'view_projects';
 
+/** Stray keystrokes and punctuation are not evidence of an intent to browse projects. */
+export function needsChatClarification(query: string): boolean {
+    const characters = query.match(/[\p{L}\p{N}]/gu) ?? [];
+    return !characters.length || (characters.length === 1 && !/\p{N}/u.test(characters[0])) || /^(.)\1{2,}$/u.test(characters.join('').toLowerCase());
+}
+
+/** Chat navigation belongs in explicit UI controls, never in the generated message body. */
+export function stripChatLinks(raw: string): string {
+    return raw
+        .replace(/^\s*\[[^\]\n]+\]:\s*\S+.*$/gm, '')
+        .replace(/!?\[([^\]\n]*)\]\([^\n]*?\)/g, '$1')
+        .replace(/\[([^\]\n]+)\]\[[^\]\n]*\]/g, '$1')
+        .replace(/<a\b[^>]*>([\s\S]*?)<\/a>/gi, '$1')
+        .replace(/<[^>]*(?:https?:|mailto:)[^>]*>/gi, '')
+        .replace(/\b[\w.+-]+@(?:[a-z0-9-]+\.)+[a-z]{2,}\b/gi, '')
+        .replace(/(?:https?:\/\/|mailto:|www\.)[^\s<>`]+/gi, '')
+        .replace(/\b(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[a-z]{2,})(?::\d+)?(?:\/[^\s<>`]*)?/gi, '')
+        .replace(/[\t ]+([,.!?;:])/g, '$1')
+        .replace(/[\t ]{2,}/g, ' ')
+        .replace(/^[\t ]+$/gm, '')
+        .replace(/\n{3,}/g, '\n\n').trim();
+}
+
 /** Provider citation syntax has no matching sources in our Markdown renderer. Keep real links and code. */
 export function stripCitationArtifacts(raw: string): string {
     return raw.split(/(```[\s\S]*?```|`[^`\n]+`)/g).map((part, index) => index % 2 ? part : part
@@ -67,9 +90,9 @@ export function stripCitationArtifacts(raw: string): string {
 /** Only known action markers become UI controls; model text never supplies navigation targets. */
 export function parseChatActions(raw: string, context: ChatScope['context']): { text: string; actions: ChatAction[] } {
     let showProjects = false;
-    const text = stripCitationArtifacts(raw.replace(/<action>\s*([^<>]*?)\s*<\/action>/gi, (_, action: string) => {
+    const text = stripChatLinks(stripCitationArtifacts(raw.replace(/<action>\s*([^<>]*?)\s*<\/action>/gi, (_, action: string) => {
         if (action.trim() === 'view_projects') showProjects = true;
         return '';
-    }));
+    })));
     return { text, actions: context === 'personal' && text && showProjects ? ['view_projects'] : [] };
 }

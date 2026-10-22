@@ -1,7 +1,6 @@
 jest.mock('../kb/search', () => ({ searchKb: jest.fn() }));
 jest.mock('../llm/chain', () => ({ generateWithFallback: jest.fn() }));
 jest.mock('../../blog/overview', () => ({ getBlogOverview: jest.fn() }));
-jest.mock('../../projects/chat-links', () => ({ ...jest.requireActual('../../projects/chat-links'), getChatProjectLinks: jest.fn().mockResolvedValue([]) }));
 
 import type { KbHit } from '../kb/search';
 import { buildSystemPrompt, generateRagResponse, passageLabel } from '../rag';
@@ -9,8 +8,8 @@ import { buildSystemPrompt, generateRagResponse, passageLabel } from '../rag';
 const hit = (sourceFile: string, headingPath = 'Heading'): KbHit => ({ id: '1', content: 'Body text', headingPath, sourceFile, projectId: null, similarity: 0.9, score: 0.5 });
 
 describe('passageLabel', () => {
-    it('adds the post URL to blog passages only', () => {
-        expect(passageLabel(hit('blog/my-post', 'Blog post: My post'), 0)).toBe('[1] Blog post: My post (blog post: https://www.vansh.fyi/blog/my-post)');
+    it('identifies blog passages without supplying navigation URLs', () => {
+        expect(passageLabel(hit('blog/my-post', 'Blog post: My post'), 0)).toBe("[1] Blog post: My post (Vansh's blog post)");
         expect(passageLabel(hit('projects/ai/ursa.md', 'Ursa'), 2)).toBe('[3] Ursa');
     });
 });
@@ -25,22 +24,18 @@ describe('buildSystemPrompt', () => {
         expect(prompt).toContain('Never output citation markers');
     });
 
-    it('uses supplied placement URLs and keeps other project links out of scoped chat', () => {
-        const links = [
-            { projectId: 'aether', title: 'Aether', url: 'https://www.vansh.fyi/projects/design-aether' },
-            { projectId: 'ursa', title: 'Ursa', url: 'https://www.vansh.fyi/projects/ai-ursa' },
-        ];
-        expect(buildSystemPrompt([], undefined, '', links)).toContain(links[1].url);
-        const scoped = buildSystemPrompt([], 'aether', '', links);
-        expect(scoped).toContain(links[0].url);
-        expect(scoped).not.toContain(links[1].url);
-        expect(scoped).toContain('never construct a URL');
+    it('forbids message links and does not redirect project visitors to another chat', () => {
+        const scoped = buildSystemPrompt([], 'aether');
+        expect(scoped).toContain('Never output links, URLs');
+        expect(scoped).toContain('Do not send them elsewhere');
+        expect(scoped).not.toContain('/chat');
+        expect(scoped).not.toContain('AVAILABLE LINKS');
     });
-    it('includes the blog section and post link rule when there are posts', () => {
+    it('attributes blog facts by title without asking the model to output links', () => {
         const prompt = buildSystemPrompt([hit('blog/a')], undefined, '- "A" https://portfolio.vansh.fyi/blog/a');
         expect(prompt).toContain('BLOG POSTS (newest first');
         expect(prompt).toContain('- "A" https://portfolio.vansh.fyi/blog/a');
-        expect(prompt).toContain('ALWAYS include that post\'s link');
+        expect(prompt).toContain('mention its title in plain text without a link');
     });
 
     it('omits the blog section when there is nothing to list', () => {
@@ -62,6 +57,22 @@ import { getBlogOverview } from '../../blog/overview';
 
 describe('project isolation and follow-ups', () => {
     beforeEach(() => jest.clearAllMocks());
+
+    it.each(['.', 'j', '!!!', 'jjjj', '…'])('clarifies stray input %s without retrieval, generation or actions even after project discussion', async (query) => {
+        const history = [{ role: 'user' as const, content: 'Show me projects' }, { role: 'assistant' as const, content: 'Aether is an AI tool.' }];
+        const result = await generateRagResponse(query, 'personal', undefined, history);
+        expect(result).toEqual({ text: expect.stringContaining('a little more'), sources: [], actions: [] });
+        expect(searchKb).not.toHaveBeenCalled();
+        expect(generateWithFallback).not.toHaveBeenCalled();
+    });
+
+    it('strips links from project answers before returning a message', async () => {
+        (searchKb as jest.Mock).mockResolvedValue([{ ...hit('projects/a.md'), projectId: 'aether' }]);
+        (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'Ask in [general chat](https://www.vansh.fyi/chat), or visit vansh.fyi/chat.', provider: 'free' });
+        const result = await generateRagResponse('Who is Vansh?', 'project', 'aether');
+        expect(result.text).not.toMatch(/https?:|vansh\.fyi|\]\(/);
+        expect(result.actions).toEqual([]);
+    });
 
     it('includes only the active project overview and matching reference passages', () => {
         const own = { ...hit('projects/a.md'), projectId: 'aether', content: 'Aether evidence.' };

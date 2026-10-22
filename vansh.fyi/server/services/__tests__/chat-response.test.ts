@@ -1,6 +1,27 @@
-import { parseChatActions, stripCitationArtifacts } from '../../../lib/chat';
+import { needsChatClarification, parseChatActions, stripChatLinks, stripCitationArtifacts } from '../../../lib/chat';
 
 describe('chat response cleanup', () => {
+    it.each([
+        ['Read [Aether](https://www.vansh.fyi/projects/aether-ai).', 'Read Aether.'],
+        ['Use [general chat](/chat).', 'Use general chat.'],
+        ['Read [the post][post].\n\n[post]: https://www.vansh.fyi/blog/post', 'Read the post.'],
+        ['Visit https://www.vansh.fyi/chat or vansh.fyi/chat', 'Visit or'],
+        ['<a href="/chat">General chat</a>', 'General chat'],
+        ['<https://www.vansh.fyi/chat>', ''],
+        ['**Aether** uses React and TypeScript.', '**Aether** uses React and TypeScript.'],
+        ['Email hello@vansh.fyi', 'Email'],
+    ])('removes text navigation from %s', (raw, expected) => {
+        expect(stripChatLinks(raw)).toBe(expected);
+    });
+
+    it('retains dedicated project actions while removing message links', () => {
+        expect(parseChatActions('[Aether](/projects/aether) creates tokens.\n<action>view_projects</action>', 'personal'))
+            .toEqual({ text: 'Aether creates tokens.', actions: ['view_projects'] });
+    });
+
+    it.each(['AI', 'Hi', 'Why?', 'Can I see those?', '1', 'Aether'])('allows meaningful short input %s', (query) => {
+        expect(needsChatClarification(query)).toBe(false);
+    });
     it('removes adjacent and standalone model citation markers from the reported response', () => {
         const raw = '【5†L9-L11】【4†L1-L4】\n\nAether creates design tokens. 【4†L1-L4】\n\nComponents have live previews.【4†L5-L9】';
         expect(stripCitationArtifacts(raw)).toBe('Aether creates design tokens.\n\nComponents have live previews.');

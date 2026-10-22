@@ -148,7 +148,7 @@ const ChatSession: React.FC = () => {
                 <div className="group flex items-center gap-2 text-white/80 ring-transparent ring-1 rounded-lg pt-1 pr-4 pb-1 pl-4">
                   <div className="flex">
                     <span className="text-sm text-white/80 font-geist">Ask Ursa:</span>
-                    <span className="hidden lg:inline text-sm text-white/50 font-geist">Know More about projects</span>
+                    <span className="hidden lg:inline whitespace-pre text-sm text-white/50 font-geist">{' '}Know more about {chatContext === 'personal' ? 'Vansh' : `"${projectNameFor(portfolio, projectId) || 'this project'}"`}</span>
                   </div>
                 </div>
               </div>
