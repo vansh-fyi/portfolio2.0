@@ -16,7 +16,7 @@ declare global {
 }
 
 const SCRIPT_SRC =
-  'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js';
+  'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.32/dist/unicornStudio.umd.js';
 const DESKTOP_QUERY = '(min-width: 768px)';
 
 /** Fade-out duration. Must match `duration-[900ms]` (the hidden state) on the background elements in App.tsx; the fade-in is `duration-300`. */

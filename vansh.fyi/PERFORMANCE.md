@@ -2,6 +2,8 @@
 
 The progressive hero blur is intentional. Its eight layers, masks, radii, and mobile fallback are unchanged by this optimization.
 
+Unicorn Studio is pinned to SDK v1.4.32, which includes the vendor's animation-loop cancellation fix when scenes are destroyed. This addresses stale render callbacks after switching views or themes. Stay on the compatible 1.x runtime unless scenes are republished and visually verified for a major SDK upgrade.
+
 ## Images
 
 Run `npm run optimize:images` after replacing a homepage image in `public/images`. Commit the generated manifest and `public/images/optimized` files. Variants use content hashes and a one-year immutable cache policy. Keep previously deployed hashed files available when rolling deployments overlap; original image URLs retain their existing cache behavior.
