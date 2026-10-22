@@ -26,7 +26,7 @@ async function main() {
         let verdict = '';
         let answer = '';
         try {
-            ({ text: answer } = await generateRagResponse(c.q, 'personal'));
+            ({ text: answer } = await generateRagResponse(c.q, c.context ?? 'personal', c.projectId, c.history));
             const problems = evaluateAnswer(c, answer);
 
             if (c.pending) {

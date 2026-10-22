@@ -352,7 +352,7 @@ async function checkAnswers(): Promise<CheckResult> {
     const { generateRagResponse } = await import('../rag');
     const ask = async (c: GoldenCase) => {
         try {
-            const { text } = await withTimeout(generateRagResponse(c.q, 'personal'), 15_000, 'answer');
+            const { text } = await withTimeout(generateRagResponse(c.q, c.context ?? 'personal', c.projectId, c.history), 15_000, 'answer');
             return { q: c.q, problems: evaluateAnswer(c, text), error: undefined as string | undefined };
         } catch (error) {
             return { q: c.q, problems: [] as string[], error: errMsg(error) };

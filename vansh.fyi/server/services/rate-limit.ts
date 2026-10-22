@@ -4,8 +4,8 @@ import { supabaseAdmin } from './supabase';
  * Rate limiting backed by Postgres (rate_limit_hit RPC, migration 005), so counters are
  * shared by every serverless instance and survive cold starts.
  *
- * Fails OPEN: if the limiter itself is down (or SUPABASE_SERVICE_ROLE_KEY is missing) the
- * chat keeps working and a warning is logged. Quota protection is not worth an outage.
+ * Chat opts into fail-closed behavior to protect its quota during limiter outages.
+ * Other callers retain their existing fail-open behavior unless they explicitly opt in.
  */
 
 export interface RateRule {
@@ -62,7 +62,7 @@ export interface RateResult {
 }
 
 /** Checks rules in order and stops at the first one that blocks (later counters aren't incremented). */
-export async function checkRateLimit(rules: RateRule[]): Promise<RateResult> {
+export async function checkRateLimit(rules: RateRule[], options: { failClosed?: boolean } = {}): Promise<RateResult> {
     for (const rule of rules) {
         try {
             const { data, error } = await supabaseAdmin.rpc('rate_limit_hit', {
@@ -71,10 +71,11 @@ export async function checkRateLimit(rules: RateRule[]): Promise<RateResult> {
                 p_max: rule.max,
             });
             if (error) throw new Error(error.message);
+            if (typeof data !== 'boolean') throw new Error('Invalid rate limit result');
             if (data === false) return { allowed: false, blockedBy: rule.key };
         } catch (error) {
-            console.warn(`⚠️ Rate limiter unavailable, failing open: ${error instanceof Error ? error.message : error}`);
-            return { allowed: true };
+            console.warn(`Rate limiter unavailable: ${error instanceof Error ? error.message : error}`);
+            return options.failClosed ? { allowed: false, blockedBy: 'limiter-unavailable' } : { allowed: true };
         }
     }
     return { allowed: true };

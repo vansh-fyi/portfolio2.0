@@ -10,20 +10,49 @@ BUILD / INGEST (run when content changes)
     → split by heading, each chunk prefixed with "Project > Section"
     → embed with gte-small (Supabase Edge Function)
     → upsert into Supabase `kb_chunks` (incremental, by content hash)
-    → regenerate src/services/kb/portfolio-map.generated.json  (overview of every project)
+    → regenerate server/services/kb/portfolio-map.generated.json  (overview of every project)
 
-REQUEST  (frontend → tRPC `rag.query`)
+REQUEST  (frontend → POST tRPC `rag.send`)
   rate limit (Postgres)  →  embed query  →  kb_hybrid_search()
         vector + full-text, merged with Reciprocal Rank Fusion, filters applied in SQL
-  → prompt = rules + portfolio map + top 8 passages
-  → free-tier LLM chain, first healthy one answers:
-        Gemini 3.5 Flash-Lite → Gemini 3.1 Flash-Lite → Groq gpt-oss-120b → OpenRouter :free
+  → prompt = rules + scoped overview + up to 6 passages + bounded recent exchanges
+  → free-only OpenRouter chain, first healthy :free variant answers
+        no Gemini/Groq or paid-model fallback
 
 DAILY  (Vercel Cron → /api/cron/health)
   probes providers, billing guard, embeddings, database, smoke questions → emails on problems
 ```
 
-Only allow-listed model IDs are ever called, and OpenRouter models must end in `:free`, so a config mistake cannot start costing money.
+Production model calls are restricted to explicit OpenRouter `:free` variants. When free capacity is exhausted, chat reports unavailability; it does not fall back to a billable model. Hosting, database and embedding-service quotas remain separate from model pricing.
+
+
+## Chat scope and memory
+
+Project requests require a canonical, published project ID. Listing IDs are resolved by the frontend;
+for example `driq-health-ai` uses the `driq-health` scope. The server checks publication before
+retrieval, filters passages again before prompting, and includes only that project's overview.
+Project chats direct unrelated questions to the general chat rather than silently widening scope.
+General chat can search the full public knowledge base. Scope is not an authorization boundary for
+confidential documents: `kb_chunks` remains public portfolio content.
+
+History lives only in the currently mounted browser chat. It is not written to a database, local
+storage, session storage, or the TanStack query cache. Conversation requests use POST so history is
+not embedded in URLs. Only the last three successful user/assistant exchanges are sent, at most
+3,000 characters total and 1,000 per message. Local compaction removes formatting overhead while
+preserving words, negation and code spacing; long messages are excerpted. No AI summary call is made.
+The visible transcript is separately capped at 40 messages / 24,000 characters. Model output is capped
+at 500 tokens. These are character bounds for input, not an exact count for every provider tokenizer.
+
+Switching scopes, closing chat, reloading, or leaving the page discards the session. Ten idle minutes
+purges the history, draft and transcript; expiry is checked again on tab resume and before sending.
+Pending requests are aborted and late results ignored. The server passes disconnect signals to the
+model provider and never starts another fallback after cancellation. Application history is ephemeral;
+this does not configure third-party provider retention.
+
+`rag.query` remains for stateless legacy callers and deployment probes. It rejects conversation history;
+new chat clients use `rag.send`. The API independently enforces history roles, alternating complete
+exchanges, count and character limits. Daily and per-IP rate limits remain in effect and chat does not
+call a model if the quota limiter is unavailable.
 
 ## Project layout
 
@@ -36,7 +65,7 @@ Only allow-listed model IDs are ever called, and OpenRouter models must end in `
 | `server/services/rag.ts` | Prompt building and the answer pipeline |
 | `server/services/kb/` | Chunker, search, embedding client, portfolio-map builder |
 | `server/services/llm/chain.ts` | Provider chain, fallback, cooldowns, model allow-list |
-| `server/services/rate-limit.ts` | Postgres-backed rate limits (fail-open) |
+| `server/services/rate-limit.ts` | Postgres-backed rate limits (chat fails closed) |
 | `server/services/health/` | Health checks and shared answer evaluation |
 | `server/services/config.ts` | Environment variables, read lazily so `next build` never needs secrets |
 | `evals/golden.json` | Real visitor questions with expected facts |
@@ -56,9 +85,9 @@ Only allow-listed model IDs are ever called, and OpenRouter models must end in `
    | Variable | Required | Purpose |
    |---|---|---|
    | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | yes | Database access |
-   | `SUPABASE_SERVICE_ROLE_KEY` | yes for ingest + rate limiting | Writes to `kb_chunks`; without it the rate limiter silently allows everything |
+   | `SUPABASE_SERVICE_ROLE_KEY` | yes for ingest + rate limiting | Writes to `kb_chunks`; without it chat fails closed to protect its quota |
    | `EMBED_SECRET` | yes | Shared secret for the `embed` Edge Function |
-   | `GEMINI_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY` | at least one | LLM providers (use free-tier keys with **no billing attached**) |
+   | `OPENROUTER_API_KEY` | yes for chat | Explicit `:free` model variants only. Gemini/Groq keys are not used for production answers. |
    | `RESEND_API_KEY`, `CONTACT_EMAIL` | yes | Lead emails and health alerts |
    | `CRON_SECRET` | production | Authorises Vercel Cron to call `/api/cron/health` |
    | `KEEPALIVE_TABLES` | optional | Comma-separated tables (e.g. `blogs`) the health check queries to keep Supabase active |
@@ -80,7 +109,7 @@ Only allow-listed model IDs are ever called, and OpenRouter models must end in `
    npm run ingest-kb               # sync ../_content into Supabase
    npm run ingest-kb -- --dry-run  # preview chunks only; needs no credentials
    ```
-   Ingest is incremental and never wipes the table: it inserts new chunks, removes stale ones, and skips unchanged content.
+   Ingest is incremental and never wipes the table: it inserts new chunks, removes stale ones, and refreshes metadata for unchanged content without re-embedding it.
 
 ## Development
 

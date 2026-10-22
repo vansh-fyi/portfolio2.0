@@ -147,3 +147,49 @@ describe('generateWithFallback', () => {
         }
     });
 });
+
+
+it('uses only explicit free variants even when paid-capable keys are configured', () => {
+    const chain = getProviderChain();
+    expect(chain).toHaveLength(2);
+    expect(chain.every((p) => p.baseUrl === 'https://openrouter.ai/api/v1' && p.model.endsWith(':free'))).toBe(true);
+});
+
+it('rejects a billable override before making any network call', async () => {
+    const fetchMock = jest.spyOn(global, 'fetch');
+    await expect(generateWithFallback({ system: 's', prompt: 'p', providers: [{ ...getProviderChain()[0], model: 'paid-model' }] })).rejects.toThrow('billable');
+    expect(fetchMock).not.toHaveBeenCalled();
+    fetchMock.mockRestore();
+});
+
+it('sends ordered conversational roles with a capped output allowance', async () => {
+    resetProviderCooldowns();
+    const fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue({ ok: true, json: async () => ({ choices: [{ message: { content: 'Complete answer.' } }] }) } as Response);
+    const history = [{ role: 'user' as const, content: 'Question' }, { role: 'assistant' as const, content: 'Answer' }];
+    await generateWithFallback({ system: 'rules', prompt: 'Follow-up', history });
+    const body = JSON.parse(String(fetchMock.mock.calls[0][1]?.body));
+    expect(body.messages).toEqual([{ role: 'system', content: 'rules' }, ...history, { role: 'user', content: 'Follow-up' }]);
+    expect(body.max_tokens).toBe(500);
+    fetchMock.mockRestore();
+});
+
+it('does not start another provider after cancellation', async () => {
+    resetProviderCooldowns();
+    const controller = new AbortController();
+    const fetchMock = jest.spyOn(global, 'fetch').mockImplementation(async () => { controller.abort(); throw new DOMException('Aborted', 'AbortError'); });
+    await expect(generateWithFallback({ system: 's', prompt: 'p', signal: controller.signal })).rejects.toThrow('Aborted');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    fetchMock.mockRestore();
+});
+
+it('does not retry exhausted free providers during their cooldown', async () => {
+    resetProviderCooldowns();
+    const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue({ ok: false, status: 429, text: async () => 'Quota exhausted' } as Response);
+    await expect(generateWithFallback({ system: 's', prompt: 'p' })).rejects.toThrow();
+    const calls = fetchMock.mock.calls.length;
+    await expect(generateWithFallback({ system: 's', prompt: 'p' })).rejects.toThrow('cooling down');
+    expect(fetchMock).toHaveBeenCalledTimes(calls);
+    fetchMock.mockRestore();
+    warn.mockRestore();
+});

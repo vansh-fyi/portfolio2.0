@@ -1,9 +1,10 @@
 import { config } from '../config';
+import { boundedHistory, type ChatTurn } from '../../../lib/chat';
 
 /**
- * Free-tier LLM fallback chain for Ursa.
+ * Free-only LLM fallback chain for Ursa.
  *
- * All three providers speak the OpenAI chat-completions protocol, so one small HTTP
+ * The providers speak the OpenAI chat-completions protocol, so one small HTTP
  * client covers them (no SDK versions to drift as models churn). Providers are tried
  * in order; any failure (429, 404/410 for retired models, 5xx, timeout, empty reply)
  * moves on to the next.
@@ -18,7 +19,6 @@ export interface LlmProvider {
     baseUrl: string;
     apiKey: string;
     model: string;
-    extraBody?: Record<string, unknown>;
 }
 
 export interface LlmFailure {
@@ -44,34 +44,8 @@ export class AllProvidersFailedError extends Error {
 
 type ProviderSpec = Omit<LlmProvider, 'apiKey'> & { keyOf: () => string };
 
-/**
- * Order = preference. Verified working on free keys on 2026-10-08 (run `npx tsx --env-file-if-exists=.env.local scripts/probe-models.ts`).
- * 3.5-flash-lite leads: on 2026-10-08 it answered in ~1s while 3.1-flash-lite was timing out / returning 503 "high demand".
- * Gemini runs with reasoning_effort "minimal": hidden thinking tokens count against max_tokens and at "low" cut ~1 in 4 answers
- * off mid-sentence at 700 tokens (and were ~2x slower). Groq's gpt-oss does not support "minimal", so it stays on "low".
- */
+/** Only explicit :free variants: exhausted free capacity must never become a paid fallback. */
 const PROVIDER_CHAIN: ProviderSpec[] = [
-    {
-        id: 'gemini/gemini-3.5-flash-lite',
-        baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
-        model: 'gemini-3.5-flash-lite',
-        keyOf: () => config.llm.geminiApiKey,
-        extraBody: { reasoning_effort: 'minimal' },
-    },
-    {
-        id: 'gemini/gemini-3.1-flash-lite',
-        baseUrl: 'https://generativelanguage.googleapis.com/v1beta/openai',
-        model: 'gemini-3.1-flash-lite',
-        keyOf: () => config.llm.geminiApiKey,
-        extraBody: { reasoning_effort: 'minimal' },
-    },
-    {
-        id: 'groq/gpt-oss-120b',
-        baseUrl: 'https://api.groq.com/openai/v1',
-        model: 'openai/gpt-oss-120b',
-        keyOf: () => config.llm.groqApiKey,
-        extraBody: { reasoning_effort: 'low' },
-    },
     {
         id: 'openrouter/nemotron-3-super:free',
         baseUrl: 'https://openrouter.ai/api/v1',
@@ -93,14 +67,18 @@ const blockedUntil = new Map<string, number>();
 /** Providers that have a key configured. Throws if a spec would break the billing guard. */
 export function getProviderChain(): LlmProvider[] {
     return PROVIDER_CHAIN.flatMap((spec) => {
-        if (spec.baseUrl.includes('openrouter.ai') && !spec.model.endsWith(':free')) {
-            throw new Error(`Refusing non-free OpenRouter model: ${spec.model}`);
-        }
+        assertFreeProvider(spec);
         const apiKey = spec.keyOf();
         if (!apiKey) return [];
         const { keyOf: _keyOf, ...rest } = spec;
         return [{ ...rest, apiKey }];
     });
+}
+
+function assertFreeProvider(provider: Pick<LlmProvider, 'baseUrl' | 'model'>): void {
+    if (provider.baseUrl !== 'https://openrouter.ai/api/v1' || !provider.model.endsWith(':free')) {
+        throw new Error('Refusing a potentially billable LLM provider');
+    }
 }
 
 export function resetProviderCooldowns(): void {
@@ -141,8 +119,11 @@ async function callProviderRaw(
     system: string,
     prompt: string,
     maxTokens: number,
-    timeoutMs: number
+    timeoutMs: number,
+    history: ChatTurn[] = [],
+    signal?: AbortSignal
 ): Promise<{ text: string; finishReason: string | null }> {
+    assertFreeProvider(provider);
     let res: Response;
     try {
         res = await fetch(`${provider.baseUrl}/chat/completions`, {
@@ -154,13 +135,14 @@ async function callProviderRaw(
                 temperature: 0.3,
                 messages: [
                     { role: 'system', content: system },
+                    ...boundedHistory(history),
                     { role: 'user', content: prompt },
                 ],
-                ...provider.extraBody,
             }),
-            signal: AbortSignal.timeout(timeoutMs),
+            signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]) : AbortSignal.timeout(timeoutMs),
         });
     } catch (error) {
+        if (signal?.aborted) throw error;
         if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) {
             throw new Error(`timed out after ${Math.round(timeoutMs / 1000)}s`);
         }
@@ -213,6 +195,8 @@ function cooldownFor(error: unknown): number {
 export interface GenerateOptions {
     system: string;
     prompt: string;
+    history?: ChatTurn[];
+    signal?: AbortSignal;
     maxTokens?: number;
     /** Total wall-clock budget across all attempts (Vercel functions are capped at 30s) */
     deadlineMs?: number;
@@ -223,8 +207,10 @@ export interface GenerateOptions {
 }
 
 export async function generateWithFallback(options: GenerateOptions): Promise<LlmResult> {
-    const { system, prompt, maxTokens = 1500, deadlineMs = 20_000, attemptTimeoutMs = 8_000 } = options;
+    const { system, prompt, history = [], signal, deadlineMs = 20_000, attemptTimeoutMs = 8_000 } = options;
+    const maxTokens = Math.min(500, Math.max(1, options.maxTokens ?? 500));
     const providers = options.providers ?? getProviderChain();
+    providers.forEach(assertFreeProvider);
     const startedAt = Date.now();
     const failures: LlmFailure[] = [];
     /** First answer that looked cut off; returned only if no provider gives a complete one. */
@@ -234,26 +220,27 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
         throw new AllProvidersFailedError([{ provider: 'none', reason: 'no LLM API keys configured' }]);
     }
 
-    // Prefer providers that aren't cooling down; if every one is, try them all anyway.
+    // Do not hammer an exhausted free quota while every provider is cooling down.
     const now = Date.now();
     const ready = providers.filter((p) => (blockedUntil.get(p.id) ?? 0) <= now);
-    const ordered = ready.length > 0 ? ready : providers;
+    if (!ready.length) throw new AllProvidersFailedError(providers.map((provider) => ({ provider: provider.id, reason: 'cooling down' })));
 
-    for (const provider of ordered) {
+    for (const provider of ready) {
+        signal?.throwIfAborted();
         const remaining = deadlineMs - (Date.now() - startedAt);
         if (remaining < 1_000) {
             failures.push({ provider: provider.id, reason: 'skipped: time budget exhausted' });
             break;
         }
         try {
-            const { text, finishReason } = await callProviderRaw(provider, system, prompt, maxTokens, Math.min(attemptTimeoutMs, remaining));
+            const { text, finishReason } = await callProviderRaw(provider, system, prompt, maxTokens, Math.min(attemptTimeoutMs, remaining), history, signal);
             blockedUntil.delete(provider.id);
 
             if (looksTruncated(text, finishReason)) {
                 // A one-off glitch, not an outage: no cooldown, just try the next provider
                 truncated ??= { text, provider: provider.id };
                 failures.push({ provider: provider.id, reason: 'truncated response' });
-                console.warn(`⚠️ LLM answer looked truncated: ${provider.id} (finish=${finishReason}, ${text.length} chars, ends: ${JSON.stringify(text.slice(-50))})`);
+                console.warn(`⚠️ LLM answer looked truncated: ${provider.id} (finish=${finishReason}, ${text.length} chars)`);
                 continue;
             }
             if (failures.length > 0) {
@@ -261,6 +248,7 @@ export async function generateWithFallback(options: GenerateOptions): Promise<Ll
             }
             return { text, provider: provider.id, failures };
         } catch (error) {
+            if (signal?.aborted) throw error;
             const reason = error instanceof Error ? error.message : String(error);
             failures.push({ provider: provider.id, reason });
             blockedUntil.set(provider.id, Date.now() + cooldownFor(error));

@@ -4,7 +4,7 @@ import { embeddingInput, type KbChunk } from './chunker';
 /**
  * Brings the chunks of ONE source file in `kb_chunks` in line with `chunks`, incrementally:
  * chunks whose content hash is new are embedded and inserted, chunks that no longer exist are
- * deleted, unchanged chunks are left alone (so they are not re-embedded). Inserts happen before
+ * deleted, unchanged chunks keep their embeddings while metadata is refreshed. Inserts happen before
  * deletes, so a failure half way never loses data.
  *
  * Shared by the `_content/` ingest script and by blog post indexing.
@@ -55,6 +55,16 @@ export async function syncSourceFile(db: SupabaseClient, embed: Embedder, source
             { onConflict: 'source_file,content_hash' },
         );
         if (error) throw new Error(`Insert failed for ${source.sourceFile}: ${error.message}`);
+    }
+
+    // Retag existing content without buying another embedding when only frontmatter changed.
+    if (source.chunks.length > 0) {
+        const { error } = await db.from('kb_chunks').update({
+            source_type: source.sourceType,
+            project_id: source.projectId ?? null,
+            metadata: source.metadata,
+        }).eq('source_file', source.sourceFile);
+        if (error) throw new Error(`Metadata update failed for ${source.sourceFile}: ${error.message}`);
     }
 
     const staleIds = [...existing.entries()].filter(([hash]) => !wanted.has(hash)).map(([, id]) => id);

@@ -1,9 +1,14 @@
+import type { ChatTurn } from '../../../lib/chat';
+
 /**
  * Shared answer checking for evals/golden.json — used by the manual eval script and the daily health cron.
  */
 
 export interface GoldenCase {
     q: string;
+    context?: 'personal' | 'project';
+    projectId?: string;
+    history?: ChatTurn[];
     /** At least one phrase must appear (case-insensitive) */
     any?: string[];
     /** Every phrase must appear */

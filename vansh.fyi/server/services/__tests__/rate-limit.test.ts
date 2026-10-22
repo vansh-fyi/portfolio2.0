@@ -53,3 +53,9 @@ describe('rule sets', () => {
         expect(RAG_LIMITS.globalPerDay).toBeLessThan(1000);
     });
 });
+
+
+it('fails closed for chat when the limiter cannot protect its quota', async () => {
+    rpc.mockRejectedValue(new Error('offline'));
+    expect(await checkRateLimit(ragRules('1.2.3.4'), { failClosed: true })).toEqual({ allowed: false, blockedBy: 'limiter-unavailable' });
+});

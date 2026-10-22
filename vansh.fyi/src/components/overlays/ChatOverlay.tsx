@@ -5,29 +5,30 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
 import OverlaySidebar from './OverlaySidebar';
-import { useRAGQuery } from '../../hooks/useRAGQuery';
+import { useChatSession } from '../../hooks/useChatSession';
 import { usePortfolio } from '../../state/portfolio';
-import { projectNameFor } from '../../../lib/portfolio';
+import { projectIdFor, projectNameFor } from '../../../lib/portfolio';
+import { CHAT_LIMITS, type ChatScope } from '../../../lib/chat';
 import StreamingMarkdown from '../StreamingMarkdown';
 import ThinkingLoader from '../ThinkingLoader';
 
-interface Message {
-  sender: 'user' | 'ai';
-  text: string;
-  isNew?: boolean; // Flag to trigger streaming animation for new AI messages
-}
-
 const ChatView: React.FC = () => {
+  const { chatContext, projectId } = useViewStore();
+  return <ChatSession key={`${chatContext}:${projectId ?? ''}`} />;
+};
+
+const ChatSession: React.FC = () => {
   const { goToMain, goToProjects, goToProjectChat, chatContext, initialChatQuery, clearInitialChatQuery, projectId } = useViewStore();
   const portfolio = usePortfolio();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [pendingQuery, setPendingQuery] = useState(''); // Track query being sent
-  const [isSending, setIsSending] = useState(false);
+  const scope: ChatScope = chatContext === 'project'
+    ? { context: 'project', projectId: projectIdFor(portfolio, projectId) ?? '' }
+    : { context: 'personal' };
+  const greeting = chatContext === 'personal'
+    ? "Hi! I'm Ursa. Ask me anything about Vansh."
+    : `Hello! Ask anything about ${projectNameFor(portfolio, projectId) || 'this project'} here.`;
+  const { messages, input, setInput, isSending, send } = useChatSession(scope, greeting);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
-  const { data, error, isLoading, refetch } = useRAGQuery(pendingQuery);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Virtualization setup for performance with long message lists
@@ -49,64 +50,23 @@ const ChatView: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (chatContext === 'personal') {
-      setMessages([{ sender: 'ai', text: "Hi! I'm Ursa. Ask me anything about Vansh.", isNew: false }]);
-    } else {
-      // Get the actual project name from metadata
-      const projectName = projectId ? projectNameFor(portfolio, projectId) : undefined;
-      const displayName = projectName || 'this project';
-      setMessages([{ sender: 'ai', text: `Hello! Ask anything about ${displayName} here.`, isNew: false }]);
-    }
-  }, [chatContext, projectId, portfolio]);
-
-  useEffect(() => {
-    if (initialChatQuery) {
-      setMessages((prev) => [...prev, { sender: 'user', text: initialChatQuery }]);
-      setPendingQuery(initialChatQuery); // Use pendingQuery instead
-      clearInitialChatQuery(); // Clear it after use
-    }
-  }, [initialChatQuery]);
-
-  // Trigger refetch when pendingQuery changes (and is not empty)
-  useEffect(() => {
-    if (pendingQuery.trim()) {
-      refetch();
-    }
-  }, [pendingQuery, refetch]);
+    if (!initialChatQuery) return;
+    let cancelled = false;
+    // Defer until StrictMode's setup/cleanup replay finishes, so one initial question makes one request.
+    queueMicrotask(() => {
+      if (cancelled) return;
+      clearInitialChatQuery();
+      void send(initialChatQuery);
+    });
+    return () => { cancelled = true; };
+  }, [initialChatQuery, clearInitialChatQuery, send]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (messages.length > 0) {
       virtualizer.scrollToIndex(messages.length - 1, { align: 'end' });
     }
-  }, [messages.length, isLoading, virtualizer]);
-
-  useEffect(() => {
-    if (isLoading) {
-      setIsSending(true);
-    } else {
-      setIsSending(false);
-    }
-
-    // Only process response if we were expecting one (pendingQuery is set)
-    if (!pendingQuery) return;
-
-    // @ts-ignore - Only add message if there's an actual response (not null from empty queries)
-    if (data && data.response) {
-      setMessages((prev) => {
-        // Mark previous messages as not new (so they don't re-stream)
-        const updated = prev.map(m => ({ ...m, isNew: false }));
-        return [...updated, { sender: 'ai', text: data.response, isNew: true }];
-      });
-      setPendingQuery(''); // Clear pending query after receiving response
-    } else if (error) {
-      setMessages((prev) => {
-        const updated = prev.map(m => ({ ...m, isNew: false }));
-        return [...updated, { sender: 'ai', text: 'Ursa is having trouble connecting. Please try again.', isNew: true }];
-      });
-      setPendingQuery(''); // Clear on error too
-    }
-  }, [data, error, isLoading, pendingQuery]);
+  }, [messages.length, isSending, virtualizer]);
 
   const handleClose = () => {
     if (chatContext === 'project') {
@@ -116,12 +76,7 @@ const ChatView: React.FC = () => {
     }
   };
 
-  const handleSend = () => {
-    if (input.trim() === '') return;
-    setMessages((prev) => [...prev, { sender: 'user', text: input }]);
-    setPendingQuery(input); // Set the query to send
-    setInput(''); // Clear input field immediately for UX
-  };
+  const handleSend = () => { void send(input); };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -129,14 +84,6 @@ const ChatView: React.FC = () => {
       handleSend();
     }
   };
-
-  // Cleanup on unmount - defensive measure to clear chat state
-  useEffect(() => {
-    return () => {
-      setMessages([]);
-      setPendingQuery('');
-    };
-  }, []);
 
   return (
     <div className="fixed inset-0 z-40 bg-black">
@@ -342,6 +289,8 @@ const ChatView: React.FC = () => {
                         <div className="relative flex-1">
                           <textarea
                             rows={2}
+                            maxLength={CHAT_LIMITS.queryChars}
+                            aria-label="Chat message"
                             className="resize-none focus:outline-none text-sm text-white bg-transparent w-full rounded-xl pt-2.5 pr-3 pb-2.5 pl-3"
                             placeholder="Ask anything about the project in detail..."
                             value={input}

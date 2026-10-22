@@ -8,6 +8,7 @@ import { initTRPC } from '@trpc/server';
 export interface Context {
     /** Best-effort client IP, used for rate limiting */
     ip?: string;
+    signal?: AbortSignal;
 }
 
 export const t = initTRPC.context<Context>().create();
@@ -20,4 +21,5 @@ export function ipFromHeaders(headers: Headers): string {
 
 export const createContext = ({ req }: { req: Request }): Context => ({
     ip: ipFromHeaders(req.headers),
+    signal: req.signal,
 });

@@ -383,5 +383,29 @@
       "agency"
     ],
     "all": []
+  },
+  {
+    "q": "What did Vansh build for this project?",
+    "context": "project",
+    "projectId": "aether",
+    "any": [
+      "aether",
+      "design system"
+    ]
+  },
+  {
+    "q": "Tell me about DriQ Health and its clinical outcomes.",
+    "context": "project",
+    "projectId": "aether",
+    "any": [
+      "general chat",
+      "/chat",
+      "this project",
+      "aether"
+    ],
+    "forbid": [
+      "70x",
+      "incontinence monitoring"
+    ]
   }
 ]

@@ -14,6 +14,10 @@ function fakeDb(initial: Row[] = []) {
             if (table !== 'kb_chunks') throw new Error(`unexpected table ${table}`);
             return {
                 select: () => ({ eq: async (_col: string, value: string) => ({ data: rows.filter((r) => r.source_file === value).map(({ id, content_hash }) => ({ id, content_hash })), error: null }) }),
+                update: (values: Partial<Row>) => ({ eq: async (_col: string, value: string) => {
+                    for (const row of rows) if (row.source_file === value) Object.assign(row, values);
+                    return { error: null };
+                } }),
                 upsert: async (batch: Omit<Row, 'id'>[]) => {
                     for (const b of batch) {
                         const i = rows.findIndex((r) => r.source_file === b.source_file && r.content_hash === b.content_hash);
@@ -104,4 +108,18 @@ describe('removeSourceFile', () => {
         expect(await removeSourceFile(db, blogSourceFile('a'))).toBe(2);
         expect(db.rows.map((r) => r.source_file)).toEqual(['blog/b']);
     });
+});
+
+
+it('retags unchanged content without re-embedding it or touching another source', async () => {
+    const db = fakeDb([row('projects/a.md', 'h1'), row('projects/b.md', 'h1')]);
+    const { embed, calls } = embedder();
+    const originalEmbedding = db.rows[0].embedding;
+    await syncSourceFile(db, embed, { ...source('projects/a.md', [chunk('h1')]), sourceType: 'project', projectId: 'new-project', metadata: { visibility: 'public' } });
+    expect(calls).toHaveLength(0);
+    expect(db.rows[0]).toMatchObject({ source_type: 'project', project_id: 'new-project', metadata: { visibility: 'public' } });
+    expect(db.rows[0].embedding).toBe(originalEmbedding);
+    expect(db.rows[1].project_id).toBeNull();
+    await syncSourceFile(db, embed, source('projects/a.md', [chunk('h1')]));
+    expect(db.rows[0]).toMatchObject({ source_type: 'blog', project_id: null });
 });
