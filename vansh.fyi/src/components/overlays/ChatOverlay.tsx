@@ -11,6 +11,7 @@ import { projectIdFor, projectNameFor } from '../../../lib/portfolio';
 import { CHAT_LIMITS, type ChatScope } from '../../../lib/chat';
 import StreamingMarkdown from '../StreamingMarkdown';
 import ThinkingLoader from '../ThinkingLoader';
+import ViewProjectsLink from '../ViewProjectsLink';
 
 const ChatView: React.FC = () => {
   const { chatContext, projectId } = useViewStore();
@@ -248,6 +249,9 @@ const ChatSession: React.FC = () => {
                                     />
                                   ) : (
                                     <p>{msg.text}</p>
+                                  )}
+                                  {msg.sender === 'ai' && chatContext === 'personal' && msg.actions?.includes('view_projects') && (
+                                    <div className="mt-3"><ViewProjectsLink /></div>
                                   )}
                                 </div>
                               </div>

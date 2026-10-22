@@ -12,7 +12,10 @@ jest.mock('@tanstack/react-virtual', () => ({
     scrollToIndex: () => undefined,
   }),
 }));
-jest.mock('../../../state/overlayStore');
+jest.mock('../../../state/overlayStore', () => ({
+  ...jest.requireActual('../../../state/overlayStore'),
+  useViewStore: jest.fn(),
+}));
 jest.mock('../../../hooks/useRAGQuery');
 jest.mock('../../../state/portfolio', () => ({ usePortfolio: () => require('../../../../lib/portfolio-fixture').PORTFOLIO_FIXTURE }));
 jest.mock('../../StreamingMarkdown', () => function Markdown({ content }: { content: string }) { return <p>{content}</p>; });
@@ -20,10 +23,12 @@ jest.mock('../../StreamingMarkdown', () => function Markdown({ content }: { cont
 const ask = jest.fn();
 const goToMain = jest.fn();
 const goToProjects = jest.fn();
+const goToProject = jest.fn();
+const scrollToSection = jest.fn();
 const goToProjectChat = jest.fn();
 const clearInitialChatQuery = jest.fn();
 const setScope = (chatContext: 'personal' | 'project', projectId?: string, initialChatQuery = '') =>
-  (useViewStore as unknown as jest.Mock).mockReturnValue({ goToMain, goToProjects, goToProjectChat, clearInitialChatQuery, chatContext, projectId, initialChatQuery });
+  (useViewStore as unknown as jest.Mock).mockReturnValue({ goToMain, goToProjects, goToProject, scrollToSection, goToProjectChat, clearInitialChatQuery, chatContext, projectId, initialChatQuery });
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -88,4 +93,30 @@ it('submits an initial question only once under StrictMode', async () => {
   render(<StrictMode><ChatView /></StrictMode>);
   await waitFor(() => expect(ask).toHaveBeenCalledTimes(1));
   expect(clearInitialChatQuery).toHaveBeenCalledTimes(1);
+});
+
+it('renders the model action and opens the same featured project as the hero', async () => {
+  ask.mockResolvedValueOnce({ response: 'Explore his work.', actions: ['view_projects'] });
+  setScope('personal', undefined, 'Can I see those?');
+  render(<ChatView />);
+  const link = await screen.findByRole('link', { name: /View Projects/i });
+  expect(link).toHaveAttribute('href', '/projects/aether');
+  fireEvent.click(link);
+  expect(goToProject).toHaveBeenCalledWith('aether');
+  expect(ask).toHaveBeenCalledTimes(1);
+});
+
+it.each(['personal', 'project'] as const)('shows no action for an ordinary %s answer', async (context) => {
+  setScope(context, context === 'project' ? 'aether' : undefined, 'Hello');
+  render(<ChatView />);
+  await screen.findByText('A complete answer.');
+  expect(screen.queryByRole('link', { name: /View Projects/i })).not.toBeInTheDocument();
+});
+
+it('suppresses actions inside project chat', async () => {
+  ask.mockResolvedValueOnce({ response: 'Project details.', actions: ['view_projects'] });
+  setScope('project', 'aether', 'Show examples');
+  render(<ChatView />);
+  await screen.findByText('Project details.');
+  expect(screen.queryByRole('link', { name: /View Projects/i })).not.toBeInTheDocument();
 });

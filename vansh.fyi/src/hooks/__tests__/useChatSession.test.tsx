@@ -88,3 +88,15 @@ it('does not add failed answers to future memory', async () => {
   await act(async () => { await result.current.send('Try again'); });
   expect(ask.mock.calls[1][0].history).toEqual([]);
 });
+
+it('keeps actions on the reply and sends only answer text in conversation history', async () => {
+  ask.mockResolvedValueOnce({ response: 'Explore his projects.', actions: ['view_projects'] });
+  const { result } = renderHook(() => useChatSession({ context: 'personal' }, 'Hello.'));
+  await act(async () => { await result.current.send('Can I see his work?'); });
+  expect(result.current.messages[result.current.messages.length - 1]).toMatchObject({ sender: 'ai', actions: ['view_projects'] });
+  await act(async () => { await result.current.send('Which uses React?'); });
+  expect(ask.mock.calls[1][0].history).toEqual([
+    { role: 'user', content: 'Can I see his work?' },
+    { role: 'assistant', content: 'Explore his projects.' },
+  ]);
+});

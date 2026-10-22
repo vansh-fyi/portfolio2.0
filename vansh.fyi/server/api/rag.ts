@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { generateRagResponse } from '../services/rag';
 import { checkRateLimit, ragRules } from '../services/rate-limit';
 import { t, type Context } from './trpc';
-import { CHAT_LIMITS } from '../../lib/chat';
+import { CHAT_LIMITS, type ChatAction } from '../../lib/chat';
 import { supabase } from '../services/supabase';
 
 
@@ -45,7 +45,8 @@ async function answer({ input, ctx }: { input: z.output<typeof ragQuerySchema>; 
         return {
             success: true,
             response: null,
-            sources: []
+            sources: [],
+            actions: [] as ChatAction[],
         };
     }
 
@@ -67,12 +68,13 @@ async function answer({ input, ctx }: { input: z.output<typeof ragQuerySchema>; 
     }
 
     try {
-        const { text, sources } = await generateRagResponse(query, context, projectId, history, ctx.signal);
+        const { text, sources, actions } = await generateRagResponse(query, context, projectId, history, ctx.signal);
 
         return {
             success: true,
             response: text || 'No response generated',
-            sources: sources || []
+            sources: sources || [],
+            actions: actions ?? [],
         };
     } catch (error) {
         // Details (provider names, HTTP errors) stay in the logs, not in the visitor's browser

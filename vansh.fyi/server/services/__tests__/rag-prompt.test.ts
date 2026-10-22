@@ -84,3 +84,41 @@ describe('project isolation and follow-ups', () => {
         expect(generateWithFallback).not.toHaveBeenCalled();
     });
 });
+
+import { parseChatActions } from '../../../lib/chat';
+
+describe('intent-driven project actions', () => {
+    it('instructs personal chat to use history for indirect follow-ups', () => {
+        const prompt = buildSystemPrompt([]);
+        expect(prompt).toContain('Can I see those?');
+        expect(prompt).toContain('<action>view_projects</action>');
+        expect(prompt).toContain('visitor declines to browse');
+        expect(buildSystemPrompt([], 'aether')).not.toContain('UI ACTIONS');
+    });
+
+    it.each([
+        ['Answer.\n<action>view_projects</action>', 'Answer.', ['view_projects']],
+        ['Answer.', 'Answer.', []],
+        ['Answer. <action>delete_all</action>', 'Answer.', []],
+        ['Answer. <action>view_projects</action><action>view_projects</action>', 'Answer.', ['view_projects']],
+        ['<action>view_projects</action>', '', []],
+    ])('extracts only allowlisted actions from %s', (raw, text, actions) => {
+        expect(parseChatActions(raw as string, 'personal')).toEqual({ text, actions });
+    });
+
+    it('suppresses actions in project chat', () => {
+        expect(parseChatActions('Answer. <action>view_projects</action>', 'project')).toEqual({ text: 'Answer.', actions: [] });
+    });
+
+    it('returns a contextual action using one model call with history', async () => {
+        jest.clearAllMocks();
+        (searchKb as jest.Mock).mockResolvedValue([]);
+        (getBlogOverview as jest.Mock).mockResolvedValue('');
+        (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'Explore his work below.\n<action>view_projects</action>', provider: 'free' });
+        const history = [{ role: 'user' as const, content: 'What has he built?' }, { role: 'assistant' as const, content: 'Aether.' }];
+        const result = await generateRagResponse('Can I see those?', 'personal', undefined, history);
+        expect(result).toMatchObject({ text: 'Explore his work below.', actions: ['view_projects'] });
+        expect(generateWithFallback).toHaveBeenCalledTimes(1);
+        expect(generateWithFallback).toHaveBeenCalledWith(expect.objectContaining({ history, prompt: 'Can I see those?' }));
+    });
+});

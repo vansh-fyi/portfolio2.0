@@ -1,15 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import { projectPath, useViewStore } from '../state/overlayStore';
-import { usePortfolio } from '../state/portfolio';
-import { firstPlacementId } from '../../lib/portfolio';
+import { useState, type KeyboardEvent } from 'react';
+import { useViewStore } from '../state/overlayStore';
+import ViewProjectsLink from './ViewProjectsLink';
 import MeetingButton from './MeetingButton';
 
 const Hero = () => {
-  const { goToChat, goToProject, scrollToSection } = useViewStore();
-  const portfolio = usePortfolio();
-  const defaultProjectId = portfolio.featured[0]?.placementId ?? firstPlacementId(portfolio);
+  const { goToChat } = useViewStore();
   const [query, setQuery] = useState('');
 
   const handleSendQuery = () => {
@@ -18,7 +15,7 @@ const Hero = () => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: KeyboardEvent) => {
     if (e.key === 'Enter' && query.trim()) {
       handleSendQuery();
     }
@@ -119,20 +116,9 @@ const Hero = () => {
             {/* Column 3: Buttons */}
             <div className="md:col-span-12 lg:col-span-2 relative">
               <div className="flex flex-row lg:flex-col gap-x-3 gap-y-3">
-                <a href={defaultProjectId ? projectPath(defaultProjectId) : '#projects'} onClick={(e) => {
-                  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-                  e.preventDefault();
-                  if (defaultProjectId) goToProject(defaultProjectId);
-                  else scrollToSection('projects');
-                }} className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4 backdrop-blur-sm hover:bg-white/20 hover:ring-white/30 text-white/80 bg-white/10 ring-white/15">
-                  View Projects
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right h-4 w-4">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </a>
+                <ViewProjectsLink />
                 <MeetingButton className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
-                  Let's Connect
+                  Let&apos;s Connect
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar h-4 w-4">
                     <path d="M8 2v4"></path>
                     <path d="M16 2v4"></path>

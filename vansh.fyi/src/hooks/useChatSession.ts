@@ -1,13 +1,14 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { boundedHistory, CHAT_LIMITS, type ChatScope, type ChatTurn } from '../../lib/chat';
+import { boundedHistory, CHAT_LIMITS, type ChatAction, type ChatScope, type ChatTurn } from '../../lib/chat';
 import { useRAGQuery } from './useRAGQuery';
 
 export interface ChatMessage {
   sender: 'user' | 'ai';
   text: string;
   isNew?: boolean;
+  actions?: ChatAction[];
 }
 
 function boundedTranscript(messages: ChatMessage[]): ChatMessage[] {
@@ -86,7 +87,7 @@ export function useChatSession(scope: ChatScope, greeting: string) {
       const response = result.response?.slice(0, 6000);
       if (!response) throw new Error('Empty chat response');
       history.current = boundedHistory([...history.current, { role: 'user', content: query }, { role: 'assistant', content: response }]);
-      append({ sender: 'ai', text: response, isNew: true });
+      append({ sender: 'ai', text: response, isNew: true, actions: context === 'personal' ? result.actions : [] });
     } catch {
       if (request.current !== controller || controller.signal.aborted) return;
       append({ sender: 'ai', text: 'Ursa is having trouble connecting. Please try again.', isNew: true });

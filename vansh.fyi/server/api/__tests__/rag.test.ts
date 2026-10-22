@@ -122,7 +122,7 @@ describe('RAG API Router', () => {
 
             const result = await caller.query({ query: '', context: 'personal' });
 
-            expect(result).toEqual({ success: true, response: null, sources: [] });
+            expect(result).toEqual({ success: true, response: null, sources: [], actions: [] });
             expect(mockGenerateRagResponse).not.toHaveBeenCalled();
             expect(checkRateLimit).not.toHaveBeenCalled();
         });
@@ -194,4 +194,11 @@ describe('scope and memory boundaries', () => {
         await expect(ragRouter.createCaller({}).send({ query: 'Hello', context: 'personal', history: turns as never })).rejects.toMatchObject({ code: 'BAD_REQUEST' });
         expect(generateRagResponse).not.toHaveBeenCalled();
     });
+});
+
+it('forwards actions separately from answer text', async () => {
+    (checkRateLimit as jest.Mock).mockResolvedValue({ allowed: true });
+    (generateRagResponse as jest.Mock).mockResolvedValueOnce({ text: 'Explore his work.', sources: [], actions: ['view_projects'] });
+    const result = await ragRouter.createCaller({}).send({ query: 'Can I see those?', context: 'personal' });
+    expect(result).toMatchObject({ response: 'Explore his work.', actions: ['view_projects'] });
 });

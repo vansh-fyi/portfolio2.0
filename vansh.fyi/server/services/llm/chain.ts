@@ -1,5 +1,5 @@
 import { config } from '../config';
-import { boundedHistory, type ChatTurn } from '../../../lib/chat';
+import { boundedHistory, parseChatActions, type ChatTurn } from '../../../lib/chat';
 
 /**
  * Free-only LLM fallback chain for Ursa.
@@ -70,8 +70,7 @@ export function getProviderChain(): LlmProvider[] {
         assertFreeProvider(spec);
         const apiKey = spec.keyOf();
         if (!apiKey) return [];
-        const { keyOf: _keyOf, ...rest } = spec;
-        return [{ ...rest, apiKey }];
+        return [{ id: spec.id, baseUrl: spec.baseUrl, model: spec.model, apiKey }];
     });
 }
 
@@ -180,7 +179,7 @@ export async function callProvider(
  */
 export function looksTruncated(text: string, finishReason?: string | null): boolean {
     if (finishReason === 'length') return true;
-    const lastLine = text.trimEnd().split('\n').pop() ?? '';
+    const lastLine = parseChatActions(text, 'personal').text.trimEnd().split('\n').pop() ?? '';
     if (/^\s*([-*\u2022]|\d+[.)])\s/.test(lastLine)) return false;
     return /[A-Za-z0-9,;:]$/.test(lastLine.trimEnd());
 }

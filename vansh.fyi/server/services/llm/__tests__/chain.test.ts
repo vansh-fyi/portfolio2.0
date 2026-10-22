@@ -193,3 +193,8 @@ it('does not retry exhausted free providers during their cooldown', async () => 
     fetchMock.mockRestore();
     warn.mockRestore();
 });
+
+it('detects truncation even with an action marker', () => {
+    expect(looksTruncated('His work includes\n<action>view_projects</action>')).toBe(true);
+    expect(looksTruncated('Explore his work.\n<action>view_projects</action>')).toBe(false);
+});

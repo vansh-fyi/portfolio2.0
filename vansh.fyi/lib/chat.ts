@@ -53,3 +53,15 @@ export function boundedHistory(turns: readonly ChatTurn[]): ChatTurn[] {
     }
     return result;
 }
+
+export type ChatAction = 'view_projects';
+
+/** Only known action markers become UI controls; model text never supplies navigation targets. */
+export function parseChatActions(raw: string, context: ChatScope['context']): { text: string; actions: ChatAction[] } {
+    let showProjects = false;
+    const text = raw.replace(/<action>\s*([^<>]*?)\s*<\/action>/gi, (_, action: string) => {
+        if (action.trim() === 'view_projects') showProjects = true;
+        return '';
+    }).trim();
+    return { text, actions: context === 'personal' && text && showProjects ? ['view_projects'] : [] };
+}
