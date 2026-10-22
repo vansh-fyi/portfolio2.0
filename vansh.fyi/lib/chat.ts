@@ -56,12 +56,20 @@ export function boundedHistory(turns: readonly ChatTurn[]): ChatTurn[] {
 
 export type ChatAction = 'view_projects';
 
+/** Provider citation syntax has no matching sources in our Markdown renderer. Keep real links and code. */
+export function stripCitationArtifacts(raw: string): string {
+    return raw.split(/(```[\s\S]*?```|`[^`\n]+`)/g).map((part, index) => index % 2 ? part : part
+        .replace(/[\t ]*(?:【[^【】\n]*†[^【】\n]*】|\uE200(?:cite|filecite)\uE202[^\uE201\n]*\uE201)/g, '')
+        .replace(/^[\t ]+$/gm, '')
+        .replace(/\n{3,}/g, '\n\n')).join('').trim();
+}
+
 /** Only known action markers become UI controls; model text never supplies navigation targets. */
 export function parseChatActions(raw: string, context: ChatScope['context']): { text: string; actions: ChatAction[] } {
     let showProjects = false;
-    const text = raw.replace(/<action>\s*([^<>]*?)\s*<\/action>/gi, (_, action: string) => {
+    const text = stripCitationArtifacts(raw.replace(/<action>\s*([^<>]*?)\s*<\/action>/gi, (_, action: string) => {
         if (action.trim() === 'view_projects') showProjects = true;
         return '';
-    }).trim();
+    }));
     return { text, actions: context === 'personal' && text && showProjects ? ['view_projects'] : [] };
 }

@@ -21,6 +21,8 @@ export interface GoldenCase {
     pending?: string;
     /** Cheap subset the daily cron runs */
     smoke?: boolean;
+    maxWords?: number;
+    maxBullets?: number;
 }
 
 const UNKNOWN_HINTS = [
@@ -38,6 +40,9 @@ const UNKNOWN_HINTS = [
 export function evaluateAnswer(c: GoldenCase, answer: string): string[] {
     const lower = answer.toLowerCase();
     const problems: string[] = [];
+    if (/【[^】\n]*†[^】\n]*】|\uE200(?:cite|filecite)\uE202/.test(answer)) problems.push('unrendered citation marker');
+    if (c.maxWords && answer.trim().split(/\s+/).length > c.maxWords) problems.push(`exceeds ${c.maxWords} words`);
+    if (c.maxBullets && (answer.match(/^\s*(?:[-*]|\d+[.)])\s+/gm)?.length ?? 0) > c.maxBullets) problems.push(`exceeds ${c.maxBullets} list items`);
 
     if (c.any?.length && !c.any.some((p) => lower.includes(p.toLowerCase()))) {
         problems.push(`none of [${c.any.join(', ')}]`);

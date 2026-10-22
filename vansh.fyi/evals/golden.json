@@ -1,5 +1,19 @@
 [
   {
+    "q": "What projects has Vansh worked on?",
+    "any": ["aether", "ursa", "alignment", "perfectly", "astr", "sparto", "driq"],
+    "maxWords": 110,
+    "maxBullets": 3,
+    "smoke": true
+  },
+  {
+    "q": "Give me an overview of his professional experience.",
+    "any": ["tapforce", "design", "engineer"],
+    "maxWords": 100,
+    "maxBullets": 1,
+    "smoke": true
+  },
+  {
     "q": "Who are you?",
     "all": [
       "ursa"

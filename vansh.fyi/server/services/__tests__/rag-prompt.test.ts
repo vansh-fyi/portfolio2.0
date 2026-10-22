@@ -1,6 +1,7 @@
 jest.mock('../kb/search', () => ({ searchKb: jest.fn() }));
 jest.mock('../llm/chain', () => ({ generateWithFallback: jest.fn() }));
 jest.mock('../../blog/overview', () => ({ getBlogOverview: jest.fn() }));
+jest.mock('../../projects/chat-links', () => ({ ...jest.requireActual('../../projects/chat-links'), getChatProjectLinks: jest.fn().mockResolvedValue([]) }));
 
 import type { KbHit } from '../kb/search';
 import { buildSystemPrompt, generateRagResponse, passageLabel } from '../rag';
@@ -15,6 +16,26 @@ describe('passageLabel', () => {
 });
 
 describe('buildSystemPrompt', () => {
+    it('summarizes projects and experience while preserving explicit requests for depth', () => {
+        const prompt = buildSystemPrompt([]);
+        expect(prompt).toContain('at most THREE relevant projects');
+        expect(prompt).toContain('2-3 sentence overview');
+        expect(prompt).toContain('an explicit request for all projects overrides this default');
+        expect(prompt).toContain('only when the visitor explicitly asks for that depth');
+        expect(prompt).toContain('Never output citation markers');
+    });
+
+    it('uses supplied placement URLs and keeps other project links out of scoped chat', () => {
+        const links = [
+            { projectId: 'aether', title: 'Aether', url: 'https://www.vansh.fyi/projects/design-aether' },
+            { projectId: 'ursa', title: 'Ursa', url: 'https://www.vansh.fyi/projects/ai-ursa' },
+        ];
+        expect(buildSystemPrompt([], undefined, '', links)).toContain(links[1].url);
+        const scoped = buildSystemPrompt([], 'aether', '', links);
+        expect(scoped).toContain(links[0].url);
+        expect(scoped).not.toContain(links[1].url);
+        expect(scoped).toContain('never construct a URL');
+    });
     it('includes the blog section and post link rule when there are posts', () => {
         const prompt = buildSystemPrompt([hit('blog/a')], undefined, '- "A" https://portfolio.vansh.fyi/blog/a');
         expect(prompt).toContain('BLOG POSTS (newest first');
@@ -114,7 +135,7 @@ describe('intent-driven project actions', () => {
         jest.clearAllMocks();
         (searchKb as jest.Mock).mockResolvedValue([]);
         (getBlogOverview as jest.Mock).mockResolvedValue('');
-        (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'Explore his work below.\n<action>view_projects</action>', provider: 'free' });
+        (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'Explore his work below.【5†L9-L11】\n<action>view_projects</action>', provider: 'free' });
         const history = [{ role: 'user' as const, content: 'What has he built?' }, { role: 'assistant' as const, content: 'Aether.' }];
         const result = await generateRagResponse('Can I see those?', 'personal', undefined, history);
         expect(result).toMatchObject({ text: 'Explore his work below.', actions: ['view_projects'] });

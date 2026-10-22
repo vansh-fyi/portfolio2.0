@@ -1,5 +1,5 @@
 import { config } from '../config';
-import { boundedHistory, parseChatActions, type ChatTurn } from '../../../lib/chat';
+import { boundedHistory, parseChatActions, stripCitationArtifacts, type ChatTurn } from '../../../lib/chat';
 
 /**
  * Free-tier LLM fallback chain for Ursa: Gemini, then Groq, then OpenRouter.
@@ -135,7 +135,7 @@ export function describeHttpError(status: number, bodyText: string, maxLength = 
 }
 
 function stripReasoning(text: string): string {
-    return text.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    return stripCitationArtifacts(text.replace(/<think>[\s\S]*?<\/think>/gi, ''));
 }
 
 async function callProviderRaw(
