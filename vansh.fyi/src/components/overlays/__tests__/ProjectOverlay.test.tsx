@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ProjectView from '../ProjectOverlay';
 import { useViewStore } from '../../../state/overlayStore';
 
@@ -32,4 +32,14 @@ describe('ProjectView embed', () => {
     expect(frame.getAttribute('sandbox')).not.toContain('allow-top-navigation');
     expect(frame).toHaveAttribute('referrerpolicy', 'no-referrer');
   });
+});
+
+
+it.each(['Close', 'Minimise'])('%s returns to the projects section on one click', (label) => {
+  mockStore('aether');
+  const { scrollToSection } = useViewStore();
+  render(<ProjectView />);
+  fireEvent.click(screen.getByRole('button', { name: label }));
+  expect(scrollToSection).toHaveBeenCalledTimes(1);
+  expect(scrollToSection).toHaveBeenCalledWith('projects');
 });

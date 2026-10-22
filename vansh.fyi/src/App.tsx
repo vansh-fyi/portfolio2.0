@@ -13,12 +13,10 @@ import About from './components/About';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ProjectView from './components/overlays/ProjectOverlay';
 
-// The overlay views (and the Markdown stack behind the chat) are not needed to paint the home page,
-// so they are separate chunks; they are fetched when idle so opening one still feels instant.
-const loadProjectView = () => import('./components/overlays/ProjectOverlay');
+// Keep the lightweight project window ready for the first click. Only chat needs the Markdown stack.
 const loadChatView = () => import('./components/overlays/ChatOverlay');
-const ProjectView = dynamic(loadProjectView);
 const ChatView = dynamic(loadChatView);
 
 function App() {
@@ -44,7 +42,6 @@ function App() {
   useEffect(() => {
     if (currentView !== 'main') return;
     const warm = () => {
-      loadProjectView();
       loadChatView();
     };
     // requestIdleCallback is missing in Safari, hence the optional typing and the timeout fallback

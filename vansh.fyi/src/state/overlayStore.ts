@@ -64,7 +64,8 @@ export const useUiStore = create<UiState>((set) => ({
 
 /**
  * View state and navigation. Which view is showing comes from the URL; the actions navigate with the
- * Next router, so every view has a real, linkable, indexable URL and Back/Forward just work.
+ * native history within the portfolio, so window controls don't wait for a server render.
+ * Next synchronizes usePathname with pushState; direct visits still use the server routes.
  */
 export const useViewStore = () => {
   const pathname = usePathname();
@@ -78,11 +79,20 @@ export const useViewStore = () => {
   const { projectId } = route;
 
   const actions = useMemo(() => {
+    const navigate = (path: string) => {
+      // Other pages (e.g. the blog) also use this hook, but don't render App.
+      const inPortfolio = pathname === '/' || pathname === '/chat' || /^\/projects\/[^/]+(?:\/chat)?\/?$/.test(pathname ?? '');
+      if (!inPortfolio) {
+        router.push(path);
+        return;
+      }
+      if (window.location.pathname !== path) window.history.pushState(null, '', path);
+    };
     const goToMain = () => {
       useUiStore.setState({ initialChatQuery: '' });
-      router.push('/');
+      navigate('/');
     };
-    const goToProject = (id: string) => router.push(projectPath(id));
+    const goToProject = (id: string) => navigate(projectPath(id));
     return {
       goToMain,
       goToProject,
@@ -90,11 +100,11 @@ export const useViewStore = () => {
       goToProjects: () => (projectId ? goToProject(projectId) : goToMain()),
       goToChat: (query = '') => {
         useUiStore.setState({ initialChatQuery: query });
-        router.push('/chat');
+        navigate('/chat');
       },
       goToProjectChat: (id: string, query = '') => {
         useUiStore.setState({ initialChatQuery: query });
-        router.push(projectChatPath(id));
+        navigate(projectChatPath(id));
       },
       /** Switch the project shown in the project view. */
       selectProject: goToProject,
@@ -106,7 +116,7 @@ export const useViewStore = () => {
           return;
         }
         useUiStore.setState({ initialChatQuery: '', pendingSection: id });
-        router.push('/');
+        navigate('/');
       },
     };
   }, [router, pathname, projectId]);
