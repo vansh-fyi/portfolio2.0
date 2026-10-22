@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { projectPath, useViewStore } from '../state/overlayStore';
 import { usePortfolio } from '../state/portfolio';
 import { firstPlacementId } from '../../lib/portfolio';
+import MeetingButton from './MeetingButton';
 
 const Hero = () => {
   const { goToChat, goToProject, scrollToSection } = useViewStore();
@@ -15,11 +16,6 @@ const Hero = () => {
     if (query.trim()) {
       goToChat(query);
     }
-  };
-
-  const goTo = (id: 'projects' | 'contact') => (e: React.MouseEvent) => {
-    e.preventDefault();
-    scrollToSection(id);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -135,7 +131,7 @@ const Hero = () => {
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
                 </a>
-                <a href="#contact" onClick={goTo('contact')} className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
+                <MeetingButton className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
                   Let's Connect
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar h-4 w-4">
                     <path d="M8 2v4"></path>
@@ -143,7 +139,7 @@ const Hero = () => {
                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                     <path d="M3 10h18"></path>
                   </svg>
-                </a>
+                </MeetingButton>
               </div>
             </div>
           </div>
