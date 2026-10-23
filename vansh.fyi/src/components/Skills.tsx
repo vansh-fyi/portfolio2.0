@@ -161,7 +161,7 @@ const Skills = () => {
                 ML &amp; Generative AI
               </h3>
               <p className="group-hover:text-white transition-colors leading-relaxed text-sm text-white/80 pointer-events-none">
-                This is my new obsession. I'm actively thinking an exploring Generative AI, Python, and RAG systems. I believe AI needs it's GUI transition-[transform,translate,scale,opacity,background-color,border-color,color] soon.
+                This is my new obsession. I'm actively exploring Generative AI, Python, and RAG systems. I believe AI needs its GUI transition soon.
               </p>
             </div>
           </div>
