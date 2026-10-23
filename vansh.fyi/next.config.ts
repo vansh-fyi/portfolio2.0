@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  experimental: { agentUpgrade: 'security' },
   typescript: { tsconfigPath: './tsconfig.next.json' },
   async headers() {
     return [{
