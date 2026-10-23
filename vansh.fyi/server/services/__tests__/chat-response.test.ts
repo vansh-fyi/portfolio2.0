@@ -1,6 +1,13 @@
-import { needsChatClarification, parseChatActions, stripChatLinks, stripCitationArtifacts } from '../../../lib/chat';
+import { hasExperienceDuration, needsChatClarification, parseChatActions, stripChatLinks, stripCitationArtifacts } from '../../../lib/chat';
 
 describe('chat response cleanup', () => {
+    it.each(['He has 3 years of cumulative experience.', 'Vansh has about **four years of professional experience**.', 'His experience spans 5 years.', 'He has 3+ years of experience.'])('detects a fixed experience claim: %s', (text) => {
+        expect(hasExperienceDuration(text)).toBe(true);
+    });
+
+    it.each(['He began his career in 2021.', 'He has worked at Tapforce since December 2025.', 'He taught at DIT University for a year.', 'His work improves the user experience.'])('preserves dates and role descriptions: %s', (text) => {
+        expect(hasExperienceDuration(text)).toBe(false);
+    });
     it.each([
         ['Read [Aether](https://www.vansh.fyi/projects/aether-ai).', 'Read Aether.'],
         ['Use [general chat](/chat).', 'Use general chat.'],

@@ -56,6 +56,13 @@ export function boundedHistory(turns: readonly ChatTurn[]): ChatTurn[] {
 
 export type ChatAction = 'view_projects';
 
+/** Elapsed career dates cannot establish cumulative professional experience. */
+export function hasExperienceDuration(text: string): boolean {
+    const amount = '(?:\\d+(?:\\.\\d+)?|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\\+?';
+    const years = `${amount}[\\s-]*(?:years?|yrs?)`;
+    return new RegExp(`\\b${years}\\s+(?:(?:of|cumulative|professional|industry|work|relevant|hands-on|practical|design|development)\\s+){0,5}experience\\b|\\bexperience\\s+(?:(?:of|spans|spanning|is|totals|totaling|about|around)\\s+){0,3}${years}\\b`, 'i').test(text.replace(/[*_]/g, ''));
+}
+
 /** Stray keystrokes and punctuation are not evidence of an intent to browse projects. */
 export function needsChatClarification(query: string): boolean {
     const characters = query.match(/[\p{L}\p{N}]/gu) ?? [];

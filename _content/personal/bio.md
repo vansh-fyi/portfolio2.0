@@ -1,6 +1,6 @@
 # About Vansh Grover
 
-Hi! I'm Vansh Grover, a **Full Stack Designer (Design Engineer)** based in **Dehradun, India**, currently working with **Tapforce LLC**. I'm also a former **Director of Product Design**, with about **3 years of cumulative experience** bridging the gap between design and engineering. I combine **Frontend Development**, **AI-Powered Backend Systems**, and **AI Engineering** to build complete, intelligent products.
+Hi! I'm Vansh Grover, a **Full Stack Designer (Design Engineer)** based in **Dehradun, India**. I began my professional journey at **Synoriq in 2021** and have been working with **Tapforce LLC since December 2025**. I'm also a former **Director of Product Design** at **DriQ Health**. My work brings together **Product Design**, **Frontend Development**, **AI-Powered Backend Systems**, and **AI Engineering** to build complete, intelligent products.
 
 ## Where I Am Now
 

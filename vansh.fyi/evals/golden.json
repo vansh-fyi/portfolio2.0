@@ -2,16 +2,28 @@
   {
     "q": "What projects has Vansh worked on?",
     "any": ["aether", "ursa", "alignment", "perfectly", "astr", "sparto", "driq"],
-    "maxWords": 110,
+    "maxWords": 170,
     "maxBullets": 3,
     "smoke": true
   },
   {
     "q": "Give me an overview of his professional experience.",
     "any": ["tapforce", "design", "engineer"],
-    "maxWords": 100,
+    "all": ["2021", "tapforce", "December 2025"],
+    "forbid": ["3 years", "three years", "4 years", "four years", "5 years", "five years", "cumulative experience"],
+    "maxWords": 160,
     "maxBullets": 1,
     "smoke": true
+  },
+  {
+    "q": "How many years of experience does he have?",
+    "all": ["2021", "tapforce", "December 2025"],
+    "forbid": ["3 years", "three years", "4 years", "four years", "5 years", "five years", "hard to calculate", "reach out"],
+    "maxWords": 160,
+    "history": [
+      { "role": "user", "content": "What is his background?" },
+      { "role": "assistant", "content": "He has 3 years of cumulative experience." }
+    ]
   },
   {
     "q": "Who are you?",

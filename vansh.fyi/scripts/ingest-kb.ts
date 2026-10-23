@@ -12,7 +12,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { MarkdownSource } from '../server/services/ingestion/markdown-source';
 import { chunkMarkdown } from '../server/services/kb/chunker';
-import { buildPortfolioMap } from '../server/services/kb/portfolio-map';
+import { buildExperienceSummary, buildPortfolioMap } from '../server/services/kb/portfolio-map';
 import { BLOG_SOURCE_PREFIX, syncSourceFile } from '../server/services/kb/sync';
 
 const DRY_RUN = process.argv.includes('--dry-run');
@@ -64,7 +64,7 @@ async function main() {
     // Always-in-prompt overview of every project (committed; bundled with the function)
     const mapPath = path.resolve(import.meta.dirname, '../server/services/kb/portfolio-map.generated.json');
     const portfolioMap = buildPortfolioMap(documents);
-    await fs.writeFile(mapPath, JSON.stringify({ map: portfolioMap }, null, 2) + '\n');
+    await fs.writeFile(mapPath, JSON.stringify({ map: portfolioMap, experienceSummary: buildExperienceSummary(documents) }, null, 2) + '\n');
     console.log(`🗺️  Portfolio map: ${portfolioMap.length} chars (~${Math.round(portfolioMap.length / 4)} tokens) → ${path.relative(process.cwd(), mapPath)}`);
 
     if (DRY_RUN) {

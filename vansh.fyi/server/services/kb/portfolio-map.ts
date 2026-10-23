@@ -13,8 +13,8 @@ const TECH_MAX = 6;
 
 const prettify = (s: string) => s.replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
-/** First substantial prose paragraph, stripped of markdown, trimmed to SUMMARY_MAX. */
-export function summarize(markdown: string): string {
+/** First substantial prose paragraph, stripped of markdown and bounded for prompt context. */
+export function summarize(markdown: string, maxChars = SUMMARY_MAX): string {
     const paragraphs = markdown
         .split(/\n{2,}/)
         // a heading directly above its text (no blank line) must not disqualify the text
@@ -35,13 +35,18 @@ export function summarize(markdown: string): string {
         .replace(/\s+/g, ' ')
         .trim();
 
-    if (plain.length <= SUMMARY_MAX) return plain;
-    const cut = plain.slice(0, SUMMARY_MAX);
+    if (plain.length <= maxChars) return plain;
+    const cut = plain.slice(0, maxChars);
     const lastSpace = cut.lastIndexOf(' ');
-    return `${cut.slice(0, lastSpace > 120 ? lastSpace : SUMMARY_MAX)}…`;
+    return `${cut.slice(0, lastSpace > maxChars / 2 ? lastSpace : maxChars)}…`;
 }
 
 const asList = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
+
+export function buildExperienceSummary(documents: Document[]): string {
+    const experience = documents.find((d) => d.metadata.source_type === 'personal' && d.metadata.source_file === 'personal/experience.md');
+    return experience ? summarize(experience.content, 900) : '';
+}
 
 export function buildPortfolioMap(documents: Document[]): string {
     const byProject = new Map<string, Document[]>();
@@ -87,8 +92,12 @@ export function buildPortfolioMap(documents: Document[]): string {
     const personalSections = documents
         .filter((d) => d.metadata.source_type === 'personal')
         .map((d) => prettify(String(d.metadata.source_file).replace(/^personal\//, '').replace(/\.md$/, '')));
+    const personalOverview = documents
+        .filter((d) => d.metadata.source_type === 'personal' && /^personal\/(bio|experience)\.md$/.test(String(d.metadata.source_file)))
+        .map((d) => summarize(d.content, 900)).filter(Boolean);
 
     return [
+        personalOverview.length ? `Personal background:\n${personalOverview.join('\n')}\n` : '',
         `Projects (${lines.length}):`,
         ...lines,
         personalSections.length ? `\nPersonal profile sections: ${personalSections.join(', ')}.` : '',

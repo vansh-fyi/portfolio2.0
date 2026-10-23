@@ -1,14 +1,16 @@
 ---
 type: personal
 category: experience
-lastUpdated: 2026-10-08
+lastUpdated: 2026-10-22
 tags: [work-history, tapforce, full-stack-design, mvp, driq-health, product-design, teaching, fintech, healthcare]
 source: /rag/personal/personal.md
 ---
 
 # My Professional Journey
 
-I have **about 3 years of cumulative professional experience** in product design and development. My career path has been unique—punctuated by a necessary career break for recovery—but defined by rapid growth and high-impact roles. From starting as a trainee to becoming a **Director of Product Design**, I've consistently taken on challenges that required me to evolve.
+Vansh began his professional journey in **2021 as a Product Design Trainee at Synoriq**. Since then, he has worked with **App Mechanic**, taught at **DIT University**, led product design at **DriQ Health**, and taken on freelance product and brand design for **Partlink Solutions (Sparto)**. Since **December 2025**, he has been a **Full Stack Designer (Design Engineer) at Tapforce LLC**, designing and building complete client MVPs end to end with the help of AI. His work spans fintech, spatial interfaces, healthcare products, product design, development and AI engineering.
+
+My career timeline includes a career break and overlapping freelance work; elapsed calendar years and cumulative time in professional roles are different measures.
 
 ## Current Role
 

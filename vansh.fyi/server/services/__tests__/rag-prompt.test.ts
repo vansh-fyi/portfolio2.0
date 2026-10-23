@@ -18,7 +18,10 @@ describe('buildSystemPrompt', () => {
     it('summarizes projects and experience while preserving explicit requests for depth', () => {
         const prompt = buildSystemPrompt([]);
         expect(prompt).toContain('at most THREE relevant projects');
-        expect(prompt).toContain('2-3 sentence overview');
+        expect(prompt).toContain('connected 3-5 sentence overview');
+        expect(prompt).toContain('conversational and descriptive');
+        expect(prompt).toContain('Do not state or calculate a total number of years');
+        expect(prompt).toContain('Tapforce since December 2025');
         expect(prompt).toContain('an explicit request for all projects overrides this default');
         expect(prompt).toContain('only when the visitor explicitly asks for that depth');
         expect(prompt).toContain('Never output citation markers');
@@ -57,6 +60,20 @@ import { getBlogOverview } from '../../blog/overview';
 
 describe('project isolation and follow-ups', () => {
     beforeEach(() => jest.clearAllMocks());
+
+    it('replaces stale experience counts in assistant memory and in a noncompliant provider answer with the current sourced journey', async () => {
+        (searchKb as jest.Mock).mockResolvedValue([]);
+        (getBlogOverview as jest.Mock).mockResolvedValue('');
+        (generateWithFallback as jest.Mock).mockResolvedValue({ text: 'He has 3 years of cumulative experience. <action>view_projects</action>', provider: 'free' });
+        const history = [{ role: 'user' as const, content: 'What is his background?' }, { role: 'assistant' as const, content: 'He has 3 years of cumulative experience.' }];
+        const result = await generateRagResponse('How much experience does he have?', 'personal', undefined, history);
+        expect(result.text).toContain('2021');
+        expect(result.text).toContain('December 2025');
+        expect(result.text).toContain('Tapforce');
+        expect(result.text).not.toContain('3 years');
+        expect(result.actions).toEqual([]);
+        expect(generateWithFallback).toHaveBeenCalledWith(expect.objectContaining({ history: [history[0], expect.objectContaining({ role: 'assistant', content: expect.not.stringContaining('3 years') })] }));
+    });
 
     it.each(['.', 'j', '!!!', 'jjjj', '…'])('clarifies stray input %s without retrieval, generation or actions even after project discussion', async (query) => {
         const history = [{ role: 'user' as const, content: 'Show me projects' }, { role: 'assistant' as const, content: 'Aether is an AI tool.' }];
