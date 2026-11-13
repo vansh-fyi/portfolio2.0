@@ -10,7 +10,7 @@
 
 Hi! I'm Vansh Grover, a multidisciplinary designer and engineer with a unique background in **Physics** and **User Experience Design**. I operate at the intersection of analytical rigor and creative empathy, building intelligent products that are both beautiful and functional.
 
-Currently, I am focused on **Spatial Computing** and **Ambient Intelligence**, exploring how technology can anticipate our needs and enhance our capabilities without getting in the way. Based in Dehradun, India, I work remotely as a Full Stack Designer (Design Engineer) at Tapforce LLC. On the side, I'm an independent robotics researcher studying how Vision-Language-Action (VLA) models, LLMs and robots relate and how to optimise them, working toward physics-aware general intelligence. I hope to pursue a PhD soon.
+Currently, I am focused on **Social Robotics** and **VLA Research**, exploring how robots and AI driving them can anticipate our needs and enhance our capabilities without getting in the way. I live in Dehradun, India, and work remotely as a Full Stack Designer (Design Engineer) at Tapforce LLC. On the side, I'm an independent robotics researcher studying how Vision-Language-Action (VLA) models, LLMs and robots relate and how to optimise them, working toward physics-aware general intelligence. I hope to pursue a PhD in robotics soon.
 
 ## Tech Stack & Skills
 
