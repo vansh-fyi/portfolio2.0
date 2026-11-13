@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Inter } from 'next/font/google';
 import { SITE_URL } from '@/lib/site';
 import { themeInitScript } from '@/lib/theme';
+import { loadRecoveryScript } from '@/lib/load-recovery';
 import Analytics from './analytics';
 import Providers from './providers';
 import './globals.css';
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${geist.variable}`}>
       <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: loadRecoveryScript }} />
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <Providers>{children}</Providers>
         <Analytics />

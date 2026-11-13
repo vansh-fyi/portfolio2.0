@@ -1,3 +1,4 @@
+import { NotebookText } from 'lucide-react';
 const Footer = () => {
   return (
     <footer className="border-t pt-10 pb-10 border-white/10">
@@ -85,29 +86,9 @@ const Footer = () => {
             <a
               href="/blog"
               className="inline-flex items-center gap-2 transition-[transform,translate,scale,opacity,background-color,border-color,color] active:scale-95 text-sm font-medium font-geist ring-1 rounded-full pt-2 pr-3.5 pb-2 pl-3.5 backdrop-blur-sm hover:bg-white/10 hover:ring-white/20 text-white/80 bg-white/5 ring-white/10"
-              aria-label="GitHub"
+              aria-label="Blog"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className=""
-              >
-                <path d="M2 6h4"></path>
-                <path d="M2 10h4"></path>
-                <path d="M2 14h4"></path>
-                <path d="M2 18h4"></path>
-                <rect width="16" height="20" x="4" y="2" rx="2"></rect>
-                <path d="M9.5 8h5"></path>
-                <path d="M9.5 12H16"></path>
-                <path d="M9.5 16H14"></path>
-              </svg>
+              <NotebookText size={18} strokeWidth={1.5} aria-hidden="true" />
               <span className="hidden sm:inline">Blog</span>
             </a>
           </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { Calendar, SendHorizontal, Sparkles } from 'lucide-react';
 import { useState, type KeyboardEvent } from 'react';
 import { useViewStore } from '../state/overlayStore';
 import ViewProjectsLink from './ViewProjectsLink';
@@ -69,13 +70,7 @@ const Hero = () => {
                 <div className="group transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
                   <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
                     <div className="hidden sm:flex text-white/80 bg-white/10 w-9 h-9 border-white/10 border rounded-lg items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
-                        <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" className=""></path>
-                        <path d="M20 3v4"></path>
-                        <path d="M22 5h-4"></path>
-                        <path d="M4 17v2"></path>
-                        <path d="M5 18H3"></path>
-                      </svg>
+                      <Sparkles className="w-[18px] h-[18px]" strokeWidth={1.5} aria-hidden="true" />
                     </div>
                     <input
                       onFocus={warmChatView}
@@ -92,10 +87,7 @@ const Hero = () => {
                       aria-label="Send message"
                       onClick={handleSendQuery}
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-black/80">
-                        <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" className=""></path>
-                        <path d="M6 12h16" className=""></path>
-                      </svg>
+                      <SendHorizontal className="w-[18px] h-[18px] text-black/80" strokeWidth={1.5} aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -121,12 +113,7 @@ const Hero = () => {
                 <ViewProjectsLink />
                 <MeetingButton className="inline-flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 bg-white hover:bg-white/80 text-sm font-medium text-black/80 font-geist ring-white/20 ring-1 rounded-full pt-2.5 pr-4 pb-2.5 pl-4">
                   Let&apos;s Connect
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar h-4 w-4">
-                    <path d="M8 2v4"></path>
-                    <path d="M16 2v4"></path>
-                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                    <path d="M3 10h18"></path>
-                  </svg>
+                  <Calendar className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
                 </MeetingButton>
               </div>
             </div>

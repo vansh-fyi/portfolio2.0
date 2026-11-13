@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowRight } from 'lucide-react';
 import { useViewStore } from '../state/overlayStore';
 import { usePortfolio } from '../state/portfolio';
 import { FEATURED_CARD_CLASS, firstPlacementId } from '../../lib/portfolio';
@@ -65,10 +66,7 @@ const Projects = () => {
         </div>
         <div className="text-center">
           <button onClick={handleProjectClick(firstPlacementId(portfolio) ?? '')} className="group inline-flex transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 text-base font-medium text-white/80 bg-black/30 border-white/30 border rounded-2xl pt-4 pr-8 pb-4 pl-8 backdrop-blur-xl gap-x-3 gap-y-3 items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
+            <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} aria-hidden="true" />
             <span className="">See All Projects</span>
           </button>
         </div>

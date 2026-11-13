@@ -1,3 +1,4 @@
+import { AppWindow, Blocks, Briefcase, Code, Goal, Sparkles, UserSearch, Workflow } from 'lucide-react';
 const Skills = () => {
   return (
     <section className="scroll-animate lg:py-24 in-view pt-24 pb-24 relative" id="features">
@@ -17,11 +18,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group hover:from-white/12 hover:to-white/10 hover:ring-white/20 bg-black/30 to-white/4 ring-white/10 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <rect width="8" height="8" x="3" y="3" rx="2"></rect>
-                    <path d="M7 11v4a2 2 0 0 0 2 2h4"></path>
-                    <rect width="8" height="8" x="13" y="13" rx="2"></rect>
-                  </svg>
+                  <Workflow className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">01</span>
               </div>
@@ -36,12 +33,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <rect width="20" height="16" x="2" y="4" rx="2" className=""></rect>
-                    <path d="M6 8h.01"></path>
-                    <path d="M10 8h.01"></path>
-                    <path d="M14 8h.01"></path>
-                  </svg>
+                  <AppWindow className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">02</span>
               </div>
@@ -56,12 +48,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 w-12 h-12 rounded-xl ring-1 bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <circle cx="10" cy="7" r="4"></circle>
-                    <path d="M10.3 15H7a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="17" cy="17" r="3" className=""></circle>
-                    <path d="m21 21-1.9-1.9"></path>
-                  </svg>
+                  <UserSearch className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">03</span>
               </div>
@@ -76,10 +63,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <rect width="7" height="7" x="14" y="3" rx="1"></rect>
-                    <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" className=""></path>
-                  </svg>
+                  <Blocks className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">04</span>
               </div>
@@ -94,10 +78,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="flex mb-4 items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 w-12 h-12 rounded-xl ring-1 bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <polyline points="16,18 22,12 16,6" className=""></polyline>
-                    <polyline points="8,6 2,12 8,18" className=""></polyline>
-                  </svg>
+                  <Code className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">05</span>
               </div>
@@ -112,12 +93,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid place-items-center group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 w-12 h-12 ring-1 rounded-xl bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <path d="M12 12h.01"></path>
-                    <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"></path>
-                    <path d="M22 13a18.15 18.15 0 0 1-20 0"></path>
-                    <rect width="20" height="14" x="2" y="6" rx="2" className=""></rect>
-                  </svg>
+                  <Briefcase className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="group-hover:text-white/80 transition-colors text-xs font-medium text-white/50">06</span>
               </div>
@@ -132,11 +108,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <path d="M12 13V2l8 4-8 4"></path>
-                    <path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"></path>
-                    <path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"></path>
-                  </svg>
+                  <Goal className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="group-hover:text-white/80 transition-colors text-xs font-medium text-white/50">07</span>
               </div>
@@ -151,9 +123,7 @@ const Skills = () => {
             <div className="fade-in-up hover:-translate-y-2 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-500 group bg-black/30 ring-1 rounded-2xl pt-6 pr-6 pb-6 pl-6 relative backdrop-blur-lg hover:from-white/12 hover:to-white/6 hover:ring-white/20 from-white/8 to-white/4 ring-white/10">
               <div className="mb-4 flex items-center justify-between">
                 <div className="grid h-12 w-12 place-items-center rounded-xl ring-1 group-hover:ring-white/20 group-hover:bg-white/10 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 bg-white/5 ring-white/10">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80">
-                    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" className=""></path>
-                  </svg>
+                  <Sparkles className="w-5 h-5 group-hover:text-white group-hover:scale-110 transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                 </div>
                 <span className="text-xs font-medium group-hover:text-white/80 transition-colors text-white/50">08</span>
               </div>

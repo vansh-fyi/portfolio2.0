@@ -1,3 +1,4 @@
+import { ArrowRight, Calendar, Mail, MapPin } from 'lucide-react';
 import DeferredContactChat from './DeferredContactChat';
 import MeetingButton from './MeetingButton';
 
@@ -30,9 +31,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="inline-flex bg-white/10 w-10 h-10 ring-white/10 ring-1 rounded-xl items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"></path>
-                    </svg>
+                    <Mail className="h-5 w-5 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                   </div>
                   <div className="">
                     <p className="font-medium text-white pointer-events-none">Project inquiries</p>
@@ -41,10 +40,7 @@ const Contact = () => {
                 </div>
                 <div className="flex items-start gap-4">
                   <div className="h-10 w-10 inline-flex items-center justify-center rounded-xl ring-1 bg-white/10 ring-white/10">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
+                    <MapPin className="h-5 w-5 text-white/80" strokeWidth={1.5} aria-hidden="true" />
                   </div>
                   <div className="">
                     <p className="font-medium text-white pointer-events-none">Based in</p>
@@ -54,19 +50,11 @@ const Contact = () => {
                 <div className="grow pt-24">
                   <div className="flex flex-col gap-3 sm:flex-row-reverse sm:justify-end">
                     <MeetingButton className="group inline-flex justify-center transition-colors duration-300 active:scale-95 gap-3 items-center whitespace-nowrap text-base font-medium font-geist text-black/80 bg-white hover:bg-white/80 border-white/20 border rounded-2xl py-4 px-8 lg:px-3 xl:px-6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 shrink-0" aria-hidden="true">
-                        <path d="M8 2v4" />
-                        <path d="M16 2v4" />
-                        <rect width="18" height="18" x="3" y="4" rx="2" />
-                        <path d="M3 10h18" />
-                      </svg>
+                      <Calendar className="h-5 w-5 shrink-0" aria-hidden="true" strokeWidth={1.5} />
                       <span>Schedule a meeting</span>
                     </MeetingButton>
                     <a href="mailto:design@vansh.fyi" className="group inline-flex justify-center transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-300 card-shine hover-glow hover:bg-white/10 hover:border-white/30 gap-x-3 gap-y-3 items-center whitespace-nowrap text-base font-medium text-white/80 bg-black/30 border-white/30 border rounded-2xl pt-4 pr-8 pb-4 pl-8 lg:px-3 xl:px-6 backdrop-blur-xl">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
-                        <path d="M5 12h14" className=""></path>
-                        <path d="m12 5 7 7-7 7" className=""></path>
-                      </svg>
+                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" strokeWidth={1.5} aria-hidden="true" />
                       <span className="">Send Me a Mail</span>
                     </a>
                   </div>

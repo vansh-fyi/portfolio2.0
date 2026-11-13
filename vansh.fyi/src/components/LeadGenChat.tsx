@@ -1,5 +1,6 @@
 'use client';
 
+import { CircleUser, SendHorizontal, Sparkles } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useThemeStore } from '../state/themeStore';
 import { trpc } from '../services/trpc';
@@ -434,11 +435,7 @@ Details: ${data.projectDetails || 'No details provided'}
             {msg.sender === 'user' && (
               // FIX 3: Fixed typo 'flexx-shrink-0' to 'flex-shrink-0'
               <div className="flex flex-shrink-0 transition-[transform,translate,scale,opacity,background-color,border-color,color] text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <circle cx="12" cy="10" r="3"></circle>
-                  <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
-                </svg>
+                <CircleUser size={18} strokeWidth={1.5} aria-hidden="true" />
               </div>
             )}
           </div>
@@ -502,13 +499,7 @@ Details: ${data.projectDetails || 'No details provided'}
       <div className="group transition-[transform,translate,scale,opacity,background-color,border-color,box-shadow,color] duration-200 hover-glow focus-within:ring-2 focus-within:ring-white/50 hover:bg-black/30 hover:ring-white/20 bg-black/50 ring-white/10 ring-1 rounded-xl pt-2 pr-2 pb-2 pl-2">
         <div className="flex gap-2 gap-x-2 gap-y-2 items-center">
           <div className="hidden sm:flex w-9 h-9 border rounded-lg items-center justify-center text-white/80 bg-white/10 border-white/10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-white/80">
-              <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path>
-              <path d="M20 3v4"></path>
-              <path d="M22 5h-4"></path>
-              <path d="M4 17v2"></path>
-              <path d="M5 18H3"></path>
-            </svg>
+            <Sparkles className="w-[18px] h-[18px] text-white/80" strokeWidth={1.5} aria-hidden="true" />
           </div>
           <input
             type="text"
@@ -525,10 +516,7 @@ Details: ${data.projectDetails || 'No details provided'}
             className="inline-flex transition-colors active:scale-95 w-9 h-9 border rounded-lg items-center justify-center hover:bg-white bg-white/80 border-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Send message"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] text-black/80">
-              <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z"></path>
-              <path d="M6 12h16"></path>
-            </svg>
+            <SendHorizontal className="w-[18px] h-[18px] text-black/80" strokeWidth={1.5} aria-hidden="true" />
           </button>
         </div>
       </div>

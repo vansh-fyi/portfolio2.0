@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronLeft, CircleUser, Menu, Minus, Search, Send, X } from 'lucide-react';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useViewStore } from '../../state/overlayStore';
@@ -106,21 +107,7 @@ const ChatSession: React.FC = () => {
                     className="flex md:h-3.5 md:w-3.5 h-4 w-4 rounded-full text-red-900 md:text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-3 h-3"
-                    >
-                      <path d="M18 6 6 18"></path>
-                      <path d="m6 6 12 12"></path>
-                    </svg>
+                    <X className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                   <button
                     type="button"
@@ -128,20 +115,7 @@ const ChatSession: React.FC = () => {
                     className="hidden md:inline flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Minimise"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <path d="M5 12h14" />
-                    </svg>
+                    <Minus className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                   <span className="hidden md:inline h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
@@ -157,9 +131,7 @@ const ChatSession: React.FC = () => {
                   onClick={handleClose}
                   className="inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[16px] h-[16px] text-white/80">
-                    <path d="M15 18l-6-6 6-6"></path>
-                  </svg>
+                  <ChevronLeft className="w-[16px] h-[16px] text-white/80" strokeWidth={1.5} aria-hidden="true" />
                   <span className="text-white/80">Back</span>
                 </button>
                 {chatContext === 'project' && (
@@ -167,19 +139,12 @@ const ChatSession: React.FC = () => {
                     onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                     className="md:hidden inline-flex active:scale-95 flex-shrink-0 text-sm bg-white/5 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[16px] h-[16px] text-white/80">
-                      <line x1="3" y1="12" x2="21" y2="12"></line>
-                      <line x1="3" y1="6" x2="21" y2="6"></line>
-                      <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                    <Menu className="w-[16px] h-[16px] text-white/80" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                 )}
                 {chatContext === 'project' && (
                   <div className="hidden md:flex bg-black/30 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/50">
-                      <path d="m21 21-4.34-4.34"></path>
-                      <circle cx="11" cy="11" r="8"></circle>
-                    </svg>
+                    <Search className="w-4 h-4 text-white/50" strokeWidth={1.5} aria-hidden="true" />
                     <input
                       placeholder="Search projects..."
                       className="w-48 bg-transparent text-sm focus:outline-none"
@@ -264,11 +229,7 @@ const ChatSession: React.FC = () => {
                               </div>
                               {msg.sender === 'user' && (
                                 <div className="inline-flex transition-[transform,translate,scale,opacity,background-color,border-color,color] text-white/80 bg-white/10 w-8 h-8 ring-white/10 ring-1 rounded-full items-center justify-center">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-circle-user lucide-user w-[18px] h-[18px]">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                    <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"></path>
-                                  </svg>
+                                  <CircleUser className="w-[18px] h-[18px]" strokeWidth={1.5} aria-hidden="true" />
                                 </div>
                               )}
                             </div>
@@ -316,10 +277,7 @@ const ChatSession: React.FC = () => {
                             disabled={isSending}
                             className="inline-flex hover:bg-white active:scale-95 text-sm font-medium text-black bg-white/80 rounded-xl pt-2.5 pr-4 pb-2.5 pl-4 items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-send w-[16px] h-[16px] mr-1.5 text-black">
-                              <path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"></path>
-                              <path d="m21.854 2.147-10.94 10.939"></path>
-                            </svg>
+                            <Send className="w-[16px] h-[16px] mr-1.5 text-black" strokeWidth={1.5} aria-hidden="true" />
                             Send
                           </button>
                         </div>

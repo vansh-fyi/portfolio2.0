@@ -1,5 +1,6 @@
 'use client';
 
+import { X } from 'lucide-react';
 import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { useThemeStore } from '../state/themeStore';
@@ -82,9 +83,7 @@ function MeetingDialog({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           className="flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full transition-colors hover:bg-[var(--meeting-hover)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
-            <path d="m6 6 12 12M18 6 6 18" />
-          </svg>
+          <X size={20} aria-hidden="true" strokeWidth={1.5} />
         </button>
       </header>
       <div className="relative min-h-0 flex-1" aria-busy={!loaded}>

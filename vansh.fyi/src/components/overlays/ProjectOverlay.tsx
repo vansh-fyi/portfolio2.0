@@ -1,5 +1,6 @@
 'use client';
 
+import { Menu, Minus, Search, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { useViewStore } from '../../state/overlayStore';
 import Header from '../Header';
@@ -42,21 +43,7 @@ const ProjectView: React.FC<{ projectId?: string; active?: boolean }> = ({ proje
                     className="flex md:h-3.5 md:w-3.5 h-4 w-4 rounded-full text-red-900 md:text-red-500/10 group-hover:text-red-900 bg-red-500/90 group-hover:bg-red-500 active:bg-red-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Close"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-3 h-3"
-                    >
-                      <path d="M18 6 6 18"></path>
-                      <path d="m6 6 12 12"></path>
-                    </svg>
+                    <X className="w-3 h-3" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                   <button
                     type="button"
@@ -64,20 +51,7 @@ const ProjectView: React.FC<{ projectId?: string; active?: boolean }> = ({ proje
                     className="hidden md:inline flex h-3.5 w-3.5 rounded-full text-amber-400/10 group-hover:text-amber-900 bg-amber-400/90 group-hover:bg-amber-400 active:bg-amber-200 cursor-pointer transition-colors items-center justify-center"
                     aria-label="Minimise"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <path d="M5 12h14" />
-                    </svg>
+                    <Minus className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" strokeWidth={1.5} aria-hidden="true" />
                   </button>
                   <span className="hidden md:inline h-3.5 w-3.5 rounded-full bg-emerald-500/90"></span>
                 </div>
@@ -111,17 +85,10 @@ const ProjectView: React.FC<{ projectId?: string; active?: boolean }> = ({ proje
                   onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                   className="md:hidden inline-flex items-center gap-2 transition-colors active:scale-95 text-sm font-medium text-white/80 bg-white/5 hover:bg-white/10 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                  </svg>
+                  <Menu className="w-4 h-4" strokeWidth={1.5} aria-hidden="true" />
                 </button>
                 <div className="hidden md:flex bg-black/30 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search w-4 h-4 text-white/50">
-                    <path d="m21 21-4.34-4.34"></path>
-                    <circle cx="11" cy="11" r="8"></circle>
-                  </svg>
+                  <Search className="w-4 h-4 text-white/50" strokeWidth={1.5} aria-hidden="true" />
                   <input
                     placeholder="Search projects..."
                     className="w-48 bg-transparent text-sm focus:outline-none"

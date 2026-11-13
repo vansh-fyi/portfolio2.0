@@ -1,5 +1,6 @@
 'use client';
 
+import { ChevronDown, Copyright, Lock, X } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { usePortfolio } from '../../state/portfolio';
 import { CategoryIcon, ProjectLogo } from '../ProjectLogo';
@@ -85,10 +86,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                   onClick={onClearSearch}
                   className="inline-flex hover:bg-white/10 hover:ring-white/20 cursor-pointer select-none active:scale-95 bg-white/5 ring-white/10 ring-1 rounded-full pt-1.5 pr-3 pb-1.5 pl-3 gap-x-2 gap-y-2 items-center"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-[16px] h-[16px]">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
+                  <X className="w-[16px] h-[16px]" strokeWidth={1.5} aria-hidden="true" />
                   <span className="text-xs lg:text-sm text-white">Clear Search</span>
                 </button>
               ) : (
@@ -99,9 +97,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                   >
                     <CategoryIcon svg={selectedCategory?.iconSvg ?? null} />
                     <span className="text-xs lg:text-sm text-white">{selectedCategory?.name}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-down w-[16px] h-[16px]">
-                      <path d="m6 9 6 6 6-6"></path>
-                    </svg>
+                    <ChevronDown className="w-[16px] h-[16px]" strokeWidth={1.5} aria-hidden="true" />
                   </summary>
                   <ul className="absolute left-0 mt-2 min-w-[14rem] backdrop-blur-md rounded-xl bg-black/80 ring-1 ring-white/10 p-1 shadow-xl z-50">
                     {projectCategories.map((category) => (
@@ -150,7 +146,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             <div className="flex items-center gap-1">
                               <span className="lg:text-base text-sm text-white">{project.title}</span>
                               {project.isNda && (
-                                <span title="NDA Protected">🔒</span>
+                                <Lock className="w-3.5 h-3.5 text-white/50" strokeWidth={1.5} aria-label="NDA Protected" role="img" />
                               )}
                             </div>
                             <span className="lg:text-sm text-xs text-white/50">{project.subtitle}</span>
@@ -185,7 +181,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
                             <div className="flex items-center gap-1">
                               <span className="lg:text-base text-sm text-white">{project.title}</span>
                               {project.isNda && (
-                                <span title="NDA Protected">🔒</span>
+                                <Lock className="w-3.5 h-3.5 text-white/50" strokeWidth={1.5} aria-label="NDA Protected" role="img" />
                               )}
                             </div>
                             <span className="lg:text-sm text-xs text-white/50">{project.subtitle}</span>
@@ -203,10 +199,7 @@ const OverlaySidebar: React.FC<OverlaySidebarProps> = ({
       <div className="border-white/10 border-t pt-3 pr-2 pl-2">
         <div className="flex items-center gap-3 rounded-xl bg-black/80 p-3 ring-1 ring-white/10">
           <div className="inline-flex transition-[transform,translate,scale,opacity,background-color,border-color,color] active:scale-95 text-white/80 bg-white/10 w-8 h-8 rounded-full ring-white/10 ring-1 items-center justify-center flex-shrink-0">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copyright lucide-train-front lucide-circle-user lucide-user w-[20px] h-[20px] text-white/80 flex-shrink-0">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M14.83 14.83a4 4 0 1 1 0-5.66"></path>
-            </svg>
+            <Copyright className="w-[20px] h-[20px] text-white/80 flex-shrink-0" strokeWidth={1.5} aria-hidden="true" />
           </div>
           <div className="min-w-0">
             <p className="text-xs lg:text-sm font-medium text-white">Vansh Grover, {new Date().getFullYear()}</p>
